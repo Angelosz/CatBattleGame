@@ -32,6 +32,7 @@ captures/                       # Screenshot capture output directory
 
 ### Gradle-specific ###
 .gradle/                        # Gradle cache
+.gradle
 build/                          # Build output directory
 gradle-app.setting              # Local Gradle settings
 .gradle/caches/                 # Gradle cache
@@ -43,6 +44,7 @@ gradle-app.setting              # Local Gradle settings
 *.hprof                         # Memory snapshots
 *.log                           # Log files
 .idea/                          # IDE settings directory
+.idea
 .DS_Store                       # macOS specific files
 Thumbs.db                       # Windows specific files
 *.bak                           # Backup files
@@ -77,3 +79,4 @@ app/google-services.json        # Firebase config for app module
 
 ### Local Properties ###
 local.properties                # Configuration for local environment
+/local.properties
