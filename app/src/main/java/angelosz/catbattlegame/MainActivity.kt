@@ -8,7 +8,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.lifecycle.lifecycleScope
 import angelosz.catbattlegame.data.preloadData
-import angelosz.catbattlegame.ui.screens.HomeScreen
+import angelosz.catbattlegame.ui.screens.AppLayout
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CatBattleGameTheme {
-                HomeScreen(windowSize = calculateWindowSizeClass(this).widthSizeClass)
+                AppLayout(windowSize = calculateWindowSizeClass(this).widthSizeClass)
             }
         }
     }
