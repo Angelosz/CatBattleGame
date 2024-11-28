@@ -23,16 +23,19 @@ import angelosz.catbattlegame.R
 
 
 @Composable
-fun HomeScreen(windowSize: WindowWidthSizeClass) {
+fun HomeScreen(
+    windowSize: WindowWidthSizeClass,
+    navigateToEncyclopedia: () -> Unit
+) {
     if(windowSize == WindowWidthSizeClass.Expanded){
-        LandscapeHomeScreen()
+        LandscapeHomeScreen(navigateToEncyclopedia)
     } else {
-        PortraitHomeScreen()
+        PortraitHomeScreen(navigateToEncyclopedia)
     }
 }
 
 @Composable
-fun LandscapeHomeScreen() {
+fun LandscapeHomeScreen(navigateToEncyclopedia: () -> Unit) {
     Box(modifier = Modifier
         .fillMaxSize(),
     ){
@@ -69,7 +72,7 @@ fun LandscapeHomeScreen() {
                 Text(text = "My Collection", style = MaterialTheme.typography.labelLarge)
             }
             Button(
-                onClick = {},
+                onClick = navigateToEncyclopedia,
                 modifier = Modifier
                     .padding(16.dp)
                     .width(192.dp)
@@ -83,7 +86,7 @@ fun LandscapeHomeScreen() {
 }
 
 @Composable
-fun PortraitHomeScreen(){
+fun PortraitHomeScreen(navigateToEncyclopedia: () -> Unit) {
     Box(modifier = Modifier
         .fillMaxSize(),
     ){
@@ -123,7 +126,7 @@ fun PortraitHomeScreen(){
                 Text(text = "My Collection", style = MaterialTheme.typography.labelLarge)
             }
             Button(
-                onClick = {},
+                onClick = navigateToEncyclopedia,
                 modifier = Modifier
                     .padding(16.dp)
                     .width(192.dp)
