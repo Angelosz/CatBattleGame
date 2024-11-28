@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx.v262)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.1")
+
 
     // Room components
     implementation (libs.androidx.room.runtime)
