@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.domain.models
+package angelosz.catbattlegame.domain.models.entities
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity
@@ -12,6 +12,7 @@ data class Cat(
     @PrimaryKey
     val id: Int,
     val name: String,
+    val description: String,
     val armorType: ArmorType,
     val role: CatRole,
     val baseHealth: Int,
