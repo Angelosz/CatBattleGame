@@ -1,6 +1,6 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.Cat
+import angelosz.catbattlegame.domain.models.entities.Cat
 
 interface CatRepository {
     suspend fun getAllCats(): List<Cat>
