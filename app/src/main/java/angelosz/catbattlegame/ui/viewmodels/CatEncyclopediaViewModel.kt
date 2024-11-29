@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
+import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -68,13 +69,13 @@ class CatEncyclopediaViewModel(
         }
     }
 
-    fun updateCardDetails(catId: Int){
+    fun updateSelectedCat(catId: Int){
         viewModelScope.launch {
             fetchCatDetails(catId)
         }
     }
 
-    fun selectAbility(abilityId: Int){
+    fun updateSelectedAbility(abilityId: Int){
         viewModelScope.launch {
             fetchAbilityData(abilityId)
         }
@@ -83,6 +84,21 @@ class CatEncyclopediaViewModel(
     fun changeView(toDetailView: Boolean){
         _uiState.update {
             it.copy(onDetailsView = toDetailView)
+        }
+    }
+
+    fun updateCollectionView(collectionView: CollectionView){
+        _uiState.update {
+            it.copy(collectionView = collectionView)
+        }
+    }
+
+    fun deselectAllData() {
+        _uiState.update {
+            it.copy(
+                selectedCatData = null,
+                selectedAbility = null
+                )
         }
     }
 }
