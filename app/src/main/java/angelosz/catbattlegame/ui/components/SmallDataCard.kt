@@ -19,7 +19,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun CatSmallDataCard(modifier: Modifier = Modifier, id: Int, name: String, @DrawableRes image: Int, onCardClicked: (Int) -> Unit){
+fun SmallDataCard(modifier: Modifier = Modifier, id: Int, name: String, @DrawableRes image: Int, onCardClicked: (Int) -> Unit){
     Card(
         modifier = modifier.shadow(2.dp, RoundedCornerShape(4.dp)),
         onClick = { onCardClicked(id) }
@@ -42,7 +42,7 @@ fun CatSmallDataCard(modifier: Modifier = Modifier, id: Int, name: String, @Draw
 @Composable
 fun CatSmallDataCardPreview(){
     CatBattleGameTheme {
-        CatSmallDataCard(
+        SmallDataCard(
             modifier = Modifier.padding(8.dp),
             id = 0,
             name = "Kitten Swordman",
