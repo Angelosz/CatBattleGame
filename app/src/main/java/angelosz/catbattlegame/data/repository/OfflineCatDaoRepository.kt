@@ -1,7 +1,7 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.CatDao
-import angelosz.catbattlegame.domain.models.Cat
+import angelosz.catbattlegame.domain.models.entities.Cat
 
 class OfflineCatDaoRepository(private val catDao: CatDao): CatRepository {
 
