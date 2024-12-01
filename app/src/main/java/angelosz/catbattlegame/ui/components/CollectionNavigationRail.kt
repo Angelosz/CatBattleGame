@@ -1,21 +1,23 @@
 package angelosz.catbattlegame.ui.components
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.domain.models.CollectionNavigationItem
 import angelosz.catbattlegame.domain.models.collectionNavigationItems
 
 @Composable
 fun CollectionNavigationRail(
+    modifier: Modifier = Modifier,
     selectedView: CollectionView,
     onTabPressed: (CollectionView) -> Unit,
-    modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    items: List<CollectionNavigationItem> = collectionNavigationItems
 ){
     NavigationRail(modifier = modifier){
         NavigationRailItem(
@@ -23,12 +25,12 @@ fun CollectionNavigationRail(
             onClick = onBackPressed,
             icon = {
                 Icon(
-                    imageVector = Icons.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back button"
                 )
             }
         )
-        for( item in collectionNavigationItems ){
+        for( item in items ){
             NavigationRailItem(
                 selected = item.collectionView == selectedView,
                 onClick = { onTabPressed(item.collectionView) },
