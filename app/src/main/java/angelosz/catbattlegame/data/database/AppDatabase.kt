@@ -6,21 +6,29 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import angelosz.catbattlegame.data.dao.AbilityDao
 import angelosz.catbattlegame.data.dao.CatDao
+import angelosz.catbattlegame.data.dao.PlayerDao
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.AbilityArmorDamageMultiplier
 import angelosz.catbattlegame.domain.models.entities.Cat
 import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
+import angelosz.catbattlegame.domain.models.entities.OwnedCat
+import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 
 @Database(
     entities = [
         Cat::class,
         Ability::class,
         CatAbilityCrossRef::class,
-        AbilityArmorDamageMultiplier::class
-   ], version = 9)
+        AbilityArmorDamageMultiplier::class,
+        PlayerAccount::class,
+        OwnedCat::class
+    ],
+    exportSchema = false,
+    version = 10)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
+    abstract fun playerDao(): PlayerDao
 
     companion object {
         @Volatile
