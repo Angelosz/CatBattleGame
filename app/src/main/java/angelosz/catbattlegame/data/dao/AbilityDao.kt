@@ -21,7 +21,7 @@ interface AbilityDao {
     @Query("Select * from abilities where id = :id")
     suspend fun getAbilityById(id: Int): Ability
 
-    @Query("Select * from abilities" +
+    @Query("Select abilities.* from abilities" +
             " INNER JOIN cat_ability_crossref" +
             " ON abilities.id == cat_ability_crossref.abilityId" +
             " WHERE cat_ability_crossref.catId == :catId")
