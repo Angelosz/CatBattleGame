@@ -2,15 +2,14 @@ package angelosz.catbattlegame.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,21 +18,32 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun SmallDataCard(modifier: Modifier = Modifier, id: Int, name: String, @DrawableRes image: Int, onCardClicked: (Int) -> Unit){
-    Card(
-        modifier = modifier.shadow(2.dp, RoundedCornerShape(4.dp)),
-        onClick = { onCardClicked(id) }
+fun SmallDataCard(
+    modifier: Modifier = Modifier,
+    id: Int, name: String,
+    @DrawableRes image: Int,
+    onCardClicked: (Int) -> Unit,
+    imageSize: Int
+){
+    Box(modifier = modifier
+        .size(imageSize.dp),
+        contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(8.dp)
-        )
+        Card(
+            onClick = { onCardClicked(id) }
+        ) {
+            Image(
+                painter = painterResource(image),
+                contentDescription = name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
         Image(
-            painter = painterResource(image),
-            contentDescription = name,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(176.dp)
+            painter = painterResource(R.drawable.small_border_2),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxSize()
         )
     }
 }
@@ -47,6 +57,7 @@ fun CatSmallDataCardPreview(){
             id = 0,
             name = "Kitten Swordman",
             image = R.drawable.kitten_swordman_300x300,
-            onCardClicked = {})
+            onCardClicked = {},
+            imageSize = 128)
     }
 }
