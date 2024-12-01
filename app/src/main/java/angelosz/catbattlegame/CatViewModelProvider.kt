@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import angelosz.catbattlegame.ui.viewmodels.CatCollectionViewModel
 import angelosz.catbattlegame.ui.viewmodels.CatEncyclopediaViewModel
 
 object CatViewModelProvider {
@@ -12,6 +13,14 @@ object CatViewModelProvider {
             CatEncyclopediaViewModel(
                 getCatBattleApplication().container.catRepository,
                 getCatBattleApplication().container.abilityRepository
+            )
+        }
+
+        initializer {
+            CatCollectionViewModel(
+                getCatBattleApplication().container.catRepository,
+                getCatBattleApplication().container.abilityRepository,
+                getCatBattleApplication().container.playerRepository
             )
         }
     }
