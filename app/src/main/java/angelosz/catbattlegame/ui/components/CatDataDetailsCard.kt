@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -19,7 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,9 +40,9 @@ fun CatDataDetailsCard(
     ) {
     Card(
         modifier = modifier
-            .shadow(2.dp, RoundedCornerShape(8.dp)),
-        shape = RoundedCornerShape(8.dp)
-    ){
+            .fillMaxSize(),
+        shape = RectangleShape
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -59,7 +58,7 @@ fun CatDataDetailsCard(
                 contentDescription = catDetails.cat.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .height(300.dp),
             )
             Column(
                 modifier = Modifier.padding(16.dp)
@@ -76,7 +75,9 @@ fun CatDataDetailsCard(
                     modifier = Modifier.padding(4.dp)
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column() {
@@ -112,7 +113,7 @@ fun CatDataDetailsCard(
                                 text = "Rarity: ${catDetails.cat.rarity}",
                                 modifier = Modifier.padding(4.dp)
                             )
-                            if(catDetails.isElderOf.isNotBlank()){
+                            if (catDetails.isElderOf.isNotBlank()) {
                                 Text(
                                     text = "Elder Of: ${catDetails.isElderOf}",
                                     modifier = Modifier.padding(4.dp)
@@ -126,9 +127,11 @@ fun CatDataDetailsCard(
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surface
                     ),
-                    modifier = Modifier.padding(4.dp).fillMaxWidth()
-                ){
-                    if(catDetails.cat.evolutionLevel <= 30){
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                ) {
+                    if (catDetails.cat.evolutionLevel <= 30) {
                         Text(
                             text = "Evolves at level: ${catDetails.cat.evolutionLevel}",
                             modifier = Modifier.padding(top = 8.dp, start = 8.dp)
@@ -140,18 +143,20 @@ fun CatDataDetailsCard(
                     }
                 }
 
-                if(catDetails.abilities.isNotEmpty()){
+                if (catDetails.abilities.isNotEmpty()) {
                     Card(
                         colors = CardDefaults.cardColors(
                             containerColor = MaterialTheme.colorScheme.surface
                         ),
-                        modifier = Modifier.padding(4.dp).fillMaxWidth()
-                    ){
-                        for (ability in catDetails.abilities){
-                            Row (
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxWidth()
+                    ) {
+                        for (ability in catDetails.abilities) {
+                            Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.padding(8.dp)
-                            ){
+                            ) {
                                 Image(
                                     painter = painterResource(ability.icon),
                                     contentDescription = "${ability.name} ability icon",
@@ -175,7 +180,7 @@ fun CatDataDetailsCard(
 fun Preview_CatDataCard(){
     CatBattleGameTheme {
         CatDataDetailsCard(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier,
             CatDetailsData(
                 cat = Cat(
                     id = 1,
