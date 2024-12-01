@@ -163,11 +163,11 @@ private fun AddEncyclopediaNavigationRail(
     onBackPressed: () -> Unit,
 ) {
     CollectionNavigationRail(
-        uiState.collectionView,
+        modifier = Modifier.width(48.dp),
+        selectedView = uiState.collectionView,
         onTabPressed = { collectionView ->
             viewModel.updateCollectionView(collectionView)
         },
-        modifier = Modifier.width(48.dp),
         onBackPressed = {
             if (uiState.selectedCatData != null || uiState.selectedAbility != null) {
                 viewModel.deselectAllData()
@@ -186,7 +186,7 @@ private fun AddEncyclopediaBottomNavigationBar(
     onBackPressed: () -> Unit,
 ) {
     CollectionNavigationBottomBar(
-        uiState.collectionView,
+        selectedView = uiState.collectionView,
         onTabPressed = { collectionView ->
             viewModel.updateCollectionView(collectionView)
             viewModel.changeView(false)
@@ -220,7 +220,7 @@ private fun PortraitEncyclopediaCatsScreen(
             painter = painterResource(R.drawable.encyclopedia_portrait),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
         if(!isOnDetailsView){
             LazyVerticalGrid(
