@@ -16,4 +16,7 @@ interface CatDao {
 
     @Query("Select * from cats where id = :id")
     suspend fun getCatById(id: Int): Cat
+
+    @Query("Select * from cats where id in (:ids)")
+    suspend fun getCatsById(ids: List<Int>): List<Cat>
 }

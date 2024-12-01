@@ -7,5 +7,7 @@ interface CatRepository {
 
     suspend fun getCatById(id: Int): Cat
 
-    suspend fun InsertCats(cats: List<Cat>)
+    suspend fun insertCats(cats: List<Cat>)
+
+    suspend fun getCatsById(ids: List<Int>): List<Cat>
 }
