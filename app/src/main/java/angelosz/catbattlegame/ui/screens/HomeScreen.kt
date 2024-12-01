@@ -28,18 +28,20 @@ import angelosz.catbattlegame.R
 @Composable
 fun HomeScreen(
     windowSize: WindowWidthSizeClass,
-    navigateToEncyclopedia: () -> Unit
+    navigateToEncyclopedia: () -> Unit,
+    navigateToCollection: () -> Unit
 ) {
     if(windowSize == WindowWidthSizeClass.Expanded){
-        LandscapeHomeScreen(navigateToEncyclopedia,)
+        LandscapeHomeScreen(navigateToEncyclopedia, navigateToCollection)
     } else {
-        PortraitHomeScreen(navigateToEncyclopedia)
+        PortraitHomeScreen(navigateToEncyclopedia, navigateToCollection)
     }
 }
 
 @Composable
 private fun LandscapeHomeScreen(
     navigateToEncyclopedia: () -> Unit,
+    navigateToCollection: () -> Unit,
     ) {
     Box(modifier = Modifier
         .fillMaxSize(),
@@ -69,7 +71,7 @@ private fun LandscapeHomeScreen(
                 modifier = Modifier.padding(8.dp),
                 image = R.drawable.button_collection,
                 contentDescription = "Collection button",
-                onButtonClicked = {}
+                onButtonClicked = navigateToCollection
             )
             HomeButton(
                 modifier = Modifier.padding(8.dp),
@@ -82,7 +84,10 @@ private fun LandscapeHomeScreen(
 }
 
 @Composable
-private fun PortraitHomeScreen(navigateToEncyclopedia: () -> Unit) {
+private fun PortraitHomeScreen(
+    navigateToEncyclopedia: () -> Unit,
+    navigateToCollection: () -> Unit
+) {
     Box(modifier = Modifier
         .fillMaxSize(),
     ){
@@ -117,7 +122,7 @@ private fun PortraitHomeScreen(navigateToEncyclopedia: () -> Unit) {
                 modifier = Modifier.weight(0.1f),
                 image = R.drawable.button_collection,
                 contentDescription = "Collection button",
-                onButtonClicked = {}
+                onButtonClicked = navigateToCollection
             )
             HomeButton(
                 modifier = Modifier.weight(0.1f),

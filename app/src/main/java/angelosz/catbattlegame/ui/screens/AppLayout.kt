@@ -1,7 +1,6 @@
 package angelosz.catbattlegame.ui.screens
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,9 +13,7 @@ fun AppLayout(
     windowSize: WindowWidthSizeClass
 ){
     val navController = rememberNavController()
-    Text(
-        text = "Home"
-    )
+
     NavHost(
         navController = navController,
         startDestination = HomeScreenRoute,
@@ -26,11 +23,18 @@ fun AppLayout(
         composable<HomeScreenRoute> {
             HomeScreen(
                 windowSize = windowSize,
-                navigateToEncyclopedia = { navController.navigate(EncyclopediaScreenRoute) }
+                navigateToEncyclopedia = { navController.navigate(EncyclopediaScreenRoute) },
+                navigateToCollection = { navController.navigate(CollectionScreenRoute) }
             )
         }
         composable<EncyclopediaScreenRoute> {
             EncyclopediaScreen(
+                windowSize = windowSize,
+                onBackPressed = { navController.navigateUp() }
+            )
+        }
+        composable<CollectionScreenRoute> {
+            CollectionScreen(
                 windowSize = windowSize,
                 onBackPressed = { navController.navigateUp() }
             )
