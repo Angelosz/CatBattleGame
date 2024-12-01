@@ -7,3 +7,6 @@ object HomeScreenRoute
 
 @Serializable
 object EncyclopediaScreenRoute
+
+@Serializable
+object CollectionScreenRoute
