@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.PlayerDao
+import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 
@@ -15,4 +16,9 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun deleteOwnedCat(ownedCat: OwnedCat) = dao.deleteOwnedCat(ownedCat)
     override suspend fun getAllOwnedCats(): List<OwnedCat> = dao.getAllOwnedCats()
     override suspend fun getOwnedCatByCatId(catId: Int): OwnedCat = dao.getOwnedCatByCatId(catId)
+
+    /* Battle Chests */
+    override suspend fun insertBattleChest(battleChest: BattleChest) = dao.insertBattleChest(battleChest)
+    override suspend fun deleteBattleChest(battleChest: BattleChest) = dao.deleteBattleChest(battleChest)
+    override suspend fun getAllBattleChests(): List<BattleChest> = dao.getAllBattleChests()
 }
