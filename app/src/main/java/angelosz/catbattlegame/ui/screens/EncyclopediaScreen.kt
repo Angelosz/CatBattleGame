@@ -217,7 +217,7 @@ private fun PortraitEncyclopediaCatsScreen(
             .fillMaxSize(),
     ) {
         Image(
-            painter = painterResource(R.drawable.encyclopedia_portrait),
+            painter = painterResource(R.drawable.encyclopedia_portrait_blurry),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop,
@@ -266,7 +266,7 @@ private fun LandscapeEncyclopediaCatsScreen(
             .fillMaxSize(),
     ) {
         Image(
-            painter = painterResource(R.drawable.encyclopedia_landscape),
+            painter = painterResource(R.drawable.encyclopedia_landscape_blurry),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -317,7 +317,7 @@ private fun PortraitEncyclopediaAbilityScreen(
             .fillMaxSize(),
     ) {
         Image(
-            painter = painterResource(R.drawable.encyclopedia_portrait),
+            painter = painterResource(R.drawable.encyclopedia_portrait_blurry),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -368,7 +368,7 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
             .fillMaxSize(),
     ) {
         Image(
-            painter = painterResource(R.drawable.encyclopedia_landscape),
+            painter = painterResource(R.drawable.encyclopedia_landscape_blurry),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -379,7 +379,6 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
             LazyVerticalGrid(
                 modifier = Modifier.weight(1f),
                 columns = GridCells.FixedSize(128.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(abilities) { ability ->
                     SmallDataCard(
