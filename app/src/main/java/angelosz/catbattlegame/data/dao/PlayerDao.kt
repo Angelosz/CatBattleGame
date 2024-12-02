@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 
@@ -29,7 +30,16 @@ interface PlayerDao {
 
     @Query("Select * from player_owned_cat")
     suspend fun getAllOwnedCats(): List<OwnedCat>
-    @Query("Select * from player_owned_cat where id = :catId")
+    @Query("Select * from player_owned_cat where catId = :catId")
     suspend fun getOwnedCatByCatId(catId: Int): OwnedCat
 
+    /* Battle Chests */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBattleChest(battleChest: BattleChest)
+
+    @Delete
+    suspend fun deleteBattleChest(battleChest: BattleChest)
+
+    @Query("Select * from battle_chests")
+    suspend fun getAllBattleChests(): List<BattleChest>
 }
