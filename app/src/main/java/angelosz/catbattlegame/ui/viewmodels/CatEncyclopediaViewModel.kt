@@ -29,10 +29,10 @@ class CatEncyclopediaViewModel(
             fetchAllCatData()
             fetchAllAbilityData()
             if(catList.isNotEmpty()) {
-                fetchCatDetails(catList[0].id)
+                fetchCatDetails(catList.first().id)
             }
             if(abilityList.isNotEmpty()){
-                fetchAbilityData(abilityList[0].id)
+                fetchAbilityData(abilityList.first().id)
             }
         }
     }
