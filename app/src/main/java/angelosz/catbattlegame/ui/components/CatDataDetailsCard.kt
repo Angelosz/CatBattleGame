@@ -36,7 +36,10 @@ import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 @Composable
 fun CatDataDetailsCard(
     modifier: Modifier = Modifier,
-    catDetails: CatDetailsData
+    catDetails: CatDetailsData,
+    showExperienceBar: Boolean = false,
+    level: Int = 1,
+    experience: Int = 0
     ) {
     Card(
         modifier = modifier
@@ -63,6 +66,13 @@ fun CatDataDetailsCard(
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
+                if(showExperienceBar){
+                    ExperienceBar(
+                        level = level,
+                        experience = experience,
+                        showText = true
+                    )
+                }
                 Text(
                     text = catDetails.cat.description,
                     style = MaterialTheme.typography.bodyMedium,
@@ -100,7 +110,7 @@ fun CatDataDetailsCard(
                             )
 
                         }
-                        Column() {
+                        Column {
                             Text(
                                 text = "Base Attack: ${catDetails.cat.baseAttack}",
                                 modifier = Modifier.padding(4.dp)

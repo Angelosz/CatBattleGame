@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.screens
+package angelosz.catbattlegame.ui.encyclopedia
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
@@ -38,9 +38,7 @@ import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
 import angelosz.catbattlegame.ui.components.CatDataDetailsCard
 import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
 import angelosz.catbattlegame.ui.components.CollectionNavigationRail
-import angelosz.catbattlegame.ui.components.SmallDataCard
-import angelosz.catbattlegame.ui.viewmodels.CatEncyclopediaUiState
-import angelosz.catbattlegame.ui.viewmodels.CatEncyclopediaViewModel
+import angelosz.catbattlegame.ui.components.SmallImageCard
 
 @Composable
 fun EncyclopediaScreen(
@@ -49,7 +47,7 @@ fun EncyclopediaScreen(
 ){
     BackHandler( onBack = onBackPressed )
 
-    val viewModel: CatEncyclopediaViewModel = viewModel( factory = CatViewModelProvider.Factory )
+    val viewModel: EncyclopediaViewModel = viewModel( factory = CatViewModelProvider.Factory )
     val uiState by viewModel.uiState.collectAsState()
 
     val isLandscape = windowSize == WindowWidthSizeClass.Expanded
@@ -71,8 +69,8 @@ fun EncyclopediaScreen(
 
 @Composable
 private fun HandleEncyclopediaPortraitView(
-    uiState: CatEncyclopediaUiState,
-    viewModel: CatEncyclopediaViewModel,
+    uiState: EncyclopediaUiState,
+    viewModel: EncyclopediaViewModel,
     innerPadding: PaddingValues,
 ) {
     Column(
@@ -116,8 +114,8 @@ private fun HandleEncyclopediaPortraitView(
 
 @Composable
 private fun HandleEncyclopediaLandscapeView(
-    uiState: CatEncyclopediaUiState,
-    viewModel: CatEncyclopediaViewModel,
+    uiState: EncyclopediaUiState,
+    viewModel: EncyclopediaViewModel,
     onBackPressed: () -> Unit,
     innerPadding: PaddingValues,
 ) {
@@ -158,8 +156,8 @@ private fun HandleEncyclopediaLandscapeView(
 
 @Composable
 private fun AddEncyclopediaNavigationRail(
-    uiState: CatEncyclopediaUiState,
-    viewModel: CatEncyclopediaViewModel,
+    uiState: EncyclopediaUiState,
+    viewModel: EncyclopediaViewModel,
     onBackPressed: () -> Unit,
 ) {
     CollectionNavigationRail(
@@ -181,8 +179,8 @@ private fun AddEncyclopediaNavigationRail(
 
 @Composable
 private fun AddEncyclopediaBottomNavigationBar(
-    uiState: CatEncyclopediaUiState,
-    viewModel: CatEncyclopediaViewModel,
+    uiState: EncyclopediaUiState,
+    viewModel: EncyclopediaViewModel,
     onBackPressed: () -> Unit,
 ) {
     CollectionNavigationBottomBar(
@@ -228,7 +226,7 @@ private fun PortraitEncyclopediaCatsScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(cats) { cat ->
-                    SmallDataCard(
+                    SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = cat.id,
                         name = cat.name,
@@ -280,7 +278,7 @@ private fun LandscapeEncyclopediaCatsScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(cats) { cat ->
-                    SmallDataCard(
+                    SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = cat.id,
                         name = cat.name,
@@ -328,7 +326,7 @@ private fun PortraitEncyclopediaAbilityScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(abilities) { ability ->
-                    SmallDataCard(
+                    SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = ability.id,
                         name = ability.name,
@@ -381,7 +379,7 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
                 columns = GridCells.FixedSize(128.dp),
             ) {
                 items(abilities) { ability ->
-                    SmallDataCard(
+                    SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = ability.id,
                         name = ability.name,
