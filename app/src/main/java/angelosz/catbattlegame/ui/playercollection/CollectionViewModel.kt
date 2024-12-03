@@ -22,7 +22,7 @@ class CollectionViewModel(
     = MutableStateFlow(CollectionUiState())
     val uiState: StateFlow<CollectionUiState> = _uiState
 
-    val smallCardData = _uiState.value.smallCardsData
+    private val smallCardData = _uiState.value.smallCardsData
 
     init {
         viewModelScope.launch {
