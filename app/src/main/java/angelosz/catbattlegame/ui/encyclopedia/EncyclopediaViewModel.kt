@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.viewmodels
+package angelosz.catbattlegame.ui.encyclopedia
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,14 +11,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CatEncyclopediaViewModel(
+class EncyclopediaViewModel(
     val catRepository: CatRepository,
     val abilityRepository: AbilityRepository
 ): ViewModel() {
-    private val _uiState: MutableStateFlow<CatEncyclopediaUiState> = MutableStateFlow(
-        CatEncyclopediaUiState()
+    private val _uiState: MutableStateFlow<EncyclopediaUiState> = MutableStateFlow(
+        EncyclopediaUiState()
     )
-    val uiState: StateFlow<CatEncyclopediaUiState> = _uiState
+    val uiState: StateFlow<EncyclopediaUiState> = _uiState
 
     private val catList = _uiState.value.cats
     private val abilityList = _uiState.value.abilities

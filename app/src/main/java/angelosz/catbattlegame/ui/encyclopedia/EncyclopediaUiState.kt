@@ -1,11 +1,11 @@
-package angelosz.catbattlegame.ui.viewmodels
+package angelosz.catbattlegame.ui.encyclopedia
 
 import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.Cat
 
-data class CatEncyclopediaUiState(
+data class EncyclopediaUiState(
     val cats: List<Cat> = emptyList(),
     val abilities: List<Ability> = emptyList(),
     val selectedCatData: CatDetailsData? = null,
