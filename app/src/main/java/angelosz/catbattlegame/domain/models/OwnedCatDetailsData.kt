@@ -8,5 +8,6 @@ data class OwnedCatDetailsData(
     val abilities: List<Ability>,
     val level: Int,
     val experience: Int,
-    val evolutionCat: Pair<Int, String>?
+    val evolutionCat: Pair<Int, String>?,
+    val isElderOf: Pair<Int, String>?
 )
