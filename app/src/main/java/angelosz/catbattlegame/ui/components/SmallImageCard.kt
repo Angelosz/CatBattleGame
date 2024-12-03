@@ -18,12 +18,13 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun SmallDataCard(
+fun SmallImageCard(
     modifier: Modifier = Modifier,
     id: Int, name: String,
     @DrawableRes image: Int,
     onCardClicked: (Int) -> Unit,
-    imageSize: Int
+    imageSize: Int,
+    showBorder: Boolean = true
 ){
     Box(modifier = modifier
         .size(imageSize.dp),
@@ -39,12 +40,14 @@ fun SmallDataCard(
                 modifier = Modifier.fillMaxSize()
             )
         }
-        Image(
-            painter = painterResource(R.drawable.small_border_2),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
+        if(showBorder){
+            Image(
+                painter = painterResource(R.drawable.small_border_2),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
 
@@ -52,12 +55,13 @@ fun SmallDataCard(
 @Composable
 fun CatSmallDataCardPreview(){
     CatBattleGameTheme {
-        SmallDataCard(
+        SmallImageCard(
             modifier = Modifier.padding(8.dp),
             id = 0,
             name = "Kitten Swordman",
             image = R.drawable.kitten_swordman_300x300,
             onCardClicked = {},
-            imageSize = 128)
+            imageSize = 128
+            )
     }
 }
