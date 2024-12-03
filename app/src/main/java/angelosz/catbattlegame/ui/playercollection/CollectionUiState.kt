@@ -1,9 +1,9 @@
-package angelosz.catbattlegame.ui.viewmodels
+package angelosz.catbattlegame.ui.playercollection
 
 import angelosz.catbattlegame.domain.models.CollectionSmallCardData
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 
-data class CatCollectionUiState(
+data class CollectionUiState(
     val smallCardsData: List<CollectionSmallCardData> = listOf(),
     val selectedCat: OwnedCatDetailsData? = null,
     val isDetailView: Boolean = false

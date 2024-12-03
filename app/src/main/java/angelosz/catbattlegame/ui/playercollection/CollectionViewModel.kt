@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.viewmodels
+package angelosz.catbattlegame.ui.playercollection
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CatCollectionViewModel(
+class CollectionViewModel(
     val catRepository: CatRepository,
     val abilityRepository: AbilityRepository,
     val playerAccountRepository: PlayerAccountRepository
 ): ViewModel() {
-    private val _uiState: MutableStateFlow<CatCollectionUiState>
-    = MutableStateFlow(CatCollectionUiState())
-    val uiState: StateFlow<CatCollectionUiState> = _uiState
+    private val _uiState: MutableStateFlow<CollectionUiState>
+    = MutableStateFlow(CollectionUiState())
+    val uiState: StateFlow<CollectionUiState> = _uiState
 
     val smallCardData = _uiState.value.smallCardsData
 

@@ -36,14 +36,13 @@ import angelosz.catbattlegame.ui.components.CatDataDetailsCard
 import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
 import angelosz.catbattlegame.ui.components.CollectionNavigationRail
 import angelosz.catbattlegame.ui.components.SmallImageCardWithExperienceBar
-import angelosz.catbattlegame.ui.viewmodels.CatCollectionViewModel
 
 @Composable
 fun CollectionScreen(
     windowSize: WindowWidthSizeClass,
     onBackPressed: () -> Unit
 ){
-    val viewModel: CatCollectionViewModel = viewModel(factory = CatViewModelProvider.Factory)
+    val viewModel: CollectionViewModel = viewModel(factory = CatViewModelProvider.Factory)
     val uiState = viewModel.uiState.collectAsState()
 
     val smallCardsData = uiState.value.smallCardsData
