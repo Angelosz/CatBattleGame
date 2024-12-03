@@ -68,6 +68,9 @@ class CatCollectionViewModel(
                 level = ownedCatData.level,
                 evolutionCat = cat.nextEvolutionId?.let { evolution ->
                     Pair(evolution, catRepository.getCatById(evolution).name)
+                },
+                isElderOf = cat.isElderOf?.let { adultCatId ->
+                    Pair(adultCatId, catRepository.getCatById(adultCatId).name)
                 }
             ))
         }
