@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.models.CollectionNavigationItem
-import angelosz.catbattlegame.domain.models.collectionNavigationItems
+import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
 
 @Composable
 fun CollectionNavigationRail(
@@ -17,7 +17,7 @@ fun CollectionNavigationRail(
     selectedView: CollectionView,
     onTabPressed: (CollectionView) -> Unit,
     onBackPressed: () -> Unit,
-    items: List<CollectionNavigationItem> = collectionNavigationItems
+    items: List<CollectionNavigationItem> = encyclopediaNavigationItems
 ){
     NavigationRail(modifier = modifier){
         NavigationRailItem(
