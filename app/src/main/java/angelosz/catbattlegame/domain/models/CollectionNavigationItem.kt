@@ -12,15 +12,27 @@ data class CollectionNavigationItem(
     val text: String
 )
 
-val collectionNavigationItems = listOf(
-    CollectionNavigationItem(
-        CollectionView.CATS,
-        Icons.Filled.Face,
-        text = "Cats"
-    ),
-    CollectionNavigationItem(
-        CollectionView.ABILITIES,
-        Icons.Filled.Star,
-        text = "Abilities"
+val encyclopediaNavigationItems by lazy {
+    listOf(
+        CollectionNavigationItem(
+            CollectionView.CATS,
+            Icons.Filled.Face,
+            text = "Cats"
+        ),
+        CollectionNavigationItem(
+            CollectionView.ABILITIES,
+            Icons.Filled.Star,
+            text = "Abilities"
+        )
     )
-)
+}
+
+val collectionNavigationItems by lazy {
+    listOf(
+        CollectionNavigationItem(
+            CollectionView.CATS,
+            Icons.Filled.Face,
+            text = "Cats"
+        )
+    )
+}
