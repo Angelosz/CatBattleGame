@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.screens
+package angelosz.catbattlegame.navigation
 
 import kotlinx.serialization.Serializable
 
