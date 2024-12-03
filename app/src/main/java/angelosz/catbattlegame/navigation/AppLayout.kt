@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.screens
+package angelosz.catbattlegame.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -7,6 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import angelosz.catbattlegame.ui.playercollection.CollectionScreen
+import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaScreen
+import angelosz.catbattlegame.ui.home.HomeScreen
 
 @Composable
 fun AppLayout(
