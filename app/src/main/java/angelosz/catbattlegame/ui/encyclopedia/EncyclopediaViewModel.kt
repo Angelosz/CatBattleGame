@@ -15,9 +15,8 @@ class EncyclopediaViewModel(
     val catRepository: CatRepository,
     val abilityRepository: AbilityRepository
 ): ViewModel() {
-    private val _uiState: MutableStateFlow<EncyclopediaUiState> = MutableStateFlow(
-        EncyclopediaUiState()
-    )
+    private val _uiState: MutableStateFlow<EncyclopediaUiState>
+    = MutableStateFlow(EncyclopediaUiState())
     val uiState: StateFlow<EncyclopediaUiState> = _uiState
 
     private val catList = _uiState.value.cats

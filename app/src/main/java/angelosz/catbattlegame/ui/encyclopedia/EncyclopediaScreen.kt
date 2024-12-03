@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -32,6 +31,7 @@ import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.models.CatDetailsData
+import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.Cat
 import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
@@ -45,24 +45,51 @@ fun EncyclopediaScreen(
     windowSize: WindowWidthSizeClass,
     onBackPressed: () -> Unit
 ){
-    BackHandler( onBack = onBackPressed )
+
 
     val viewModel: EncyclopediaViewModel = viewModel( factory = CatViewModelProvider.Factory )
     val uiState by viewModel.uiState.collectAsState()
 
-    val isLandscape = windowSize == WindowWidthSizeClass.Expanded
+    val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
+
+    val onBackWasPressed = {
+        if(uiState.onDetailsView) {
+            viewModel.changeView(toDetailView = false)
+        } else {
+            onBackPressed()
+        }
+    }
+
+    BackHandler( onBack = onBackWasPressed )
 
     Scaffold(
         bottomBar = {
-            if (!isLandscape) {
-                AddEncyclopediaBottomNavigationBar(uiState, viewModel, onBackPressed)
+            if (isPortraitView) {
+                CollectionNavigationBottomBar(
+                    selectedView = uiState.collectionView,
+                    onTabPressed = { collectionView ->
+                        viewModel.updateCollectionView(collectionView)
+                        viewModel.changeView(false)
+                    },
+                    onBackPressed = onBackWasPressed,
+                    items = encyclopediaNavigationItems,
+                )
             }
         }
     ) { innerPadding ->
-        if(isLandscape){
-            HandleEncyclopediaLandscapeView(uiState, viewModel, onBackPressed, innerPadding)
+        if(isPortraitView){
+            HandleEncyclopediaPortraitView(
+                uiState = uiState,
+                viewModel = viewModel,
+                innerPadding = innerPadding
+            )
         } else {
-            HandleEncyclopediaPortraitView(uiState, viewModel, innerPadding,)
+            HandleEncyclopediaLandscapeView(
+                uiState = uiState,
+                viewModel = viewModel,
+                innerPadding = innerPadding,
+                onBackPressed = onBackWasPressed
+            )
         }
     }
 }
@@ -88,10 +115,8 @@ private fun HandleEncyclopediaPortraitView(
                         viewModel.changeView(toDetailView = true)
                     },
                     isOnDetailsView = uiState.onDetailsView,
-                    onDetailsBackClicked = { viewModel.changeView(toDetailView = false) }
                 )
             }
-
             CollectionView.ABILITIES -> {
                 PortraitEncyclopediaAbilityScreen(
                     modifier = Modifier.padding(innerPadding),
@@ -102,11 +127,9 @@ private fun HandleEncyclopediaPortraitView(
                         viewModel.changeView(toDetailView = true)
                     },
                     isOnDetailsView = uiState.onDetailsView,
-                    onDetailsBackClicked = { viewModel.changeView(toDetailView = false) }
 
                 )
             }
-
             CollectionView.ITEMS -> Text("No items yet :(")
         }
     }
@@ -123,7 +146,14 @@ private fun HandleEncyclopediaLandscapeView(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
     ) {
-        AddEncyclopediaNavigationRail(uiState, viewModel, onBackPressed)
+        CollectionNavigationRail(
+            selectedView = uiState.collectionView,
+            onTabPressed = { collection ->
+                viewModel.updateCollectionView(collection)
+            },
+            onBackPressed = onBackPressed,
+            items = encyclopediaNavigationItems
+        )
 
         when (uiState.collectionView) {
             CollectionView.CATS -> {
@@ -155,60 +185,12 @@ private fun HandleEncyclopediaLandscapeView(
 }
 
 @Composable
-private fun AddEncyclopediaNavigationRail(
-    uiState: EncyclopediaUiState,
-    viewModel: EncyclopediaViewModel,
-    onBackPressed: () -> Unit,
-) {
-    CollectionNavigationRail(
-        modifier = Modifier.width(48.dp),
-        selectedView = uiState.collectionView,
-        onTabPressed = { collectionView ->
-            viewModel.updateCollectionView(collectionView)
-        },
-        onBackPressed = {
-            if (uiState.selectedCatData != null || uiState.selectedAbility != null) {
-                viewModel.deselectAllData()
-                viewModel.changeView(false)
-            } else {
-                onBackPressed()
-            }
-        }
-    )
-}
-
-@Composable
-private fun AddEncyclopediaBottomNavigationBar(
-    uiState: EncyclopediaUiState,
-    viewModel: EncyclopediaViewModel,
-    onBackPressed: () -> Unit,
-) {
-    CollectionNavigationBottomBar(
-        selectedView = uiState.collectionView,
-        onTabPressed = { collectionView ->
-            viewModel.updateCollectionView(collectionView)
-            viewModel.changeView(false)
-        },
-        onBackPressed = {
-            if (uiState.onDetailsView) {
-                viewModel.changeView(false)
-            } else {
-                onBackPressed()
-            }
-        },
-        modifier = Modifier.height(84.dp)
-    )
-}
-
-
-@Composable
 private fun PortraitEncyclopediaCatsScreen(
     modifier: Modifier = Modifier,
     cats: List<Cat>,
     catDetails: CatDetailsData?,
     onCardClicked: (Int) -> Unit,
     isOnDetailsView: Boolean,
-    onDetailsBackClicked: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -237,17 +219,15 @@ private fun PortraitEncyclopediaCatsScreen(
                 }
             }
         } else {
-            catDetails?.let{CatDataDetailsCard(
-                modifier = Modifier.padding(16.dp),
-                catDetails = catDetails
+            catDetails?.let{
+                CatDataDetailsCard(
+                    modifier = Modifier.padding(16.dp),
+                    catDetails = catDetails
             )} ?: Text(
                 text = "No cat selected :(",
                 color = Color.White,
                 style = MaterialTheme.typography.displayLarge
             )
-            BackHandler {
-                onDetailsBackClicked()
-            }
         }
     }
 }
@@ -308,7 +288,6 @@ private fun PortraitEncyclopediaAbilityScreen(
     abilityData: Ability?,
     onCardClicked: (Int) -> Unit,
     isOnDetailsView: Boolean,
-    onDetailsBackClicked: () -> Unit
 ){
     Box(
         modifier = modifier
@@ -348,9 +327,6 @@ private fun PortraitEncyclopediaAbilityScreen(
                 color = Color.White,
                 style = MaterialTheme.typography.displayLarge
             )
-            BackHandler {
-                onDetailsBackClicked()
-            }
         }
     }
 }
@@ -401,6 +377,3 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
         }
     }
 }
-
-
-

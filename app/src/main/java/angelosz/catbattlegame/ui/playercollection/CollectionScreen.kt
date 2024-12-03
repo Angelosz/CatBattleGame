@@ -4,12 +4,11 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -20,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -43,57 +43,44 @@ fun CollectionScreen(
     onBackPressed: () -> Unit
 ){
     val viewModel: CollectionViewModel = viewModel(factory = CatViewModelProvider.Factory)
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
-    val smallCardsData = uiState.value.smallCardsData
-    val selectedCat = uiState.value.selectedCat
-    val isDetailView = uiState.value.isDetailView
     val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
+
     val onBackWasPressed = {
-        if(isDetailView) {
-            viewModel.deselectCat()
+        if(uiState.isDetailView) {
             viewModel.changeView(toDetailView = false)
         } else {
             onBackPressed()
         }
     }
 
-    BackHandler { onBackWasPressed() }
+    BackHandler(onBack = onBackWasPressed)
 
     Scaffold(
         bottomBar = {
             if(isPortraitView){
                 CollectionNavigationBottomBar(
                     selectedView = CollectionView.CATS,
-                    onTabPressed = {},
+                    onTabPressed = {  },
                     onBackPressed = onBackWasPressed,
                     items = collectionNavigationItems,
-                    modifier = Modifier.height(84.dp)
                 )
             }
         }
     ){ innerPadding ->
         if(isPortraitView) {
             HandleCollectionPortraitView(
-                cats = smallCardsData,
-                selectedCat = selectedCat,
-                isDetailView = isDetailView,
-                onCardClicked = { id ->
-                    viewModel.selectCat( id )
-                    viewModel.changeView( toDetailView = true )
-                },
-                innerPadding = innerPadding
+                viewModel = viewModel,
+                uiState = uiState,
+                innerPadding = innerPadding,
             )
         } else {
             HandleCollectionLandscapeView(
-                cats = smallCardsData,
-                selectedCat = selectedCat,
-                onCardClicked = { id ->
-                    viewModel.selectCat( id )
-                    viewModel.changeView( toDetailView = true )
-                },
-                onBackPressed = onBackWasPressed,
+                viewModel = viewModel,
+                uiState = uiState,
                 innerPadding = innerPadding,
+                onBackWasPressed = onBackWasPressed
             )
         }
     }
@@ -102,14 +89,80 @@ fun CollectionScreen(
 
 @Composable
 private fun HandleCollectionPortraitView(
+    innerPadding: PaddingValues,
+    uiState: CollectionUiState,
+    viewModel: CollectionViewModel
+) {
+    Column(
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        when(uiState.collectionView){
+            CollectionView.CATS -> {
+                CatCollectionPortraitView(
+                    cats = uiState.smallCardsData,
+                    selectedCat = uiState.selectedCat,
+                    onCardClicked = { id ->
+                        viewModel.selectCat( id )
+                        viewModel.changeView( toDetailView = true )
+                    },
+                    isDetailView = uiState.isDetailView,
+                    modifier = Modifier.padding(innerPadding),
+                )
+            }
+            else -> {
+
+            }
+        }
+    }
+}
+
+@Composable
+private fun HandleCollectionLandscapeView(
+    innerPadding: PaddingValues,
+    uiState: CollectionUiState,
+    viewModel: CollectionViewModel,
+    onBackWasPressed: () -> Unit
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        CollectionNavigationRail(
+            selectedView = CollectionView.CATS,
+            items = collectionNavigationItems,
+            onTabPressed = { },
+            onBackPressed = onBackWasPressed,
+        )
+        when(uiState.collectionView){
+            CollectionView.CATS -> {
+                CatCollectionLandscapeView(
+                    cats = uiState.smallCardsData,
+                    selectedCat = uiState.selectedCat,
+                    onCardClicked = { id ->
+                        viewModel.selectCat( id )
+                        viewModel.changeView( toDetailView = true )
+                    },
+                    innerPadding = innerPadding,
+                )
+            }
+            else -> {
+
+            }
+        }
+    }
+}
+
+@Composable
+fun CatCollectionPortraitView(
     cats: List<CollectionSmallCardData>,
     selectedCat: OwnedCatDetailsData?,
     onCardClicked: (Int) -> Unit,
     isDetailView: Boolean,
-    innerPadding: PaddingValues
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().padding(innerPadding),
+        modifier = modifier.fillMaxSize(),
     ) {
         Image(
             painter = painterResource(R.drawable.player_collection_portrait_blurry),
@@ -121,7 +174,7 @@ private fun HandleCollectionPortraitView(
             selectedCat?.let { ownedCat ->
                 CatDataDetailsCard(
                     catDetails = CatDetailsData(
-                            cat = ownedCat.cat,
+                        cat = ownedCat.cat,
                         abilities = ownedCat.abilities,
                         nextEvolutionName = ownedCat.evolutionCat?.second ?: "",
                         isElderOf = ownedCat.isElderOf?.second ?: ""
@@ -135,13 +188,12 @@ private fun HandleCollectionPortraitView(
                 ?: Text( text = "No cat selected")
         } else {
             LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier
-                    .fillMaxWidth()
+                columns = GridCells.FixedSize(160.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 items(cats) { data ->
                     SmallImageCardWithExperienceBar(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.padding(8.dp),
                         id = data.id,
                         name = "",
                         image = data.image,
@@ -157,12 +209,11 @@ private fun HandleCollectionPortraitView(
 }
 
 @Composable
-private fun HandleCollectionLandscapeView(
+fun CatCollectionLandscapeView(
     cats: List<CollectionSmallCardData>,
     selectedCat: OwnedCatDetailsData?,
     onCardClicked: (Int) -> Unit,
     innerPadding: PaddingValues,
-    onBackPressed: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -177,13 +228,6 @@ private fun HandleCollectionLandscapeView(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxSize()
         ) {
-            CollectionNavigationRail(
-                modifier = Modifier.width(48.dp),
-                selectedView = CollectionView.CATS,
-                items = collectionNavigationItems,
-                onTabPressed = {},
-                onBackPressed = onBackPressed,
-            )
             Row(
                 modifier = Modifier
                     .fillMaxSize()
@@ -197,7 +241,7 @@ private fun HandleCollectionLandscapeView(
                 ) {
                     items(cats) { data ->
                         SmallImageCardWithExperienceBar(
-                            modifier = Modifier,
+                            modifier = Modifier.padding(8.dp),
                             id = data.id,
                             name = "",
                             image = data.image,
