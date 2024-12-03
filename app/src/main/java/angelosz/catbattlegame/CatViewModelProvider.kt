@@ -5,12 +5,12 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import angelosz.catbattlegame.ui.viewmodels.CatCollectionViewModel
-import angelosz.catbattlegame.ui.viewmodels.CatEncyclopediaViewModel
+import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaViewModel
 
 object CatViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            CatEncyclopediaViewModel(
+            EncyclopediaViewModel(
                 getCatBattleApplication().container.catRepository,
                 getCatBattleApplication().container.abilityRepository
             )
