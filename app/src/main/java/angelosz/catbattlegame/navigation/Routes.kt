@@ -12,4 +12,4 @@ object EncyclopediaScreenRoute
 object CollectionScreenRoute
 
 @Serializable
-object BattleChestsOpeningScreenRoute
+object BattleChestsScreenRoute
