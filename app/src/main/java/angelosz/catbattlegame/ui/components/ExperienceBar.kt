@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import angelosz.catbattlegame.GameConstants.XP_PER_LEVEL
+import angelosz.catbattlegame.utils.GameConstants.XP_PER_LEVEL
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
