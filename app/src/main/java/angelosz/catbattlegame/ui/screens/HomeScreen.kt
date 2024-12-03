@@ -31,68 +31,14 @@ fun HomeScreen(
     navigateToEncyclopedia: () -> Unit,
     navigateToCollection: () -> Unit
 ) {
-    if(windowSize == WindowWidthSizeClass.Expanded){
-        LandscapeHomeScreen(navigateToEncyclopedia, navigateToCollection)
-    } else {
-        PortraitHomeScreen(navigateToEncyclopedia, navigateToCollection)
-    }
-}
+    val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
+    val background = if(isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape
 
-@Composable
-private fun LandscapeHomeScreen(
-    navigateToEncyclopedia: () -> Unit,
-    navigateToCollection: () -> Unit,
-    ) {
     Box(modifier = Modifier
         .fillMaxSize(),
     ){
         Image(
-            painter = painterResource(R.drawable.homescreen_landscape),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Image(
-                painter = painterResource(R.mipmap.ic_launcher_foreground),
-                contentDescription = "",
-                modifier = Modifier.size(192.dp)
-            )
-            HomeButton(
-                modifier = Modifier.padding(8.dp),
-                image = R.drawable.button_play,
-                contentDescription = "Play button",
-                onButtonClicked = {}
-            )
-            HomeButton(
-                modifier = Modifier.padding(8.dp),
-                image = R.drawable.button_collection,
-                contentDescription = "Collection button",
-                onButtonClicked = navigateToCollection
-            )
-            HomeButton(
-                modifier = Modifier.padding(8.dp),
-                image = R.drawable.button_encyclopedia,
-                contentDescription = "Encyclopedia button",
-                onButtonClicked = navigateToEncyclopedia
-            )
-        }
-    }
-}
-
-@Composable
-private fun PortraitHomeScreen(
-    navigateToEncyclopedia: () -> Unit,
-    navigateToCollection: () -> Unit
-) {
-    Box(modifier = Modifier
-        .fillMaxSize(),
-    ){
-        Image(
-            painter = painterResource(R.drawable.homescreen_portrait),
+            painter = painterResource(background),
             contentDescription = "",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -102,35 +48,30 @@ private fun PortraitHomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
-
-            Image(
-                painter = painterResource(R.mipmap.ic_launcher_foreground),
-                contentDescription = "",
-                modifier = Modifier.fillMaxSize().weight(0.2f),
-            )
-
-            Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
-
-            HomeButton(
-                modifier = Modifier.weight(0.1f),
-                image = R.drawable.button_play,
-                contentDescription = "Play button",
-                onButtonClicked = {}
-            )
-            HomeButton(
-                modifier = Modifier.weight(0.1f),
-                image = R.drawable.button_collection,
-                contentDescription = "Collection button",
-                onButtonClicked = navigateToCollection
-            )
-            HomeButton(
-                modifier = Modifier.weight(0.1f),
-                image = R.drawable.button_encyclopedia,
-                contentDescription = "Encyclopedia button",
-                onButtonClicked = navigateToEncyclopedia
-            )
-            Spacer(modifier = Modifier.fillMaxSize().weight(0.1f))
+            if(isPortraitView){
+                Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
+                Image(
+                    painter = painterResource(R.mipmap.ic_launcher_foreground),
+                    contentDescription = "",
+                    modifier = Modifier.fillMaxSize().weight(0.2f),
+                )
+                Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
+                HomeButtons(
+                    navigateToCollection = navigateToCollection,
+                    navigateToEncyclopedia = navigateToEncyclopedia
+                )
+                Spacer(modifier = Modifier.fillMaxSize().weight(0.1f))
+            } else {
+                Image(
+                    painter = painterResource(R.mipmap.ic_launcher_foreground),
+                    contentDescription = "",
+                    modifier = Modifier.size(192.dp)
+                )
+                HomeButtons(
+                    navigateToCollection = navigateToCollection,
+                    navigateToEncyclopedia = navigateToEncyclopedia
+                )
+            }
         }
     }
 }
@@ -159,4 +100,29 @@ private fun HomeButton(
             modifier = Modifier.fillMaxSize()
         )
     }
+}
+
+@Composable
+private fun HomeButtons(
+    navigateToCollection: () -> Unit,
+    navigateToEncyclopedia: () -> Unit
+) {
+    HomeButton(
+        modifier = Modifier.padding(8.dp),
+        image = R.drawable.button_play,
+        contentDescription = "Play button",
+        onButtonClicked = {}
+    )
+    HomeButton(
+        modifier = Modifier.padding(8.dp),
+        image = R.drawable.button_collection,
+        contentDescription = "Collection button",
+        onButtonClicked = navigateToCollection
+    )
+    HomeButton(
+        modifier = Modifier.padding(8.dp),
+        image = R.drawable.button_encyclopedia,
+        contentDescription = "Encyclopedia button",
+        onButtonClicked = navigateToEncyclopedia
+    )
 }
