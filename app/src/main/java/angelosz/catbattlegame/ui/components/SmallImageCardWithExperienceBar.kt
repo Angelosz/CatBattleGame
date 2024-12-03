@@ -1,8 +1,8 @@
 package angelosz.catbattlegame.ui.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,7 +12,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun CollectionSmallCard(
+fun SmallImageCardWithExperienceBar(
     modifier: Modifier = Modifier,
     id: Int,
     name: String,
@@ -24,10 +24,11 @@ fun CollectionSmallCard(
 ) {
     Box(
         modifier = modifier
-            .size(imageSize.dp)
+            .width(imageSize.dp)
+            .height((imageSize + 16).dp)
     ){
-        SmallDataCard(
-            modifier = Modifier.padding(8.dp),
+        SmallImageCard(
+            modifier = Modifier,
             id = id,
             name = name,
             onCardClicked = onCardClicked,
@@ -46,7 +47,7 @@ fun CollectionSmallCard(
 @Composable
 fun CollectionSmallCardPreview(){
     CatBattleGameTheme {
-        CollectionSmallCard(
+        SmallImageCardWithExperienceBar(
             id = 21,
             name = "Kitten Rogue",
             onCardClicked = {},
