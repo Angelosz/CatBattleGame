@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import angelosz.catbattlegame.ui.playercollection.CollectionViewModel
+import angelosz.catbattlegame.ui.battlechests.BattleChestsViewModel
 import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaViewModel
+import angelosz.catbattlegame.ui.playercollection.CollectionViewModel
 
 object CatViewModelProvider {
     val Factory = viewModelFactory {
@@ -20,6 +21,13 @@ object CatViewModelProvider {
             CollectionViewModel(
                 getCatBattleApplication().container.catRepository,
                 getCatBattleApplication().container.abilityRepository,
+                getCatBattleApplication().container.playerRepository
+            )
+        }
+
+        initializer {
+            BattleChestsViewModel(
+                getCatBattleApplication().container.catRepository,
                 getCatBattleApplication().container.playerRepository
             )
         }
