@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "player_owned_cat")
 data class OwnedCat(
-    @PrimaryKey
-    val id: Int = 1,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val catId: Int,
     val healthModifier: Int = 0,
     val attackModifier: Int = 0,
