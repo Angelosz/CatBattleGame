@@ -1,12 +1,11 @@
 package angelosz.catbattlegame.domain.enums
 
-enum class CatRarity(private val displayName: String) {
-    KITTEN("Kitten"),
-    TEEN("Teen"),
-    ADULT("Adult"),
-    ELDER("Elder");
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 
-    override fun toString(): String {
-        return displayName
-    }
+enum class CatRarity(@StringRes val res: Int) {
+    KITTEN(R.string.kitten),
+    TEEN(R.string.teen),
+    ADULT(R.string.adult),
+    ELDER(R.string.elder);
 }

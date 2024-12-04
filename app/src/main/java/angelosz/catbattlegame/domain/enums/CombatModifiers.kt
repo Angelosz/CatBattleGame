@@ -1,13 +1,12 @@
 package angelosz.catbattlegame.domain.enums
 
-enum class CombatModifiers(private val displayName: String){
-    SLOWED("Slowed"),
-    STUNNED("Stunned"),
-    POISONED("Poisoned"),
-    CLEANSED("Cleansed"),
-    SHIELDED("Shielded");
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 
-    override fun toString(): String {
-        return displayName
-    }
+enum class CombatModifiers(@StringRes val res: Int){
+    SLOWED(R.string.combatmodifier_slowed),
+    STUNNED(R.string.combatmodifier_stunned),
+    POISONED(R.string.combatmodifier_poisoned),
+    CLEANSED(R.string.combatmodifier_cleansed),
+    SHIELDED(R.string.combatmodifier_shielded);
 }

@@ -1,16 +1,15 @@
 package angelosz.catbattlegame.domain.enums
 
-enum class AbilityType(private val displayName: String) {
-    BLUNT("Blunt"),
-    PIERCING("Piercing"),
-    HEROIC("Heroic"),
-    ELEMENTAL("Elemental"),
-    ETHEREAL("Ethereal"),
-    HEALING("Healing"),
-    NORMAL("Normal"),
-    STATUS_CHANGING("Status changing");
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 
-    override fun toString(): String {
-        return displayName
-    }
+enum class AbilityType(@StringRes val res: Int) {
+    BLUNT(R.string.abilitytype_blunt),
+    PIERCING(R.string.abilitytype_piercing),
+    HEROIC(R.string.abilitytype_heroic),
+    ELEMENTAL(R.string.abilitytype_elemental),
+    ETHEREAL(R.string.abilitytype_ethereal),
+    HEALING(R.string.abilitytype_healing),
+    NORMAL(R.string.abilitytype_normal),
+    STATUS_CHANGING(R.string.abilitytype_status_changing);
 }

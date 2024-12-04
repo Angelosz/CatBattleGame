@@ -1,13 +1,12 @@
 package angelosz.catbattlegame.domain.enums
 
-enum class CatRole(private val displayName: String) {
-    WARRIOR("Warrior"),
-    ASSASSIN("Assassin"),
-    MAGE("Mage"),
-    HEALER("Healer"),
-    DEFENDER("Defender");
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 
-    override fun toString(): String {
-        return displayName
-    }
+enum class CatRole(@StringRes val res: Int) {
+    WARRIOR(R.string.catrole_warrior),
+    ASSASSIN(R.string.catrole_assassin),
+    MAGE(R.string.catrole_mage),
+    HEALER(R.string.catrole_healer),
+    DEFENDER(R.string.catrole_defender);
 }

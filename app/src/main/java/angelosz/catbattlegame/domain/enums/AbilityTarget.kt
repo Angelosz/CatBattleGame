@@ -1,12 +1,11 @@
 package angelosz.catbattlegame.domain.enums
 
-enum class AbilityTarget(private val displayName: String){
-    SINGLE_ENEMY("Single enemy"),
-    ENEMY_TEAM("Enemy team"),
-    ALLY("Ally"),
-    TEAM("Team");
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 
-    override fun toString(): String {
-        return displayName
-    }
+enum class AbilityTarget(@StringRes val res: Int){
+    SINGLE_ENEMY(R.string.abilitytarget_single_enemy),
+    ENEMY_TEAM(R.string.abilitytarget_enemy_team),
+    ALLY(R.string.abilitytarget_ally),
+    TEAM(R.string.abilitytarget_team);
 }
