@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
@@ -65,13 +66,13 @@ fun CatAbilityDetailsCard(modifier: Modifier = Modifier, ability: Ability){
                     text = "Attack speed multiplier: ${ability.attackSpeedMultiplier}"
                 )
                 Text(
-                    text = "Combat Modifier: ${ability.combatModifier ?: "None"}"
+                    text = "Combat Modifier: ${ability.combatModifier?.res?.let { stringResource(it) } ?: "None"}"
                 )
                 Text(
-                    text = "Ability type: ${ability.abilityType}"
+                    text = "Ability type: ${stringResource(ability.abilityType.res)}"
                 )
                 Text(
-                    text = "Ability target/s: ${ability.targets}"
+                    text = "Ability target/s: ${stringResource(ability.targets.res)}"
                 )
                 Text(
                     text = "Cooldown: ${ability.cooldown}"
