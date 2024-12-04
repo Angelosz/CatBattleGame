@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.models.entities.Cat
 
 @Dao
@@ -19,4 +20,7 @@ interface CatDao {
 
     @Query("Select * from cats where id in (:ids)")
     suspend fun getCatsById(ids: List<Int>): List<Cat>
+
+    @Query("Select id from cats where rarity = :rarity AND id NOT IN (Select catId from player_owned_cat)")
+    suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>
 }

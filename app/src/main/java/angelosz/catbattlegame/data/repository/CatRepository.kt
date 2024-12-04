@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.data.repository
 
+import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.models.entities.Cat
 
 interface CatRepository {
@@ -10,4 +11,6 @@ interface CatRepository {
     suspend fun insertCats(cats: List<Cat>)
 
     suspend fun getCatsById(ids: List<Int>): List<Cat>
+
+    suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>
 }
