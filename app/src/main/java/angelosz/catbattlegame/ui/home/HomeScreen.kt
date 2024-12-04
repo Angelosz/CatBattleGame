@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,8 +22,10 @@ import angelosz.catbattlegame.R
 @Composable
 fun HomeScreen(
     windowSize: WindowWidthSizeClass,
+    onPlayButtonClick: () -> Unit,
     navigateToEncyclopedia: () -> Unit,
-    navigateToCollection: () -> Unit
+    navigateToCollection: () -> Unit,
+    navigateToBattleChests:() -> Unit
 ) {
     val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
     val background = if(isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape
@@ -51,7 +54,8 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
                 HomeButtons(
                     navigateToCollection = navigateToCollection,
-                    navigateToEncyclopedia = navigateToEncyclopedia
+                    navigateToEncyclopedia = navigateToEncyclopedia,
+                    onPlayButtonClick = onPlayButtonClick
                 )
                 Spacer(modifier = Modifier.fillMaxSize().weight(0.1f))
             } else {
@@ -62,9 +66,30 @@ fun HomeScreen(
                 )
                 HomeButtons(
                     navigateToCollection = navigateToCollection,
-                    navigateToEncyclopedia = navigateToEncyclopedia
+                    navigateToEncyclopedia = navigateToEncyclopedia,
+                    onPlayButtonClick = onPlayButtonClick
                 )
             }
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 64.dp, end = 8.dp),
+        ) {
+            Image(
+                painter = painterResource(R.drawable.circular_button_128),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(96.dp)
+            )
+            Image(
+                painter = painterResource(R.drawable.battlechest_256),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(80.dp)
+                    .clickable(onClick = navigateToBattleChests )
+            )
         }
     }
 }
@@ -73,13 +98,14 @@ fun HomeScreen(
 @Composable
 private fun HomeButtons(
     navigateToCollection: () -> Unit,
-    navigateToEncyclopedia: () -> Unit
+    navigateToEncyclopedia: () -> Unit,
+    onPlayButtonClick: () -> Unit
 ) {
     HomeButton(
         modifier = Modifier.padding(8.dp),
         image = R.drawable.button_play,
         contentDescription = "Play button",
-        onButtonClicked = {}
+        onButtonClicked = onPlayButtonClick
     )
     HomeButton(
         modifier = Modifier.padding(8.dp),
