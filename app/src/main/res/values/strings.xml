@@ -2,7 +2,7 @@
     <string name="app_name">CatBattleGame</string>
     <string name="battlechests_available">You have %1$s packages!\nClick it to open it!</string>
     <string name="no_battlechests_available">You have no packages! :(</string>
-    <string name="battlechest_new_cat_display">New Cat</string>
+    <string name="battlechest_new_cat_display">New</string>
     <string name="battlechest_normal_display">Normal</string>
     <string name="package_description">Package rarity: %1$s\nPackage type: %2$s</string>
     <string name="kitten">Kitten</string>
