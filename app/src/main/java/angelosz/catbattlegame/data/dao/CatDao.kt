@@ -21,6 +21,9 @@ interface CatDao {
     @Query("Select * from cats where id in (:ids)")
     suspend fun getCatsById(ids: List<Int>): List<Cat>
 
+    @Query("Select * from cats where rarity = :rarity order by RANDOM() LIMIT 1")
+    suspend fun getRandomCatByRarity(rarity: CatRarity): Cat
+
     @Query("Select id from cats where rarity = :rarity AND id NOT IN (Select catId from player_owned_cat)")
     suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>
 }

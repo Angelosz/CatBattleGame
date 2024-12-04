@@ -12,5 +12,7 @@ interface CatRepository {
 
     suspend fun getCatsById(ids: List<Int>): List<Cat>
 
+    suspend fun getRandomCatByRarity(rarity: CatRarity): Cat
+
     suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>
 }
