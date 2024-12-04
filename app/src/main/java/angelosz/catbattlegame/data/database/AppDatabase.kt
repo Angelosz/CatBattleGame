@@ -26,7 +26,7 @@ import angelosz.catbattlegame.domain.models.entities.PlayerAccount
         BattleChest::class
     ],
     exportSchema = false,
-    version = 12)
+    version = 13)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
