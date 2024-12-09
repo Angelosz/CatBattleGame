@@ -96,13 +96,15 @@ class BattleChestsViewModel(
     }
 
     private suspend fun addCatToPlayerAccount(catId: Int){
-        playerAccountRepository.insertOwnedCat(
-            OwnedCat(
-                catId = catId,
-                level = 1,
-                experience = 0
+        if(!playerAccountRepository.ownsCat(catId)){
+            playerAccountRepository.insertOwnedCat(
+                OwnedCat(
+                    catId = catId,
+                    level = 1,
+                    experience = 0
+                )
             )
-        )
+        }
     }
 
     private suspend fun deleteBattleChest(battleChest: BattleChest){
