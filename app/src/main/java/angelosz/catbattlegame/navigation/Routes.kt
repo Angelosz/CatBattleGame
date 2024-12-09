@@ -13,3 +13,6 @@ object CollectionScreenRoute
 
 @Serializable
 object BattleChestsScreenRoute
+
+@Serializable
+object TeamBuilderScreenRoute
