@@ -13,10 +13,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.ui.components.BackgroundImage
 
 
 @Composable
@@ -33,12 +33,7 @@ fun HomeScreen(
     Box(modifier = Modifier
         .fillMaxSize(),
     ){
-        Image(
-            painter = painterResource(background),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        BackgroundImage(background)
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

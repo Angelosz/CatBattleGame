@@ -52,6 +52,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.SmallImageCard
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import kotlinx.coroutines.launch
@@ -73,12 +74,7 @@ fun BattleChestsScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        Image(
-            painter = painterResource(R.drawable.encyclopedia_landscape_blurry),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-        )
+        BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
         if(uiState.catReward == null){
             /* Battle Chest */
             val battleChest = uiState.selectedBattleChest

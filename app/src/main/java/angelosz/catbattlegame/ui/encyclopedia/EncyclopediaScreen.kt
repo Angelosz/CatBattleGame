@@ -1,7 +1,6 @@
 package angelosz.catbattlegame.ui.encyclopedia
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,8 +22,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -34,6 +31,7 @@ import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
 import angelosz.catbattlegame.ui.components.CatDataDetailsCard
 import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
@@ -196,12 +194,7 @@ private fun PortraitEncyclopediaCatsScreen(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(R.drawable.encyclopedia_portrait_blurry),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop,
-        )
+        BackgroundImage(R.drawable.encyclopedia_portrait_blurry)
         if(!isOnDetailsView){
             LazyVerticalGrid(
                 columns = GridCells.FixedSize(128.dp),
@@ -242,12 +235,7 @@ private fun LandscapeEncyclopediaCatsScreen(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(R.drawable.encyclopedia_landscape_blurry),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
         Row(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -291,12 +279,7 @@ private fun PortraitEncyclopediaAbilityScreen(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(R.drawable.encyclopedia_portrait_blurry),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        BackgroundImage(R.drawable.encyclopedia_portrait_blurry)
         if(!isOnDetailsView){
             LazyVerticalGrid(
                 columns = GridCells.FixedSize(128.dp),
@@ -338,12 +321,7 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
         modifier = modifier
             .fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(R.drawable.encyclopedia_landscape_blurry),
-            contentDescription = "",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
         Row(
             modifier = Modifier.fillMaxSize()
         ) {

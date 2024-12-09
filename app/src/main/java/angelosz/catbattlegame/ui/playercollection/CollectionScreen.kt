@@ -1,7 +1,6 @@
 package angelosz.catbattlegame.ui.playercollection
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,8 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -32,6 +29,7 @@ import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.CollectionSmallCardData
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.domain.models.collectionNavigationItems
+import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatDataDetailsCard
 import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
 import angelosz.catbattlegame.ui.components.CollectionNavigationRail
@@ -164,12 +162,7 @@ fun CatCollectionPortraitView(
     Box(
         modifier = modifier.fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(R.drawable.player_collection_portrait_blurry),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        BackgroundImage(R.drawable.player_collection_portrait_blurry)
         if(isDetailView){
             selectedCat?.let { ownedCat ->
                 CatDataDetailsCard(
@@ -217,12 +210,7 @@ fun CatCollectionLandscapeView(
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        Image(
-            painter = painterResource(R.drawable.player_collection_portrait_blurry),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        BackgroundImage(R.drawable.player_collection_portrait_blurry)
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxSize()
