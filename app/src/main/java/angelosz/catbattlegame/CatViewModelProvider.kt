@@ -29,7 +29,8 @@ object CatViewModelProvider {
         initializer {
             BattleChestsViewModel(
                 getCatBattleApplication().container.catRepository,
-                getCatBattleApplication().container.playerRepository
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.battleChestRepository
             )
         }
 

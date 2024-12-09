@@ -1,6 +1,5 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 import angelosz.catbattlegame.domain.models.entities.PlayerTeam
@@ -23,11 +22,6 @@ interface PlayerAccountRepository {
     suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat>
     suspend fun getCount(): Int
     suspend fun ownsCat(catId: Int): Boolean
-
-    /* Battle Chests */
-    suspend fun insertBattleChest(battleChest: BattleChest)
-    suspend fun deleteBattleChest(battleChest: BattleChest)
-    suspend fun getAllBattleChests(): List<BattleChest>
 
     /* Player Teams */
     suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long

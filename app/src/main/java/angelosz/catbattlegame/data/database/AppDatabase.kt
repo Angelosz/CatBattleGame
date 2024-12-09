@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import angelosz.catbattlegame.data.dao.AbilityDao
+import angelosz.catbattlegame.data.dao.BattleChestDao
 import angelosz.catbattlegame.data.dao.CatDao
 import angelosz.catbattlegame.data.dao.PlayerDao
 import angelosz.catbattlegame.domain.models.entities.Ability
@@ -35,6 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
     abstract fun playerDao(): PlayerDao
+    abstract fun battleChestDao(): BattleChestDao
 
     companion object {
         @Volatile

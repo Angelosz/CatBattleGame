@@ -2,6 +2,7 @@ package angelosz.catbattlegame.ui.battlechests
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.repository.BattleChestRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.BattleChestType
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class BattleChestsViewModel(
     private val catRepository: CatRepository,
-    private val playerAccountRepository: PlayerAccountRepository
+    private val playerAccountRepository: PlayerAccountRepository,
+    private val battleChestRepository: BattleChestRepository
 ): ViewModel() {
     private val _uiState: MutableStateFlow<BattleChestsUiState> =
         MutableStateFlow(BattleChestsUiState())
@@ -29,7 +31,7 @@ class BattleChestsViewModel(
     }
 
     private suspend fun fetchBattleChests() {
-        val storedBattleChests = playerAccountRepository.getAllBattleChests()
+        val storedBattleChests = battleChestRepository.getAllBattleChests()
         val battleChests = mutableMapOf<Pair<CatRarity, BattleChestType>, List<BattleChest>>()
 
         //transform list to Map<Pair<CatRarity, BattleChestType>, Int>
@@ -112,7 +114,7 @@ class BattleChestsViewModel(
     }
 
     private suspend fun deleteBattleChest(battleChest: BattleChest){
-        playerAccountRepository.deleteBattleChest(battleChest)
+        battleChestRepository.deleteBattleChest(battleChest)
     }
 
 
