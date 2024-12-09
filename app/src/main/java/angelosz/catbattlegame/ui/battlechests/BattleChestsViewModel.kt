@@ -127,13 +127,4 @@ class BattleChestsViewModel(
             )
         }
     }
-
-    fun backToBattleChestGrid() {
-        _uiState.update {
-            it.copy(
-                selectedBattleChest = null,
-                catReward = null
-            )
-        }
-    }
 }
