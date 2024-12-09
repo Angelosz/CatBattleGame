@@ -57,6 +57,7 @@ class CollectionViewModel(
 
         _uiState.update {
             it.copy(selectedCat = OwnedCatDetailsData(
+                ownedCatData = ownedCatData,
                 cat = cat.copy(
                     baseHealth = cat.baseHealth + ownedCatData.healthModifier,
                     baseAttack = cat.baseAttack + ownedCatData.attackModifier,
