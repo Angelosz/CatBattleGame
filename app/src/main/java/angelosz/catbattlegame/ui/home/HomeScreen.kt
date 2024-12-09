@@ -25,7 +25,8 @@ fun HomeScreen(
     onPlayButtonClick: () -> Unit,
     navigateToEncyclopedia: () -> Unit,
     navigateToCollection: () -> Unit,
-    navigateToBattleChests:() -> Unit
+    navigateToBattleChests: () -> Unit,
+    navigateToTeamBuild: () -> Unit
 ) {
     val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
     val background = if(isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape
@@ -69,22 +70,41 @@ fun HomeScreen(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 64.dp, end = 8.dp),
+                .align(Alignment.CenterEnd)
+                .padding(end = 8.dp),
         ) {
-            Image(
-                painter = painterResource(R.drawable.circular_button_128),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(96.dp)
-            )
-            Image(
-                painter = painterResource(R.drawable.battlechest_256),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(80.dp)
-                    .clickable(onClick = navigateToBattleChests )
-            )
+            Column(){
+                Box(contentAlignment = Alignment.Center,){
+                    Image(
+                        painter = painterResource(R.drawable.circular_button_128),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(96.dp)
+                    )
+                    Image(
+                        painter = painterResource(R.drawable.battlechest_256),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clickable(onClick = navigateToBattleChests )
+                    )
+                }
+                Box(contentAlignment = Alignment.Center,) {
+                    Image(
+                        painter = painterResource(R.drawable.circular_button_128),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(96.dp)
+                    )
+                    Image(
+                        painter = painterResource(R.drawable.teams_button_256),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clickable( onClick = navigateToTeamBuild )
+                    )
+                }
+            }
         }
     }
 }
