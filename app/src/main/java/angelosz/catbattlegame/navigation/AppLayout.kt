@@ -11,6 +11,7 @@ import angelosz.catbattlegame.ui.battlechests.BattleChestsScreen
 import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaScreen
 import angelosz.catbattlegame.ui.home.HomeScreen
 import angelosz.catbattlegame.ui.playercollection.CollectionScreen
+import angelosz.catbattlegame.ui.teambuilder.TeamBuilderScreen
 
 @Composable
 fun AppLayout(
@@ -31,6 +32,7 @@ fun AppLayout(
                 navigateToEncyclopedia = { navController.navigate(EncyclopediaScreenRoute) },
                 navigateToCollection = { navController.navigate(CollectionScreenRoute) },
                 navigateToBattleChests = { navController.navigate(BattleChestsScreenRoute) },
+                navigateToTeamBuild = { navController.navigate(TeamBuilderScreenRoute) }
             )
         }
         composable<EncyclopediaScreenRoute> {
@@ -52,6 +54,12 @@ fun AppLayout(
                     navController.popBackStack(HomeScreenRoute, false)
                     navController.navigate(CollectionScreenRoute)
                 }
+            )
+        }
+        composable<TeamBuilderScreenRoute> {
+            TeamBuilderScreen(
+                windowSize = windowSize,
+                onBackPressed = { navController.navigateUp() }
             )
         }
     }
