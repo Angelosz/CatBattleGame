@@ -37,6 +37,16 @@ class MainActivity : ComponentActivity() {
         val existingAccount = playerDao.getPlayerAccount()
         if(existingAccount == null){
             playerDao.insertOrUpdateAccount(PlayerAccount())
+            val ownedCatsIds = playerDao.getAllOwnedCats().map { it.id }
+            /* Create first default team */
+            playerDao.insertPlayerTeam(
+                playerTeam = PlayerTeam(
+                    id = 1,
+                    name = "Default Team",
+                )
+            )
+            /*  Populate first team */
+            ownedCatsIds.forEachIndexed { index, catId -> playerDao.addCatToTeam(PlayerTeamOwnedCat(teamId = 1, ownedCatId = catId, index)) }
         }
     }
 
