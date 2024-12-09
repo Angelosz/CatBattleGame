@@ -14,6 +14,8 @@ import angelosz.catbattlegame.domain.models.entities.Cat
 import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
+import angelosz.catbattlegame.domain.models.entities.PlayerTeam
+import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
 
 @Database(
     entities = [
@@ -23,10 +25,12 @@ import angelosz.catbattlegame.domain.models.entities.PlayerAccount
         AbilityArmorDamageMultiplier::class,
         PlayerAccount::class,
         OwnedCat::class,
-        BattleChest::class
+        BattleChest::class,
+        PlayerTeam::class,
+        PlayerTeamOwnedCat::class
     ],
     exportSchema = false,
-    version = 13)
+    version = 16)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
