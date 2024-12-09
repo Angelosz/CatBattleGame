@@ -4,6 +4,9 @@ import angelosz.catbattlegame.data.dao.PlayerDao
 import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
+import angelosz.catbattlegame.domain.models.entities.PlayerTeam
+import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 
 class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepository {
     /* Player Account */
@@ -25,4 +28,17 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun insertBattleChest(battleChest: BattleChest) = dao.insertBattleChest(battleChest)
     override suspend fun deleteBattleChest(battleChest: BattleChest) = dao.deleteBattleChest(battleChest)
     override suspend fun getAllBattleChests(): List<BattleChest> = dao.getAllBattleChests()
+
+    /* Player Teams */
+    override suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long = dao.insertPlayerTeam(playerTeam)
+    override suspend fun deleteTeam(playerTeam: PlayerTeam) = dao.deleteTeam(playerTeam)
+    override suspend fun clearTeam(teamId: Long) = dao.clearTeam(teamId)
+    override suspend fun deleteTeambyId(teamId: Long) = dao.deleteTeamById(teamId)
+    override suspend fun getPlayerTeamById(teamId: Long) = dao.getPlayerTeamById(teamId)
+    override suspend fun getAllPlayerTeams(): List<PlayerTeam> = dao.getAllPlayerTeams()
+    override suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat) = dao.addCatToTeam(playerTeamOwnedCat)
+    override suspend fun getTeamData(teamId: Long): List<BasicCatData> {
+        val catBasicData = dao.getPlayerTeamCats(teamId)
+        return catBasicData
+    }
 }

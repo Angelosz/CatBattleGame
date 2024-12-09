@@ -3,6 +3,9 @@ package angelosz.catbattlegame.data.repository
 import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
+import angelosz.catbattlegame.domain.models.entities.PlayerTeam
+import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 
 interface PlayerAccountRepository {
     /* Player Account */
@@ -25,4 +28,14 @@ interface PlayerAccountRepository {
     suspend fun insertBattleChest(battleChest: BattleChest)
     suspend fun deleteBattleChest(battleChest: BattleChest)
     suspend fun getAllBattleChests(): List<BattleChest>
+
+    /* Player Teams */
+    suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long
+    suspend fun deleteTeam(playerTeam: PlayerTeam)
+    suspend fun deleteTeambyId(teamId: Long)
+    suspend fun clearTeam(teamId: Long)
+    suspend fun getPlayerTeamById(teamId: Long): PlayerTeam
+    suspend fun getAllPlayerTeams(): List<PlayerTeam>
+    suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat)
+    suspend fun getTeamData(teamId: Long): List<BasicCatData>
 }
