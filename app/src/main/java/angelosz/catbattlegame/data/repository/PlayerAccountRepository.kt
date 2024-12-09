@@ -16,6 +16,10 @@ interface PlayerAccountRepository {
 
     suspend fun getAllOwnedCats(): List<OwnedCat>
     suspend fun getOwnedCatByCatId(catId: Int): OwnedCat
+    suspend fun getOwnedCatsByCatIds(catIds: List<Int>): List<OwnedCat>
+    suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat>
+    suspend fun getCount(): Int
+    suspend fun ownsCat(catId: Int): Boolean
 
     /* Battle Chests */
     suspend fun insertBattleChest(battleChest: BattleChest)
