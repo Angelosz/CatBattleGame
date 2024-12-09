@@ -37,7 +37,7 @@ class BattleChestsViewModel(
             .groupBy { it.rarity to it.type }
         )
 
-        // Get first battlechest if only 1 is available
+        // Get first battleChest if only 1 is available
         var selectedBattleChest: BattleChest? = null
         if(storedBattleChests.size == 1) {
             selectedBattleChest = storedBattleChests.first()
@@ -56,8 +56,12 @@ class BattleChestsViewModel(
             val battleChest = uiState.value.selectedBattleChest
             when(battleChest?.type){
                 BattleChestType.NORMAL -> {
+                    val cat = getRandomCatOfRarity(battleChest.rarity)
+                    addCatToPlayerAccount(cat.id)
+                    deleteBattleChest(battleChest)
+                    fetchBattleChests()
                     _uiState.update {
-                        it.copy(catReward = getRandomCat(battleChest.rarity))
+                        it.copy(catReward = cat)
                     }
                 }
                 BattleChestType.NEW_CAT -> {
@@ -76,7 +80,7 @@ class BattleChestsViewModel(
         }
     }
 
-    private suspend fun getRandomCat(rarity: CatRarity): Cat {
+    private suspend fun getRandomCatOfRarity(rarity: CatRarity): Cat {
         return catRepository.getRandomCatByRarity(rarity)
     }
 
@@ -85,7 +89,7 @@ class BattleChestsViewModel(
         return if(unownedCatsIds.isNotEmpty()){
             catRepository.getCatById(unownedCatsIds.random())
         } else {
-            getRandomCat(rarity)
+            getRandomCatOfRarity(rarity)
         }
     }
 
