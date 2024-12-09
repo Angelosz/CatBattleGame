@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -38,6 +35,8 @@ import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.CatImageCardGrid
+import angelosz.catbattlegame.ui.components.PaginationButtons
 import angelosz.catbattlegame.ui.components.SmallImageCard
 
 @Composable
@@ -73,7 +72,7 @@ fun TeamBuilderScreen(
                 } else {
                     BackHandler { viewModel.goBackToTeamList() }
 
-                    CatsPage(uiState, viewModel)
+                    TeamCatsGridPage(uiState, viewModel)
 
                     val selectedCat = uiState.selectedCat
                     SelectedCatInfoCard(
@@ -193,7 +192,7 @@ private fun SelectedCatInfoCard(
 }
 
 @Composable
-private fun CatsPage(
+private fun TeamCatsGridPage(
     uiState: TeamBuilderUiState,
     viewModel: TeamBuilderViewModel,
 ) {
@@ -207,49 +206,11 @@ private fun CatsPage(
         Column(
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.FixedSize(112.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 4.dp)
-            ) {
-
-                val data = uiState.pageCatsData.toMutableList()
-
-                /* Fill the list with empty(catId = -1) BasicCatData */
-                if (data.size < viewModel.paginationLimit) {
-                    repeat(viewModel.paginationLimit - data.size) {
-                        data.add(
-                            BasicCatData(
-                                catId = -1,
-                                image = R.drawable.battlechest_background_128
-                            )
-                        )
-                    }
-                }
-
-                items(data) { catData ->
-                    if (catData.catId >= 0) {
-                        SmallImageCard(
-                            id = catData.catId,
-                            image = catData.image,
-                            onCardClicked = { id -> viewModel.selectCat(id) },
-                            imageSize = 112,
-                            showBorder = true
-                        )
-                    } else {
-                        SmallImageCard(
-                            id = 0,
-                            image = R.drawable.battlechest_background_128,
-                            onCardClicked = {},
-                            imageSize = 112,
-                            showBorder = true
-                        )
-                    }
-                }
-            }
+            CatImageCardGrid(
+                catsData = uiState.pageCatsData,
+                pageLimit = viewModel.paginationLimit,
+                imageSize = 112,
+                onCardSelected = { id -> viewModel.selectCat(id) })
             PaginationButtons(
                 isNotFirstPage = uiState.catListPage > 1,
                 isNotLastPage = uiState.catListPage * viewModel.paginationLimit < uiState.ownedCatCount,
@@ -260,39 +221,9 @@ private fun CatsPage(
     }
 }
 
-@Composable
-private fun PaginationButtons(
-    isNotFirstPage: Boolean,
-    isNotLastPage: Boolean,
-    onPreviousButtonClicked: () -> Unit,
-    onNextButtonClicked: () -> Unit,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Button(
-            onClick = onPreviousButtonClicked,
-            enabled = isNotFirstPage,
-        ) {
-            Text(
-                text = "<",
-                style = MaterialTheme.typography.labelMedium,
-            )
-        }
-        Button(
-            onClick = onNextButtonClicked,
-            enabled = isNotLastPage
-        ) {
-            Text(
-                text = ">",
-                style = MaterialTheme.typography.labelMedium,
-            )
-        }
-    }
-}
+
+
+
 
 
 @Composable
