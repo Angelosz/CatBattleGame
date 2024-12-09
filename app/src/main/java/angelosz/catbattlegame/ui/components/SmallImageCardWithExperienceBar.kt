@@ -15,7 +15,6 @@ import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 fun SmallImageCardWithExperienceBar(
     modifier: Modifier = Modifier,
     id: Int,
-    name: String,
     onCardClicked: (Int) -> Unit,
     imageSize: Int,
     image: Int,
@@ -30,7 +29,6 @@ fun SmallImageCardWithExperienceBar(
         SmallImageCard(
             modifier = Modifier,
             id = id,
-            name = name,
             onCardClicked = onCardClicked,
             imageSize = imageSize,
             image = image
@@ -49,7 +47,6 @@ fun CollectionSmallCardPreview(){
     CatBattleGameTheme {
         SmallImageCardWithExperienceBar(
             id = 21,
-            name = "Kitten Rogue",
             onCardClicked = {},
             imageSize = 192,
             image = R.drawable.kitten_rogue_300,

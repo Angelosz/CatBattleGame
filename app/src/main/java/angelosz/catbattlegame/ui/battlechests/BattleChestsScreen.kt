@@ -155,7 +155,6 @@ fun BattleChestsScreen(
                     uiState.catReward?.let { cat ->
                         SmallImageCard(
                             id = cat.id,
-                            name = "",
                             image = cat.image,
                             imageSize = 256,
                             onCardClicked = {},

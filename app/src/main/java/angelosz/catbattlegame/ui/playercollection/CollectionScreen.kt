@@ -195,7 +195,6 @@ fun CatCollectionPortraitView(
                     SmallImageCardWithExperienceBar(
                         modifier = Modifier.padding(8.dp),
                         id = data.id,
-                        name = "",
                         image = data.image,
                         imageSize = 160,
                         onCardClicked = onCardClicked,
@@ -243,7 +242,6 @@ fun CatCollectionLandscapeView(
                         SmallImageCardWithExperienceBar(
                             modifier = Modifier.padding(8.dp),
                             id = data.id,
-                            name = "",
                             image = data.image,
                             imageSize = 192,
                             onCardClicked = onCardClicked,

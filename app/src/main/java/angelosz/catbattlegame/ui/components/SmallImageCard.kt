@@ -3,7 +3,6 @@ package angelosz.catbattlegame.ui.components
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
@@ -20,10 +19,10 @@ import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 @Composable
 fun SmallImageCard(
     modifier: Modifier = Modifier,
-    id: Int, name: String,
+    id: Int,
     @DrawableRes image: Int,
-    onCardClicked: (Int) -> Unit,
-    imageSize: Int,
+    onCardClicked: (Int) -> Unit = {},
+    imageSize: Int = 127,
     showBorder: Boolean = true
 ){
     Box(modifier = modifier
@@ -31,13 +30,13 @@ fun SmallImageCard(
         contentAlignment = Alignment.Center
     ) {
         Card(
-            onClick = { onCardClicked(id) }
+            onClick = { onCardClicked(id) },
         ) {
             Image(
                 painter = painterResource(image),
-                contentDescription = name,
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.size(imageSize.dp)
             )
         }
         if(showBorder){
@@ -45,7 +44,7 @@ fun SmallImageCard(
                 painter = painterResource(R.drawable.small_border_2),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.size(imageSize.dp)
             )
         }
     }
@@ -58,7 +57,6 @@ fun CatSmallDataCardPreview(){
         SmallImageCard(
             modifier = Modifier.padding(8.dp),
             id = 0,
-            name = "Kitten Swordman",
             image = R.drawable.kitten_swordman_300x300,
             onCardClicked = {},
             imageSize = 128

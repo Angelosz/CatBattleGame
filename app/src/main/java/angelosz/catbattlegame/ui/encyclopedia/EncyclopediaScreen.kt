@@ -211,7 +211,6 @@ private fun PortraitEncyclopediaCatsScreen(
                     SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = cat.id,
-                        name = cat.name,
                         image = cat.image,
                         onCardClicked = onCardClicked,
                         imageSize = 128
@@ -261,7 +260,6 @@ private fun LandscapeEncyclopediaCatsScreen(
                     SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = cat.id,
-                        name = cat.name,
                         image = cat.image,
                         onCardClicked = onCardClicked,
                         imageSize = 128
@@ -308,7 +306,6 @@ private fun PortraitEncyclopediaAbilityScreen(
                     SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = ability.id,
-                        name = ability.name,
                         image = ability.image,
                         onCardClicked = onCardClicked,
                         imageSize = 128
@@ -358,7 +355,6 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
                     SmallImageCard(
                         modifier = Modifier.padding(8.dp),
                         id = ability.id,
-                        name = ability.name,
                         image = ability.image,
                         onCardClicked = onCardClicked,
                         imageSize = 128
