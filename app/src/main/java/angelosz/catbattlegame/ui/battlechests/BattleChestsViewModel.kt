@@ -48,7 +48,8 @@ class BattleChestsViewModel(
         _uiState.update {
             it.copy(
                 battleChests = battleChests,
-                selectedBattleChest = selectedBattleChest
+                selectedBattleChest = selectedBattleChest,
+                message = "You have ${storedBattleChests.size} package/s, click it to open it!"
             )
         }
     }
@@ -59,27 +60,56 @@ class BattleChestsViewModel(
             when(battleChest?.type){
                 BattleChestType.NORMAL -> {
                     val cat = getRandomCatOfRarity(battleChest.rarity)
-                    addCatToPlayerAccount(cat.id)
+
+                    var message = "You got a ${cat.name}!"
+                    if(!playerAccountRepository.ownsCat(cat.id)){
+                        addCatToPlayerAccount(cat.id)
+                    } else {
+                        message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
+                    }
+
                     deleteBattleChest(battleChest)
-                    fetchBattleChests()
                     _uiState.update {
-                        it.copy(catReward = cat)
+                        it.copy(
+                            catReward = cat,
+                            message = message
+                        )
                     }
                 }
                 BattleChestType.NEW_CAT -> {
                     val cat = getRandomUnownedCatOfRarity(battleChest.rarity)
-                    addCatToPlayerAccount(cat.id)
+
+                    var message = "You got a ${cat.name}!"
+                    if(!playerAccountRepository.ownsCat(cat.id)){
+                        addCatToPlayerAccount(cat.id)
+                    } else {
+                        message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
+                    }
+
                     deleteBattleChest(battleChest)
-                    fetchBattleChests()
                     _uiState.update {
                         it.copy(
-                            catReward = cat
+                            catReward = cat,
+                            message = message
                         )
                     }
                 }
                 null -> { }
             }
         }
+    }
+
+    private fun disenchantCat(cat: Cat): Int {
+        val crystalValue = when(cat.rarity){
+            CatRarity.KITTEN -> 20
+            CatRarity.TEEN -> 40
+            CatRarity.ADULT -> 80
+            CatRarity.ELDER -> 160
+        }
+        viewModelScope.launch {
+            playerAccountRepository.addCrystals(crystalValue)
+        }
+        return crystalValue
     }
 
     private suspend fun getRandomCatOfRarity(rarity: CatRarity): Cat {
@@ -95,22 +125,14 @@ class BattleChestsViewModel(
         }
     }
 
-    fun clearCatReward(){
-        _uiState.update {
-            it.copy( catReward = null )
-        }
-    }
-
     private suspend fun addCatToPlayerAccount(catId: Int){
-        if(!playerAccountRepository.ownsCat(catId)){
-            playerAccountRepository.insertOwnedCat(
-                OwnedCat(
-                    catId = catId,
-                    level = 1,
-                    experience = 0
-                )
+        playerAccountRepository.insertOwnedCat(
+            OwnedCat(
+                catId = catId,
+                level = 1,
+                experience = 0
             )
-        }
+        )
     }
 
     private suspend fun deleteBattleChest(battleChest: BattleChest){
@@ -131,6 +153,15 @@ class BattleChestsViewModel(
             it.copy(
                 selectedBattleChest = battleChest
             )
+        }
+    }
+
+    fun goBackToBattleChestsGrid(){
+        viewModelScope.launch {
+            fetchBattleChests()
+            _uiState.update {
+                it.copy( catReward = null )
+            }
         }
     }
 }

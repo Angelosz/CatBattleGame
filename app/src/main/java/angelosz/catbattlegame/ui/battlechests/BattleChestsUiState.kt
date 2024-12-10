@@ -8,5 +8,6 @@ import angelosz.catbattlegame.domain.models.entities.Cat
 data class BattleChestsUiState(
     val battleChests: Map<Pair<CatRarity, BattleChestType>, List<BattleChest>> = mapOf(),
     val catReward: Cat? = null,
-    val selectedBattleChest: BattleChest? = null
+    val selectedBattleChest: BattleChest? = null,
+    val message: String = ""
 )

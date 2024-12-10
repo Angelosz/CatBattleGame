@@ -100,7 +100,7 @@ fun BattleChestsScreen(
                             }
                         }
                     )
-                    TextCard(stringResource(R.string.battlechests_available, viewModel.countBattleChests()))
+                    TextCard(uiState.message)
                 }
             } else {
                 Box(
@@ -161,7 +161,7 @@ fun BattleChestsScreen(
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
                         ){
                             Text(
-                                text = "You got a ${cat.name}!",
+                                text = uiState.message,
                                 modifier = Modifier.padding(16.dp),
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.labelLarge
@@ -171,7 +171,7 @@ fun BattleChestsScreen(
                         Row {
                             Button(
                                 onClick = {
-                                    viewModel.clearCatReward()
+                                    viewModel.goBackToBattleChestsGrid()
                                     coroutineScope.launch {
                                         lootBoxAnimationOffsetY.snapTo(0f)
                                     }
