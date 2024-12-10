@@ -5,9 +5,11 @@ import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 import angelosz.catbattlegame.domain.models.entities.PlayerTeam
 import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import kotlinx.coroutines.flow.Flow
 
 interface PlayerAccountRepository {
     /* Player Account */
+    suspend fun getPlayerAccountAsFlow(): Flow<PlayerAccount?>
     suspend fun getPlayerAccount(): PlayerAccount?
     suspend fun createOrUpdateAccount(playerAccount: PlayerAccount)
 

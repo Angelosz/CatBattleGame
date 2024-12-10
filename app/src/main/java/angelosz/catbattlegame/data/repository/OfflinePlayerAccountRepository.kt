@@ -6,9 +6,11 @@ import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 import angelosz.catbattlegame.domain.models.entities.PlayerTeam
 import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import kotlinx.coroutines.flow.Flow
 
 class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepository {
     /* Player Account */
+    override suspend fun getPlayerAccountAsFlow(): Flow<PlayerAccount?> = dao.getPlayerAccountAsFlow()
     override suspend fun getPlayerAccount(): PlayerAccount? = dao.getPlayerAccount()
     override suspend fun createOrUpdateAccount(playerAccount: PlayerAccount) = dao.insertOrUpdateAccount(playerAccount)
 

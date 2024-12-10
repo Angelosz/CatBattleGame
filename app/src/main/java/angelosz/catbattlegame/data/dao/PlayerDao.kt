@@ -11,12 +11,16 @@ import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 import angelosz.catbattlegame.domain.models.entities.PlayerTeam
 import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlayerDao {
     /* Player Account */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrUpdateAccount(playerAccount: PlayerAccount)
+    @Query("Select * from player_account Limit 1")
+    fun getPlayerAccountAsFlow(): Flow<PlayerAccount?>
+
     @Query("Select * from player_account Limit 1")
     suspend fun getPlayerAccount(): PlayerAccount?
 
