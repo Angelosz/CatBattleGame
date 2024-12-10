@@ -12,6 +12,10 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun getPlayerAccount(): PlayerAccount? = dao.getPlayerAccount()
     override suspend fun createOrUpdateAccount(playerAccount: PlayerAccount) = dao.insertOrUpdateAccount(playerAccount)
 
+    /* Crystals */
+    override suspend fun addCrystals(amount: Int) = dao.addCrystals(amount)
+    override suspend fun reduceCrystals(amount: Int) = dao.reduceCrystals(amount)
+
     /* Owned Cats */
     override suspend fun insertOwnedCat(ownedCat: OwnedCat) = dao.insertOwnedCat(ownedCat)
     override suspend fun updateOwnedCat(ownedCat: OwnedCat) = dao.updateOwnedCat(ownedCat)

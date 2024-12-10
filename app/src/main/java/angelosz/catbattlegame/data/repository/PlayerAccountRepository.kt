@@ -11,6 +11,10 @@ interface PlayerAccountRepository {
     suspend fun getPlayerAccount(): PlayerAccount?
     suspend fun createOrUpdateAccount(playerAccount: PlayerAccount)
 
+    /* Crystals */
+    suspend fun addCrystals(amount: Int)
+    suspend fun reduceCrystals(amount: Int)
+
     /* Owned Cats */
     suspend fun insertOwnedCat(ownedCat: OwnedCat)
     suspend fun updateOwnedCat(ownedCat: OwnedCat)

@@ -20,6 +20,14 @@ interface PlayerDao {
     @Query("Select * from player_account Limit 1")
     suspend fun getPlayerAccount(): PlayerAccount?
 
+    /* Crystals */
+    @Query("Update player_account set crystals = crystals + :amount")
+    suspend fun addCrystals(amount: Int)
+
+    @Query("Update player_account set crystals = crystals - :amount")
+    suspend fun reduceCrystals(amount: Int)
+
+
     /* Owned Cats */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOwnedCat(ownedCat: OwnedCat)
