@@ -31,7 +31,7 @@ import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
         PlayerTeamOwnedCat::class
     ],
     exportSchema = false,
-    version = 16)
+    version = 17)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
