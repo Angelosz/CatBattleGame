@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -56,51 +59,124 @@ fun TeamBuilderScreen(
     ) {
         BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
         if(isPortraitView){
-            Column(
+            HandlePortraitView(uiState, viewModel)
+        } else {
+            HandleLandscapeView(uiState, viewModel)
+        }
+    }
+}
+
+@Composable
+fun HandleLandscapeView(uiState: TeamBuilderUiState, viewModel: TeamBuilderViewModel) {
+    Row(
+        modifier = Modifier
+            .systemBarsPadding()
+            .fillMaxSize(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        if (!uiState.teamIsSelected) {
+            TeamsList(
+                teams = uiState.teams,
+                selectTeam = { teamData -> viewModel.selectTeam(teamData.teamId) },
+                deleteTeam = { teamData -> viewModel.deleteTeam(teamData.teamId) },
+                createTeam = { _ -> viewModel.createNewTeam() },
+                columns = 2
+            )
+        } else {
+            BackHandler { viewModel.goBackToTeamList() }
+
+            TeamCatsGridPage(
                 modifier = Modifier
-                    .systemBarsPadding()
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(12.dp)
+                    .width(332.dp),
+                uiState = uiState,
+                viewModel = viewModel,
+                imageSize = 92
+            )
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                if(!uiState.teamIsSelected){
-                    TeamsList(
-                        teams = uiState.teams,
-                        selectTeam = { teamData -> viewModel.selectTeam(teamData.teamId) },
-                        deleteTeam = { teamData -> viewModel.deleteTeam(teamData.teamId) },
-                        createTeam = { _ -> viewModel.createNewTeam() }
-                    )
-                } else {
-                    BackHandler { viewModel.goBackToTeamList() }
+                val selectedCat = uiState.selectedCat
+                SelectedCatInfoCard(
+                    selectedCat = selectedCat,
+                    onAddClicked = { viewModel.addSelectedCatToTeam() }
+                )
+                Spacer(modifier = Modifier.weight(1f))
 
-                    TeamCatsGridPage(uiState, viewModel)
-
-                    val selectedCat = uiState.selectedCat
-                    SelectedCatInfoCard(
-                        selectedCat = selectedCat,
-                        onAddClicked = { viewModel.addSelectedCatToTeam() }
-                    )
-
-                    Spacer(modifier = Modifier.weight(1f))
-
-                    TeamPanel(
-                        teamData = uiState.selectedTeam,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                        imageSize = 80,
-                        spacedBy = 8,
-                        onTeamCardClicked = { },
-                        onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId)},
-                        onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) }
-                    )
-                }
+                TeamPanel(
+                    teamData = uiState.selectedTeam,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                    imageSize = 80,
+                    spacedBy = 8,
+                    onTeamCardClicked = { },
+                    onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId) },
+                    onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) }
+                )
             }
         }
     }
 }
 
 @Composable
-private fun SelectedCatInfoCard(
+private fun HandlePortraitView(
+    uiState: TeamBuilderUiState,
+    viewModel: TeamBuilderViewModel,
+) {
+    Column(
+        modifier = Modifier
+            .systemBarsPadding()
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (!uiState.teamIsSelected) {
+            TeamsList(
+                teams = uiState.teams,
+                selectTeam = { teamData -> viewModel.selectTeam(teamData.teamId) },
+                deleteTeam = { teamData -> viewModel.deleteTeam(teamData.teamId) },
+                createTeam = { _ -> viewModel.createNewTeam() },
+            )
+        } else {
+            BackHandler { viewModel.goBackToTeamList() }
+
+            TeamCatsGridPage(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .height(420.dp)
+                    .fillMaxWidth(),
+                uiState = uiState,
+                viewModel = viewModel,
+            )
+
+            val selectedCat = uiState.selectedCat
+            SelectedCatInfoCard(
+                selectedCat = selectedCat,
+                onAddClicked = { viewModel.addSelectedCatToTeam() }
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            TeamPanel(
+                teamData = uiState.selectedTeam,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                imageSize = 80,
+                spacedBy = 8,
+                onTeamCardClicked = { },
+                onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId) },
+                onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) }
+            )
+        }
+    }
+}
+
+@Composable
+fun SelectedCatInfoCard(
     selectedCat: OwnedCatDetailsData,
     onAddClicked: () -> Unit,
 ) {
@@ -192,24 +268,24 @@ private fun SelectedCatInfoCard(
 }
 
 @Composable
-private fun TeamCatsGridPage(
+fun TeamCatsGridPage(
+    modifier: Modifier = Modifier,
     uiState: TeamBuilderUiState,
     viewModel: TeamBuilderViewModel,
+    imageSize: Int = 112,
 ) {
     Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .height(420.dp)
-            .fillMaxWidth(),
+        modifier = modifier,
         shape = RectangleShape,
     ){
         Column(
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CatImageCardGrid(
                 catsData = uiState.pageCatsData,
                 pageLimit = viewModel.paginationLimit,
-                imageSize = 112,
+                imageSize = imageSize,
                 onCardSelected = { id -> viewModel.selectCat(id) })
             PaginationButtons(
                 isNotFirstPage = uiState.catListPage > 1,
@@ -221,47 +297,50 @@ private fun TeamCatsGridPage(
     }
 }
 
-
-
-
-
-
 @Composable
-private fun TeamsList(
+fun TeamsList(
     teams: List<TeamData>,
     selectTeam: (TeamData) -> Unit,
     deleteTeam: (TeamData) -> Unit,
-    createTeam: (TeamData) -> Unit
-
+    createTeam: (TeamData) -> Unit,
+    panelsSize: Int = 360,
+    columns: Int = 1
 ) {
-    for (team in teams) {
-        TeamPanel(
-            teamData = team,
-            modifier = Modifier
-                .padding(16.dp)
-                .width(360.dp),
-            imageSize = 80,
-            spacedBy = 8,
-            onTeamCardClicked = selectTeam,
-            hasDeleteButton = true,
-            onDeleteTeamClicked = deleteTeam,
-            onCatClicked = {},
-        )
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(columns),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        items(teams){ team ->
+            TeamPanel(
+                teamData = team,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(panelsSize.dp),
+                imageSize = 80,
+                spacedBy = 8,
+                onTeamCardClicked = selectTeam,
+                hasDeleteButton = true,
+                onDeleteTeamClicked = deleteTeam,
+                onCatClicked = {},
+            )
+        }
+        item {
+            /* New Team TeamPanel */
+            TeamPanel(
+                teamData = TeamData(
+                    teamId = 0,
+                    teamName = "Create New Team",
+                    cats = listOf()
+                ),
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(panelsSize.dp),
+                imageSize = 80,
+                spacedBy = 8,
+                onTeamCardClicked = createTeam,
+                onDeleteTeamClicked = { },
+                onCatClicked = {},
+            )
+        }
     }
-    /* New Team TeamPanel */
-    TeamPanel(
-        teamData = TeamData(
-            teamId = 0,
-            teamName = "Create New Team",
-            cats = listOf()
-        ),
-        modifier = Modifier
-            .padding(16.dp)
-            .width(360.dp),
-        imageSize = 80,
-        spacedBy = 8,
-        onTeamCardClicked = createTeam,
-        onDeleteTeamClicked = { },
-        onCatClicked = {},
-    )
 }
