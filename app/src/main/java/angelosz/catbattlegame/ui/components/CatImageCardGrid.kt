@@ -56,7 +56,7 @@ fun CatImageCardGrid(
                     id = 0,
                     image = R.drawable.battlechest_background_128,
                     onCardClicked = {},
-                    imageSize = 112,
+                    imageSize = imageSize,
                     showBorder = true
                 )
             }
