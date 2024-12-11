@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.domain.models.entities.PlayerTeam
 import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
@@ -28,6 +29,12 @@ class TeamBuilderViewModel(
         fetchAllPlayerTeams()
         fetchCatPage()
         fetchOwnedCatCount()
+
+        _uiState.update {
+            it.copy(
+                screenState = ScreenState.SUCCESS
+            )
+        }
     }
 
     private fun fetchOwnedCatCount() {

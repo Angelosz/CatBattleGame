@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.ui.teambuilder
 
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 
 data class TeamBuilderUiState (
@@ -13,5 +14,6 @@ data class TeamBuilderUiState (
     val catListPage: Int = 1,
     val selectedCat: OwnedCatDetailsData = OwnedCatDetailsData(),
     val ownedCatCount: Int = 0,
-    val teamIsSelected: Boolean = false
+    val teamIsSelected: Boolean = false,
+    val screenState: ScreenState = ScreenState.LOADING
 )
