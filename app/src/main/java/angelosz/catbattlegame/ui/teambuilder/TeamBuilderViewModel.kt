@@ -25,55 +25,66 @@ class TeamBuilderViewModel(
 
     val paginationLimit = 9
 
-    init{
-        fetchAllPlayerTeams()
-        fetchCatPage()
-        fetchOwnedCatCount()
-
+    init {
         _uiState.update {
             it.copy(
-                screenState = ScreenState.SUCCESS
+                screenState = ScreenState.LOADING
+            )
+        }
+
+        viewModelScope.launch {
+            try {
+                fetchAllPlayerTeams()
+                fetchCatPage()
+                fetchOwnedCatCount()
+
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.SUCCESS
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun fetchOwnedCatCount() {
+        _uiState.update {
+            it.copy(
+                ownedCatCount = playerAccountRepository.getCount()
             )
         }
     }
 
-    private fun fetchOwnedCatCount() {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    ownedCatCount = playerAccountRepository.getCount()
+    private suspend fun fetchCatPage() {
+        val ownedCats = playerAccountRepository
+            .getPaginatedOwnedCats(
+                limit = paginationLimit,
+                offset = paginationLimit * (_uiState.value.catListPage - 1)
+            )
+        val listOfBasicCatData: List<BasicCatData> =
+            catRepository.getCatsById( ownedCats.map { ownedCat -> ownedCat.catId } )
+            .map { cat ->
+                BasicCatData(
+                    catId = cat.id,
+                    image = cat.image
                 )
             }
+        _uiState.update {
+            it.copy(
+                pageCatsData = listOfBasicCatData,
+            )
         }
     }
 
-    private fun fetchCatPage() {
-        viewModelScope.launch {
-            val ownedCats = playerAccountRepository
-                .getPaginatedOwnedCats(
-                    limit = paginationLimit,
-                    offset = paginationLimit * (_uiState.value.catListPage - 1)
-                )
-            val listOfBasicCatData: List<BasicCatData> =
-                catRepository.getCatsById( ownedCats.map { ownedCat -> ownedCat.catId } )
-                .map { cat ->
-                    BasicCatData(
-                        catId = cat.id,
-                        image = cat.image
-                    )
-                }
-            _uiState.update {
-                it.copy(
-                    pageCatsData = listOfBasicCatData,
-                )
-            }
-        }
-    }
-
-    private fun fetchAllPlayerTeams() {
-        viewModelScope.launch {
-            val teams = playerAccountRepository.getAllPlayerTeams()
-            val teamsData = mutableListOf<TeamData>()
+    private suspend fun fetchAllPlayerTeams() {
+        val teams = playerAccountRepository.getAllPlayerTeams()
+        val teamsData = mutableListOf<TeamData>()
 
             for (team in teams) {
                 teamsData.add(
@@ -85,11 +96,10 @@ class TeamBuilderViewModel(
                 )
             }
 
-            _uiState.update {
-                it.copy(
-                    teams = teamsData
-                )
-            }
+        _uiState.update {
+            it.copy(
+                teams = teamsData
+            )
         }
     }
 
