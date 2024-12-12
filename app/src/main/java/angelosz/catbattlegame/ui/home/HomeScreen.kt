@@ -1,7 +1,6 @@
 package angelosz.catbattlegame.ui.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.RoundedButton
 
 
 @Composable
@@ -121,41 +121,18 @@ fun HomeScreen(
                 .padding(end = 8.dp),
         ) {
             Column(){
-                Box(contentAlignment = Alignment.Center,){
-                    Image(
-                        painter = painterResource(R.drawable.circular_button_128),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(96.dp)
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.battlechest_256),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clickable(onClick = navigateToBattleChests )
-                    )
-                }
-                Box(contentAlignment = Alignment.Center,) {
-                    Image(
-                        painter = painterResource(R.drawable.circular_button_128),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(96.dp)
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.teams_button_256),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(80.dp)
-                            .clickable( onClick = navigateToTeamBuild )
-                    )
-                }
+                RoundedButton(
+                    onClick = navigateToBattleChests,
+                    innerImage = R.drawable.battlechest_256,
+                )
+                RoundedButton(
+                    onClick = navigateToTeamBuild,
+                    innerImage = R.drawable.teams_button_256,
+                )
             }
         }
     }
 }
-
 
 @Composable
 private fun HomeButtons(
