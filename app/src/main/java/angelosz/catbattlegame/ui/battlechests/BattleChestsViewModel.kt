@@ -7,6 +7,7 @@ import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.Cat
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
@@ -25,8 +26,32 @@ class BattleChestsViewModel(
     val uiState: StateFlow<BattleChestsUiState> = _uiState
 
     init {
-        viewModelScope.launch {
-            fetchBattleChests()
+        setupInitialData()
+    }
+
+    fun setupInitialData() {
+        _uiState.update {
+            it.copy(
+                screenState = ScreenState.LOADING,
+            )
+        }
+
+        try{
+            viewModelScope.launch {
+                fetchBattleChests()
+
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.SUCCESS,
+                    )
+                }
+            }
+        } catch (e: Exception){
+            _uiState.update {
+                it.copy(
+                    screenState = ScreenState.FAILURE,
+                )
+            }
         }
     }
 
@@ -55,60 +80,66 @@ class BattleChestsViewModel(
     }
 
     fun openSelectedBattleChest(){
-        viewModelScope.launch {
-            val battleChest = uiState.value.selectedBattleChest
-            when(battleChest?.type){
-                BattleChestType.NORMAL -> {
-                    val cat = getRandomCatOfRarity(battleChest.rarity)
+        try{
+            viewModelScope.launch {
+                val battleChest = uiState.value.selectedBattleChest
+                when(battleChest?.type){
+                    BattleChestType.NORMAL -> {
+                        val cat = getRandomCatOfRarity(battleChest.rarity)
 
-                    var message = "You got a ${cat.name}!"
-                    if(!playerAccountRepository.ownsCat(cat.id)){
-                        addCatToPlayerAccount(cat.id)
-                    } else {
-                        message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
-                    }
+                        var message = "You got a ${cat.name}!"
+                        if(!playerAccountRepository.ownsCat(cat.id)){
+                            addCatToPlayerAccount(cat.id)
+                        } else {
+                            message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
+                        }
 
-                    deleteBattleChest(battleChest)
-                    _uiState.update {
-                        it.copy(
-                            catReward = cat,
-                            message = message
-                        )
+                        deleteBattleChest(battleChest)
+                        _uiState.update {
+                            it.copy(
+                                catReward = cat,
+                                message = message
+                            )
+                        }
                     }
+                    BattleChestType.NEW_CAT -> {
+                        val cat = getRandomUnownedCatOfRarity(battleChest.rarity)
+
+                        var message = "You got a ${cat.name}!"
+                        if(!playerAccountRepository.ownsCat(cat.id)){
+                            addCatToPlayerAccount(cat.id)
+                        } else {
+                            message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
+                        }
+
+                        deleteBattleChest(battleChest)
+                        _uiState.update {
+                            it.copy(
+                                catReward = cat,
+                                message = message
+                            )
+                        }
+                    }
+                    null -> { }
                 }
-                BattleChestType.NEW_CAT -> {
-                    val cat = getRandomUnownedCatOfRarity(battleChest.rarity)
-
-                    var message = "You got a ${cat.name}!"
-                    if(!playerAccountRepository.ownsCat(cat.id)){
-                        addCatToPlayerAccount(cat.id)
-                    } else {
-                        message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
-                    }
-
-                    deleteBattleChest(battleChest)
-                    _uiState.update {
-                        it.copy(
-                            catReward = cat,
-                            message = message
-                        )
-                    }
-                }
-                null -> { }
+            }
+        } catch (e: Exception){
+            _uiState.update {
+                it.copy(
+                    screenState = ScreenState.FAILURE,
+                )
             }
         }
     }
 
-    private fun disenchantCat(cat: Cat): Int {
+    private suspend fun disenchantCat(cat: Cat): Int {
         val crystalValue = when(cat.rarity){
             CatRarity.KITTEN -> 20
             CatRarity.TEEN -> 40
             CatRarity.ADULT -> 80
             CatRarity.ELDER -> 160
         }
-        viewModelScope.launch {
-            playerAccountRepository.addCrystals(crystalValue)
-        }
+        playerAccountRepository.addCrystals(crystalValue)
         return crystalValue
     }
 
@@ -157,10 +188,18 @@ class BattleChestsViewModel(
     }
 
     fun goBackToBattleChestsGrid(){
-        viewModelScope.launch {
-            fetchBattleChests()
+        try{
+            viewModelScope.launch {
+                fetchBattleChests()
+                _uiState.update {
+                    it.copy( catReward = null )
+                }
+            }
+        } catch(e: Exception){
             _uiState.update {
-                it.copy( catReward = null )
+                it.copy(
+                    screenState = ScreenState.FAILURE,
+                )
             }
         }
     }
