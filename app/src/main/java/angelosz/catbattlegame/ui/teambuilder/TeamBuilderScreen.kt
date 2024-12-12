@@ -36,9 +36,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatImageCardGrid
+import angelosz.catbattlegame.ui.components.FailureCard
+import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.PaginationButtons
 import angelosz.catbattlegame.ui.components.SmallImageCard
 
@@ -58,10 +61,24 @@ fun TeamBuilderScreen(
         contentAlignment = Alignment.TopCenter
     ) {
         BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
-        if(isPortraitView){
-            HandlePortraitView(uiState, viewModel)
-        } else {
-            HandleLandscapeView(uiState, viewModel)
+        when(uiState.screenState){
+            ScreenState.SUCCESS -> {
+                if(isPortraitView){
+                    HandlePortraitView(uiState, viewModel)
+                } else {
+                    HandleLandscapeView(uiState, viewModel)
+                }
+            }
+            ScreenState.LOADING -> {
+                LoadingCard()
+            }
+            ScreenState.FAILURE -> {
+                FailureCard(
+                    onBackPressed = onBackPressed,
+                    onReloadPressed = { viewModel.setupInitialData() }
+                )
+            }
+            ScreenState.WORKING -> {}
         }
     }
 }
