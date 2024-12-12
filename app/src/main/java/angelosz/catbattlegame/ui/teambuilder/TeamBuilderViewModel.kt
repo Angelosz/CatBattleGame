@@ -26,6 +26,10 @@ class TeamBuilderViewModel(
     val paginationLimit = 9
 
     init {
+        setupInitialData()
+    }
+
+    fun setupInitialData() {
         _uiState.update {
             it.copy(
                 screenState = ScreenState.LOADING
