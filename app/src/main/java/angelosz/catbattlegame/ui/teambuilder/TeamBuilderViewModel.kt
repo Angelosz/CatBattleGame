@@ -90,15 +90,15 @@ class TeamBuilderViewModel(
         val teams = playerAccountRepository.getAllPlayerTeams()
         val teamsData = mutableListOf<TeamData>()
 
-            for (team in teams) {
-                teamsData.add(
-                    TeamData(
-                        teamId = team.id,
-                        teamName = team.name,
-                        cats = playerAccountRepository.getTeamData(team.id)
-                    )
+        for (team in teams) {
+            teamsData.add(
+                TeamData(
+                    teamId = team.id,
+                    teamName = team.name,
+                    cats = playerAccountRepository.getTeamData(team.id)
                 )
-            }
+            )
+        }
 
         _uiState.update {
             it.copy(
@@ -121,76 +121,108 @@ class TeamBuilderViewModel(
 
     fun createNewTeam(){
         viewModelScope.launch {
-            val teamId = playerAccountRepository.insertPlayerTeam(
-                PlayerTeam(
-                    name = "New Team"
+            try {
+                val teamId = playerAccountRepository.insertPlayerTeam(
+                    PlayerTeam(
+                        name = "New Team"
+                    )
                 )
-            )
-            _uiState.update {
-                it.copy(
-                    selectedTeam = TeamData(
-                        teamId = teamId,
-                        teamName = "New Team",
-                        cats = listOf()
-                    ),
-                    teamIsSelected = true
-                )
+                _uiState.update {
+                    it.copy(
+                        selectedTeam = TeamData(
+                            teamId = teamId,
+                            teamName = "New Team",
+                            cats = listOf()
+                        ),
+                        teamIsSelected = true
+                    )
+                }
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
             }
         }
     }
 
     fun deleteTeam(teamId: Long) {
         viewModelScope.launch {
-            val team = playerAccountRepository.getPlayerTeamById(teamId)
-            playerAccountRepository.deleteTeam(team)
-            fetchAllPlayerTeams()
+            try {
+                val team = playerAccountRepository.getPlayerTeamById(teamId)
+                playerAccountRepository.deleteTeam(team)
+                fetchAllPlayerTeams()
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
+            }
         }
     }
 
     fun goBackToTeamList(){
         viewModelScope.launch {
-            val selectedTeam = _uiState.value.selectedTeam
-            playerAccountRepository.clearTeam(selectedTeam.teamId)
-            val catIds = selectedTeam.cats.map { it.catId }
-            if(catIds.isNotEmpty()) {
-                catIds.forEachIndexed { index, catId -> playerAccountRepository.addCatToTeam(
-                    playerTeamOwnedCat = PlayerTeamOwnedCat(selectedTeam.teamId.toInt(), catId, position = index)
-                )}
-            } else {
-                playerAccountRepository.deleteTeambyId(selectedTeam.teamId)
-            }
-            fetchAllPlayerTeams()
-            _uiState.update {
-                it.copy(
-                    selectedTeam = TeamData(
-                        teamId = 1,
-                        teamName = "Default Team",
-                        cats = listOf()
-                    ),
-                    teamIsSelected = false
-                )
+            try{
+                val selectedTeam = _uiState.value.selectedTeam
+                playerAccountRepository.clearTeam(selectedTeam.teamId)
+                val catIds = selectedTeam.cats.map { it.catId }
+                if(catIds.isNotEmpty()) {
+                    catIds.forEachIndexed { index, catId -> playerAccountRepository.addCatToTeam(
+                        playerTeamOwnedCat = PlayerTeamOwnedCat(selectedTeam.teamId.toInt(), catId, position = index)
+                    )}
+                } else {
+                    playerAccountRepository.deleteTeambyId(selectedTeam.teamId)
+                }
+                fetchAllPlayerTeams()
+                _uiState.update {
+                    it.copy(
+                        selectedTeam = TeamData(
+                            teamId = 1,
+                            teamName = "Default Team",
+                            cats = listOf()
+                        ),
+                        teamIsSelected = false
+                    )
+                }
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
             }
         }
     }
 
     fun selectCat(catId: Int){
         viewModelScope.launch {
-            val ownedCat = playerAccountRepository.getOwnedCatByCatId(catId)
-            val cat = catRepository.getCatById(ownedCat.catId)
-            val abilities = abilityRepository.getCatAbilities(catId)
+            try {
+                val ownedCat = playerAccountRepository.getOwnedCatByCatId(catId)
+                val cat = catRepository.getCatById(ownedCat.catId)
+                val abilities = abilityRepository.getCatAbilities(catId)
 
-            _uiState.update {
-                it.copy(
-                    selectedCat = OwnedCatDetailsData(
-                        ownedCatData = ownedCat,
-                        cat = cat,
-                        abilities = abilities,
-                        level = ownedCat.level,
-                        experience = ownedCat.experience,
-                        evolutionCat = null,
-                        isElderOf = null
+                _uiState.update {
+                    it.copy(
+                        selectedCat = OwnedCatDetailsData(
+                            ownedCatData = ownedCat,
+                            cat = cat,
+                            abilities = abilities,
+                            level = ownedCat.level,
+                            experience = ownedCat.experience,
+                            evolutionCat = null,
+                            isElderOf = null
+                        )
                     )
-                )
+                }
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
             }
         }
     }
@@ -201,7 +233,17 @@ class TeamBuilderViewModel(
                 catListPage = it.catListPage - 1
             )
         }
-        fetchCatPage()
+        viewModelScope.launch {
+            try{
+                fetchCatPage()
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
+            }
+        }
     }
 
     fun showNextCatsPage() {
@@ -210,7 +252,17 @@ class TeamBuilderViewModel(
                catListPage = it.catListPage + 1
             )
         }
-        fetchCatPage()
+        viewModelScope.launch {
+            try{
+                fetchCatPage()
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(
+                        screenState = ScreenState.FAILURE
+                    )
+                }
+            }
+        }
     }
 
     fun addSelectedCatToTeam(){
