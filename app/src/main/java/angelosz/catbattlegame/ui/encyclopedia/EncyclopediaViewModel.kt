@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,16 +25,35 @@ class EncyclopediaViewModel(
 
 
     init {
-        viewModelScope.launch {
-            fetchAllCatData()
-            fetchAllAbilityData()
-            if(catList.isNotEmpty()) {
-                fetchCatDetails(catList.first().id)
+        setupInitialData()
+    }
+
+    fun setupInitialData() {
+        _uiState.update {
+            it.copy(screenState = ScreenState.LOADING)
+        }
+
+        try{
+            viewModelScope.launch {
+                fetchAllCatData()
+                fetchAllAbilityData()
+                if (catList.isNotEmpty()) {
+                    fetchCatDetails(catList.first().id)
+                }
+                if (abilityList.isNotEmpty()) {
+                    fetchAbilityData(abilityList.first().id)
+                }
+
+                _uiState.update {
+                    it.copy(screenState = ScreenState.SUCCESS)
+                }
             }
-            if(abilityList.isNotEmpty()){
-                fetchAbilityData(abilityList.first().id)
+        } catch (e: Exception){
+            _uiState.update {
+                it.copy(screenState = ScreenState.FAILURE)
             }
         }
+
     }
 
     private suspend fun fetchAllCatData() {
@@ -69,14 +89,26 @@ class EncyclopediaViewModel(
     }
 
     fun updateSelectedCat(catId: Int){
-        viewModelScope.launch {
-            fetchCatDetails(catId)
+        try {
+            viewModelScope.launch {
+                fetchCatDetails(catId)
+            }
+        } catch (e: Exception){
+            _uiState.update {
+                it.copy(screenState = ScreenState.FAILURE)
+            }
         }
     }
 
     fun updateSelectedAbility(abilityId: Int){
-        viewModelScope.launch {
-            fetchAbilityData(abilityId)
+       try{
+           viewModelScope.launch {
+                fetchAbilityData(abilityId)
+            }
+        } catch (e: Exception){
+            _uiState.update {
+                it.copy(screenState = ScreenState.FAILURE)
+            }
         }
     }
 

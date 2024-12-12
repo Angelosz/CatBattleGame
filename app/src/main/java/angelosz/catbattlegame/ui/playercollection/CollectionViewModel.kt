@@ -1,11 +1,11 @@
 package angelosz.catbattlegame.ui.playercollection
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CollectionSmallCardData
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,8 +25,26 @@ class CollectionViewModel(
     private val smallCardData = _uiState.value.smallCardsData
 
     init {
+        setupInitialData()
+    }
+
+    fun setupInitialData() {
+        _uiState.update {
+            it.copy(screenState = ScreenState.LOADING)
+        }
+
         viewModelScope.launch {
-            fetchOwnedCatsData()
+            try {
+                fetchOwnedCatsData()
+
+                _uiState.update {
+                    it.copy(screenState = ScreenState.SUCCESS)
+                }
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(screenState = ScreenState.FAILURE)
+                }
+            }
         }
     }
 
@@ -82,7 +100,9 @@ class CollectionViewModel(
             try {
                 fetchCatById(catId)
             } catch (e: Exception){
-                Log.d("collection", e.message.toString())
+                _uiState.update {
+                    it.copy(screenState = ScreenState.FAILURE)
+                }
             }
         }
     }

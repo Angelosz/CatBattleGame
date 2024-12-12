@@ -51,8 +51,11 @@ import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.FailureCard
+import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.SmallImageCard
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import kotlinx.coroutines.launch
@@ -70,135 +73,149 @@ fun BattleChestsScreen(
 
     BackHandler( onBack = onBackPressed )
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ){
-        BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
-        if(uiState.catReward == null){
-            /* Battle Chest */
-            val battleChest = uiState.selectedBattleChest
-            if(battleChest != null){
-                Column(
-                    modifier = Modifier.offset { IntOffset(0, lootBoxAnimationOffsetY.value.toInt()) },
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ){
-                    ShowBattleChest(
-                        battleChest = battleChest,
-                        onBattleChestClicked = {
-                            coroutineScope.launch {
-                                try {
-                                    lootBoxAnimationOffsetY.animateTo(
-                                        2000f,
-                                        animationSpec = tween(1000)
-                                    )
-                                    viewModel.openSelectedBattleChest()
-                                } catch (e: Exception) {
-                                    Log.d("battleChest", e.message.toString())
-                                }
-                            }
-                        }
-                    )
-                    TextCard(uiState.message)
-                }
-            } else {
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .fillMaxSize()
-                        .padding(horizontal = 32.dp, vertical = 64.dp),
-                ){
-                    ShowBattleChestList(
-                        battleChests = uiState.battleChests,
-                        onChestClicked = { clickedChest ->
-                            viewModel.selectBattleChest(clickedChest)
-                        }
-                    )
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.circular_button_128),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(64.dp)
-                                .clickable(onClick = onBackPressed )
-                        )
-                        Text(
-                            text = "<",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.displayLarge
-                        )
-                    }
-                }
-            }
-        } else {
-            val cardScale = animateFloatAsState(targetValue =  1f, animationSpec = tween(2000))
+    when(uiState.screenState){
+        ScreenState.SUCCESS -> {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .scale(cardScale.value),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ){
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly
-                ){
-                    uiState.catReward?.let { cat ->
-                        SmallImageCard(
-                            id = cat.id,
-                            image = cat.image,
-                            imageSize = 256,
-                            onCardClicked = {},
-                            showBorder = true,
-                        )
-                        Card(
-                            modifier = Modifier.padding(8.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
+                BackgroundImage(R.drawable.encyclopedia_landscape_blurry)
+                if(uiState.catReward == null){
+                    /* Battle Chest */
+                    val battleChest = uiState.selectedBattleChest
+                    if(battleChest != null){
+                        Column(
+                            modifier = Modifier.offset { IntOffset(0, lootBoxAnimationOffsetY.value.toInt()) },
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
                         ){
-                            Text(
-                                text = uiState.message,
-                                modifier = Modifier.padding(16.dp),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Row {
-                            Button(
-                                onClick = {
-                                    viewModel.goBackToBattleChestsGrid()
+                            ShowBattleChest(
+                                battleChest = battleChest,
+                                onBattleChestClicked = {
                                     coroutineScope.launch {
-                                        lootBoxAnimationOffsetY.snapTo(0f)
+                                        try {
+                                            lootBoxAnimationOffsetY.animateTo(
+                                                2000f,
+                                                animationSpec = tween(1000)
+                                            )
+                                            viewModel.openSelectedBattleChest()
+                                        } catch (e: Exception) {
+                                            Log.d("battleChest", e.message.toString())
+                                        }
                                     }
                                 }
+                            )
+                            TextCard(uiState.message)
+                        }
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .fillMaxSize()
+                                .padding(horizontal = 32.dp, vertical = 64.dp),
+                        ){
+                            ShowBattleChestList(
+                                battleChests = uiState.battleChests,
+                                onChestClicked = { clickedChest ->
+                                    viewModel.selectBattleChest(clickedChest)
+                                }
+                            )
+                            Box(
+                                contentAlignment = Alignment.Center,
+                                modifier = Modifier
+                                    .align(Alignment.BottomEnd)
                             ) {
+                                Image(
+                                    painter = painterResource(R.drawable.circular_button_128),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(64.dp)
+                                        .clickable(onClick = onBackPressed )
+                                )
                                 Text(
-                                    text = "Open more Packages!",
-                                    modifier = Modifier.padding(8.dp),
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.labelLarge
+                                    text = "<",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.displayLarge
                                 )
                             }
-                            Button(
-                                onClick = navigateToCollection,
-                            ) {
-                                Text(
-                                    text = "Go to Collection.",
-                                    modifier = Modifier.padding(8.dp),
-                                    textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.labelLarge
+                        }
+                    }
+                } else {
+                    val cardScale = animateFloatAsState(targetValue =  1f, animationSpec = tween(2000))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .scale(cardScale.value),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ){
+                            uiState.catReward?.let { cat ->
+                                SmallImageCard(
+                                    id = cat.id,
+                                    image = cat.image,
+                                    imageSize = 256,
+                                    onCardClicked = {},
+                                    showBorder = true,
                                 )
+                                Card(
+                                    modifier = Modifier.padding(8.dp),
+                                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
+                                ){
+                                    Text(
+                                        text = uiState.message,
+                                        modifier = Modifier.padding(16.dp),
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.labelLarge
+                                    )
+                                }
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Row {
+                                    Button(
+                                        onClick = {
+                                            viewModel.goBackToBattleChestsGrid()
+                                            coroutineScope.launch {
+                                                lootBoxAnimationOffsetY.snapTo(0f)
+                                            }
+                                        }
+                                    ) {
+                                        Text(
+                                            text = "Open more Packages!",
+                                            modifier = Modifier.padding(8.dp),
+                                            textAlign = TextAlign.Center,
+                                            style = MaterialTheme.typography.labelLarge
+                                        )
+                                    }
+                                    Button(
+                                        onClick = navigateToCollection,
+                                    ) {
+                                        Text(
+                                            text = "Go to Collection.",
+                                            modifier = Modifier.padding(8.dp),
+                                            textAlign = TextAlign.Center,
+                                            style = MaterialTheme.typography.labelLarge
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+        ScreenState.LOADING -> {
+            LoadingCard()
+        }
+        ScreenState.FAILURE -> {
+            FailureCard(
+                onBackPressed = onBackPressed,
+                onReloadPressed = { viewModel.setupInitialData() }
+            )
+        }
+        ScreenState.WORKING -> { }
     }
 }
 
