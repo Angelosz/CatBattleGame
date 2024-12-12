@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.ui.encyclopedia
 
 import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.Cat
@@ -11,5 +12,6 @@ data class EncyclopediaUiState(
     val selectedCatData: CatDetailsData? = null,
     val selectedAbility: Ability? = null,
     val onDetailsView: Boolean = false,
-    val collectionView: CollectionView = CollectionView.CATS
+    val collectionView: CollectionView = CollectionView.CATS,
+    val screenState: ScreenState = ScreenState.LOADING
 )

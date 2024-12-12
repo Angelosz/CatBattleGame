@@ -27,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
 import angelosz.catbattlegame.domain.models.entities.Ability
@@ -36,6 +37,8 @@ import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
 import angelosz.catbattlegame.ui.components.CatDataDetailsCard
 import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
 import angelosz.catbattlegame.ui.components.CollectionNavigationRail
+import angelosz.catbattlegame.ui.components.FailureCard
+import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.SmallImageCard
 
 @Composable
@@ -43,8 +46,6 @@ fun EncyclopediaScreen(
     windowSize: WindowWidthSizeClass,
     onBackPressed: () -> Unit
 ){
-
-
     val viewModel: EncyclopediaViewModel = viewModel( factory = CatViewModelProvider.Factory )
     val uiState by viewModel.uiState.collectAsState()
 
@@ -60,35 +61,49 @@ fun EncyclopediaScreen(
 
     BackHandler( onBack = onBackWasPressed )
 
-    Scaffold(
-        bottomBar = {
-            if (isPortraitView) {
-                CollectionNavigationBottomBar(
-                    selectedView = uiState.collectionView,
-                    onTabPressed = { collectionView ->
-                        viewModel.updateCollectionView(collectionView)
-                        viewModel.changeView(false)
-                    },
-                    onBackPressed = onBackWasPressed,
-                    items = encyclopediaNavigationItems,
-                )
+    when(uiState.screenState){
+        ScreenState.SUCCESS -> {
+            Scaffold(
+                bottomBar = {
+                    if (isPortraitView) {
+                        CollectionNavigationBottomBar(
+                            selectedView = uiState.collectionView,
+                            onTabPressed = { collectionView ->
+                                viewModel.updateCollectionView(collectionView)
+                                viewModel.changeView(false)
+                            },
+                            onBackPressed = onBackWasPressed,
+                            items = encyclopediaNavigationItems,
+                        )
+                    }
+                }
+            ) { innerPadding ->
+                if(isPortraitView){
+                    HandleEncyclopediaPortraitView(
+                        uiState = uiState,
+                        viewModel = viewModel,
+                        innerPadding = innerPadding
+                    )
+                } else {
+                    HandleEncyclopediaLandscapeView(
+                        uiState = uiState,
+                        viewModel = viewModel,
+                        innerPadding = innerPadding,
+                        onBackPressed = onBackWasPressed
+                    )
+                }
             }
         }
-    ) { innerPadding ->
-        if(isPortraitView){
-            HandleEncyclopediaPortraitView(
-                uiState = uiState,
-                viewModel = viewModel,
-                innerPadding = innerPadding
-            )
-        } else {
-            HandleEncyclopediaLandscapeView(
-                uiState = uiState,
-                viewModel = viewModel,
-                innerPadding = innerPadding,
-                onBackPressed = onBackWasPressed
+        ScreenState.LOADING -> {
+            LoadingCard()
+        }
+        ScreenState.FAILURE -> {
+            FailureCard(
+                onBackPressed = onBackWasPressed,
+                onReloadPressed = { viewModel.setupInitialData() }
             )
         }
+        ScreenState.WORKING -> {}
     }
 }
 
