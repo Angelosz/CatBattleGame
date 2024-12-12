@@ -14,13 +14,17 @@ import angelosz.catbattlegame.R
 
 @Composable
 fun RoundedButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     @DrawableRes innerImage: Int,
     @DrawableRes outerImage: Int = R.drawable.circular_button_128,
     outerImageSize: Int = 96,
     innerImageSize: Int = 80
 ) {
-    Box(contentAlignment = Alignment.Center) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center
+    ) {
         Image(
             painter = painterResource(outerImage),
             contentDescription = null,
