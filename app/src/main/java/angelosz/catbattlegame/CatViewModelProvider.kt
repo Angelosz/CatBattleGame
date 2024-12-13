@@ -5,7 +5,7 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import angelosz.catbattlegame.ui.battlechests.BattleChestsViewModel
-import angelosz.catbattlegame.ui.combat.CombatMenuViewModel
+import angelosz.catbattlegame.ui.combat.CampaignScreenViewModel
 import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaViewModel
 import angelosz.catbattlegame.ui.home.HomeScreenViewModel
 import angelosz.catbattlegame.ui.playercollection.CollectionViewModel
@@ -51,7 +51,9 @@ object CatViewModelProvider {
         }
 
         initializer {
-            CombatMenuViewModel()
+            CampaignScreenViewModel(
+                getCatBattleApplication().container.campaignRepository
+            )
         }
     }
 }
