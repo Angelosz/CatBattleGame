@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import angelosz.catbattlegame.ui.battlechests.BattleChestsScreen
-import angelosz.catbattlegame.ui.combat.CombatMenuScreen
+import angelosz.catbattlegame.ui.combat.CampaignScreen
 import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaScreen
 import angelosz.catbattlegame.ui.home.HomeScreen
 import angelosz.catbattlegame.ui.playercollection.CollectionScreen
@@ -64,7 +64,7 @@ fun AppLayout(
             )
         }
         composable<CombatMenuScreenRoute>{
-            CombatMenuScreen(
+            CampaignScreen(
                 windowSize = windowSize,
                 onBackButtonPressed = { navController.navigateUp() }
             )
