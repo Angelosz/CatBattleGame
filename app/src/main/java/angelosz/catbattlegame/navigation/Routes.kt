@@ -16,3 +16,6 @@ object BattleChestsScreenRoute
 
 @Serializable
 object TeamBuilderScreenRoute
+
+@Serializable
+object CombatMenuScreenRoute
