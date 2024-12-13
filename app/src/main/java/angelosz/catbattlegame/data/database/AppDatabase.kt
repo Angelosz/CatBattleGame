@@ -6,11 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import angelosz.catbattlegame.data.dao.AbilityDao
 import angelosz.catbattlegame.data.dao.BattleChestDao
+import angelosz.catbattlegame.data.dao.CampaignDao
 import angelosz.catbattlegame.data.dao.CatDao
 import angelosz.catbattlegame.data.dao.PlayerDao
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.AbilityArmorDamageMultiplier
 import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.domain.models.entities.Campaign
+import angelosz.catbattlegame.domain.models.entities.CampaignChapter
 import angelosz.catbattlegame.domain.models.entities.Cat
 import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
@@ -28,15 +31,18 @@ import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
         OwnedCat::class,
         BattleChest::class,
         PlayerTeam::class,
-        PlayerTeamOwnedCat::class
+        PlayerTeamOwnedCat::class,
+        Campaign::class,
+        CampaignChapter::class
     ],
     exportSchema = false,
-    version = 17)
+    version = 19)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
     abstract fun playerDao(): PlayerDao
     abstract fun battleChestDao(): BattleChestDao
+    abstract fun campaignDao(): CampaignDao
 
     companion object {
         @Volatile
