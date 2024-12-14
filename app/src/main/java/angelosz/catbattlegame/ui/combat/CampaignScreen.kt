@@ -1,17 +1,23 @@
 package angelosz.catbattlegame.ui.combat
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Card
@@ -27,7 +33,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -59,15 +67,17 @@ fun CampaignScreen(
             ScreenState.SUCCESS -> {
                 when(uiState.stage){
                     CampaignSelectionStage.SELECTING_CAMPAIGN -> {
+                        BackHandler(onBack = onBackButtonPressed)
                         CampaignSelectionCarousel(
                             campaigns = uiState.campaigns,
                             onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) }
                         )
                     }
                     CampaignSelectionStage.SELECTING_CHAPTER -> {
+                        BackHandler(onBack = { viewModel.backToCampaignSelection() })
                         CampaignChapterSelectionGrid(
                             chapters = uiState.campaignChapters,
-                            onChapterClicked = {  }
+                            onChapterClicked = { chapter -> viewModel.selectCampaignChapter(chapter) }
                         )
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {
@@ -99,7 +109,7 @@ fun CampaignChapterSelectionGrid(
         Column(
             modifier = Modifier
                 .systemBarsPadding()
-                .fillMaxSize(),
+                .height(640.dp),
             ) {
             LazyVerticalGrid(
                 modifier = Modifier
@@ -110,13 +120,32 @@ fun CampaignChapterSelectionGrid(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(chapters) { chapter ->
-                    RoundedButton(
-                        onClick = { onChapterClicked(chapter) },
-                        innerImage = chapter.image,
-                        outerImage = R.drawable.iconflash_256,
-                        innerImageSize = 96,
-                        outerImageSize = 128
-                    )
+                    Box {
+                        RoundedButton(
+                            onClick = { onChapterClicked(chapter) },
+                            innerImage = chapter.image,
+                            outerImage = R.drawable.iconflash_256,
+                            innerImageSize = 96,
+                            outerImageSize = 128
+                        )
+                        if(chapter.state == CampaignState.LOCKED){
+                            Card(
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .shadow(2.dp, CircleShape),
+                                shape = CircleShape,
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.White
+                                ),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Lock,
+                                    contentDescription = "Locked Chapter",
+                                    modifier = Modifier.padding(4.dp),
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
