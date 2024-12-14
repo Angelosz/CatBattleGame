@@ -52,7 +52,8 @@ object CatViewModelProvider {
 
         initializer {
             CampaignScreenViewModel(
-                getCatBattleApplication().container.campaignRepository
+                getCatBattleApplication().container.campaignRepository,
+                getCatBattleApplication().container.enemyCatRepository
             )
         }
     }
