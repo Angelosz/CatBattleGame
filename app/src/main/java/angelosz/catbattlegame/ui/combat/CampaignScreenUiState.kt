@@ -16,5 +16,6 @@ data class CampaignScreenUiState (
     val selectedCampaign: Campaign = Campaign(0),
     val campaignChapters: List<CampaignChapter> = listOf(),
     val selectedCampaignChapter: CampaignChapter = CampaignChapter(),
+    val selectedCampaignChapterEnemyCats: List<SimplifiedEnemyCatData> = listOf(),
     val stage: CampaignSelectionStage = CampaignSelectionStage.SELECTING_CAMPAIGN
 )
