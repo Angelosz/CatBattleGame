@@ -31,7 +31,7 @@ interface EnemyCatDao {
     suspend fun getEnemyCatsByCampaignChapterId(campaignChapterId: Long): List<EnemyCat>
 
     @Query("""
-        SELECT E.id, E.name, E.image
+        SELECT E.id, E.name, E.image, E.description
         FROM campaign_enemies E
         JOIN chapter_enemy CE ON E.id = CE.enemyCatId
         WHERE CE.chapterId = :campaignChapterId
