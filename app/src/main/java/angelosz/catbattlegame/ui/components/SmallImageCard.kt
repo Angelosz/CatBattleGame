@@ -19,7 +19,7 @@ import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 @Composable
 fun SmallImageCard(
     modifier: Modifier = Modifier,
-    id: Int,
+    id: Int = 1,
     @DrawableRes image: Int,
     onCardClicked: (Int) -> Unit = {},
     imageSize: Int = 127,
