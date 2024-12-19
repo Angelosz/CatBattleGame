@@ -47,15 +47,15 @@ fun FailureCard(
                             text = "Go back"
                         )
                     }
-                    Button(
+                    /*Button(
                         onClick = onReloadPressed,
                         modifier = Modifier.padding(4.dp)
                     ) {
                         Text(
                             modifier = Modifier.padding(8.dp),
-                            text = "Reload Team Builder"
+                            text = "Reload"
                         )
-                    }
+                    }*/
                 }
             }
         }
