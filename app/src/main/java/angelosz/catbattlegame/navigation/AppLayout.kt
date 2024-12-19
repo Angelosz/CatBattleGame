@@ -8,7 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import angelosz.catbattlegame.ui.battlechests.BattleChestsScreen
-import angelosz.catbattlegame.ui.combat.CampaignScreen
+import angelosz.catbattlegame.ui.campaign.CampaignScreen
+import angelosz.catbattlegame.ui.combat.CombatScreen
 import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaScreen
 import angelosz.catbattlegame.ui.home.HomeScreen
 import angelosz.catbattlegame.ui.playercollection.CollectionScreen

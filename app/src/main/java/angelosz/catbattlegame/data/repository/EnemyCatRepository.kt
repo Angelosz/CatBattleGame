@@ -4,7 +4,7 @@ import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.ChapterEnemy
 import angelosz.catbattlegame.domain.models.entities.EnemyAbility
 import angelosz.catbattlegame.domain.models.entities.EnemyCat
-import angelosz.catbattlegame.ui.combat.SimplifiedEnemyCatData
+import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 interface EnemyCatRepository {
     suspend fun insertEnemyCat(enemyCat: EnemyCat): Long

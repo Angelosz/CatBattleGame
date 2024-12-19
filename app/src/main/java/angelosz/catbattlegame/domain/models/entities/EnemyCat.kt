@@ -7,7 +7,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CatRole
-import angelosz.catbattlegame.ui.combat.EnemyType
+import angelosz.catbattlegame.ui.campaign.EnemyType
 
 @Entity(tableName = "campaign_enemies")
 data class EnemyCat(
