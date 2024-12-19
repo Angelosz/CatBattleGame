@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.combat
+package angelosz.catbattlegame.ui.campaign
 
 import androidx.annotation.DrawableRes
 

@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.combat
+package angelosz.catbattlegame.ui.campaign
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +55,7 @@ import angelosz.catbattlegame.ui.components.SmallImageCard
 fun CampaignScreen(
     windowSize: WindowWidthSizeClass,
     onBackButtonPressed: () -> Unit,
+    onChapterSelected: (Long) -> Unit,
     viewModel: CampaignScreenViewModel = viewModel(factory = CatViewModelProvider.Factory)
     ){
     val uiState by viewModel.uiState.collectAsState()
@@ -84,7 +85,7 @@ fun CampaignScreen(
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {
                         BackHandler(onBack = { viewModel.backToCampaignChapterSelection() })
-                        ChapterInfoCard(uiState)
+                        ChapterInfoCard(uiState, onChooseTeamClicked = onChapterSelected)
                     }
                 }
 
@@ -104,7 +105,10 @@ fun CampaignScreen(
 }
 
 @Composable
-private fun ChapterInfoCard(uiState: CampaignScreenUiState) {
+private fun ChapterInfoCard(
+    uiState: CampaignScreenUiState,
+    onChooseTeamClicked: (Long) -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -182,13 +186,11 @@ private fun ChapterInfoCard(uiState: CampaignScreenUiState) {
             ){
                 Button(
                     modifier = Modifier.padding(8.dp),
-                    onClick = {
-
-                    }
+                    onClick = { onChooseTeamClicked(uiState.selectedCampaignChapter.id) }
                 ){
                     Text(
                         modifier = Modifier.padding(4.dp),
-                        text = "Fight",
+                        text = "Start",
                         style = MaterialTheme.typography.headlineSmall
                     )
                 }

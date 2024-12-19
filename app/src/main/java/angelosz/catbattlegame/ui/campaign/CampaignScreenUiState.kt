@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.combat
+package angelosz.catbattlegame.ui.campaign
 
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.entities.Campaign
