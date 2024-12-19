@@ -18,4 +18,13 @@ object BattleChestsScreenRoute
 object TeamBuilderScreenRoute
 
 @Serializable
-object CombatMenuScreenRoute
+object CampaignMenuScreenRoute
+
+@Serializable
+data class TeamSelectionScreenRoute(val chapterId: Long)
+
+@Serializable
+data class CombatScreenRoute(val teamId: Long, val chapterId: Long)
+
+@Serializable
+data class CombatResolutionScreenRoute(val teamId: Long, val chapterId: Long, val success: Boolean)
