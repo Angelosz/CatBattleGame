@@ -98,7 +98,9 @@ fun HandleLandscapeView(uiState: TeamBuilderUiState, viewModel: TeamBuilderViewM
                 selectTeam = { teamData -> viewModel.selectTeam(teamData.teamId) },
                 deleteTeam = { teamData -> viewModel.deleteTeam(teamData.teamId) },
                 createTeam = { _ -> viewModel.createNewTeam() },
-                columns = 2
+                columns = 2,
+                canDeleteTeam = true,
+                canCreateTeam = true
             )
         } else {
             BackHandler { viewModel.goBackToTeamList() }
@@ -132,7 +134,8 @@ fun HandleLandscapeView(uiState: TeamBuilderUiState, viewModel: TeamBuilderViewM
                     spacedBy = 8,
                     onTeamCardClicked = { },
                     onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId) },
-                    onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) }
+                    onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) },
+                    isNameEditable = true
                 )
             }
         }
@@ -156,6 +159,8 @@ private fun HandlePortraitView(
                 selectTeam = { teamData -> viewModel.selectTeam(teamData.teamId) },
                 deleteTeam = { teamData -> viewModel.deleteTeam(teamData.teamId) },
                 createTeam = { _ -> viewModel.createNewTeam() },
+                canDeleteTeam = true,
+                canCreateTeam = true
             )
         } else {
             BackHandler { viewModel.goBackToTeamList() }
@@ -186,7 +191,9 @@ private fun HandlePortraitView(
                 spacedBy = 8,
                 onTeamCardClicked = { },
                 onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId) },
-                onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) }
+                onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) },
+                isNameEditable = true,
+                onNameChanged = viewModel::UpdateTeamName
             )
         }
     }
@@ -201,7 +208,7 @@ fun SelectedCatInfoCard(
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .height(208.dp),
+            .height(192.dp),
         shape = RectangleShape,
     ) {
         Row(
@@ -277,7 +284,7 @@ fun SelectedCatInfoCard(
                     modifier = Modifier
                         .padding(horizontal = 6.dp)
                 ) {
-
+                    // Abilities?
                 }
             }
         }
@@ -317,11 +324,15 @@ fun TeamCatsGridPage(
 @Composable
 fun TeamsList(
     teams: List<TeamData>,
-    selectTeam: (TeamData) -> Unit,
-    deleteTeam: (TeamData) -> Unit,
-    createTeam: (TeamData) -> Unit,
+    selectTeam: (TeamData) -> Unit = {},
+    deleteTeam: (TeamData) -> Unit = {},
+    createTeam: (TeamData) -> Unit = {},
     panelsSize: Int = 360,
-    columns: Int = 1
+    columns: Int = 1,
+    canDeleteTeam: Boolean = false,
+    canCreateTeam: Boolean = false,
+    selectedTeamId: Long = 0,
+    markSelectedTeamId: Boolean = false
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
@@ -336,28 +347,31 @@ fun TeamsList(
                 imageSize = 80,
                 spacedBy = 8,
                 onTeamCardClicked = selectTeam,
-                hasDeleteButton = true,
+                hasDeleteButton = canDeleteTeam,
                 onDeleteTeamClicked = deleteTeam,
                 onCatClicked = {},
+                markTeam = markSelectedTeamId && (selectedTeamId == team.teamId),
             )
         }
-        item {
-            /* New Team TeamPanel */
-            TeamPanel(
-                teamData = TeamData(
-                    teamId = 0,
-                    teamName = "Create New Team",
-                    cats = listOf()
-                ),
-                modifier = Modifier
-                    .padding(16.dp)
-                    .width(panelsSize.dp),
-                imageSize = 80,
-                spacedBy = 8,
-                onTeamCardClicked = createTeam,
-                onDeleteTeamClicked = { },
-                onCatClicked = {},
-            )
+        if(canCreateTeam){
+            item {
+                /* New Team TeamPanel */
+                TeamPanel(
+                    teamData = TeamData(
+                        teamId = 0,
+                        teamName = "Create New Team",
+                        cats = listOf()
+                    ),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .width(panelsSize.dp),
+                    imageSize = 80,
+                    spacedBy = 8,
+                    onTeamCardClicked = createTeam,
+                    onDeleteTeamClicked = { },
+                    onCatClicked = {},
+                )
+            }
         }
     }
 }
