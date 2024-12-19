@@ -13,4 +13,5 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Campaign Chapters */
     override suspend fun insertCampaignChapter(campaignChapter: CampaignChapter): Long = dao.insertCampaignChapter(campaignChapter)
     override suspend fun getCampaignChaptersByCampaignId(campaignId: Long): List<CampaignChapter> = dao.getCampaignChaptersByCampaignId(campaignId)
+    override suspend fun getChapterById(id: Long): CampaignChapter = dao.getCampaignChapterById(id)
 }

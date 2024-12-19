@@ -12,4 +12,5 @@ interface CampaignRepository {
     /* Campaign Chapter */
     suspend fun insertCampaignChapter(campaignChapter: CampaignChapter): Long
     suspend fun getCampaignChaptersByCampaignId(campaignId: Long): List<CampaignChapter>
+    suspend fun getChapterById(id: Long): CampaignChapter
 }
