@@ -44,6 +44,8 @@ interface PlayerDao {
     suspend fun getAllOwnedCats(): List<OwnedCat>
     @Query("Select * from player_owned_cat where catId = :catId")
     suspend fun getOwnedCatByCatId(catId: Int): OwnedCat
+    @Query("Select * from player_owned_cat where id = :id")
+    suspend fun getOwnedCatById(id: Int): OwnedCat
     @Query("Select * from player_owned_cat where catId in (:catIds)")
     suspend fun getOwnedCatsByIds(catIds: List<Int>): List<OwnedCat>
     @Query("Select * from player_owned_cat order by id asc limit :limit offset :offset")
