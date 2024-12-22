@@ -18,6 +18,7 @@ import angelosz.catbattlegame.domain.models.entities.CampaignChapter
 import angelosz.catbattlegame.domain.models.entities.Cat
 import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
 import angelosz.catbattlegame.domain.models.entities.ChapterEnemy
+import angelosz.catbattlegame.domain.models.entities.ChapterReward
 import angelosz.catbattlegame.domain.models.entities.EnemyAbility
 import angelosz.catbattlegame.domain.models.entities.EnemyCat
 import angelosz.catbattlegame.domain.models.entities.OwnedCat
@@ -40,10 +41,11 @@ import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
         CampaignChapter::class,
         EnemyCat::class,
         EnemyAbility::class,
-        ChapterEnemy::class
+        ChapterEnemy::class,
+        ChapterReward::class
     ],
     exportSchema = false,
-    version = 21)
+    version = 23)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
