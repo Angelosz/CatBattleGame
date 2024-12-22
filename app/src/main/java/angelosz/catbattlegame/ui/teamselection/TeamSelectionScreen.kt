@@ -86,7 +86,7 @@ fun TeamSelectionScreen(
                     onReloadPressed = { viewModel.setupInitialData() }
                 )
             }
-            ScreenState.WORKING -> {
+            ScreenState.INITIALIZING -> {
 
             }
         }

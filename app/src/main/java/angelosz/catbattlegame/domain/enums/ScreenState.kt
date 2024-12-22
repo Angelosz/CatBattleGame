@@ -4,5 +4,5 @@ enum class ScreenState {
     SUCCESS,
     LOADING,
     FAILURE,
-    WORKING
+    INITIALIZING
 }

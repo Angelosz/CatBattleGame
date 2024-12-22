@@ -99,7 +99,7 @@ fun CampaignScreen(
                     onReloadPressed = { viewModel.setupInitialData() }
                 )
             }
-            ScreenState.WORKING -> { }
+            ScreenState.INITIALIZING -> { }
         }
     }
 }
