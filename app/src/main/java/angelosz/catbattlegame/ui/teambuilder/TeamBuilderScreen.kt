@@ -38,6 +38,7 @@ import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
+import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatImageCardGrid
 import angelosz.catbattlegame.ui.components.FailureCard
@@ -78,7 +79,16 @@ fun TeamBuilderScreen(
                     onReloadPressed = { viewModel.setupInitialData() }
                 )
             }
-            ScreenState.WORKING -> {}
+            ScreenState.INITIALIZING -> {}
+        }
+
+        if (!uiState.teamIsSelected) {
+            BackButton(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(horizontal = 32.dp, vertical = 64.dp),
+                onBackPressed = onBackPressed
+            )
         }
     }
 }

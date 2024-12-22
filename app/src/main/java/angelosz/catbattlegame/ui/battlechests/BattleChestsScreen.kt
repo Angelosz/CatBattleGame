@@ -41,7 +41,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
@@ -53,6 +52,7 @@ import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
@@ -110,35 +110,29 @@ fun BattleChestsScreen(
                     } else {
                         Box(
                             modifier = Modifier
-                                .align(Alignment.Center)
                                 .fillMaxSize()
                                 .padding(horizontal = 32.dp, vertical = 64.dp),
+                            contentAlignment = Alignment.Center
                         ){
-                            ShowBattleChestList(
-                                battleChests = uiState.battleChests,
-                                onChestClicked = { clickedChest ->
-                                    viewModel.selectBattleChest(clickedChest)
+                            if(uiState.battleChests.isNotEmpty()){
+                                ShowBattleChestList(
+                                    battleChests = uiState.battleChests,
+                                    onChestClicked = { clickedChest ->
+                                        viewModel.selectBattleChest(clickedChest)
+                                    }
+                                )
+                            } else {
+                                Card(){
+                                    Text(
+                                        modifier = Modifier.padding(8.dp),
+                                        text = "You have no packages left! :("
+                                    )
                                 }
-                            )
-                            Box(
-                                contentAlignment = Alignment.Center,
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                            ) {
-                                Image(
-                                    painter = painterResource(R.drawable.circular_button_128),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(64.dp)
-                                        .clickable(onClick = onBackPressed )
-                                )
-                                Text(
-                                    text = "<",
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold,
-                                    style = MaterialTheme.typography.displayLarge
-                                )
                             }
+                            BackButton(
+                                modifier = Modifier.align(Alignment.BottomEnd),
+                                onBackPressed = onBackPressed
+                            )
                         }
                     }
                 } else {
@@ -215,7 +209,7 @@ fun BattleChestsScreen(
                 onReloadPressed = { viewModel.setupInitialData() }
             )
         }
-        ScreenState.WORKING -> { }
+        ScreenState.INITIALIZING -> { }
     }
 }
 
