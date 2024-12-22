@@ -29,6 +29,7 @@ import angelosz.catbattlegame.domain.enums.AbilityType
 import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CatRole
+import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.Cat
@@ -215,7 +216,8 @@ fun Preview_CatDataCard(){
                         description = "Quick but lower damage attack.",
                         image = R.drawable.ability_quick_attack_256,
                         icon = R.drawable.ability_quick_attack_48,
-                        abilityType = AbilityType.NORMAL,
+                        abilityType = AbilityType.DAMAGE,
+                        damageType = DamageType.PIERCING,
                         attackSpeedMultiplier = 0.75f,
                         damageMultiplier = 0.75f,
                         combatModifier = null,

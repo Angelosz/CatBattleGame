@@ -97,7 +97,7 @@ fun CollectionScreen(
 
             )
         }
-        ScreenState.WORKING -> { }
+        ScreenState.INITIALIZING -> { }
     }
 }
 

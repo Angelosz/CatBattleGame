@@ -21,7 +21,7 @@
     <string name="abilitytype_elemental">Elemental</string>
     <string name="abilitytype_ethereal">Ethereal</string>
     <string name="abilitytype_healing">Healing</string>
-    <string name="abilitytype_normal">Normal</string>
+    <string name="abilitytype_damage">Damage Dealing</string>
     <string name="abilitytype_status_changing">Status changing</string>
     <string name="abilitytarget_single_enemy">Single enemy</string>
     <string name="abilitytarget_enemy_team">Enemy team</string>

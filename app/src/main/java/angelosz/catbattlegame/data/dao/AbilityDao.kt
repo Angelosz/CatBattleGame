@@ -26,4 +26,10 @@ interface AbilityDao {
             " ON abilities.id == cat_ability_crossref.abilityId" +
             " WHERE cat_ability_crossref.catId == :catId")
     suspend fun getCatAbilities(catId: Int): List<Ability>
+
+    @Query("Select abilities.* from abilities" +
+            " INNER JOIN campaign_enemy_ability" +
+            " ON abilities.id == campaign_enemy_ability.abilityId" +
+            " WHERE campaign_enemy_ability.enemyCatId == :catId")
+    suspend fun getEnemyCatAbilities(catId: Int): List<Ability>
 }

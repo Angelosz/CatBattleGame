@@ -8,8 +8,8 @@ import angelosz.catbattlegame.domain.enums.CampaignState
 
 @Entity(tableName = "campaign_chapter")
 data class CampaignChapter(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @PrimaryKey
+    val id: Long = 1,
     val campaignId: Long = 1,
     val order: Int = 1,
     val state: CampaignState = CampaignState.LOCKED,

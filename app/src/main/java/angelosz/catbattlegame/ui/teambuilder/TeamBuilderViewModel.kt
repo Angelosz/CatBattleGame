@@ -79,6 +79,7 @@ class TeamBuilderViewModel(
                     image = cat.image
                 )
             }
+        if(listOfBasicCatData.isNotEmpty()) selectCat(listOfBasicCatData.first().catId)
         _uiState.update {
             it.copy(
                 pageCatsData = listOfBasicCatData,
@@ -173,6 +174,7 @@ class TeamBuilderViewModel(
                     catIds.forEachIndexed { index, catId -> playerAccountRepository.addCatToTeam(
                         playerTeamOwnedCat = PlayerTeamOwnedCat(selectedTeam.teamId.toInt(), catId, position = index)
                     )}
+                    playerAccountRepository.insertPlayerTeam(PlayerTeam(selectedTeam.teamId, selectedTeam.teamName))
                 } else {
                     playerAccountRepository.deleteTeambyId(selectedTeam.teamId)
                 }
@@ -310,6 +312,16 @@ class TeamBuilderViewModel(
                     teamId = selectedTeam.teamId,
                     teamName = selectedTeam.teamName,
                     cats = teamList
+                )
+            )
+        }
+    }
+
+    fun UpdateTeamName(teamName: String) {
+        _uiState.update {
+            it.copy(
+                selectedTeam = it.selectedTeam.copy(
+                    teamName = teamName
                 )
             )
         }

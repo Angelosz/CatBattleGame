@@ -3,6 +3,7 @@ package angelosz.catbattlegame.data.repository
 import angelosz.catbattlegame.data.dao.CampaignDao
 import angelosz.catbattlegame.domain.models.entities.Campaign
 import angelosz.catbattlegame.domain.models.entities.CampaignChapter
+import angelosz.catbattlegame.domain.models.entities.ChapterReward
 
 class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Campaign */
@@ -13,4 +14,9 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Campaign Chapters */
     override suspend fun insertCampaignChapter(campaignChapter: CampaignChapter): Long = dao.insertCampaignChapter(campaignChapter)
     override suspend fun getCampaignChaptersByCampaignId(campaignId: Long): List<CampaignChapter> = dao.getCampaignChaptersByCampaignId(campaignId)
+    override suspend fun getChapterById(id: Long): CampaignChapter = dao.getCampaignChapterById(id)
+
+    /* Chapter Rewards */
+    override suspend fun insertChapterReward(chapterReward: ChapterReward): Long = dao.insertChapterReward(chapterReward)
+    override suspend fun getChapterRewards(chapterId: Long): List<ChapterReward> = dao.getChapterRewards(chapterId)
 }

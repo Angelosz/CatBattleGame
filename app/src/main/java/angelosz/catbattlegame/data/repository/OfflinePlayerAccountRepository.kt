@@ -25,6 +25,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun getAllOwnedCats(): List<OwnedCat> = dao.getAllOwnedCats()
     override suspend fun getOwnedCatsByCatIds(catIds: List<Int>): List<OwnedCat> = dao.getOwnedCatsByIds(catIds)
     override suspend fun getOwnedCatByCatId(catId: Int): OwnedCat = dao.getOwnedCatByCatId(catId)
+    override suspend fun getOwnedCatById(id: Int): OwnedCat = dao.getOwnedCatById(id)
     override suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat> = dao.getPaginatedOwnedCats(limit, offset)
     override suspend fun getCount(): Int = dao.getCount()
     override suspend fun ownsCat(catId: Int): Boolean = dao.ownsCat(catId)

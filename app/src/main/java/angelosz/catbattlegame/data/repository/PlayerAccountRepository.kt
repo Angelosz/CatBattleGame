@@ -24,6 +24,7 @@ interface PlayerAccountRepository {
 
     suspend fun getAllOwnedCats(): List<OwnedCat>
     suspend fun getOwnedCatByCatId(catId: Int): OwnedCat
+    suspend fun getOwnedCatById(id: Int): OwnedCat
     suspend fun getOwnedCatsByCatIds(catIds: List<Int>): List<OwnedCat>
     suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat>
     suspend fun getCount(): Int

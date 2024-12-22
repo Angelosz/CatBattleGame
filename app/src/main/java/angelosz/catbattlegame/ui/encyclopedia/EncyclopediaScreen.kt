@@ -103,7 +103,7 @@ fun EncyclopediaScreen(
                 onReloadPressed = { viewModel.setupInitialData() }
             )
         }
-        ScreenState.WORKING -> {}
+        ScreenState.INITIALIZING -> {}
     }
 }
 

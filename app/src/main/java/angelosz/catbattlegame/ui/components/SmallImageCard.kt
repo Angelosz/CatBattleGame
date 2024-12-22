@@ -19,11 +19,12 @@ import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 @Composable
 fun SmallImageCard(
     modifier: Modifier = Modifier,
-    id: Int,
+    id: Int = 1,
     @DrawableRes image: Int,
     onCardClicked: (Int) -> Unit = {},
     imageSize: Int = 127,
-    showBorder: Boolean = true
+    showBorder: Boolean = true,
+    @DrawableRes borderImage: Int = R.drawable.cat_image_border
 ){
     Box(modifier = modifier
         .size(imageSize.dp),
@@ -41,7 +42,7 @@ fun SmallImageCard(
         }
         if(showBorder){
             Image(
-                painter = painterResource(R.drawable.small_border_2),
+                painter = painterResource(borderImage),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.size(imageSize.dp)

@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.navigation
 
+import angelosz.catbattlegame.domain.enums.CombatResult
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -18,4 +19,13 @@ object BattleChestsScreenRoute
 object TeamBuilderScreenRoute
 
 @Serializable
-object CombatMenuScreenRoute
+object CampaignMenuScreenRoute
+
+@Serializable
+data class TeamSelectionScreenRoute(val chapterId: Long)
+
+@Serializable
+data class CombatScreenRoute(val teamId: Long, val chapterId: Long)
+
+@Serializable
+data class CombatResultScreenRoute(val teamId: Long, val chapterId: Long, val combatResult: CombatResult)

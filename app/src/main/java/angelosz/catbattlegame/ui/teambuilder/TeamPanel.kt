@@ -14,7 +14,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,25 +42,43 @@ fun TeamPanel(
     hasDeleteButton: Boolean = false,
     onDeleteTeamClicked: (TeamData) -> Unit = {},
     onCatClicked: (Int) -> Unit,
+    markTeam: Boolean = false,
+    isNameEditable: Boolean = false,
+    onNameChanged: (String) -> Unit = {}
 ){
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(
+            containerColor = if(markTeam) Color.LightGray else Color.White
+        ),
         onClick = { onTeamCardClicked(teamData) },
         shape = RectangleShape,
     ){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(8.dp)
             ) {
-                Text(
-                    text = teamData.teamName,
-                    style = MaterialTheme.typography.headlineSmall,
-                )
+                if(isNameEditable){
+                    var teamName by remember { mutableStateOf(teamData.teamName) }
+                    TextField(
+                        value = teamName,
+                        onValueChange = {
+                            teamName = it
+                            onNameChanged(it)
+                        },
+                        singleLine = true,
+                    )
+                } else {
+                    Text(
+                        text = teamData.teamName,
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                }
                 Spacer(modifier = Modifier.weight(1f))
                 if(hasDeleteButton){
                     DeleteTeamButton(onDeleteTeamClicked, teamData)
@@ -138,6 +161,7 @@ fun Preview_TeamPanel(){
             onTeamCardClicked = { },
             onDeleteTeamClicked = { },
             onCatClicked = {},
+            isNameEditable = true,
         )
     }
 }

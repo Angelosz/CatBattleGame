@@ -1,22 +1,29 @@
-package angelosz.catbattlegame.ui.combat
+package angelosz.catbattlegame.ui.campaign
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -27,7 +34,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -40,11 +49,13 @@ import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.RoundedButton
+import angelosz.catbattlegame.ui.components.SmallImageCard
 
 @Composable
 fun CampaignScreen(
     windowSize: WindowWidthSizeClass,
     onBackButtonPressed: () -> Unit,
+    onChapterSelected: (Long) -> Unit,
     viewModel: CampaignScreenViewModel = viewModel(factory = CatViewModelProvider.Factory)
     ){
     val uiState by viewModel.uiState.collectAsState()
@@ -59,19 +70,22 @@ fun CampaignScreen(
             ScreenState.SUCCESS -> {
                 when(uiState.stage){
                     CampaignSelectionStage.SELECTING_CAMPAIGN -> {
+                        BackHandler(onBack = onBackButtonPressed)
                         CampaignSelectionCarousel(
                             campaigns = uiState.campaigns,
                             onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) }
                         )
                     }
                     CampaignSelectionStage.SELECTING_CHAPTER -> {
+                        BackHandler(onBack = { viewModel.backToCampaignSelection() })
                         CampaignChapterSelectionGrid(
                             chapters = uiState.campaignChapters,
-                            onChapterClicked = {  }
+                            onChapterClicked = { chapter -> viewModel.selectCampaignChapter(chapter) }
                         )
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {
-
+                        BackHandler(onBack = { viewModel.backToCampaignChapterSelection() })
+                        ChapterInfoCard(uiState, onChooseTeamClicked = onChapterSelected)
                     }
                 }
 
@@ -85,7 +99,102 @@ fun CampaignScreen(
                     onReloadPressed = { viewModel.setupInitialData() }
                 )
             }
-            ScreenState.WORKING -> { }
+            ScreenState.INITIALIZING -> { }
+        }
+    }
+}
+
+@Composable
+private fun ChapterInfoCard(
+    uiState: CampaignScreenUiState,
+    onChooseTeamClicked: (Long) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        RoundedButton(
+            outerImage = R.drawable.iconflash_256,
+            outerImageSize = 256,
+            innerImage = uiState.selectedCampaignChapter.image,
+            innerImageSize = 196,
+            onClick = { },
+        )
+        Card(
+            modifier = Modifier.padding(16.dp),
+        ) {
+            Column(
+                modifier = Modifier.padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = uiState.selectedCampaignChapter.name,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(
+                    text = uiState.selectedCampaignChapter.description,
+                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Card(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = "Enemies",
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineSmall,
+                    )
+                    LazyVerticalGrid(
+                        contentPadding = PaddingValues(16.dp),
+                        columns = GridCells.Fixed(2),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.height(256.dp)
+                    ) {
+                        items(uiState.selectedCampaignChapterEnemyCats) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                SmallImageCard(
+                                    image = it.image,
+                                    imageSize = 128
+                                )
+                                Card(
+                                    modifier = Modifier.padding(top = 4.dp),
+                                ) {
+                                    Text(
+                                        text = it.name,
+                                        modifier = Modifier.padding(8.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.BottomCenter
+            ){
+                Button(
+                    modifier = Modifier.padding(8.dp),
+                    onClick = { onChooseTeamClicked(uiState.selectedCampaignChapter.id) }
+                ){
+                    Text(
+                        modifier = Modifier.padding(4.dp),
+                        text = "Start",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+            }
         }
     }
 }
@@ -99,7 +208,7 @@ fun CampaignChapterSelectionGrid(
         Column(
             modifier = Modifier
                 .systemBarsPadding()
-                .fillMaxSize(),
+                .height(640.dp),
             ) {
             LazyVerticalGrid(
                 modifier = Modifier
@@ -110,13 +219,32 @@ fun CampaignChapterSelectionGrid(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(chapters) { chapter ->
-                    RoundedButton(
-                        onClick = { onChapterClicked(chapter) },
-                        innerImage = chapter.image,
-                        outerImage = R.drawable.iconflash_256,
-                        innerImageSize = 96,
-                        outerImageSize = 128
-                    )
+                    Box {
+                        RoundedButton(
+                            onClick = { onChapterClicked(chapter) },
+                            innerImage = chapter.image,
+                            outerImage = R.drawable.iconflash_256,
+                            innerImageSize = 96,
+                            outerImageSize = 128
+                        )
+                        if(chapter.state == CampaignState.LOCKED){
+                            Card(
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .shadow(2.dp, CircleShape),
+                                shape = CircleShape,
+                                colors = CardDefaults.cardColors(
+                                    containerColor = Color.White
+                                ),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.Lock,
+                                    contentDescription = "Locked Chapter",
+                                    modifier = Modifier.padding(4.dp),
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -165,7 +293,6 @@ private fun CampaignSelectionCarousel(
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = Color.White
-
                     )
                 ) {
                     Row(
