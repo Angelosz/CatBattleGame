@@ -11,6 +11,7 @@ import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaViewModel
 import angelosz.catbattlegame.ui.home.HomeScreenViewModel
 import angelosz.catbattlegame.ui.playercollection.CollectionViewModel
 import angelosz.catbattlegame.ui.teambuilder.TeamBuilderViewModel
+import angelosz.catbattlegame.ui.teamselection.TeamSelectionScreenViewModel
 
 object CatViewModelProvider {
     val Factory = viewModelFactory {
@@ -57,6 +58,13 @@ object CatViewModelProvider {
                 getCatBattleApplication().container.enemyCatRepository
             )
         }
+
+        initializer() {
+            TeamSelectionScreenViewModel(
+                getCatBattleApplication().container.playerRepository
+            )
+        }
+
     }
 }
 
