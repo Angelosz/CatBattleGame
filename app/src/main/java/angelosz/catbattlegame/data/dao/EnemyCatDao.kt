@@ -22,7 +22,19 @@ interface EnemyCatDao {
     suspend fun getEnemyCatById(id: Long): EnemyCat
 
     @Query("""
-        SELECT *
+        SELECT 
+            E.id, 
+            E.name, 
+            E.description, 
+            E.image, 
+            E.armorType, 
+            E.role, 
+            E.baseHealth, 
+            E.baseAttack, 
+            E.baseDefense, 
+            E.attackSpeed, 
+            E.rarity, 
+            E.enemyType
         FROM campaign_enemies E
         JOIN chapter_enemy CE ON E.id = CE.enemyCatId
         WHERE CE.chapterId = :campaignChapterId
@@ -41,5 +53,8 @@ interface EnemyCatDao {
 
     @Query("SELECT * FROM abilities WHERE id IN (SELECT abilityId FROM campaign_enemy_ability WHERE enemyCatId = :enemyCatId)")
     suspend fun getEnemyCatAbilities(enemyCatId: Long): List<Ability>
+
+    @Query("Select * from chapter_enemy where chapterId = :chapterId")
+    suspend fun getChapterEnemies(chapterId: Long): List<ChapterEnemy>
 }
 
