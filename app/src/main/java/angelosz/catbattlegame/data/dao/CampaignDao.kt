@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import angelosz.catbattlegame.domain.models.entities.Campaign
 import angelosz.catbattlegame.domain.models.entities.CampaignChapter
-import angelosz.catbattlegame.domain.models.entities.ChapterEnemy
+import angelosz.catbattlegame.domain.models.entities.ChapterReward
 
 @Dao
 interface CampaignDao {
@@ -26,7 +26,11 @@ interface CampaignDao {
     suspend fun getCampaignChaptersByCampaignId(campaignId: Long): List<CampaignChapter>
     @Query("Select * from campaign_chapter where id = :id")
     suspend fun getCampaignChapterById(id: Long): CampaignChapter
-    @Query("Select * from chapter_enemy where chapterId = :chapterId")
-    suspend fun getChapterEnemies(chapterId: Long): List<ChapterEnemy>
 
+    /* Chapter Rewards */
+    @Insert
+    suspend fun insertChapterReward(chapterReward: ChapterReward): Long
+
+    @Query("Select * from chapter_reward where chapterId = :chapterId")
+    suspend fun getChapterRewards(chapterId: Long): List<ChapterReward>
 }
