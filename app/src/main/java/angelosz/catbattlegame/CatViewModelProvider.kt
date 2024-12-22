@@ -7,6 +7,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import angelosz.catbattlegame.ui.battlechests.BattleChestsViewModel
 import angelosz.catbattlegame.ui.campaign.CampaignScreenViewModel
 import angelosz.catbattlegame.ui.combat.CombatScreenViewModel
+import angelosz.catbattlegame.ui.combatreward.CombatResultViewModel
 import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaViewModel
 import angelosz.catbattlegame.ui.home.HomeScreenViewModel
 import angelosz.catbattlegame.ui.playercollection.CollectionViewModel
@@ -65,6 +66,22 @@ object CatViewModelProvider {
             )
         }
 
+        initializer(){
+            CombatScreenViewModel(
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.campaignRepository,
+                getCatBattleApplication().container.enemyCatRepository,
+                getCatBattleApplication().container.abilityRepository,
+                getCatBattleApplication().container.catRepository
+            )
+        }
+
+        initializer{
+            CombatResultViewModel(
+                getCatBattleApplication().container.campaignRepository,
+                getCatBattleApplication().container.playerRepository
+            )
+        }
     }
 }
 
