@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.navigation
 
+import angelosz.catbattlegame.domain.enums.CombatResult
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -27,4 +28,4 @@ data class TeamSelectionScreenRoute(val chapterId: Long)
 data class CombatScreenRoute(val teamId: Long, val chapterId: Long)
 
 @Serializable
-data class CombatResolutionScreenRoute(val teamId: Long, val chapterId: Long, val success: Boolean)
+data class CombatResultScreenRoute(val teamId: Long, val chapterId: Long, val combatResult: CombatResult)
