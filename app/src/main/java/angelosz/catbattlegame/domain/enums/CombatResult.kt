@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.combat
+package angelosz.catbattlegame.domain.enums
 
 enum class CombatResult {
     PLAYER_WON,
