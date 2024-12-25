@@ -31,6 +31,13 @@ interface PlayerDao {
     @Query("Update player_account set crystals = crystals - :amount")
     suspend fun reduceCrystals(amount: Int)
 
+    /* Gold */
+    @Query("Update player_account set gold = gold + :amount")
+    suspend fun addGold(amount: Int)
+
+    @Query("Update player_account set gold = gold - :amount")
+    suspend fun reduceGold(amount: Int)
+
 
     /* Owned Cats */
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -16,7 +16,30 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
 
     /* Crystals */
     override suspend fun addCrystals(amount: Int) = dao.addCrystals(amount)
-    override suspend fun reduceCrystals(amount: Int) = dao.reduceCrystals(amount)
+    override suspend fun reduceCrystals(amount: Int) {
+        val crystals = dao.getPlayerAccount()?.gold
+        if(crystals != null){
+            if(amount > crystals){
+                dao.reduceCrystals(amount)
+            } else {
+                dao.reduceCrystals(crystals)
+            }
+        }
+
+    }
+
+    /* Gold */
+    override suspend fun addGold(amount: Int) = dao.addGold(amount)
+    override suspend fun reduceGold(amount: Int) {
+        val gold = dao.getPlayerAccount()?.gold
+        if(gold != null){
+            if(amount > gold){
+                dao.reduceGold(amount)
+            } else {
+                dao.reduceGold(gold)
+            }
+        }
+    }
 
     /* Owned Cats */
     override suspend fun insertOwnedCat(ownedCat: OwnedCat) = dao.insertOwnedCat(ownedCat)

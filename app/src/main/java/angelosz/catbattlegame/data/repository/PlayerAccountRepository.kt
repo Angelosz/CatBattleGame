@@ -17,6 +17,10 @@ interface PlayerAccountRepository {
     suspend fun addCrystals(amount: Int)
     suspend fun reduceCrystals(amount: Int)
 
+    /* Gold */
+    suspend fun addGold(amount: Int)
+    suspend fun reduceGold(amount: Int)
+
     /* Owned Cats */
     suspend fun insertOwnedCat(ownedCat: OwnedCat)
     suspend fun updateOwnedCat(ownedCat: OwnedCat)
