@@ -80,7 +80,11 @@ fun CampaignScreen(
                         BackHandler(onBack = { viewModel.backToCampaignSelection() })
                         CampaignChapterSelectionGrid(
                             chapters = uiState.campaignChapters,
-                            onChapterClicked = { chapter -> viewModel.selectCampaignChapter(chapter) }
+                            onChapterClicked = { chapter ->
+                                if(chapter.state != CampaignState.LOCKED) {
+                                    viewModel.selectCampaignChapter(chapter)
+                                }
+                            }
                         )
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {

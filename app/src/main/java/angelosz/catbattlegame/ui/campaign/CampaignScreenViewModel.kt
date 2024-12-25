@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
+import angelosz.catbattlegame.domain.enums.CampaignState
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.entities.Campaign
 import angelosz.catbattlegame.domain.models.entities.CampaignChapter
@@ -72,6 +73,8 @@ class CampaignScreenViewModel(
     }
 
     fun selectCampaignChapter(campaignChapter: CampaignChapter) {
+        if(campaignChapter.state == CampaignState.LOCKED) return
+
         _uiState.update {
             it.copy(
                 screenState = ScreenState.LOADING,
