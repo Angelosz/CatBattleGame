@@ -1,10 +1,10 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.EnemyCatDao
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.ChapterEnemy
-import angelosz.catbattlegame.domain.models.entities.EnemyAbility
-import angelosz.catbattlegame.domain.models.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.ChapterEnemy
+import angelosz.catbattlegame.data.entities.EnemyAbility
+import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 class OfflineEnemyCatRepository(val dao: EnemyCatDao): EnemyCatRepository {

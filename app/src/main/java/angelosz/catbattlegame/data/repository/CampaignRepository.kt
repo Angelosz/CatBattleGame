@@ -1,8 +1,8 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.entities.Campaign
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
-import angelosz.catbattlegame.domain.models.entities.ChapterReward
+import angelosz.catbattlegame.data.entities.Campaign
+import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.ChapterReward
 
 interface CampaignRepository {
     /* Campaign */

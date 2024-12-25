@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.domain.models.entities
+package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity

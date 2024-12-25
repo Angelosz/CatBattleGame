@@ -2,7 +2,7 @@ package angelosz.catbattlegame.ui.combat
 
 import angelosz.catbattlegame.domain.enums.AbilityTarget
 import angelosz.catbattlegame.domain.enums.AbilityType
-import angelosz.catbattlegame.domain.models.entities.Ability
+import angelosz.catbattlegame.data.entities.Ability
 
 sealed class CombatAbility(){
     private var cooldown = 0

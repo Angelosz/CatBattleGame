@@ -1,8 +1,8 @@
 package angelosz.catbattlegame.domain.models
 
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.Cat
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.OwnedCat
 
 data class OwnedCatDetailsData(
     val ownedCatData: OwnedCat = OwnedCat(),

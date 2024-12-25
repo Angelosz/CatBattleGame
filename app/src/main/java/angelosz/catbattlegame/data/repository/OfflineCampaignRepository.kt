@@ -1,9 +1,9 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.CampaignDao
-import angelosz.catbattlegame.domain.models.entities.Campaign
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
-import angelosz.catbattlegame.domain.models.entities.ChapterReward
+import angelosz.catbattlegame.data.entities.Campaign
+import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.ChapterReward
 
 class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Campaign */

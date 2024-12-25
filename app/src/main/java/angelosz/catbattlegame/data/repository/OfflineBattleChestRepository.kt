@@ -1,7 +1,7 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.BattleChestDao
-import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.data.entities.BattleChest
 
 class OfflineBattleChestRepository(val dao: BattleChestDao): BattleChestRepository {
     override suspend fun insertBattleChest(battleChest: BattleChest) = dao.insertBattleChest(battleChest)

@@ -1,6 +1,6 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.entities.Ability
+import angelosz.catbattlegame.data.entities.Ability
 
 interface AbilityRepository {
     suspend fun getAllPlayerAbilities(): List<Ability>

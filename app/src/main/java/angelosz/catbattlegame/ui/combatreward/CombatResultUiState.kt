@@ -1,10 +1,10 @@
 package angelosz.catbattlegame.ui.combatreward
 
+import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.ChapterReward
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
-import angelosz.catbattlegame.domain.models.entities.ChapterReward
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 
 data class CombatResultUiState(

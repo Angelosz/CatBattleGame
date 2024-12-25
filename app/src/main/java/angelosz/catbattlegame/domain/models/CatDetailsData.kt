@@ -1,7 +1,7 @@
 package angelosz.catbattlegame.domain.models
 
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 
 data class CatDetailsData(
     val cat: Cat,

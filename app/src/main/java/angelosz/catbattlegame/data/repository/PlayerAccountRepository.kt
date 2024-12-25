@@ -1,9 +1,9 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
-import angelosz.catbattlegame.domain.models.entities.PlayerAccount
-import angelosz.catbattlegame.domain.models.entities.PlayerTeam
-import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.PlayerAccount
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 import kotlinx.coroutines.flow.Flow
 

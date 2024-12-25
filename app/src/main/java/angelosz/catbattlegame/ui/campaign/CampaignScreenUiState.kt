@@ -1,8 +1,8 @@
 package angelosz.catbattlegame.ui.campaign
 
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.Campaign
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.Campaign
+import angelosz.catbattlegame.data.entities.CampaignChapter
 
 enum class CampaignSelectionStage {
     SELECTING_CAMPAIGN,

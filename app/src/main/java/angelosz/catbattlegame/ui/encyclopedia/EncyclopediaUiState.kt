@@ -3,8 +3,8 @@ package angelosz.catbattlegame.ui.encyclopedia
 import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 
 data class EncyclopediaUiState(
     val cats: List<Cat> = emptyList(),

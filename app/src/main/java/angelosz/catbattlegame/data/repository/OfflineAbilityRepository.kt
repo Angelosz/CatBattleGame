@@ -1,7 +1,7 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.AbilityDao
-import angelosz.catbattlegame.domain.models.entities.Ability
+import angelosz.catbattlegame.data.entities.Ability
 
 class OfflineAbilityRepository(private val abilityDao: AbilityDao): AbilityRepository {
     override suspend fun getAllPlayerAbilities() = abilityDao.getAllPlayerAbilities()

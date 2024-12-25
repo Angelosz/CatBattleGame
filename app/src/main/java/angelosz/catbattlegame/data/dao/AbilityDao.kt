@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
 
 @Dao
 interface AbilityDao {

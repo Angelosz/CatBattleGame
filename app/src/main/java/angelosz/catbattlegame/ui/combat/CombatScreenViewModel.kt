@@ -13,8 +13,8 @@ import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
 import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.ui.campaign.EnemyType
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 import angelosz.catbattlegame.ui.teambuilder.TeamData

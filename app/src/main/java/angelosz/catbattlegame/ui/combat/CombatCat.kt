@@ -21,9 +21,9 @@ import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.domain.enums.CombatModifiers
 import angelosz.catbattlegame.domain.enums.DamageType
-import angelosz.catbattlegame.domain.models.entities.Cat
-import angelosz.catbattlegame.domain.models.entities.EnemyCat
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.ui.components.SmallImageCard
 
 class CombatCatData(

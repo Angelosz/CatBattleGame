@@ -8,9 +8,9 @@ import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.BattleChest
-import angelosz.catbattlegame.domain.models.entities.Cat
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.BattleChest
+import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.OwnedCat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

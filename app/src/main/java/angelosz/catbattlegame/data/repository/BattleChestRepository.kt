@@ -1,6 +1,6 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.data.entities.BattleChest
 
 interface BattleChestRepository {
     suspend fun insertBattleChest(battleChest: BattleChest)
