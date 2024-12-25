@@ -17,6 +17,6 @@ data class CampaignChapter(
     val name: String = "Chapter",
     val description: String = "Chapter description",
     @DrawableRes val image: Int = R.drawable.enemy_wool_ball_300,
-    val unlocksChapter: Int = 0,
+    val unlocksChapter: Long = 0,
     val isLastCampaignChapter: Boolean = false
 )
