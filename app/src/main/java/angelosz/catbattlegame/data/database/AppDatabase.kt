@@ -10,21 +10,21 @@ import angelosz.catbattlegame.data.dao.CampaignDao
 import angelosz.catbattlegame.data.dao.CatDao
 import angelosz.catbattlegame.data.dao.EnemyCatDao
 import angelosz.catbattlegame.data.dao.PlayerDao
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.AbilityArmorDamageMultiplier
-import angelosz.catbattlegame.domain.models.entities.BattleChest
-import angelosz.catbattlegame.domain.models.entities.Campaign
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
-import angelosz.catbattlegame.domain.models.entities.Cat
-import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
-import angelosz.catbattlegame.domain.models.entities.ChapterEnemy
-import angelosz.catbattlegame.domain.models.entities.ChapterReward
-import angelosz.catbattlegame.domain.models.entities.EnemyAbility
-import angelosz.catbattlegame.domain.models.entities.EnemyCat
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
-import angelosz.catbattlegame.domain.models.entities.PlayerAccount
-import angelosz.catbattlegame.domain.models.entities.PlayerTeam
-import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.AbilityArmorDamageMultiplier
+import angelosz.catbattlegame.data.entities.BattleChest
+import angelosz.catbattlegame.data.entities.Campaign
+import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
+import angelosz.catbattlegame.data.entities.ChapterEnemy
+import angelosz.catbattlegame.data.entities.ChapterReward
+import angelosz.catbattlegame.data.entities.EnemyAbility
+import angelosz.catbattlegame.data.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.PlayerAccount
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 
 @Database(
     entities = [
@@ -45,7 +45,7 @@ import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
         ChapterReward::class
     ],
     exportSchema = false,
-    version = 23)
+    version = 26)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao
@@ -64,8 +64,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "cat_battle_database"
-                )
-                .fallbackToDestructiveMigration()
+                ).fallbackToDestructiveMigration()
                 .build().also { instance = it }
             }
         }

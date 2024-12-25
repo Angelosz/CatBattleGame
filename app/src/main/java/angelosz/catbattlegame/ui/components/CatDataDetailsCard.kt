@@ -31,8 +31,8 @@ import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.models.CatDetailsData
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable

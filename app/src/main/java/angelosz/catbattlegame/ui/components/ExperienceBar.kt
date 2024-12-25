@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import angelosz.catbattlegame.utils.GameConstants.XP_PER_LEVEL
+import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
@@ -67,7 +67,7 @@ fun ExperienceBar(
             )
             if(showText){
                 Text(
-                    text = "$experience / ${XP_PER_LEVEL}",
+                    text = "$experience / ${EXPERIENCE_PER_LEVEL}",
                     color = Color.White
                 )
             }
@@ -76,7 +76,7 @@ fun ExperienceBar(
 }
 
 fun calculateExperience(experience: Int): Float
-    = (experience.toFloat() / XP_PER_LEVEL.toFloat())
+    = (experience.toFloat() / EXPERIENCE_PER_LEVEL.toFloat())
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable

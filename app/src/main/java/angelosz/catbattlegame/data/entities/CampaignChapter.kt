@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.domain.models.entities
+package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity
@@ -13,7 +13,10 @@ data class CampaignChapter(
     val campaignId: Long = 1,
     val order: Int = 1,
     val state: CampaignState = CampaignState.LOCKED,
+    val experience: Int = 100,
     val name: String = "Chapter",
     val description: String = "Chapter description",
-    @DrawableRes val image: Int = R.drawable.enemy_wool_ball_300
+    @DrawableRes val image: Int = R.drawable.enemy_wool_ball_300,
+    val unlocksChapter: Long = 0,
+    val isLastCampaignChapter: Boolean = false
 )

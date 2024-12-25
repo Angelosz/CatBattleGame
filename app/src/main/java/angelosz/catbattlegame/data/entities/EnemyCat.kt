@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.domain.models.entities
+package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity
@@ -23,5 +23,6 @@ data class EnemyCat(
     val baseDefense: Int = 10,
     val attackSpeed: Float = 1f,
     val rarity: CatRarity = CatRarity.KITTEN,
-    val enemyType: EnemyType = EnemyType.SIMPLE_ENEMY
+    val enemyType: EnemyType = EnemyType.SIMPLE_ENEMY,
+    val isDiscovered: Boolean = false
 )

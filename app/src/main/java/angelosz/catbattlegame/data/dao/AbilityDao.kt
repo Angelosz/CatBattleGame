@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.CatAbilityCrossRef
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
 
 @Dao
 interface AbilityDao {
@@ -15,8 +15,8 @@ interface AbilityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCatAbilityCrossRefs(abilities: List<CatAbilityCrossRef>)
 
-    @Query("Select * from abilities")
-    suspend fun getAllAbilities(): List<Ability>
+    @Query("Select * from abilities where abilitySource = 'PLAYER'")
+    suspend fun getAllPlayerAbilities(): List<Ability>
 
     @Query("Select * from abilities where id = :id")
     suspend fun getAbilityById(id: Int): Ability

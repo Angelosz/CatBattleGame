@@ -64,7 +64,7 @@ class EncyclopediaViewModel(
 
     private suspend fun fetchAllAbilityData() {
         _uiState.update {
-            it.copy(abilities = abilityRepository.getAllAbilities())
+            it.copy(abilities = abilityRepository.getAllPlayerAbilities())
         }
     }
 

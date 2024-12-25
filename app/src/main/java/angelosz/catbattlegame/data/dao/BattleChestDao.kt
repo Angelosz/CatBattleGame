@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.data.entities.BattleChest
 
 @Dao
 interface BattleChestDao {

@@ -5,8 +5,8 @@ import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
-import angelosz.catbattlegame.domain.models.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.ui.teambuilder.TeamData
 
 data class CombatScreenUiState(

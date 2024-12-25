@@ -1,8 +1,9 @@
-package angelosz.catbattlegame.domain.models.entities
+package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import angelosz.catbattlegame.domain.enums.AbilitySource
 import angelosz.catbattlegame.domain.enums.AbilityTarget
 import angelosz.catbattlegame.domain.enums.AbilityType
 import angelosz.catbattlegame.domain.enums.CombatModifiers
@@ -21,6 +22,7 @@ data class Ability(
     val targets: AbilityTarget,
     val cooldown: Int,
     @DrawableRes val image: Int,
-    @DrawableRes val icon: Int
+    @DrawableRes val icon: Int,
+    val abilitySource: AbilitySource = AbilitySource.PLAYER,
 )
 

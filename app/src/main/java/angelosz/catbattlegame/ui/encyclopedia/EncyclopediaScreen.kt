@@ -30,8 +30,8 @@ import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
 import angelosz.catbattlegame.ui.components.CatDataDetailsCard

@@ -43,8 +43,8 @@ import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.CampaignState
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.Campaign
-import angelosz.catbattlegame.domain.models.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.Campaign
+import angelosz.catbattlegame.data.entities.CampaignChapter
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
@@ -80,7 +80,11 @@ fun CampaignScreen(
                         BackHandler(onBack = { viewModel.backToCampaignSelection() })
                         CampaignChapterSelectionGrid(
                             chapters = uiState.campaignChapters,
-                            onChapterClicked = { chapter -> viewModel.selectCampaignChapter(chapter) }
+                            onChapterClicked = { chapter ->
+                                if(chapter.state != CampaignState.LOCKED) {
+                                    viewModel.selectCampaignChapter(chapter)
+                                }
+                            }
                         )
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {

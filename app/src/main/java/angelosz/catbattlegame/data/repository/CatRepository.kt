@@ -1,7 +1,7 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.domain.enums.CatRarity
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Cat
 
 interface CatRepository {
     suspend fun getAllCats(): List<Cat>

@@ -3,10 +3,10 @@ package angelosz.catbattlegame.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import angelosz.catbattlegame.domain.models.entities.Ability
-import angelosz.catbattlegame.domain.models.entities.ChapterEnemy
-import angelosz.catbattlegame.domain.models.entities.EnemyAbility
-import angelosz.catbattlegame.domain.models.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.ChapterEnemy
+import angelosz.catbattlegame.data.entities.EnemyAbility
+import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 @Dao
@@ -34,7 +34,8 @@ interface EnemyCatDao {
             E.baseDefense, 
             E.attackSpeed, 
             E.rarity, 
-            E.enemyType
+            E.enemyType,
+            E.isDiscovered
         FROM campaign_enemies E
         JOIN chapter_enemy CE ON E.id = CE.enemyCatId
         WHERE CE.chapterId = :campaignChapterId

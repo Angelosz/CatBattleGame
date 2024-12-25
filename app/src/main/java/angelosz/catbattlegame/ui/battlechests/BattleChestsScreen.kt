@@ -51,7 +51,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.entities.BattleChest
+import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard

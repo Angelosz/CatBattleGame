@@ -6,10 +6,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
-import angelosz.catbattlegame.domain.models.entities.PlayerAccount
-import angelosz.catbattlegame.domain.models.entities.PlayerTeam
-import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.PlayerAccount
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 import kotlinx.coroutines.flow.Flow
 
@@ -30,6 +30,13 @@ interface PlayerDao {
 
     @Query("Update player_account set crystals = crystals - :amount")
     suspend fun reduceCrystals(amount: Int)
+
+    /* Gold */
+    @Query("Update player_account set gold = gold + :amount")
+    suspend fun addGold(amount: Int)
+
+    @Query("Update player_account set gold = gold - :amount")
+    suspend fun reduceGold(amount: Int)
 
 
     /* Owned Cats */

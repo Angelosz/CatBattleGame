@@ -79,7 +79,8 @@ object CatViewModelProvider {
         initializer{
             CombatResultViewModel(
                 getCatBattleApplication().container.campaignRepository,
-                getCatBattleApplication().container.playerRepository
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.battleChestRepository
             )
         }
     }

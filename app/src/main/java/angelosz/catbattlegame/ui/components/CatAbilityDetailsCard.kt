@@ -27,7 +27,7 @@ import angelosz.catbattlegame.domain.enums.AbilityTarget
 import angelosz.catbattlegame.domain.enums.AbilityType
 import angelosz.catbattlegame.domain.enums.CombatModifiers
 import angelosz.catbattlegame.domain.enums.DamageType
-import angelosz.catbattlegame.domain.models.entities.Ability
+import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable

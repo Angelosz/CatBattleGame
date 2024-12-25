@@ -3,6 +3,7 @@ package angelosz.catbattlegame.ui.combat
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -218,13 +219,21 @@ fun CombatScreen(
                                         color = Color.White
                                     )
                                     uiState.catInitiatives.forEach { cat ->
-                                        Image(
-                                            painter = painterResource(cat.image),
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(48.dp)
-                                                .padding(horizontal = 2.dp)
-                                        )
+                                        Column(
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Text(
+                                                text =  "%.2f".format(cat.initiative),
+                                                style = MaterialTheme.typography.labelMedium,
+                                            )
+                                            Image(
+                                                painter = painterResource(cat.image),
+                                                contentDescription = null,
+                                                modifier = Modifier
+                                                    .size(48.dp)
+                                                    .padding(horizontal = 2.dp)
+                                            )
+                                        }
                                     }
                                 }
                             }

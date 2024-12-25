@@ -1,9 +1,9 @@
 package angelosz.catbattlegame.data.repository
 
-import angelosz.catbattlegame.domain.models.entities.OwnedCat
-import angelosz.catbattlegame.domain.models.entities.PlayerAccount
-import angelosz.catbattlegame.domain.models.entities.PlayerTeam
-import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.OwnedCat
+import angelosz.catbattlegame.data.entities.PlayerAccount
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.ui.teambuilder.BasicCatData
 import kotlinx.coroutines.flow.Flow
 
@@ -16,6 +16,10 @@ interface PlayerAccountRepository {
     /* Crystals */
     suspend fun addCrystals(amount: Int)
     suspend fun reduceCrystals(amount: Int)
+
+    /* Gold */
+    suspend fun addGold(amount: Int)
+    suspend fun reduceGold(amount: Int)
 
     /* Owned Cats */
     suspend fun insertOwnedCat(ownedCat: OwnedCat)

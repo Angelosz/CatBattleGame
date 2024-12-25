@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import angelosz.catbattlegame.domain.enums.CatRarity
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Cat
 
 @Dao
 interface CatDao {

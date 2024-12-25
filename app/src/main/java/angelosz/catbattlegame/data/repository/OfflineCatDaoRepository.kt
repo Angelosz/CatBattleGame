@@ -2,7 +2,7 @@ package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.CatDao
 import angelosz.catbattlegame.domain.enums.CatRarity
-import angelosz.catbattlegame.domain.models.entities.Cat
+import angelosz.catbattlegame.data.entities.Cat
 
 class OfflineCatDaoRepository(private val catDao: CatDao): CatRepository {
     override suspend fun getAllCats() = catDao.getAllCats()
