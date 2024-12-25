@@ -23,5 +23,6 @@ data class EnemyCat(
     val baseDefense: Int = 10,
     val attackSpeed: Float = 1f,
     val rarity: CatRarity = CatRarity.KITTEN,
-    val enemyType: EnemyType = EnemyType.SIMPLE_ENEMY
+    val enemyType: EnemyType = EnemyType.SIMPLE_ENEMY,
+    val isDiscovered: Boolean = false
 )

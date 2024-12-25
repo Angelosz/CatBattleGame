@@ -34,7 +34,8 @@ interface EnemyCatDao {
             E.baseDefense, 
             E.attackSpeed, 
             E.rarity, 
-            E.enemyType
+            E.enemyType,
+            E.isDiscovered
         FROM campaign_enemies E
         JOIN chapter_enemy CE ON E.id = CE.enemyCatId
         WHERE CE.chapterId = :campaignChapterId
