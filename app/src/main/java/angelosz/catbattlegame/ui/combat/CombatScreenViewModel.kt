@@ -7,9 +7,11 @@ import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.CombatModifiers
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
+import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.entities.Ability
 import angelosz.catbattlegame.domain.models.entities.EnemyCat
@@ -275,10 +277,29 @@ class CombatScreenViewModel(
                     numberOfTurns = _uiState.value.numberOfTurns + 1
                 )
 
-                getCat(_uiState.value.activeCatId)?.reduceAbilitiesCooldown()
+                val activeCat = getCat(_uiState.value.activeCatId)
+                activeCat?.reduceAbilitiesCooldown()
                 _uiState.value.activeAbility?.applyCooldown()
 
                 delay(750)
+
+                activeCat?.cat?.combatModifiers?.forEach{ (combatModifier, value) ->
+                    when(combatModifier){
+                        CombatModifiers.POISONED -> {
+                            val damage = (activeCat.cat.maxHealth * 0.05f).toInt()
+                            activeCat.takeDamage(damage, DamageType.ELEMENTAL)
+                            activeCat.cat.lastEffect = Pair(CombatEffect.POISONED, damage)
+                            activeCat.reduceCombatModifierTurn(combatModifier)
+                            _uiState.update {
+                                it.copy(
+                                    numberOfTurns = it.numberOfTurns + 1
+                                )
+                            }
+                            delay(750)
+                        }
+                        else -> {}
+                    }
+                }
 
                 if(_uiState.value.combatState != CombatState.FINISHED) {
                     endTurn()
@@ -312,6 +333,7 @@ class CombatScreenViewModel(
 
     private fun startNewTurn() {
         moveInitiativeBar()
+        clearCats()
 
         val newActiveCat = _uiState.value.catInitiatives.firstOrNull()?.catId
         if(newActiveCat != null){
@@ -341,6 +363,15 @@ class CombatScreenViewModel(
         }
     }
 
+    private fun clearCats() {
+        for(cat in _uiState.value.teamCombatCats){
+            cat.clear()
+        }
+        for(cat in _uiState.value.enemyCombatCats){
+            cat.clear()
+        }
+    }
+
     private fun executeAiTurn() {
         viewModelScope.launch {
             delay(750)
@@ -366,6 +397,13 @@ class CombatScreenViewModel(
         val initiatives = _uiState.value.catInitiatives
         val firstInitiativeTime = initiatives.firstOrNull()?.initiative ?: 0.0f
         initiatives.forEach { initiative ->
+            val cat = getCat(initiative.catId)
+            if(cat != null){
+                if(cat.cat.combatModifiers.contains(CombatModifiers.SLOWED)){
+                    initiative.initiative += 2.0f
+                    cat.reduceCombatModifierTurn(CombatModifiers.SLOWED)
+                }
+            }
             initiative.initiative -= firstInitiativeTime
             if(initiative.initiative < 0) initiative.initiative = 0.0f
         }
@@ -394,6 +432,7 @@ class CombatScreenViewModel(
         if(cat != null){
             val damage = (getCat(_uiState.value.activeCatId)?.cat?.attack ?: 0) * ability.damageMultiplier
             cat.takeDamage(damage.toInt(), ability.damageType)
+            cat.cat.lastEffect = Pair(CombatEffect.DAMAGED, damage.toInt())
         }
     }
 
@@ -402,7 +441,23 @@ class CombatScreenViewModel(
         if(cat != null){
             val damage = (getCat(_uiState.value.activeCatId)?.cat?.attack ?: 0) * ability.damageMultiplier
             cat.heal(damage.toInt(), ability.damageType)
+            cat.cat.lastEffect = Pair(CombatEffect.HEALED, damage.toInt())
         }
     }
+
+    fun applyModifiers(catId: Int, combatModifier: CombatModifiers?) {
+        val cat = getCat(catId)
+        if(cat != null && combatModifier != null){
+            cat.addCombatModifier(combatModifier)
+        }
+    }
+}
+
+enum class CombatEffect {
+    DAMAGED,
+    HEALED,
+    POISONED,
+    ATTACKED,
+    NO_EFFECT,
 }
 

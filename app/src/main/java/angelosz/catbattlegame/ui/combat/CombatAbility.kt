@@ -17,6 +17,15 @@ sealed class CombatAbility(){
     abstract fun selectAllyTeam(allyTeam: List<Int>)
     abstract fun clear()
 
+    fun applyCombatModifiers(targets: List<CombatCat>){
+        val combatModifier = ability.combatModifier
+        if(combatModifier != null){
+            for (target in targets) {
+                target.addCombatModifier(combatModifier)
+            }
+        }
+    }
+
     fun onCooldown(): Boolean = cooldown > 0
 
     fun applyCooldown() {
@@ -76,6 +85,7 @@ class SingleTargetDamageAbility(override val ability: Ability): CombatAbility(){
     override fun apply(viewModel: CombatScreenViewModel) {
         val catId = selectedCatId
         if(catId != null) {
+            viewModel.applyModifiers(catId, ability.combatModifier)
             viewModel.damageCat(catId, ability)
         }
     }
@@ -118,6 +128,8 @@ class SingleTargetHealingAbility(override val ability: Ability): CombatAbility()
         val catId = selectedCatId
         if(catId != null) {
             viewModel.healCat(catId, ability)
+            viewModel.applyModifiers(catId, ability.combatModifier)
+
         }
     }
 
@@ -164,6 +176,7 @@ class AoEDamageAbility(override val ability: Ability): CombatAbility(){
     override fun apply(viewModel: CombatScreenViewModel) {
         selectedCats.forEach { catId ->
             viewModel.damageCat(catId, ability)
+            viewModel.applyModifiers(catId, ability.combatModifier)
         }
     }
 
@@ -197,6 +210,7 @@ class AoEHealAbility(override val ability: Ability): CombatAbility(){
     override fun apply(viewModel: CombatScreenViewModel) {
         selectedCats.forEach { catId ->
             viewModel.healCat(catId, ability)
+            viewModel.applyModifiers(catId, ability.combatModifier)
         }
     }
 

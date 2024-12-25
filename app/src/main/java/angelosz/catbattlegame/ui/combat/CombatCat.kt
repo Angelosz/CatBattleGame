@@ -6,11 +6,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRole
@@ -37,7 +42,8 @@ class CombatCatData(
     val abilities: List<CombatAbility>,
     val role: CatRole,
     val armorType: ArmorType,
-    val combatModifiers: MutableMap<CombatModifiers, Int> = emptyMap<CombatModifiers, Int>().toMutableMap()
+    val combatModifiers: MutableMap<CombatModifiers, Int> = emptyMap<CombatModifiers, Int>().toMutableMap(),
+    var lastEffect: Pair<CombatEffect, Int> = Pair(CombatEffect.NO_EFFECT, 0)
 ){
     companion object Builder{
         fun build(
@@ -109,7 +115,8 @@ interface CombatCat{
         @DrawableRes border: Int
     ){
         Box(
-            modifier = Modifier.width(imageSize.dp)
+            modifier = Modifier
+                .width(imageSize.dp)
                 .height((imageSize + 16).dp),
             contentAlignment = Alignment.Center,
         ){
@@ -131,6 +138,43 @@ interface CombatCat{
                 strokeCap = StrokeCap.Square,
                 trackColor = Color.LightGray,
             )
+            when(cat.lastEffect.first){
+                CombatEffect.DAMAGED -> {
+                    Text(
+                        text = "- ${cat.lastEffect.second}",
+                        color = Color.Red,
+                        style = MaterialTheme.typography.displaySmall.copy(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(3f, 3f),
+                                blurRadius = 1f
+                            )
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                    )
+                }
+                CombatEffect.HEALED -> {
+                    Text(
+                        text = "+ ${cat.lastEffect.second}",
+                        color = Color.Green,
+                        style = MaterialTheme.typography.displaySmall.copy(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(3f, 3f),
+                                blurRadius = 1f
+                            )
+                        ),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                    )
+                }
+                CombatEffect.POISONED -> {}
+                CombatEffect.ATTACKED -> {}
+                CombatEffect.NO_EFFECT -> {}
+            }
         }
     }
 
@@ -151,6 +195,25 @@ interface CombatCat{
         cat.abilities.forEach { ability ->
             ability.reduceCooldown(by)
         }
+    }
+
+    fun reduceCombatModifierTurn(combatModifier: CombatModifiers) {
+        val currentValue = cat.combatModifiers.getOrDefault(combatModifier, 0)
+
+        if(currentValue == 0){
+            cat.combatModifiers.remove(combatModifier)
+        } else {
+            cat.combatModifiers[combatModifier] = currentValue - 1
+        }
+    }
+
+    fun clear() {
+        cat.lastEffect = Pair(CombatEffect.NO_EFFECT, 0)
+    }
+
+    fun addCombatModifier(combatModifier: CombatModifiers) {
+        val currentValue = cat.combatModifiers.getOrDefault(combatModifier, 0)
+        cat.combatModifiers[combatModifier] = currentValue + 1
     }
 }
 
