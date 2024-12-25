@@ -17,7 +17,7 @@ data class CombatResultUiState(
             amount = 10
         )
     ),
-    val rewardCollected: Boolean = false,
+    val experienceGained: Int = 0,
     val combatResult: CombatResult = CombatResult.PLAYER_LOST,
     val screenState: ScreenState = ScreenState.INITIALIZING
 )

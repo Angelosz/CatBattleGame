@@ -126,6 +126,14 @@ fun CombatResultScreen(
                                         }
                                     }
                                 }
+                                Text(
+                                    modifier = Modifier
+                                        .padding(vertical = 8.dp)
+                                        .fillMaxWidth(),
+                                    text = "Experience: ${uiState.experienceGained}",
+                                    style = MaterialTheme.typography.labelLarge,
+                                    textAlign = TextAlign.Center
+                                )
                                 Button(
                                     modifier = Modifier.padding(8.dp),
                                     onClick = onReturnToHomePressed

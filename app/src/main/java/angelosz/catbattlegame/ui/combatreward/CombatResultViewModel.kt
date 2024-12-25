@@ -15,6 +15,8 @@ import angelosz.catbattlegame.domain.models.entities.BattleChest
 import angelosz.catbattlegame.domain.models.entities.Campaign
 import angelosz.catbattlegame.domain.models.entities.CampaignChapter
 import angelosz.catbattlegame.domain.models.entities.ChapterReward
+import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -42,25 +44,46 @@ class CombatResultViewModel(
                 if(combatResult == CombatResult.PLAYER_WON){
                     val chapter = campaignRepository.getChapterById(chapterId)
                     val team = playerAccountRepository.getTeamData(teamId)
-                    val chapterRewards = campaignRepository.getChapterRewards(chapterId)
 
-                    addRewards(chapterRewards)
-                    // addCatsExperience(chapter, team)
+                    if(chapter.state != CampaignState.COMPLETED){
+                        val chapterRewards = campaignRepository.getChapterRewards(chapterId)
 
-                    if(chapter.isLastCampaignChapter){
-                        completeCampaign(campaignRepository.getCampaignById(chapter.campaignId))
-                    } else {
+                        addRewards(chapterRewards)
+                        addCatsExperience(team, chapter.experience)
+
                         completeChapter(chapter)
+
+                        if(chapter.isLastCampaignChapter){
+                            val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
+                            completeCampaign(currentCampaign)
+                            unlockNextCampaign(currentCampaign.nextCampaign)
+                        } else {
+                            unlockNextChapter(chapter.unlocksChapter)
+                        }
+
+                        _uiState.update {
+                            it.copy(
+                                chapter = chapter,
+                                team = team,
+                                chapterReward = chapterRewards,
+                                experienceGained = chapter.experience,
+                                screenState = ScreenState.SUCCESS
+                            )
+                        }
+                    } else {
+                        val experience = chapter.experience / 10
+                        addCatsExperience(team, experience)
+
+                        _uiState.update {
+                            it.copy(
+                                chapter = chapter,
+                                team = team,
+                                experienceGained = experience,
+                                screenState = ScreenState.SUCCESS
+                            )
+                        }
                     }
 
-                    _uiState.update {
-                        it.copy(
-                            chapter = chapter,
-                            team = team,
-                            chapterReward = chapterRewards,
-                            screenState = ScreenState.SUCCESS
-                        )
-                    }
                 } else {
                     _uiState.update {
                         it.copy(
@@ -76,13 +99,34 @@ class CombatResultViewModel(
         }
     }
 
+    private suspend fun addCatsExperience(team: List<BasicCatData>, experience: Int) {
+        team.forEach{ cat ->
+            val ownedCat = playerAccountRepository.getOwnedCatById(cat.catId)
+            val totalExperience = ownedCat.experience + experience
+
+            if(totalExperience >= EXPERIENCE_PER_LEVEL){
+                playerAccountRepository.updateOwnedCat(
+                    ownedCat.copy(
+                        experience = totalExperience - EXPERIENCE_PER_LEVEL,
+                        level = ownedCat.level + 1
+                    )
+                )
+            } else {
+                playerAccountRepository.updateOwnedCat(
+                    ownedCat.copy(
+                        experience = totalExperience
+                    )
+                )
+            }
+        }
+    }
+
     private suspend fun completeChapter(chapter: CampaignChapter) {
         campaignRepository.updateCampaignChapter(
             chapter.copy(
                 state = CampaignState.COMPLETED
             )
         )
-        unlockNextChapter(chapter.unlocksChapter)
     }
 
     private suspend fun unlockNextChapter(unlocksChapter: Long) {
@@ -100,7 +144,6 @@ class CombatResultViewModel(
                 state = CampaignState.COMPLETED
             )
         )
-        unlockNextCampaign(currentCampaign.nextCampaign)
     }
 
     private suspend fun unlockNextCampaign(campaignId: Long) {
