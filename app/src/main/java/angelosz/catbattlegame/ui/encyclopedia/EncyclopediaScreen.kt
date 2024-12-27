@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
-import angelosz.catbattlegame.data.entities.Ability
-import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
 import angelosz.catbattlegame.ui.components.CatDataDetailsCard
@@ -325,6 +325,7 @@ private fun PortraitEncyclopediaAbilityScreen(
         }
     }
 }
+
 @Composable
 private fun LandscapeEncyclopediaAbilitiesScreen(
     modifier: Modifier,

@@ -2,6 +2,8 @@ package angelosz.catbattlegame.ui.encyclopedia
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.domain.enums.CollectionView
@@ -20,8 +22,10 @@ class EncyclopediaViewModel(
     = MutableStateFlow(EncyclopediaUiState())
     val uiState: StateFlow<EncyclopediaUiState> = _uiState
 
-    private val catList = _uiState.value.cats
-    private val abilityList = _uiState.value.abilities
+    private val catList: List<Cat>
+        get() = _uiState.value.cats
+    private val abilityList: List<Ability>
+        get() = _uiState.value.abilities
 
 
     init {
@@ -33,12 +37,12 @@ class EncyclopediaViewModel(
             it.copy(screenState = ScreenState.LOADING)
         }
 
-        try{
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try{
                 fetchAllCatData()
                 fetchAllAbilityData()
                 if (catList.isNotEmpty()) {
-                    fetchCatDetails(catList.first().id)
+                    fetchCatDetails(_uiState.value.cats.first().id)
                 }
                 if (abilityList.isNotEmpty()) {
                     fetchAbilityData(abilityList.first().id)
@@ -47,13 +51,12 @@ class EncyclopediaViewModel(
                 _uiState.update {
                     it.copy(screenState = ScreenState.SUCCESS)
                 }
-            }
-        } catch (e: Exception){
-            _uiState.update {
-                it.copy(screenState = ScreenState.FAILURE)
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(screenState = ScreenState.FAILURE)
+                }
             }
         }
-
     }
 
     private suspend fun fetchAllCatData() {
@@ -89,25 +92,25 @@ class EncyclopediaViewModel(
     }
 
     fun updateSelectedCat(catId: Int){
-        try {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 fetchCatDetails(catId)
-            }
-        } catch (e: Exception){
-            _uiState.update {
-                it.copy(screenState = ScreenState.FAILURE)
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(screenState = ScreenState.FAILURE)
+                }
             }
         }
     }
 
     fun updateSelectedAbility(abilityId: Int){
-       try{
-           viewModelScope.launch {
+        viewModelScope.launch {
+            try{
                 fetchAbilityData(abilityId)
-            }
-        } catch (e: Exception){
-            _uiState.update {
-                it.copy(screenState = ScreenState.FAILURE)
+            } catch (e: Exception){
+                _uiState.update {
+                    it.copy(screenState = ScreenState.FAILURE)
+                }
             }
         }
     }
@@ -124,12 +127,4 @@ class EncyclopediaViewModel(
         }
     }
 
-    fun deselectAllData() {
-        _uiState.update {
-            it.copy(
-                selectedCatData = null,
-                selectedAbility = null
-                )
-        }
-    }
 }
