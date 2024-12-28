@@ -15,7 +15,7 @@ import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.Campaign
 import angelosz.catbattlegame.data.entities.CampaignChapter
 import angelosz.catbattlegame.data.entities.ChapterReward
-import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import angelosz.catbattlegame.domain.models.BasicCatData
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

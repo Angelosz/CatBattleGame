@@ -4,7 +4,7 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
-import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import angelosz.catbattlegame.domain.models.BasicCatData
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerAccountRepository {

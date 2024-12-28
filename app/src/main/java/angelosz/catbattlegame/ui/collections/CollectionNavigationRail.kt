@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.components
+package angelosz.catbattlegame.ui.collections
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -7,7 +7,6 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.models.CollectionNavigationItem
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
 

@@ -17,7 +17,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun SmallImageCard(
+fun CatCard(
     modifier: Modifier = Modifier,
     id: Int = 1,
     @DrawableRes image: Int,
@@ -55,7 +55,7 @@ fun SmallImageCard(
 @Composable
 fun CatSmallDataCardPreview(){
     CatBattleGameTheme {
-        SmallImageCard(
+        CatCard(
             modifier = Modifier.padding(8.dp),
             id = 0,
             image = R.drawable.kitten_swordman_300x300,

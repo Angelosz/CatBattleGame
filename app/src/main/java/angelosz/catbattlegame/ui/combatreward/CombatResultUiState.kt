@@ -5,7 +5,7 @@ import angelosz.catbattlegame.data.entities.ChapterReward
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import angelosz.catbattlegame.domain.models.BasicCatData
 
 data class CombatResultUiState(
     val chapter: CampaignChapter? = null,

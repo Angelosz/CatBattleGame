@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.ui.teambuilder
 
+import angelosz.catbattlegame.domain.models.BasicCatData
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 

@@ -1,6 +1,6 @@
 package angelosz.catbattlegame.ui.playercollection
 
-import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.ui.collections.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CollectionSmallCardData
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData

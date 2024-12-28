@@ -48,15 +48,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.SmallImageCard
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import kotlinx.coroutines.launch
 
@@ -148,7 +148,7 @@ fun BattleChestsScreen(
                             verticalArrangement = Arrangement.SpaceEvenly
                         ){
                             uiState.catReward?.let { cat ->
-                                SmallImageCard(
+                                CatCard(
                                     id = cat.id,
                                     image = cat.image,
                                     imageSize = 256,
@@ -244,7 +244,7 @@ private fun ShowBattleChestList(
 
 @Composable
 private fun BattleChestSlot(
-    boxSize: Int = 64,
+    boxSize: Int = 96,
     onChestClicked: (BattleChest) -> Unit,
     battleChest: BattleChest,
     amount: Int,

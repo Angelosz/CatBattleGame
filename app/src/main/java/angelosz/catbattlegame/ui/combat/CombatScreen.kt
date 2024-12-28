@@ -3,7 +3,6 @@ package angelosz.catbattlegame.ui.combat
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -42,7 +41,7 @@ import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.SmallImageCard
+import angelosz.catbattlegame.ui.components.CatCard
 
 @Composable
 fun CombatScreen(
@@ -96,7 +95,7 @@ fun CombatScreen(
                                         gridItem = { index ->
                                             val catData = enemyTeam.getOrNull(index)
                                             if (catData != null) {
-                                                SmallImageCard(
+                                                CatCard(
                                                     modifier = Modifier.padding(8.dp),
                                                     id = catData.id.toInt(),
                                                     image = catData.image,
@@ -147,7 +146,7 @@ fun CombatScreen(
                                         gridItem = { index ->
                                             val catData = playerTeam.getOrNull(index)
                                             if (catData != null) {
-                                                SmallImageCard(
+                                                CatCard(
                                                     modifier = Modifier.padding(8.dp),
                                                     id = catData.catId,
                                                     image = catData.image,

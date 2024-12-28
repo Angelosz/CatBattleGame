@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.components
+package angelosz.catbattlegame.ui.collections
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,15 +23,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.domain.enums.AbilityTarget
 import angelosz.catbattlegame.domain.enums.AbilityType
 import angelosz.catbattlegame.domain.enums.CombatModifiers
 import angelosz.catbattlegame.domain.enums.DamageType
-import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun CatAbilityDetailsCard(modifier: Modifier = Modifier, ability: Ability){
+fun AbilityDetailsCard(modifier: Modifier = Modifier, ability: Ability){
     Card(
         modifier = modifier
         .shadow(2.dp, RoundedCornerShape(8.dp)),
@@ -99,7 +99,7 @@ fun CatAbilityDetailsCard(modifier: Modifier = Modifier, ability: Ability){
 @Composable
 fun CatAbilityCardPreview(){
     CatBattleGameTheme {
-        CatAbilityDetailsCard(
+        AbilityDetailsCard(
             modifier = Modifier.padding(16.dp).fillMaxWidth(),
             ability = Ability(
                 id = 3,

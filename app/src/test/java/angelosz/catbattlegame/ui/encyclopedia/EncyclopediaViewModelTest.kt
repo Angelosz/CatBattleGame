@@ -5,7 +5,7 @@ import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.domain.enums.CatRarity
-import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.ui.collections.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import junit.framework.TestCase.assertEquals

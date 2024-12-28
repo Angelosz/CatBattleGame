@@ -17,14 +17,14 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.domain.enums.CombatModifiers
 import angelosz.catbattlegame.domain.enums.DamageType
-import angelosz.catbattlegame.data.entities.Cat
-import angelosz.catbattlegame.data.entities.EnemyCat
-import angelosz.catbattlegame.data.entities.OwnedCat
-import angelosz.catbattlegame.ui.components.SmallImageCard
+import angelosz.catbattlegame.ui.components.CatCard
 
 class CombatCatData(
     val combatId: Int,
@@ -120,7 +120,7 @@ interface CombatCat{
                 .height((imageSize + 16).dp),
             contentAlignment = Alignment.Center,
         ){
-            SmallImageCard(
+            CatCard(
                 id = cat.combatId,
                 onCardClicked = onCardClicked,
                 imageSize = imageSize,

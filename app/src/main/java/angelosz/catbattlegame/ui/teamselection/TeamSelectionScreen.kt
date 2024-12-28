@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.ui.teamselection
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
@@ -35,6 +37,8 @@ fun TeamSelectionScreen(
 ){
     val uiState by viewModel.uiState.collectAsState()
     val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
+
+    BackHandler(onBack = onBackPressed)
 
     Box(
         contentAlignment = Alignment.Center
@@ -74,7 +78,12 @@ fun TeamSelectionScreen(
                             }
                         }
                     }
-
+                    BackButton(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(horizontal = 32.dp, vertical = 56.dp),
+                        onBackPressed = onBackPressed
+                    )
                 }
             }
             ScreenState.LOADING -> {

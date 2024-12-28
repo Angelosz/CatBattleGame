@@ -9,6 +9,7 @@ import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.domain.models.BasicCatData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
