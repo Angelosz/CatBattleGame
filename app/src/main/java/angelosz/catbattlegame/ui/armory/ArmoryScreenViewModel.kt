@@ -14,12 +14,7 @@ class ArmoryScreenViewModel: ViewModel() {
         _uiState.update {
             it.copy(
                 selectedCollection = collection,
-                isInADetailView = when(collection){
-                    ArmoryView.CATS -> {
-                        it.isCatDetailView
-                    }
-                    else -> false
-                }
+                screenState = ScreenState.SUCCESS
             )
         }
     }
@@ -31,29 +26,5 @@ class ArmoryScreenViewModel: ViewModel() {
             )
         }
         selectCollection(selectCollection)
-    }
-
-    fun exitDetailView(view: ArmoryView) {
-        when(view){
-            ArmoryView.CATS -> {
-                _uiState.update {
-                    it.copy(
-                        isInADetailView = false,
-                        isCatDetailView = false
-                    )
-                }
-            }
-            ArmoryView.TEAMS -> { }
-            ArmoryView.BATTLE_CHESTS -> { }
-        }
-    }
-
-    fun viewCatDetails(id: Int) {
-        _uiState.update {
-            it.copy(
-                isInADetailView = true,
-                isCatDetailView = true
-            )
-        }
     }
 }
