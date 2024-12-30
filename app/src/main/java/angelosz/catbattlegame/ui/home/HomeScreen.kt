@@ -26,7 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.components.BackgroundImage
-import angelosz.catbattlegame.ui.components.RoundedButton
+import angelosz.catbattlegame.ui.components.RoundedImageButton
 
 
 @Composable
@@ -121,11 +121,11 @@ fun HomeScreen(
                 .padding(end = 8.dp),
         ) {
             Column(){
-                RoundedButton(
+                RoundedImageButton(
                     onClick = navigateToBattleChests,
                     innerImage = R.drawable.battlechest_256,
                 )
-                RoundedButton(
+                RoundedImageButton(
                     onClick = navigateToTeamBuild,
                     innerImage = R.drawable.teams_button_256,
                 )

@@ -49,7 +49,7 @@ import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.RoundedButton
+import angelosz.catbattlegame.ui.components.RoundedImageButton
 
 @Composable
 fun CampaignScreen(
@@ -136,7 +136,7 @@ private fun ChapterInfoCard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        RoundedButton(
+        RoundedImageButton(
             outerImage = R.drawable.iconflash_256,
             outerImageSize = 256,
             innerImage = uiState.selectedCampaignChapter.image,
@@ -234,7 +234,7 @@ fun CampaignChapterSelectionGrid(
             ) {
                 items(chapters) { chapter ->
                     Box {
-                        RoundedButton(
+                        RoundedImageButton(
                             onClick = { onChapterClicked(chapter) },
                             innerImage = chapter.image,
                             outerImage = R.drawable.iconflash_256,
@@ -278,7 +278,7 @@ private fun CampaignSelectionCarousel(
             verticalArrangement = Arrangement.Center
         ) {
             if (selectedImageIndex > 0) {
-                RoundedButton(
+                RoundedImageButton(
                     outerImage = R.drawable.iconflash_256,
                     outerImageSize = 128,
                     innerImage = campaigns[selectedImageIndex - 1].image,
@@ -293,7 +293,7 @@ private fun CampaignSelectionCarousel(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(vertical = 48.dp),
             ) {
-                RoundedButton(
+                RoundedImageButton(
                     outerImage = R.drawable.iconflash_256,
                     outerImageSize = 256,
                     innerImage = campaigns[selectedImageIndex].image,
@@ -331,7 +331,7 @@ private fun CampaignSelectionCarousel(
                 }
             }
             if (selectedImageIndex < campaigns.lastIndex) {
-                RoundedButton(
+                RoundedImageButton(
                     outerImage = R.drawable.iconflash_256,
                     outerImageSize = 128,
                     innerImage = campaigns[selectedImageIndex + 1].image,
