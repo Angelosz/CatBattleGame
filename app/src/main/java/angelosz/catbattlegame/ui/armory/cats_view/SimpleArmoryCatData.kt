@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.armory
+package angelosz.catbattlegame.ui.armory.cats_view
 
 data class SimpleArmoryCatData(
     val id: Int,

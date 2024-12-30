@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.armory
+package angelosz.catbattlegame.ui.armory.cats_view
 
 import androidx.annotation.DrawableRes
 import angelosz.catbattlegame.R
