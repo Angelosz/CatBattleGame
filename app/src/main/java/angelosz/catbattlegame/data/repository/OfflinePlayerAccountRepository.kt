@@ -6,6 +6,7 @@ import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.armory.cats_view.SimpleArmoryCatData
 import kotlinx.coroutines.flow.Flow
 
 class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepository {
@@ -52,6 +53,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat> = dao.getPaginatedOwnedCats(limit, offset)
     override suspend fun getCount(): Int = dao.getCount()
     override suspend fun ownsCat(catId: Int): Boolean = dao.ownsCat(catId)
+    override suspend fun getSimpleArmoryCatsData( limit: Int, offset: Int ): List<SimpleArmoryCatData> = dao.getSimpleArmoryCatsData(limit, offset)
 
     /* Player Teams */
     override suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long = dao.insertPlayerTeam(playerTeam)

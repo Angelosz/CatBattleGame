@@ -11,6 +11,7 @@ import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.armory.cats_view.SimpleArmoryCatData
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -61,6 +62,21 @@ interface PlayerDao {
     suspend fun getCount(): Int
     @Query("Select exists(select 1 from player_owned_cat where catId = :catId)")
     suspend fun ownsCat(catId: Int): Boolean
+
+    @Query("""SELECT
+                cats.id as id,
+                cats.image,
+                player_owned_cat.level,
+                player_owned_cat.experience
+            FROM 
+                player_owned_cat
+           JOIN 
+                cats ON cats.id = player_owned_cat.catId
+            ORDER BY 
+                cats.id DESC
+            LIMIT 
+                :limit OFFSET :offset;""")
+    suspend fun getSimpleArmoryCatsData(limit: Int, offset: Int): List<SimpleArmoryCatData>
 
     /* Player Teams */
     @Insert(onConflict = OnConflictStrategy.REPLACE)

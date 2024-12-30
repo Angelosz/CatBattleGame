@@ -5,6 +5,7 @@ import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.armory.cats_view.SimpleArmoryCatData
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerAccountRepository {
@@ -33,6 +34,8 @@ interface PlayerAccountRepository {
     suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat>
     suspend fun getCount(): Int
     suspend fun ownsCat(catId: Int): Boolean
+
+    suspend fun getSimpleArmoryCatsData(limit: Int, offset: Int): List<SimpleArmoryCatData>
 
     /* Player Teams */
     suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long
