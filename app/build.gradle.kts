@@ -72,6 +72,10 @@ dependencies {
 
     // Room components
     implementation (libs.androidx.room.runtime)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
     ksp(libs.androidx.room.compiler)
 
     // Kotlin coroutines support for Room
