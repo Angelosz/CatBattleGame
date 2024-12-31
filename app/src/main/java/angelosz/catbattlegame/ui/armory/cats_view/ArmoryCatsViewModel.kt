@@ -6,6 +6,8 @@ import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
+import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

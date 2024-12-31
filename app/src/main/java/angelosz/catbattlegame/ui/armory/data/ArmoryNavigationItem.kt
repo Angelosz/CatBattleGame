@@ -1,6 +1,7 @@
-package angelosz.catbattlegame.ui.armory
+package angelosz.catbattlegame.ui.armory.data
 
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.ui.armory.ArmoryView
 
 data class ArmoryNavigationItem(
     val title: String,
@@ -13,8 +14,8 @@ val armoryNavigationItems by lazy {
     listOf(
         ArmoryNavigationItem(
             title = "Cats",
-            icon = R.drawable.team_icon_96,
-            selectedIcon = R.drawable.team_icon_96,
+            icon = R.drawable.encyclopedia_icon_96,
+            selectedIcon = R.drawable.encyclopedia_icon_96,
             view = ArmoryView.CATS
         ),
         ArmoryNavigationItem(
@@ -25,8 +26,8 @@ val armoryNavigationItems by lazy {
         ),
         ArmoryNavigationItem(
             title = "Packages",
-            icon = R.drawable.team_icon_96,
-            selectedIcon = R.drawable.team_icon_96,
+            icon = R.drawable.battlechest_icon_96,
+            selectedIcon = R.drawable.battlechest_icon_96,
             view = ArmoryView.BATTLE_CHESTS
         ),
     )

@@ -12,6 +12,8 @@ import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
+import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
