@@ -83,6 +83,13 @@ object CatViewModelProvider {
                 getCatBattleApplication().container.battleChestRepository
             )
         }
+        initializer {
+            ArmoryCatsViewModel(
+                getCatBattleApplication().container.catRepository,
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.abilityRepository
+            )
+        }
     }
 }
 
