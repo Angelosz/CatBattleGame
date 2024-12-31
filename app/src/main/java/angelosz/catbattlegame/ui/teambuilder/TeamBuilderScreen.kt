@@ -203,7 +203,7 @@ private fun HandlePortraitView(
                 onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId) },
                 onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) },
                 isNameEditable = true,
-                onNameChanged = viewModel::UpdateTeamName
+                onNameChanged = viewModel::updateTeamName
             )
         }
     }
