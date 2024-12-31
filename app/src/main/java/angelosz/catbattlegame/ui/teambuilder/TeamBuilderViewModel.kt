@@ -2,14 +2,14 @@ package angelosz.catbattlegame.ui.teambuilder
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
-import angelosz.catbattlegame.data.entities.PlayerTeam
-import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -318,7 +318,7 @@ class TeamBuilderViewModel(
         }
     }
 
-    fun UpdateTeamName(teamName: String) {
+    fun updateTeamName(teamName: String) {
         _uiState.update {
             it.copy(
                 selectedTeam = it.selectedTeam.copy(
