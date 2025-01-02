@@ -61,7 +61,7 @@ class TeamBuilderViewModel(
     private suspend fun fetchOwnedCatCount() {
         _uiState.update {
             it.copy(
-                ownedCatCount = playerAccountRepository.getCount()
+                ownedCatCount = playerAccountRepository.getOwnedCatsCount()
             )
         }
     }
@@ -177,7 +177,7 @@ class TeamBuilderViewModel(
                     )}
                     playerAccountRepository.insertPlayerTeam(PlayerTeam(selectedTeam.teamId, selectedTeam.teamName))
                 } else {
-                    playerAccountRepository.deleteTeambyId(selectedTeam.teamId)
+                    playerAccountRepository.deleteTeamById(selectedTeam.teamId)
                 }
                 fetchAllPlayerTeams()
                 _uiState.update {
@@ -277,7 +277,7 @@ class TeamBuilderViewModel(
                 val cat = _uiState.value.selectedCat
                 teamList.add(
                     BasicCatData(
-                        catId =  cat.ownedCatData.id,
+                        catId =  cat.ownedCatData.catId,
                         image = cat.cat.image
                     )
                 )
@@ -299,7 +299,7 @@ class TeamBuilderViewModel(
         val selectedCat: OwnedCatDetailsData = _uiState.value.selectedCat
         val selectedTeam = _uiState.value.selectedTeam
 
-        return selectedTeam.cats.find { selectedCat.ownedCatData.id == it.catId } != null
+        return selectedTeam.cats.find { selectedCat.ownedCatData.catId == it.catId } != null
     }
 
     fun removeCatFromSelectedTeam(catId: Int){
