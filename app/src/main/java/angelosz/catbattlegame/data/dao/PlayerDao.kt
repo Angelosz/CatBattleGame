@@ -52,11 +52,9 @@ interface PlayerDao {
     suspend fun getAllOwnedCats(): List<OwnedCat>
     @Query("Select * from player_owned_cat where catId = :catId")
     suspend fun getOwnedCatByCatId(catId: Int): OwnedCat
-    @Query("Select * from player_owned_cat where id = :id")
-    suspend fun getOwnedCatById(id: Int): OwnedCat
     @Query("Select * from player_owned_cat where catId in (:catIds)")
     suspend fun getOwnedCatsByIds(catIds: List<Int>): List<OwnedCat>
-    @Query("Select * from player_owned_cat order by id asc limit :limit offset :offset")
+    @Query("Select * from player_owned_cat order by catId asc limit :limit offset :offset")
     suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat>
     @Query("Select count(catId) from player_owned_cat")
     suspend fun getCount(): Int
@@ -76,15 +74,32 @@ interface PlayerDao {
                 cats.id DESC
             LIMIT 
                 :limit OFFSET :offset;""")
-    suspend fun getSimpleArmoryCatsData(limit: Int, offset: Int): List<SimpleArmoryCatData>
+    suspend fun getSimpleCatsDataWithExperiencePage(limit: Int, offset: Int): List<SimpleArmoryCatData>
+
+    @Query("""SELECT 
+        poc.catId AS id,
+        c.image AS image,
+        poc.experience AS experience,
+        poc.level AS level
+            FROM player_team pt
+            JOIN playerteam_ownedcat ptoc ON pt.id = ptoc.teamId
+            JOIN player_owned_cat poc ON ptoc.ownedCatId = poc.catId
+            JOIN cats c ON poc.catId = c.id
+            WHERE pt.id = :teamId
+    """)
+    suspend fun getSimpleArmoryCatsDataFromTeam(teamId: Long): List<SimpleArmoryCatData>
 
     /* Player Teams */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long
+    @Update
+    suspend fun updatePlayerTeam(playerTeam: PlayerTeam)
     @Insert
     suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat)
     @Delete
     suspend fun deleteTeam(playerTeam: PlayerTeam)
+    @Query("Select exists(select 1 from player_team where id = :teamId)")
+    suspend fun teamExists(teamId: Long): Boolean
 
     @Query("delete from player_team where id = :teamId")
     suspend fun deleteTeamById(teamId: Long)
@@ -96,11 +111,11 @@ interface PlayerDao {
     suspend fun getPlayerTeamById(id: Long): PlayerTeam
 
     @Query("""SELECT 
-        poc.id AS catId,
+        poc.catId AS catId,
         c.image AS image
             FROM player_team pt
             JOIN playerteam_ownedcat ptoc ON pt.id = ptoc.teamId
-            JOIN player_owned_cat poc ON ptoc.ownedCatId = poc.id
+            JOIN player_owned_cat poc ON ptoc.ownedCatId = poc.catId
             JOIN cats c ON poc.catId = c.id
             WHERE pt.id = :teamId
             ORDER BY ptoc.position"""
