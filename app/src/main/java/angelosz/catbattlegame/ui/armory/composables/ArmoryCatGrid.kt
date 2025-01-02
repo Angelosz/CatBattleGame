@@ -21,7 +21,7 @@ import angelosz.catbattlegame.ui.components.PaginationButtons
 fun ArmoryCatGrid(
     modifier: Modifier = Modifier,
     cats: List<SimpleArmoryCatData>,
-    onCatCardClicked: (Int) -> Unit,
+    onCatCardClicked: (SimpleArmoryCatData) -> Unit,
     pageLimit: Int = 9,
     imageSize: Int = 96,
     showExperience: Boolean = false
@@ -42,13 +42,13 @@ fun ArmoryCatGrid(
                             experience = cats[index].experience,
                             image = cats[index].image,
                             imageSize = imageSize,
-                            onCardClicked = onCatCardClicked,
+                            onCardClicked = { onCatCardClicked(cats[index]) },
                         )
                     } else {
                         CatCard(
                             id = cats[index].id,
                             image = cats[index].image,
-                            onCardClicked = onCatCardClicked,
+                            onCardClicked = { onCatCardClicked(cats[index]) },
                             imageSize = imageSize,
                             showBorder = true
                         )
