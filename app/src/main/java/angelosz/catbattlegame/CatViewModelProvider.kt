@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import angelosz.catbattlegame.ui.archives.ArchivesScreenViewModel
 import angelosz.catbattlegame.ui.armory.ArmoryScreenViewModel
+import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestViewModel
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
 import angelosz.catbattlegame.ui.armory.teams_view.ArmoryTeamsViewModel
 import angelosz.catbattlegame.ui.battlechests.BattleChestsViewModel
@@ -108,6 +109,10 @@ object CatViewModelProvider {
             ArmoryTeamsViewModel(
                 getCatBattleApplication().container.playerRepository
             )
+        }
+
+        initializer {
+            ArmoryBattleChestViewModel()
         }
     }
 }

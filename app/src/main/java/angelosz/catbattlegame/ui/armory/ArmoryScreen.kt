@@ -32,6 +32,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestView
+import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestViewModel
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsView
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
 import angelosz.catbattlegame.ui.armory.data.CollectionsNavigationItem
@@ -53,6 +55,7 @@ fun ArmoryScreen(
 ) {
     val armoryCatsViewModel: ArmoryCatsViewModel = viewModel(factory = CatViewModelProvider.Factory)
     val armoryTeamsViewModel: ArmoryTeamsViewModel = viewModel(factory = CatViewModelProvider.Factory)
+    val armoryBattleChestViewModel: ArmoryBattleChestViewModel = viewModel(factory = CatViewModelProvider.Factory)
     val uiState by viewModel.uiState.collectAsState()
     val isLandscapeView = windowSize == WindowWidthSizeClass.Expanded
 
@@ -102,7 +105,14 @@ fun ArmoryScreen(
                                     isLandscapeView = isLandscapeView
                                 )
                             }
-                            CollectionsView.BATTLE_CHESTS -> { Text("Armory Battle Chests View") }
+                            CollectionsView.BATTLE_CHESTS -> {
+                                ArmoryBattleChestView(
+                                    viewModel = armoryBattleChestViewModel,
+                                    innerPadding = innerPadding,
+                                    onFailure = returnToMainMenu,
+                                    isLandscapeView = isLandscapeView
+                                )
+                            }
                             else -> { FailureCard(returnToMainMenu) }
                         }
                     }
