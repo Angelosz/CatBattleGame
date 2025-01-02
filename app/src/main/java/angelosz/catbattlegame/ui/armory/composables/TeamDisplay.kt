@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
@@ -21,51 +20,60 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.armory.data.ArmoryTeam
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
+import angelosz.catbattlegame.ui.components.CatCard
 
 @Composable
 fun TeamDisplay(
     modifier: Modifier = Modifier,
     team: ArmoryTeam,
-    onTeamClicked: () -> Unit = {},
+    onTeamClicked: (Long) -> Unit = {},
+    onCatCardClicked: (SimpleArmoryCatData) -> Unit = {},
     isSelected: Boolean = false,
     hasButton: Boolean = false,
     buttonText: String = "",
-    onButtonClick: () -> Unit = {},
+    onButtonClick: (Long) -> Unit = {},
     isNameEditable: Boolean = false,
-    onNameEdited: (String) -> Unit = {}
+    onNameEdited: (String) -> Unit = {},
+    displayAsLongStrip: Boolean = false
 ){
     Box(modifier = modifier
-        .background(if(isSelected) Color.DarkGray else Color.LightGray)
-        .clickable(onClick = onTeamClicked)){
+        .background(if(isSelected) Color.LightGray else Color.White)
+        .clickable(onClick = { onTeamClicked(team.teamId) })
+    ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ){
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
                 if(isNameEditable){
+                    val keyboardController = LocalSoftwareKeyboardController.current
+                    val focusManager = LocalFocusManager.current
                     var teamName by remember { mutableStateOf(team.teamName) }
                     TextField(
                         modifier = Modifier
-                            .weight(1f)
                             .padding(horizontal = 8.dp),
                         value = teamName,
                         onValueChange = {
                             teamName = it
+                            onNameEdited(teamName)
                         },
                         keyboardActions = KeyboardActions(
-                            onDone = { onNameEdited(teamName) }
-                        )
+                            onDone = {
+                                keyboardController?.hide()
+                                focusManager.clearFocus()
+                            }
+                        ),
+                        singleLine = true
                     )
                 } else {
                     Text(
@@ -73,21 +81,61 @@ fun TeamDisplay(
                         style = MaterialTheme.typography.headlineSmall,
                     )
                 }
+
+                if(displayAsLongStrip){
+                    TeamRowDisplay(team, onCatCardClicked)
+                }
+
                 if(hasButton){
-                    Button(onClick = onButtonClick){
+                    Button(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        onClick = { onButtonClick(team.teamId) }
+                    ){
                         Text(
                             text = buttonText,
-                            modifier = Modifier.padding(4.dp)
+                            modifier = Modifier
+                                .padding(4.dp)
                         )
                     }
                 }
             }
-            ArmoryCatGrid(
-                cats = team.cats,
-                onCatCardClicked = {},
-                pageLimit = 4,
-                imageSize = 76
-            )
+            if(!displayAsLongStrip){
+                TeamRowDisplay(team, onCatCardClicked)
+            }
+        }
+    }
+}
+
+@Composable
+private fun TeamRowDisplay(
+    team: ArmoryTeam,
+    onCatCardClicked: (SimpleArmoryCatData) -> Unit,
+    imageSize: Int = 76,
+) {
+    Row(
+        modifier = Modifier
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        repeat(4) { index ->
+            if (index >= team.cats.size) {
+                CatCard(
+                    id = 0,
+                    image = R.drawable.battlechest_background_128,
+                    onCardClicked = {},
+                    imageSize = imageSize,
+                    showBorder = true
+                )
+            } else {
+                CatCard(
+                    id = team.cats[index].id,
+                    image = team.cats[index].image,
+                    onCardClicked = { onCatCardClicked(team.cats[index]) },
+                    imageSize = imageSize,
+                    showBorder = true
+                )
+            }
         }
     }
 }
@@ -101,8 +149,8 @@ fun ArmoryTeamDisplayPreview(){
                 teamId = 1,
                 teamName = "Team Name",
                 cats = listOf(
-                    SimpleArmoryCatData(1, R.drawable.kitten_swordman_300x300, 1, 20),
-                    SimpleArmoryCatData(2, R.drawable.kitten_mage_300, 2, 30),
+                    SimpleArmoryCatData(1, R.drawable.kitten_swordman_300x300, 0, 0),
+                    SimpleArmoryCatData(2, R.drawable.kitten_mage_300, 0, 0),
                 )
             )
         )
@@ -118,8 +166,8 @@ fun ArmoryTeamDisplayWithEditableNamePreview(){
                 teamId = 1,
                 teamName = "Team Name",
                 cats = listOf(
-                    SimpleArmoryCatData(1, R.drawable.kitten_swordman_300x300, 1, 20),
-                    SimpleArmoryCatData(2, R.drawable.kitten_mage_300, 2, 30),
+                    SimpleArmoryCatData(1, R.drawable.kitten_swordman_300x300, 0, 0),
+                    SimpleArmoryCatData(2, R.drawable.kitten_mage_300, 0, 0),
                 )
             ),
             hasButton = true,
