@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import angelosz.catbattlegame.ui.archives.ArchivesScreenViewModel
+import angelosz.catbattlegame.ui.armory.ArmoryScreenViewModel
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
+import angelosz.catbattlegame.ui.armory.teams_view.ArmoryTeamsViewModel
 import angelosz.catbattlegame.ui.battlechests.BattleChestsViewModel
 import angelosz.catbattlegame.ui.campaign.CampaignScreenViewModel
 import angelosz.catbattlegame.ui.combat.CombatScreenViewModel
