@@ -2,6 +2,8 @@ package angelosz.catbattlegame.ui.combat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.CatRepository
@@ -13,10 +15,8 @@ import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
 import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.data.entities.Ability
-import angelosz.catbattlegame.data.entities.EnemyCat
-import angelosz.catbattlegame.ui.campaign.EnemyType
 import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.campaign.EnemyType
 import angelosz.catbattlegame.ui.teambuilder.TeamData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -87,7 +87,7 @@ class CombatScreenViewModel(
 
     private suspend fun buildPlayerCombatCatsTeam(teamData: List<BasicCatData>, firstCombatId: Int): List<CombatCat> {
         return teamData.mapIndexed { index, data ->
-            val ownedCat = playerAccountRepository.getOwnedCatById(data.catId)
+            val ownedCat = playerAccountRepository.getOwnedCatByCatId(data.catId)
             val cat = catRepository.getCatById(ownedCat.catId)
 
             val combatAbilities = CombatAbility.build(getCatAbilities(cat.id))
@@ -171,41 +171,47 @@ class CombatScreenViewModel(
     }
 
     private fun enemyCatDied(catId: Int) {
-        val remainingCats =
-            _uiState.value.enemyCombatCats.filter { cat -> cat.cat.combatId != catId }
-        if (remainingCats.isEmpty()) {
-            _uiState.update {
-                it.copy(
-                    combatState = CombatState.FINISHED,
-                    combatResult = CombatResult.PLAYER_WON
-                )
-            }
-        } else {
-            _uiState.update {
-                it.copy(
-                    enemyCombatCats = remainingCats,
-                    catInitiatives = _uiState.value.catInitiatives.filter { cat -> cat.catId != catId },
-                )
+        viewModelScope.launch {
+            val remainingCats =
+                _uiState.value.enemyCombatCats.filter { cat -> cat.cat.combatId != catId }
+            delay(500)
+            if (remainingCats.isEmpty()) {
+                _uiState.update {
+                    it.copy(
+                        combatState = CombatState.FINISHED,
+                        combatResult = CombatResult.PLAYER_WON
+                    )
+                }
+            } else {
+                _uiState.update {
+                    it.copy(
+                        enemyCombatCats = remainingCats,
+                        catInitiatives = _uiState.value.catInitiatives.filter { cat -> cat.catId != catId },
+                    )
+                }
             }
         }
     }
 
     private fun playerCatDied(catId: Int) {
-        val remainingCats =
-            _uiState.value.teamCombatCats.filter { cat -> cat.cat.combatId != catId }
-        if (remainingCats.isEmpty()) {
-            _uiState.update {
-                it.copy(
-                    combatState = CombatState.FINISHED,
-                    combatResult = CombatResult.PLAYER_LOST
-                )
-            }
-        } else {
-            _uiState.update {
-                it.copy(
-                    teamCombatCats = remainingCats,
-                    catInitiatives = _uiState.value.catInitiatives.filter { cat -> cat.catId != catId },
-                )
+        viewModelScope.launch {
+            delay(500)
+            val remainingCats =
+                _uiState.value.teamCombatCats.filter { cat -> cat.cat.combatId != catId }
+            if (remainingCats.isEmpty()) {
+                _uiState.update {
+                    it.copy(
+                        combatState = CombatState.FINISHED,
+                        combatResult = CombatResult.PLAYER_LOST
+                    )
+                }
+            } else {
+                _uiState.update {
+                    it.copy(
+                        teamCombatCats = remainingCats,
+                        catInitiatives = _uiState.value.catInitiatives.filter { cat -> cat.catId != catId },
+                    )
+                }
             }
         }
     }
