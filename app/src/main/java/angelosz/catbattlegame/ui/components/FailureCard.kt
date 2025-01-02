@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FailureCard(
     onBackPressed: () -> Unit,
-    onReloadPressed: () -> Unit,
+    onReloadPressed: () -> Unit = {},
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),

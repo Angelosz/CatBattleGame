@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.components
+package angelosz.catbattlegame.ui.collections
 
 import androidx.compose.foundation.Image
 import androidx.compose.material3.Icon
@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.models.CollectionNavigationItem
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
 

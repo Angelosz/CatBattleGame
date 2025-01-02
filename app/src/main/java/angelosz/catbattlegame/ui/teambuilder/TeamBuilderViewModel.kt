@@ -2,13 +2,14 @@ package angelosz.catbattlegame.ui.teambuilder
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.domain.models.BasicCatData
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
-import angelosz.catbattlegame.data.entities.PlayerTeam
-import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -60,7 +61,7 @@ class TeamBuilderViewModel(
     private suspend fun fetchOwnedCatCount() {
         _uiState.update {
             it.copy(
-                ownedCatCount = playerAccountRepository.getCount()
+                ownedCatCount = playerAccountRepository.getOwnedCatsCount()
             )
         }
     }
@@ -176,7 +177,7 @@ class TeamBuilderViewModel(
                     )}
                     playerAccountRepository.insertPlayerTeam(PlayerTeam(selectedTeam.teamId, selectedTeam.teamName))
                 } else {
-                    playerAccountRepository.deleteTeambyId(selectedTeam.teamId)
+                    playerAccountRepository.deleteTeamById(selectedTeam.teamId)
                 }
                 fetchAllPlayerTeams()
                 _uiState.update {
@@ -276,7 +277,7 @@ class TeamBuilderViewModel(
                 val cat = _uiState.value.selectedCat
                 teamList.add(
                     BasicCatData(
-                        catId =  cat.ownedCatData.id,
+                        catId =  cat.ownedCatData.catId,
                         image = cat.cat.image
                     )
                 )
@@ -298,7 +299,7 @@ class TeamBuilderViewModel(
         val selectedCat: OwnedCatDetailsData = _uiState.value.selectedCat
         val selectedTeam = _uiState.value.selectedTeam
 
-        return selectedTeam.cats.find { selectedCat.ownedCatData.id == it.catId } != null
+        return selectedTeam.cats.find { selectedCat.ownedCatData.catId == it.catId } != null
     }
 
     fun removeCatFromSelectedTeam(catId: Int){
@@ -317,7 +318,7 @@ class TeamBuilderViewModel(
         }
     }
 
-    fun UpdateTeamName(teamName: String) {
+    fun updateTeamName(teamName: String) {
         _uiState.update {
             it.copy(
                 selectedTeam = it.selectedTeam.copy(

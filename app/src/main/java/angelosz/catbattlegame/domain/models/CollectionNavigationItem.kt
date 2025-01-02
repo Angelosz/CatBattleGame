@@ -1,10 +1,11 @@
 package angelosz.catbattlegame.domain.models
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
-import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.ui.collections.CollectionView
 
 data class CollectionNavigationItem(
     val collectionView: CollectionView,
@@ -23,6 +24,11 @@ val encyclopediaNavigationItems by lazy {
             CollectionView.ABILITIES,
             Icons.Filled.Star,
             text = "Abilities"
+        ),
+        CollectionNavigationItem(
+            CollectionView.ENEMIES,
+            Icons.Filled.Close,
+            text = "Enemies"
         )
     )
 }

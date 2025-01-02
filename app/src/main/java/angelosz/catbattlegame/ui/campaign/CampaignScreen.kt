@@ -36,20 +36,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.domain.enums.CampaignState
-import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.data.entities.Campaign
 import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.domain.enums.CampaignState
+import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.RoundedButton
-import angelosz.catbattlegame.ui.components.SmallImageCard
+import angelosz.catbattlegame.ui.components.RoundedImageButton
 
 @Composable
 fun CampaignScreen(
@@ -71,6 +71,12 @@ fun CampaignScreen(
                 when(uiState.stage){
                     CampaignSelectionStage.SELECTING_CAMPAIGN -> {
                         BackHandler(onBack = onBackButtonPressed)
+                        BackButton(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(horizontal = 32.dp, vertical = 56.dp),
+                            onBackPressed = onBackButtonPressed
+                        )
                         CampaignSelectionCarousel(
                             campaigns = uiState.campaigns,
                             onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) }
@@ -78,6 +84,12 @@ fun CampaignScreen(
                     }
                     CampaignSelectionStage.SELECTING_CHAPTER -> {
                         BackHandler(onBack = { viewModel.backToCampaignSelection() })
+                        BackButton(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(horizontal = 32.dp, vertical = 56.dp),
+                            onBackPressed = { viewModel.backToCampaignSelection() }
+                        )
                         CampaignChapterSelectionGrid(
                             chapters = uiState.campaignChapters,
                             onChapterClicked = { chapter ->
@@ -89,6 +101,12 @@ fun CampaignScreen(
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {
                         BackHandler(onBack = { viewModel.backToCampaignChapterSelection() })
+                        BackButton(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(horizontal = 32.dp, vertical = 56.dp),
+                            onBackPressed = { viewModel.backToCampaignChapterSelection() }
+                        )
                         ChapterInfoCard(uiState, onChooseTeamClicked = onChapterSelected)
                     }
                 }
@@ -118,7 +136,7 @@ private fun ChapterInfoCard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        RoundedButton(
+        RoundedImageButton(
             outerImage = R.drawable.iconflash_256,
             outerImageSize = 256,
             innerImage = uiState.selectedCampaignChapter.image,
@@ -148,26 +166,18 @@ private fun ChapterInfoCard(
                         containerColor = Color.White
                     )
                 ) {
-                    Text(
-                        text = "Enemies",
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
                     LazyVerticalGrid(
                         contentPadding = PaddingValues(16.dp),
                         columns = GridCells.Fixed(2),
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier.height(256.dp)
+                        modifier = Modifier.height(224.dp)
                     ) {
                         items(uiState.selectedCampaignChapterEnemyCats) {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
-                                SmallImageCard(
+                                CatCard(
                                     image = it.image,
                                     imageSize = 128
                                 )
@@ -189,11 +199,11 @@ private fun ChapterInfoCard(
                 contentAlignment = Alignment.BottomCenter
             ){
                 Button(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(4.dp),
                     onClick = { onChooseTeamClicked(uiState.selectedCampaignChapter.id) }
                 ){
                     Text(
-                        modifier = Modifier.padding(4.dp),
+                        modifier = Modifier.padding(2.dp),
                         text = "Start",
                         style = MaterialTheme.typography.headlineSmall
                     )
@@ -224,7 +234,7 @@ fun CampaignChapterSelectionGrid(
             ) {
                 items(chapters) { chapter ->
                     Box {
-                        RoundedButton(
+                        RoundedImageButton(
                             onClick = { onChapterClicked(chapter) },
                             innerImage = chapter.image,
                             outerImage = R.drawable.iconflash_256,
@@ -268,7 +278,7 @@ private fun CampaignSelectionCarousel(
             verticalArrangement = Arrangement.Center
         ) {
             if (selectedImageIndex > 0) {
-                RoundedButton(
+                RoundedImageButton(
                     outerImage = R.drawable.iconflash_256,
                     outerImageSize = 128,
                     innerImage = campaigns[selectedImageIndex - 1].image,
@@ -283,7 +293,7 @@ private fun CampaignSelectionCarousel(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(vertical = 48.dp),
             ) {
-                RoundedButton(
+                RoundedImageButton(
                     outerImage = R.drawable.iconflash_256,
                     outerImageSize = 256,
                     innerImage = campaigns[selectedImageIndex].image,
@@ -321,7 +331,7 @@ private fun CampaignSelectionCarousel(
                 }
             }
             if (selectedImageIndex < campaigns.lastIndex) {
-                RoundedButton(
+                RoundedImageButton(
                     outerImage = R.drawable.iconflash_256,
                     outerImageSize = 128,
                     innerImage = campaigns[selectedImageIndex + 1].image,

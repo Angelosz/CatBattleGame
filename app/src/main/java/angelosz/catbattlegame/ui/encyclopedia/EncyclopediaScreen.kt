@@ -28,18 +28,18 @@ import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
-import angelosz.catbattlegame.domain.enums.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.encyclopediaNavigationItems
+import angelosz.catbattlegame.ui.collections.AbilityDetailsCard
+import angelosz.catbattlegame.ui.collections.CatDataDetailsCard
+import angelosz.catbattlegame.ui.collections.CollectionNavigationBottomBar
+import angelosz.catbattlegame.ui.collections.CollectionNavigationRail
+import angelosz.catbattlegame.ui.collections.CollectionView
 import angelosz.catbattlegame.ui.components.BackgroundImage
-import angelosz.catbattlegame.ui.components.CatAbilityDetailsCard
-import angelosz.catbattlegame.ui.components.CatDataDetailsCard
-import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
-import angelosz.catbattlegame.ui.components.CollectionNavigationRail
+import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.SmallImageCard
 
 @Composable
 fun EncyclopediaScreen(
@@ -144,6 +144,9 @@ private fun HandleEncyclopediaPortraitView(
                 )
             }
             CollectionView.ITEMS -> Text("No items yet :(")
+            CollectionView.ENEMIES -> {
+
+            }
         }
     }
 }
@@ -192,6 +195,7 @@ private fun HandleEncyclopediaLandscapeView(
             }
 
             CollectionView.ITEMS -> Text("No items yet :(")
+            else -> {}
         }
 
     }
@@ -216,7 +220,7 @@ private fun PortraitEncyclopediaCatsScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(cats) { cat ->
-                    SmallImageCard(
+                    CatCard(
                         modifier = Modifier.padding(8.dp),
                         id = cat.id,
                         image = cat.image,
@@ -230,7 +234,8 @@ private fun PortraitEncyclopediaCatsScreen(
                 CatDataDetailsCard(
                     modifier = Modifier.padding(16.dp),
                     catDetails = catDetails
-            )} ?: Text(
+            )
+            } ?: Text(
                 text = "No cat selected :(",
                 color = Color.White,
                 style = MaterialTheme.typography.displayLarge
@@ -260,7 +265,7 @@ private fun LandscapeEncyclopediaCatsScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(cats) { cat ->
-                    SmallImageCard(
+                    CatCard(
                         modifier = Modifier.padding(8.dp),
                         id = cat.id,
                         image = cat.image,
@@ -301,7 +306,7 @@ private fun PortraitEncyclopediaAbilityScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 items(abilities) { ability ->
-                    SmallImageCard(
+                    CatCard(
                         modifier = Modifier.padding(8.dp),
                         id = ability.id,
                         image = ability.image,
@@ -313,7 +318,7 @@ private fun PortraitEncyclopediaAbilityScreen(
             }
         } else {
             abilityData?.let{
-                CatAbilityDetailsCard(
+                AbilityDetailsCard(
                 modifier = Modifier.padding(16.dp),
                 ability = it
             )
@@ -346,7 +351,7 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
                 columns = GridCells.FixedSize(128.dp),
             ) {
                 items(abilities) { ability ->
-                    SmallImageCard(
+                    CatCard(
                         modifier = Modifier.padding(8.dp),
                         id = ability.id,
                         image = ability.image,
@@ -356,7 +361,7 @@ private fun LandscapeEncyclopediaAbilitiesScreen(
                 }
             }
             abilityData?.let {
-                CatAbilityDetailsCard(
+                AbilityDetailsCard(
                     modifier = Modifier
                         .padding(4.dp)
                         .width(384.dp)

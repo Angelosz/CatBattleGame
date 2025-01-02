@@ -2,6 +2,10 @@ package angelosz.catbattlegame.ui.combatreward
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.BattleChest
+import angelosz.catbattlegame.data.entities.Campaign
+import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.ChapterReward
 import angelosz.catbattlegame.data.repository.BattleChestRepository
 import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
@@ -11,11 +15,7 @@ import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.data.entities.BattleChest
-import angelosz.catbattlegame.data.entities.Campaign
-import angelosz.catbattlegame.data.entities.CampaignChapter
-import angelosz.catbattlegame.data.entities.ChapterReward
-import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import angelosz.catbattlegame.domain.models.BasicCatData
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -101,7 +101,7 @@ class CombatResultViewModel(
 
     private suspend fun addCatsExperience(team: List<BasicCatData>, experience: Int) {
         team.forEach{ cat ->
-            val ownedCat = playerAccountRepository.getOwnedCatById(cat.catId)
+            val ownedCat = playerAccountRepository.getOwnedCatByCatId(cat.catId)
             val totalExperience = ownedCat.experience + experience
 
             if(totalExperience >= EXPERIENCE_PER_LEVEL){

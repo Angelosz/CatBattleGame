@@ -12,7 +12,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
-fun SmallImageCardWithExperienceBar(
+fun CatCardWithExperienceBar(
     modifier: Modifier = Modifier,
     id: Int,
     onCardClicked: (Int) -> Unit,
@@ -26,7 +26,7 @@ fun SmallImageCardWithExperienceBar(
             .width(imageSize.dp)
             .height((imageSize + 16).dp)
     ){
-        SmallImageCard(
+        CatCard(
             modifier = Modifier,
             id = id,
             onCardClicked = onCardClicked,
@@ -45,7 +45,7 @@ fun SmallImageCardWithExperienceBar(
 @Composable
 fun CollectionSmallCardPreview(){
     CatBattleGameTheme {
-        SmallImageCardWithExperienceBar(
+        CatCardWithExperienceBar(
             id = 21,
             onCardClicked = {},
             imageSize = 192,

@@ -40,11 +40,11 @@ import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
-import angelosz.catbattlegame.ui.components.CatImageCardGrid
+import angelosz.catbattlegame.ui.collections.CatImageCardGrid
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.PaginationButtons
-import angelosz.catbattlegame.ui.components.SmallImageCard
+import angelosz.catbattlegame.ui.components.CatCard
 
 @Composable
 fun TeamBuilderScreen(
@@ -86,7 +86,7 @@ fun TeamBuilderScreen(
             BackButton(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(horizontal = 32.dp, vertical = 64.dp),
+                    .padding(horizontal = 32.dp, vertical = 56.dp),
                 onBackPressed = onBackPressed
             )
         }
@@ -203,7 +203,7 @@ private fun HandlePortraitView(
                 onDeleteTeamClicked = { teamData -> viewModel.deleteTeam(teamData.teamId) },
                 onCatClicked = { catId -> viewModel.removeCatFromSelectedTeam(catId) },
                 isNameEditable = true,
-                onNameChanged = viewModel::UpdateTeamName
+                onNameChanged = viewModel::updateTeamName
             )
         }
     }
@@ -232,7 +232,7 @@ fun SelectedCatInfoCard(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
-                SmallImageCard(
+                CatCard(
                     id = selectedCat.cat.id,
                     image = selectedCat.cat.image,
                     onCardClicked = {},

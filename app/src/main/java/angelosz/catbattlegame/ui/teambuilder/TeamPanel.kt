@@ -29,7 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.ui.components.SmallImageCard
+import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable
@@ -120,7 +121,7 @@ private fun TeamRow(
         repeat(4) { index ->
             val catData = teamData.cats.getOrNull(index)
             if (catData != null) {
-                SmallImageCard(
+                CatCard(
                     id = catData.catId,
                     image = catData.image,
                     imageSize = imageSize,

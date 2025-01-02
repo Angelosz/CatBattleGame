@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
 
 @Composable
-fun RoundedButton(
+fun RoundedImageButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     @DrawableRes innerImage: Int,

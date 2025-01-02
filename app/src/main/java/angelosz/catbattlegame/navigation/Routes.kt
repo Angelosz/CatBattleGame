@@ -1,10 +1,14 @@
 package angelosz.catbattlegame.navigation
 
 import angelosz.catbattlegame.domain.enums.CombatResult
+import angelosz.catbattlegame.ui.armory.enums.CollectionsView
 import kotlinx.serialization.Serializable
 
 @Serializable
 object HomeScreenRoute
+
+@Serializable
+data class ArmoryScreenRoute(val selectedCollection: CollectionsView)
 
 @Serializable
 object EncyclopediaScreenRoute

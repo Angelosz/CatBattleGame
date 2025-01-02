@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.components
+package angelosz.catbattlegame.ui.collections
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +33,7 @@ import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.ui.components.ExperienceBar
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable

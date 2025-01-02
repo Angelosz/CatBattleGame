@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.components
+package angelosz.catbattlegame.ui.collections
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,9 +8,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.ui.teambuilder.BasicCatData
+import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.components.CatCard
 
 @Composable
 fun CatImageCardGrid(
@@ -44,7 +46,7 @@ fun CatImageCardGrid(
 
         items(data) { catData ->
             if (catData.catId >= 0) {
-                SmallImageCard(
+                CatCard(
                     id = catData.catId,
                     image = catData.image,
                     onCardClicked = onCardSelected,
@@ -52,7 +54,7 @@ fun CatImageCardGrid(
                     showBorder = true
                 )
             } else {
-                SmallImageCard(
+                CatCard(
                     id = 0,
                     image = R.drawable.battlechest_background_128,
                     onCardClicked = {},
@@ -62,4 +64,20 @@ fun CatImageCardGrid(
             }
         }
     }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun Preview_CatImageCardGrid(){
+    CatImageCardGrid(
+        catsData = listOf(
+            BasicCatData(1, R.drawable.kitten_mage_300),
+            BasicCatData(2, R.drawable.kitten_rogue_300),
+            BasicCatData(3, R.drawable.kitten_priest_300),
+            BasicCatData(3, R.drawable.kitten_priest_300),
+        ),
+        pageLimit = 3,
+        imageSize = 96,
+        onCardSelected = { }
+    )
 }

@@ -24,19 +24,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.domain.enums.CollectionView
+import angelosz.catbattlegame.ui.collections.CollectionView
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.domain.models.CatDetailsData
 import angelosz.catbattlegame.domain.models.CollectionSmallCardData
 import angelosz.catbattlegame.domain.models.OwnedCatDetailsData
 import angelosz.catbattlegame.domain.models.collectionNavigationItems
 import angelosz.catbattlegame.ui.components.BackgroundImage
-import angelosz.catbattlegame.ui.components.CatDataDetailsCard
-import angelosz.catbattlegame.ui.components.CollectionNavigationBottomBar
-import angelosz.catbattlegame.ui.components.CollectionNavigationRail
+import angelosz.catbattlegame.ui.collections.CatDataDetailsCard
+import angelosz.catbattlegame.ui.collections.CollectionNavigationBottomBar
+import angelosz.catbattlegame.ui.collections.CollectionNavigationRail
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.SmallImageCardWithExperienceBar
+import angelosz.catbattlegame.ui.components.CatCardWithExperienceBar
 
 @Composable
 fun CollectionScreen(
@@ -202,7 +202,7 @@ fun CatCollectionPortraitView(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 items(cats) { data ->
-                    SmallImageCardWithExperienceBar(
+                    CatCardWithExperienceBar(
                         modifier = Modifier.padding(8.dp),
                         id = data.id,
                         image = data.image,
@@ -244,7 +244,7 @@ fun CatCollectionLandscapeView(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
                     items(cats) { data ->
-                        SmallImageCardWithExperienceBar(
+                        CatCardWithExperienceBar(
                             modifier = Modifier.padding(8.dp),
                             id = data.id,
                             image = data.image,
