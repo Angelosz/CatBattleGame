@@ -34,7 +34,7 @@ fun HomeScreen(
     windowSize: WindowWidthSizeClass,
     onPlayButtonClick: () -> Unit,
     navigateToEncyclopedia: () -> Unit,
-    navigateToCollection: () -> Unit,
+    navigateToCollections: () -> Unit,
     navigateToBattleChests: () -> Unit,
     navigateToTeamBuild: () -> Unit
 ) {
@@ -62,7 +62,7 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
                 HomeButtons(
-                    navigateToCollection = navigateToCollection,
+                    navigateToCollection = navigateToCollections,
                     navigateToEncyclopedia = navigateToEncyclopedia,
                     onPlayButtonClick = onPlayButtonClick
                 )
@@ -74,7 +74,7 @@ fun HomeScreen(
                     modifier = Modifier.size(192.dp)
                 )
                 HomeButtons(
-                    navigateToCollection = navigateToCollection,
+                    navigateToCollection = navigateToCollections,
                     navigateToEncyclopedia = navigateToEncyclopedia,
                     onPlayButtonClick = onPlayButtonClick
                 )
@@ -128,6 +128,10 @@ fun HomeScreen(
                 RoundedImageButton(
                     onClick = navigateToTeamBuild,
                     innerImage = R.drawable.teams_button_256,
+                )
+                RoundedImageButton(
+                    onClick = navigateToCollections,
+                    innerImage = R.drawable.archive_button_256,
                 )
             }
         }
