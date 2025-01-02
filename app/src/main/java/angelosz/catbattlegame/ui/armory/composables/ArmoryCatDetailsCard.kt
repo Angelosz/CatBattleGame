@@ -19,12 +19,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,17 +44,22 @@ fun ArmoryCatDetailsCard(
     cat: DetailedArmoryCatData,
     showCloseButton: Boolean = false,
     onCloseClicked: () -> Unit,
+    textSize: TextStyle = MaterialTheme.typography.bodyLarge,
+    imageSize: Int = 300,
 ) {
     Card(
         modifier = modifier,
         shape = RectangleShape
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier,
             contentAlignment = Alignment.Center,
         ) {
-            ArmoryCatDetailsCatContent(cat)
+            ArmoryCatDetailsCatContent(
+                cat = cat,
+                imageSize = imageSize,
+                textSize = textSize
+            )
 
             if(showCloseButton){
                 RoundedTextButton(
@@ -77,7 +80,8 @@ fun ArmoryCatDetailsCard(
 @Composable
 private fun ArmoryCatDetailsCatContent(
     cat: DetailedArmoryCatData,
-    imageSize: Int = 300
+    imageSize: Int = 300,
+    textSize: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
     Column(
         modifier = Modifier
@@ -87,14 +91,7 @@ private fun ArmoryCatDetailsCatContent(
         Text(
             text = cat.name,
             modifier = Modifier.padding(16.dp),
-            color = Color.White,
-            style = MaterialTheme.typography.headlineSmall.copy(
-                shadow = Shadow(
-                    color = Color.Black,
-                    offset = Offset(3f, 3f),
-                    blurRadius = 1f
-                )
-            ),
+            style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
         Image(
@@ -114,7 +111,7 @@ private fun ArmoryCatDetailsCatContent(
                 showText = true
             )
             Text(
-                text = "\"${cat.description}\"",
+                text = cat.description,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -134,35 +131,42 @@ private fun ArmoryCatDetailsCatContent(
                 ) {
                     Column {
                         Text(
-                            text = "Base Health: ${cat.health}",
+                            text = "Health: ${cat.health}",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = "Base Defense: ${cat.defense}",
+                            text = "Defense: ${cat.defense}",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
                             text = "Role: ${stringResource(cat.role.res)}",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
 
                         Text(
-                            text = "Armor type: ${stringResource(cat.armorType.res)}",
+                            text = "Armor: ${stringResource(cat.armorType.res)}",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
 
                     }
                     Column {
                         Text(
-                            text = "Base Attack: ${cat.attack}",
+                            text = "Attack: ${cat.attack}",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Attack Speed: ${cat.speed}s",
+                            text = "A. Speed: ${cat.speed}s",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
                             text = "Rarity: ${stringResource(cat.rarity.res)}",
+                            style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                     }
@@ -190,6 +194,7 @@ private fun ArmoryCatDetailsCatContent(
                             )
                             Text(
                                 text = ability.name,
+                                style = textSize,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
@@ -232,7 +237,7 @@ fun ArmoryCatDetailsCardPreview(){
                     )
                 )
             ),
-            onCloseClicked = { }
+            onCloseClicked = { },
         )
     }
 }

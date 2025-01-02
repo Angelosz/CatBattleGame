@@ -84,6 +84,11 @@ object CatViewModelProvider {
                 getCatBattleApplication().container.battleChestRepository
             )
         }
+
+        initializer {
+            ArchivesScreenViewModel()
+        }
+
         initializer {
             ArmoryScreenViewModel()
         }
