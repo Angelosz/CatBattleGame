@@ -70,13 +70,10 @@ fun HandleArmoryCatsLandscapeView(
     viewModel: ArmoryCatsViewModel
 ) {
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
             Column(
                 modifier = Modifier
                     .weight(1f),
@@ -88,7 +85,7 @@ fun HandleArmoryCatsLandscapeView(
                         .padding(8.dp)
                         .width(448.dp),
                     cats = uiState.cats,
-                    onCatCardClicked = viewModel::selectCat,
+                    onCatCardClicked = { viewModel.selectCat(it.id)},
                     pageLimit = uiState.pageLimit,
                     imageSize = 96,
                     showExperience = true
@@ -101,12 +98,12 @@ fun HandleArmoryCatsLandscapeView(
                 )
             }
             ArmoryCatDetailsCard(
-                modifier = Modifier.width(368.dp),
+                modifier = Modifier.width(300.dp),
                 cat = uiState.selectedCat,
                 onCloseClicked = viewModel::exitDetailView,
+                imageSize = 256,
             )
         }
-    }
 }
 
 @Composable
@@ -118,7 +115,7 @@ private fun HandleArmoryCatsPortraitView(
         ArmoryCatDetailsCard(
             modifier = Modifier.padding(16.dp),
             cat = uiState.selectedCat,
-            onCloseClicked = viewModel::exitDetailView
+            onCloseClicked = viewModel::exitDetailView,
         )
     } else {
         Column(
@@ -129,7 +126,7 @@ private fun HandleArmoryCatsPortraitView(
             ArmoryCatGrid(
                 modifier = Modifier.padding(8.dp),
                 cats = uiState.cats,
-                onCatCardClicked = viewModel::selectCat,
+                onCatCardClicked = { viewModel.selectCat(it.id) },
                 pageLimit = uiState.pageLimit,
                 imageSize = 112,
                 showExperience = true

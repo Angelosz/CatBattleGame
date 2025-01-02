@@ -59,7 +59,7 @@ val cats: List<Cat> = listOf(
     ),
     Cat(id = 3, name = "thirdCat")
 )
-val simpleArmoryCatData = listOf(
+val simpleArmoryCatDataList = listOf(
     SimpleArmoryCatData(
         id = cats[0].id,
         image = cats[0].image,
@@ -130,7 +130,7 @@ class ArmoryCatsViewModelTest {
     fun `data is fetched correctly at setup`() = runTest {
         val uiState = ArmoryCatsUiState(
             state = ScreenState.SUCCESS,
-            cats = simpleArmoryCatData,
+            cats = simpleArmoryCatDataList,
             selectedCat = firstCatDetailedData,
             isDetailView = false,
             totalNumberOfCats = 2,
@@ -202,18 +202,24 @@ class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
         for( cat in ownedCats) if(cat.catId == catId) return cat
         throw Exception()
     }
-    override suspend fun getOwnedCatById(id: Int): OwnedCat = OwnedCat()
     override suspend fun getOwnedCatsByCatIds(catIds: List<Int>): List<OwnedCat> = emptyList()
     override suspend fun getPaginatedOwnedCats(limit: Int, offset: Int): List<OwnedCat> = emptyList()
-    override suspend fun getCount(): Int = ownedCats.size
+    override suspend fun getOwnedCatsCount(): Int = ownedCats.size
     override suspend fun ownsCat(catId: Int): Boolean = false
-    override suspend fun getSimpleArmoryCatsData(
+    override suspend fun getSimpleArmoryCatsDataPage(
         limit: Int,
         offset: Int,
-    ): List<SimpleArmoryCatData> = simpleArmoryCatData
+    ): List<SimpleArmoryCatData> = simpleArmoryCatDataList
+
+    override suspend fun getSimpleCatsDataFromTeam(teamId: Long): List<SimpleArmoryCatData> = emptyList()
+
     override suspend fun insertPlayerTeam(playerTeam: PlayerTeam): Long = 0
+    override suspend fun updatePlayerTeam(playerTeam: PlayerTeam) {}
+
     override suspend fun deleteTeam(playerTeam: PlayerTeam) {}
-    override suspend fun deleteTeambyId(teamId: Long) {}
+    override suspend fun teamExists(teamId: Long): Boolean = false
+
+    override suspend fun deleteTeamById(teamId: Long) {}
     override suspend fun clearTeam(teamId: Long) {}
     override suspend fun getPlayerTeamById(teamId: Long): PlayerTeam = PlayerTeam()
     override suspend fun getAllPlayerTeams(): List<PlayerTeam> = emptyList()
