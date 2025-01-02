@@ -8,6 +8,7 @@ import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,7 +32,9 @@ class ArmoryCatsViewModel(
                 _uiState.update { it.copy( pageLimit = pageLimit ) }
                 val cats = fetchCatsSimpleData()
                 val selectedCat = fetchDetailedCatData(cats.first().id)
-                val totalNumberOfCats = playerAccountRepository.getCount()
+                val totalNumberOfCats = playerAccountRepository.getOwnedCatsCount()
+
+                delay(100)
 
                 _uiState.update {
                     it.copy(
@@ -48,7 +51,7 @@ class ArmoryCatsViewModel(
     }
 
     private suspend fun fetchCatsSimpleData(): List<SimpleArmoryCatData> {
-        return playerAccountRepository.getSimpleArmoryCatsData(
+        return playerAccountRepository.getSimpleArmoryCatsDataPage(
             limit = _uiState.value.pageLimit,
             offset = _uiState.value.page * _uiState.value.pageLimit
         )
