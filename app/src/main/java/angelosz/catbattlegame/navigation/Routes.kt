@@ -11,16 +11,7 @@ object HomeScreenRoute
 data class ArmoryScreenRoute(val selectedCollection: CollectionsView)
 
 @Serializable
-object EncyclopediaScreenRoute
-
-@Serializable
-object CollectionScreenRoute
-
-@Serializable
-object BattleChestsScreenRoute
-
-@Serializable
-object TeamBuilderScreenRoute
+data class ArchiveScreenRoute(val selectedArchive: CollectionsView)
 
 @Serializable
 object CampaignMenuScreenRoute
