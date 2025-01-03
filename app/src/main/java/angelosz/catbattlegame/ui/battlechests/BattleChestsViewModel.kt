@@ -2,15 +2,15 @@ package angelosz.catbattlegame.ui.battlechests
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.BattleChest
+import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.repository.BattleChestRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.data.entities.BattleChest
-import angelosz.catbattlegame.data.entities.Cat
-import angelosz.catbattlegame.data.entities.OwnedCat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -170,14 +170,6 @@ class BattleChestsViewModel(
         battleChestRepository.deleteBattleChest(battleChest)
     }
 
-
-    fun countBattleChests(): Int {
-        var count = 0
-        for ( battleChest in _uiState.value.battleChests ){
-            count += battleChest.value.size
-        }
-        return count
-    }
 
     fun selectBattleChest(battleChest: BattleChest) {
         _uiState.update {

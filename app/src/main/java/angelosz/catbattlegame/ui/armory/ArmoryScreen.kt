@@ -38,6 +38,7 @@ import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsView
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
 import angelosz.catbattlegame.ui.armory.data.CollectionsNavigationItem
 import angelosz.catbattlegame.ui.armory.data.armoryNavigationItems
+import angelosz.catbattlegame.ui.armory.enums.ArmoryBattleChestStage
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
 import angelosz.catbattlegame.ui.armory.teams_view.ArmoryTeamsView
 import angelosz.catbattlegame.ui.armory.teams_view.ArmoryTeamsViewModel
@@ -59,7 +60,13 @@ fun ArmoryScreen(
     val uiState by viewModel.uiState.collectAsState()
     val isLandscapeView = windowSize == WindowWidthSizeClass.Expanded
 
-    val onBackButtonPressed = determineBackButtonAction(uiState, armoryCatsViewModel, armoryTeamsViewModel, returnToMainMenu)
+    val onBackButtonPressed = determineBackButtonAction(
+        uiState,
+        armoryCatsViewModel,
+        armoryTeamsViewModel,
+        armoryBattleChestViewModel,
+        returnToMainMenu,
+    )
     BackHandler(onBack = onBackButtonPressed)
 
     Box(
@@ -110,6 +117,10 @@ fun ArmoryScreen(
                                     viewModel = armoryBattleChestViewModel,
                                     innerPadding = innerPadding,
                                     onFailure = returnToMainMenu,
+                                    onBattleChestOpened = {
+                                        armoryCatsViewModel.reloadDataIfAlreadyInitialized()
+                                        armoryTeamsViewModel.reloadDataIfAlreadyInitialized()
+                                    },
                                     isLandscapeView = isLandscapeView
                                 )
                             }
@@ -139,6 +150,7 @@ private fun determineBackButtonAction(
     uiState: ArmoryUiState,
     armoryCatsViewModel: ArmoryCatsViewModel,
     armoryTeamsViewModel: ArmoryTeamsViewModel,
+    armoryBattleChestViewModel: ArmoryBattleChestViewModel,
     returnToMainMenu: () -> Unit,
 ): () -> Unit = {
     when (uiState.selectedCollection) {
@@ -150,7 +162,13 @@ private fun determineBackButtonAction(
             } else returnToMainMenu()
         }
 
-        CollectionsView.BATTLE_CHESTS -> returnToMainMenu()
+        CollectionsView.BATTLE_CHESTS -> {
+            when(armoryBattleChestViewModel.getView()){
+                ArmoryBattleChestStage.GRID -> returnToMainMenu()
+                ArmoryBattleChestStage.BATTLE_CHEST -> armoryBattleChestViewModel.returnToGrid()
+                ArmoryBattleChestStage.CAT -> armoryBattleChestViewModel.reloadBattleChests()
+            }
+        }
         else -> returnToMainMenu()
     }
 }

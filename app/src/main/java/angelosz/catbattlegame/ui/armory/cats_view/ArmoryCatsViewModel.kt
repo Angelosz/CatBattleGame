@@ -147,4 +147,16 @@ class ArmoryCatsViewModel(
             }
         }
     }
+
+    fun reloadDataIfAlreadyInitialized() {
+        viewModelScope.launch {
+            try {
+                if(_uiState.value.state != ScreenState.INITIALIZING){
+                    reloadCatsSimpleData()
+                }
+            } catch (e: Exception){
+                _uiState.update { it.copy( state = ScreenState.FAILURE ) }
+            }
+        }
+    }
 }
