@@ -33,10 +33,8 @@ import angelosz.catbattlegame.ui.components.RoundedImageButton
 fun HomeScreen(
     windowSize: WindowWidthSizeClass,
     onPlayButtonClick: () -> Unit,
-    navigateToEncyclopedia: () -> Unit,
+    navigateToArchive: () -> Unit,
     navigateToCollections: () -> Unit,
-    navigateToBattleChests: () -> Unit,
-    navigateToTeamBuild: () -> Unit
 ) {
     val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
     val background = if(isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape
@@ -53,32 +51,14 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            if(isPortraitView){
-                Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
                 Image(
                     painter = painterResource(R.mipmap.ic_launcher_foreground),
                     contentDescription = "",
-                    modifier = Modifier.fillMaxSize().weight(0.2f),
-                )
-                Spacer(modifier = Modifier.fillMaxSize().weight(0.2f))
-                HomeButtons(
-                    navigateToCollection = navigateToCollections,
-                    navigateToEncyclopedia = navigateToEncyclopedia,
-                    onPlayButtonClick = onPlayButtonClick
-                )
-                Spacer(modifier = Modifier.fillMaxSize().weight(0.1f))
-            } else {
-                Image(
-                    painter = painterResource(R.mipmap.ic_launcher_foreground),
-                    contentDescription = "",
-                    modifier = Modifier.size(192.dp)
+                    modifier = Modifier.size(256.dp).padding(bottom = 64.dp)
                 )
                 HomeButtons(
-                    navigateToCollection = navigateToCollections,
-                    navigateToEncyclopedia = navigateToEncyclopedia,
                     onPlayButtonClick = onPlayButtonClick
                 )
-            }
         }
         Box(
             contentAlignment = Alignment.Center,
@@ -122,15 +102,11 @@ fun HomeScreen(
         ) {
             Column(){
                 RoundedImageButton(
-                    onClick = navigateToBattleChests,
-                    innerImage = R.drawable.battlechest_256,
-                )
-                RoundedImageButton(
-                    onClick = navigateToTeamBuild,
-                    innerImage = R.drawable.teams_button_256,
-                )
-                RoundedImageButton(
                     onClick = navigateToCollections,
+                    innerImage = R.drawable.collections_button_256,
+                )
+                RoundedImageButton(
+                    onClick = navigateToArchive,
                     innerImage = R.drawable.archive_button_256,
                 )
             }
@@ -140,8 +116,6 @@ fun HomeScreen(
 
 @Composable
 private fun HomeButtons(
-    navigateToCollection: () -> Unit,
-    navigateToEncyclopedia: () -> Unit,
     onPlayButtonClick: () -> Unit
 ) {
     HomeButton(
@@ -149,17 +123,5 @@ private fun HomeButtons(
         image = R.drawable.button_play,
         contentDescription = "Play button",
         onButtonClicked = onPlayButtonClick
-    )
-    HomeButton(
-        modifier = Modifier.padding(8.dp),
-        image = R.drawable.button_collection,
-        contentDescription = "Collection button",
-        onButtonClicked = navigateToCollection
-    )
-    HomeButton(
-        modifier = Modifier.padding(8.dp),
-        image = R.drawable.button_encyclopedia,
-        contentDescription = "Encyclopedia button",
-        onButtonClicked = navigateToEncyclopedia
     )
 }

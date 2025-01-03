@@ -247,4 +247,17 @@ class ArmoryTeamsViewModel(val playerAccountRepository: PlayerAccountRepository)
 
         reloadCatsSimpleData()
     }
+
+    fun reloadDataIfAlreadyInitialized() {
+        viewModelScope.launch {
+            try {
+                if(_uiState.value.state != ScreenState.INITIALIZING){
+                    reloadTeams()
+                    reloadCatsSimpleData()
+                }
+            } catch (e: Exception){
+                _uiState.update { it.copy( state = ScreenState.FAILURE ) }
+            }
+        }
+    }
 }

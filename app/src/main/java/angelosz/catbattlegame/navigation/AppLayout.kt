@@ -29,17 +29,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.ui.archives.ArchivesScreen
 import angelosz.catbattlegame.ui.armory.ArmoryScreen
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
-import angelosz.catbattlegame.ui.battlechests.BattleChestsScreen
 import angelosz.catbattlegame.ui.campaign.CampaignScreen
 import angelosz.catbattlegame.ui.combat.CombatScreen
 import angelosz.catbattlegame.ui.combatreward.CombatResultScreen
 import angelosz.catbattlegame.ui.components.RoundedImageButton
-import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaScreen
 import angelosz.catbattlegame.ui.home.HomeScreen
-import angelosz.catbattlegame.ui.playercollection.CollectionScreen
-import angelosz.catbattlegame.ui.teambuilder.TeamBuilderScreen
 import angelosz.catbattlegame.ui.teamselection.TeamSelectionScreen
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
@@ -59,10 +56,8 @@ fun AppLayout(
             HomeScreen(
                 windowSize = windowSize,
                 onPlayButtonClick = { navController.navigate(CampaignMenuScreenRoute) },
-                navigateToEncyclopedia = { navController.navigate(EncyclopediaScreenRoute) },
+                navigateToArchive = { navController.navigate(ArchiveScreenRoute(CollectionsView.CATS)) },
                 navigateToCollections = { navController.navigate(ArmoryScreenRoute(CollectionsView.CATS)) },
-                navigateToBattleChests = { navController.navigate(BattleChestsScreenRoute) },
-                navigateToTeamBuild = { navController.navigate(TeamBuilderScreenRoute) }
             )
         }
         composable<ArmoryScreenRoute> { backStackEntry ->
@@ -73,29 +68,8 @@ fun AppLayout(
                 selectCollection = data.selectedCollection
             )
         }
-        composable<EncyclopediaScreenRoute> {
-            EncyclopediaScreen(
-                windowSize = windowSize,
-                onBackPressed = { navController.navigateUp() }
-            )
-        }
-        composable<CollectionScreenRoute> {
-            CollectionScreen(
-                windowSize = windowSize,
-                onBackPressed = { navController.navigateUp() }
-            )
-        }
-        composable<BattleChestsScreenRoute> {
-            BattleChestsScreen(
-                onBackPressed = { navController.navigateUp() },
-                navigateToCollection = {
-                    navController.popBackStack(HomeScreenRoute, false)
-                    navController.navigate(CollectionScreenRoute)
-                }
-            )
-        }
-        composable<TeamBuilderScreenRoute> {
-            TeamBuilderScreen(
+        composable<ArchiveScreenRoute> {
+            ArchivesScreen(
                 windowSize = windowSize,
                 onBackPressed = { navController.navigateUp() }
             )

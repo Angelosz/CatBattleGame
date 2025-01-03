@@ -112,7 +112,11 @@ object CatViewModelProvider {
         }
 
         initializer {
-            ArmoryBattleChestViewModel()
+            ArmoryBattleChestViewModel(
+                getCatBattleApplication().container.catRepository,
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.battleChestRepository
+            )
         }
     }
 }
