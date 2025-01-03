@@ -71,7 +71,7 @@ fun AppLayout(
         composable<ArchiveScreenRoute> {
             ArchivesScreen(
                 windowSize = windowSize,
-                onBackPressed = { navController.navigateUp() }
+                returnToMenu = { navController.navigateUp() }
             )
         }
         composable<CampaignMenuScreenRoute>{
