@@ -58,7 +58,7 @@ fun ArmoryScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        BackgroundImage(if(isLandscapeView) R.drawable.encyclopedia_landscape_blurry else R.drawable.encyclopedia_portrait_blurry)
+        BackgroundImage(if(isLandscapeView) R.drawable.player_collection_landscape_blurred else R.drawable.player_collection_portrait_blurry)
         when(uiState.screenState){
             ScreenState.SUCCESS -> {
                 Scaffold(
