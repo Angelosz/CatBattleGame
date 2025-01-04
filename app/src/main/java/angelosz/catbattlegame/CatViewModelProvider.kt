@@ -88,7 +88,8 @@ object CatViewModelProvider {
             CombatResultViewModel(
                 getCatBattleApplication().container.campaignRepository,
                 getCatBattleApplication().container.playerRepository,
-                getCatBattleApplication().container.battleChestRepository
+                getCatBattleApplication().container.battleChestRepository,
+                getCatBattleApplication().container.enemyCatRepository
             )
         }
 
@@ -111,7 +112,9 @@ object CatViewModelProvider {
         }
 
         initializer {
-            ArchiveEnemiesViewModel()
+            ArchiveEnemiesViewModel(
+                getCatBattleApplication().container.enemyCatRepository
+            )
         }
 
         /* Armory ViewModels */

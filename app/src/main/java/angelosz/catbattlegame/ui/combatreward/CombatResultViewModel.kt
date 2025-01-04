@@ -6,8 +6,10 @@ import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.Campaign
 import angelosz.catbattlegame.data.entities.CampaignChapter
 import angelosz.catbattlegame.data.entities.ChapterReward
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.repository.BattleChestRepository
 import angelosz.catbattlegame.data.repository.CampaignRepository
+import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CampaignState
@@ -26,7 +28,8 @@ import kotlinx.coroutines.launch
 class CombatResultViewModel(
     private val campaignRepository: CampaignRepository,
     private val playerAccountRepository: PlayerAccountRepository,
-    private val battleChestRepository: BattleChestRepository
+    private val battleChestRepository: BattleChestRepository,
+    private val enemyCatRepository: EnemyCatRepository
 ): ViewModel() {
     private val _uiState: MutableStateFlow<CombatResultUiState> = MutableStateFlow(CombatResultUiState())
     val uiState: StateFlow<CombatResultUiState> = _uiState
@@ -41,6 +44,7 @@ class CombatResultViewModel(
 
         viewModelScope.launch {
             try {
+                discoverEnemies(chapterId)
                 if(combatResult == CombatResult.PLAYER_WON){
                     val chapter = campaignRepository.getChapterById(chapterId)
                     val team = playerAccountRepository.getTeamData(teamId)
@@ -97,6 +101,19 @@ class CombatResultViewModel(
                 )
             }
         }
+    }
+
+    private suspend fun discoverEnemies(chapterId: Long) {
+        val enemies = enemyCatRepository.getSimplifiedEnemiesByCampaignChapterId(chapterId)
+
+        playerAccountRepository.discoverEnemies(
+            enemies.map{ enemy ->
+                EnemyDiscoveryState(
+                    enemyCatId = enemy.id,
+                    state = true
+                )
+            }
+        )
     }
 
     private suspend fun addCatsExperience(team: List<BasicCatData>, experience: Int) {

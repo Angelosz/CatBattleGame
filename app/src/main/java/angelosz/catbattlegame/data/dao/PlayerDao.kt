@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
@@ -121,4 +122,7 @@ interface PlayerDao {
             ORDER BY ptoc.position"""
     )
     suspend fun getPlayerTeamCats(teamId: Long): List<BasicCatData>
+
+    @Insert
+    suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>)
 }

@@ -58,6 +58,17 @@ class ArchiveAbilitiesViewModel(
             }
         }
     }
+
+    fun isAbilitySelected(): Boolean = _uiState.value.isAbilitySelected
+
+    fun returnToAbilityList(){
+        _uiState.update {
+            it.copy(
+                isAbilitySelected = false
+            )
+        }
+    }
+
     fun isNotLastPage(): Boolean = ((_uiState.value.page + 1) * _uiState.value.pageLimit) < _uiState.value.totalNumberOfAbilities
 
     fun goToPreviousPage() {

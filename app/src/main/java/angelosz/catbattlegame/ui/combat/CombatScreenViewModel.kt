@@ -289,7 +289,7 @@ class CombatScreenViewModel(
 
                 delay(750)
 
-                activeCat?.cat?.combatModifiers?.forEach{ (combatModifier, value) ->
+                activeCat?.cat?.combatModifiers?.forEach{ (combatModifier, _) ->
                     when(combatModifier){
                         CombatModifiers.POISONED -> {
                             val damage = (activeCat.cat.maxHealth * 0.05f).toInt()

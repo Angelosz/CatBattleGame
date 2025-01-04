@@ -7,6 +7,7 @@ import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.ChapterEnemy
 import angelosz.catbattlegame.data.entities.EnemyAbility
 import angelosz.catbattlegame.data.entities.EnemyCat
+import angelosz.catbattlegame.ui.archives.data.SimpleArchiveEnemyData
 import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 @Dao
@@ -34,8 +35,7 @@ interface EnemyCatDao {
             E.baseDefense, 
             E.attackSpeed, 
             E.rarity, 
-            E.enemyType,
-            E.isDiscovered
+            E.enemyType
         FROM campaign_enemies E
         JOIN chapter_enemy CE ON E.id = CE.enemyCatId
         WHERE CE.chapterId = :campaignChapterId
@@ -57,5 +57,21 @@ interface EnemyCatDao {
 
     @Query("Select * from chapter_enemy where chapterId = :chapterId")
     suspend fun getChapterEnemies(chapterId: Long): List<ChapterEnemy>
+
+    @Query("""SELECT
+            E.id, 
+            E.image, 
+            (SELECT state from enemy_discovery where enemyCatId = E.id) as isDiscovered
+            FROM campaign_enemies E
+            ORDER BY E.id ASC
+            LIMIT :limit OFFSET :offset
+    """)
+    suspend fun getSimplifiedArchiveEnemiesPage(limit: Int, offset: Int): List<SimpleArchiveEnemyData>
+
+    @Query("SELECT COUNT(*) FROM campaign_enemies")
+    suspend fun getCount(): Int
+
+    @Query("SELECT state from enemy_discovery where enemyCatId = :enemyCatId")
+    suspend fun getEnemyCatDiscoveryStatus(enemyCatId: Long): Boolean
 }
 

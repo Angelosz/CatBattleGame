@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.data.repository
 
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
@@ -48,4 +49,5 @@ interface PlayerAccountRepository {
     suspend fun getAllPlayerTeams(): List<PlayerTeam>
     suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat)
     suspend fun getTeamData(teamId: Long): List<BasicCatData>
+    suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>)
 }

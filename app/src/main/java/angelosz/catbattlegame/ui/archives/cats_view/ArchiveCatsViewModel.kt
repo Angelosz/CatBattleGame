@@ -78,6 +78,16 @@ class ArchiveCatsViewModel(
         }
     }
 
+    fun isCatSelected(): Boolean = _uiState.value.isCatSelected
+
+    fun returnToCatList() {
+        _uiState.update {
+            it.copy(
+                isCatSelected = false
+            )
+        }
+    }
+
     fun isNotLastPage(): Boolean = ((_uiState.value.page + 1) * _uiState.value.pageLimit) < _uiState.value.totalNumberOfCats
 
     fun goToPreviousPage() {

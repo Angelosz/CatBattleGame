@@ -44,7 +44,15 @@ fun ArchivesScreen(
     val uiState by viewModel.uiState.collectAsState()
     val isLandscapeView = windowSize == WindowWidthSizeClass.Expanded
 
-    BackHandler(onBack = returnToMainMenu)
+
+    val onBackButtonPressed = determineArchiveBackButtonAction(
+        uiState,
+        archiveCatsViewModel,
+        archiveAbilitiesViewModel,
+        archiveEnemiesViewModel,
+        returnToMainMenu,
+    )
+    BackHandler(onBack = onBackButtonPressed)
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -60,7 +68,7 @@ fun ArchivesScreen(
                             CollectionsBottomBar(
                                 selectedView = uiState.selectedCollection,
                                 onTabPressed = viewModel::selectCollection,
-                                onBackPressed = returnToMainMenu,
+                                onBackPressed = onBackButtonPressed,
                                 items = archivesNavigationItems
                             )
                     },
@@ -69,7 +77,7 @@ fun ArchivesScreen(
                             CollectionsNavigationRail(
                                 selectedView = uiState.selectedCollection,
                                 onTabPressed = viewModel::selectCollection,
-                                onBackPressed = returnToMainMenu,
+                                onBackPressed = onBackButtonPressed,
                                 items = archivesNavigationItems
                             )
                         when (uiState.selectedCollection) {
@@ -77,7 +85,7 @@ fun ArchivesScreen(
                                 ArchiveCatsView(
                                     viewModel = archiveCatsViewModel,
                                     innerPadding = innerPadding,
-                                    onFailure = returnToMainMenu,
+                                    onFailure = onBackButtonPressed,
                                     onAbilityClicked = { id ->
                                         if(archiveAbilitiesViewModel.viewModelHasBeenInitialized())
                                             archiveAbilitiesViewModel.selectAbility(id)
@@ -97,7 +105,7 @@ fun ArchivesScreen(
                                 ArchiveAbilitiesView(
                                     viewModel = archiveAbilitiesViewModel,
                                     innerPadding = innerPadding,
-                                    onFailure = returnToMainMenu,
+                                    onFailure = onBackButtonPressed,
                                     isLandscapeView = isLandscapeView
                                 )
                             }
@@ -106,7 +114,7 @@ fun ArchivesScreen(
                                 ArchiveEnemiesView(
                                     viewModel = archiveEnemiesViewModel,
                                     innerPadding = innerPadding,
-                                    onFailure = returnToMainMenu,
+                                    onFailure = onBackButtonPressed,
                                     isLandscapeView = isLandscapeView
                                 )
                             }
@@ -127,6 +135,30 @@ fun ArchivesScreen(
                 }
             }
         }
+    }
+}
+
+fun determineArchiveBackButtonAction(
+    uiState: ArchivesUiState,
+    archiveCatsViewModel: ArchiveCatsViewModel,
+    archiveAbilitiesViewModel: ArchiveAbilitiesViewModel,
+    archiveEnemiesViewModel: ArchiveEnemiesViewModel,
+    returnToMainMenu: () -> Unit,
+): () -> Unit = {
+    when (uiState.selectedCollection) {
+        CollectionsView.CATS -> {
+            if(archiveCatsViewModel.isCatSelected()) archiveCatsViewModel.returnToCatList()
+            else returnToMainMenu()
+        }
+        CollectionsView.ABILITIES -> {
+            if(archiveAbilitiesViewModel.isAbilitySelected()) archiveAbilitiesViewModel.returnToAbilityList()
+            else returnToMainMenu()
+        }
+        CollectionsView.ENEMIES -> {
+            if(archiveEnemiesViewModel.isEnemySelected()) archiveEnemiesViewModel.returnToEnemyList()
+            else returnToMainMenu()
+        }
+        else -> returnToMainMenu()
     }
 }
 
