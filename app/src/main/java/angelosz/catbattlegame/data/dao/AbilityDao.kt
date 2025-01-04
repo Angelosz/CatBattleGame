@@ -21,6 +21,12 @@ interface AbilityDao {
     @Query("Select * from abilities where id = :id")
     suspend fun getAbilityById(id: Int): Ability
 
+    @Query("SELECT * FROM abilities where abilitySource = 'PLAYER' ORDER BY id ASC LIMIT :limit OFFSET :offset")
+    suspend fun getCatAbilitiesPage(limit: Int, offset: Int): List<Ability>
+
+    @Query("SELECT COUNT(id) FROM abilities")
+    suspend fun getCount(): Int
+
     @Query("Select abilities.* from abilities" +
             " INNER JOIN cat_ability_crossref" +
             " ON abilities.id == cat_ability_crossref.abilityId" +
