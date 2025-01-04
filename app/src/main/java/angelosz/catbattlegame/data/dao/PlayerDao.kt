@@ -123,6 +123,6 @@ interface PlayerDao {
     )
     suspend fun getPlayerTeamCats(teamId: Long): List<BasicCatData>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>)
 }
