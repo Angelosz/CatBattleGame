@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.armory.composables
+package angelosz.catbattlegame.ui.archives.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -30,17 +30,13 @@ import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.domain.enums.ArmorType
-import angelosz.catbattlegame.domain.enums.CatRarity
-import angelosz.catbattlegame.domain.enums.CatRole
-import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
-import angelosz.catbattlegame.ui.components.ExperienceBar
+import angelosz.catbattlegame.ui.archives.data.ArchiveEnemyData
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
-
 @Composable
-fun ArmoryCatDetailsCard(
+fun ArchiveEnemyDetailsCard(
     modifier: Modifier = Modifier,
-    cat: DetailedArmoryCatData,
+    enemy: ArchiveEnemyData,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
     imageSize: Int = 300,
 ) {
@@ -52,20 +48,20 @@ fun ArmoryCatDetailsCard(
             modifier = Modifier,
             contentAlignment = Alignment.Center,
         ) {
-            ArmoryCatDetailsCatContent(
-                cat = cat,
+            ArchiveEnemyDetailsCardContent(
+                enemy = enemy,
                 imageSize = imageSize,
-                textSize = textSize
+                textSize = textSize,
             )
         }
     }
 }
 
 @Composable
-private fun ArmoryCatDetailsCatContent(
-    cat: DetailedArmoryCatData,
+private fun ArchiveEnemyDetailsCardContent(
+    enemy: ArchiveEnemyData,
     imageSize: Int = 300,
-    textSize: TextStyle = MaterialTheme.typography.bodyLarge
+    textSize: TextStyle = MaterialTheme.typography.bodyLarge,
 ) {
     Column(
         modifier = Modifier
@@ -73,29 +69,24 @@ private fun ArmoryCatDetailsCatContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = cat.name,
+            text = enemy.name,
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
         Image(
-            painter = painterResource(cat.image),
-            contentDescription = cat.name,
+            painter = painterResource(enemy.image),
+            contentDescription = enemy.name,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(imageSize.dp),
         )
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ExperienceBar(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                level = cat.level,
-                experience = cat.experience,
-                showText = true
-            )
             Text(
-                text = cat.description,
+                text = enemy.description,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -115,41 +106,29 @@ private fun ArmoryCatDetailsCatContent(
                 ) {
                     Column {
                         Text(
-                            text = "Health: ${cat.health}",
+                            text = "Health: ${enemy.baseHealth}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = "Defense: ${cat.defense}",
+                            text = "Defense: ${enemy.baseDefense}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Role: ${stringResource(cat.role.res)}",
+                            text = "Armor: ${stringResource(enemy.armorType.res)}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
-
-                        Text(
-                            text = "Armor: ${stringResource(cat.armorType.res)}",
-                            style = textSize,
-                            modifier = Modifier.padding(4.dp)
-                        )
-
                     }
                     Column {
                         Text(
-                            text = "Attack: ${cat.attack}",
+                            text = "Attack: ${enemy.baseAttack}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "A. Speed: ${cat.speed}s",
-                            style = textSize,
-                            modifier = Modifier.padding(4.dp)
-                        )
-                        Text(
-                            text = "Rarity: ${stringResource(cat.rarity.res)}",
+                            text = "A. Speed: ${enemy.attackSpeed}s",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
@@ -157,7 +136,7 @@ private fun ArmoryCatDetailsCatContent(
                 }
             }
 
-            if (cat.abilities.isNotEmpty()) {
+            if (enemy.abilities.isNotEmpty()) {
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surface
@@ -166,10 +145,11 @@ private fun ArmoryCatDetailsCatContent(
                         .padding(4.dp)
                         .fillMaxWidth()
                 ) {
-                    for (ability in cat.abilities) {
+                    for (ability in enemy.abilities) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) {
                             Image(
                                 painter = painterResource(ability.icon),
@@ -191,23 +171,19 @@ private fun ArmoryCatDetailsCatContent(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ArmoryCatDetailsCardPreview(){
+fun ArchiveEnemyDetailsCardPreview(){
     CatBattleGameTheme {
-        ArmoryCatDetailsCard(
-            cat = DetailedArmoryCatData(
+        ArchiveEnemyDetailsCard(
+            enemy = ArchiveEnemyData(
                 id = 1,
-                name = "Kitten Swordsman",
-                description = "A brave kitten wielding a wooden sword, eager to protect.",
-                image = R.drawable.kitten_swordman_300x300,
-                level = 1,
-                experience = 0,
-                health = 50,
-                attack = 15,
-                defense = 10,
-                speed = 1.2f,
-                role = CatRole.WARRIOR,
+                name = "Wool Ball",
+                description = "Round and round it goes",
+                image = R.drawable.enemy_wool_ball_300,
+                baseHealth = 50,
+                baseAttack = 15,
+                baseDefense = 10,
+                attackSpeed = 1.2f,
                 armorType = ArmorType.LIGHT,
-                rarity = CatRarity.KITTEN,
                 abilities = listOf(
                     Ability(
                         id = 1,
@@ -219,8 +195,8 @@ fun ArmoryCatDetailsCardPreview(){
                         name = "Quick Attack",
                         icon = R.drawable.ability_quick_attack_48,
                     )
-                )
-            )
+                ),
+            ),
         )
     }
 }

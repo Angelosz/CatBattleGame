@@ -1,22 +1,9 @@
 package angelosz.catbattlegame.ui.armory
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,9 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
@@ -36,7 +20,8 @@ import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestView
 import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestViewModel
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsView
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
-import angelosz.catbattlegame.ui.armory.data.CollectionsNavigationItem
+import angelosz.catbattlegame.ui.armory.composables.CollectionsBottomBar
+import angelosz.catbattlegame.ui.armory.composables.CollectionsNavigationRail
 import angelosz.catbattlegame.ui.armory.data.armoryNavigationItems
 import angelosz.catbattlegame.ui.armory.enums.ArmoryBattleChestStage
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
@@ -73,14 +58,14 @@ fun ArmoryScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        BackgroundImage(if(isLandscapeView) R.drawable.encyclopedia_landscape_blurry else R.drawable.encyclopedia_portrait_blurry)
+        BackgroundImage(if(isLandscapeView) R.drawable.player_collection_landscape_blurred else R.drawable.player_collection_portrait_blurry)
         when(uiState.screenState){
             ScreenState.SUCCESS -> {
                 Scaffold(
                     containerColor = Color.Transparent,
                     bottomBar = {
                         if(!isLandscapeView){
-                            ArmoryScreenBottomBar(
+                            CollectionsBottomBar(
                                 selectedView = uiState.selectedCollection,
                                 onTabPressed = viewModel::selectCollection,
                                 onBackPressed = onBackButtonPressed,
@@ -89,7 +74,7 @@ fun ArmoryScreen(
                         }
                     },
                     content = { innerPadding ->
-                        if(isLandscapeView) ArmoryScreenNavigationRail(
+                        if(isLandscapeView) CollectionsNavigationRail(
                             selectedView = uiState.selectedCollection,
                             onTabPressed = viewModel::selectCollection,
                             onBackPressed = onBackButtonPressed,
@@ -171,123 +156,4 @@ private fun determineBackButtonAction(
         }
         else -> returnToMainMenu()
     }
-}
-
-@Composable
-fun ArmoryScreenBottomBar(
-    modifier: Modifier = Modifier,
-    selectedView: CollectionsView,
-    onTabPressed:(CollectionsView) -> Unit,
-    hasBackButton: Boolean = true,
-    onBackPressed: () -> Unit,
-    items: List<CollectionsNavigationItem> = armoryNavigationItems
-) {
-    NavigationBar(
-        modifier = modifier
-    ){
-        if(hasBackButton){
-            NavigationBarItem(
-                selected = false,
-                onClick = onBackPressed,
-                icon = {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back Button"
-                    )
-                }
-            )
-        }
-        for( item in items ){
-            NavigationBarItem(
-                selected = item.view == selectedView,
-                onClick = { onTabPressed(item.view) },
-                icon = {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Image(
-                            modifier = Modifier.size(32.dp),
-                            painter = painterResource(item.icon),
-                            contentDescription = item.title
-                        )
-                        Text(
-                            text = item.title,
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun ArmoryScreenNavigationRail(
-    modifier: Modifier = Modifier,
-    selectedView: CollectionsView,
-    onTabPressed:(CollectionsView) -> Unit,
-    hasBackButton: Boolean = true,
-    onBackPressed: () -> Unit,
-    items: List<CollectionsNavigationItem> = armoryNavigationItems
-){
-    NavigationRail(
-        modifier = modifier,
-    ){
-        if(hasBackButton){
-            NavigationRailItem(
-                selected = false,
-                onClick = onBackPressed,
-                icon = {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back button"
-                    )
-                }
-            )
-        }
-
-        for( item in items ){
-            NavigationRailItem(
-                modifier = Modifier
-                    .padding(vertical = 16.dp),
-                selected = item.view == selectedView,
-                onClick = { onTabPressed(item.view) },
-                icon = {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Image(
-                            modifier = Modifier.size(48.dp),
-                            painter = painterResource(item.icon),
-                            contentDescription = item.title
-                        )
-                        Text(
-                            text = item.title,
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
-                }
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ArmoryScreenBottomBarPreview(){
-    Scaffold(
-        bottomBar = {
-            ArmoryScreenBottomBar(
-                selectedView = CollectionsView.CATS,
-                onTabPressed = {},
-                onBackPressed = {},
-                )
-        },
-        content = { innerPadding ->
-            Text(
-                text = "Content",
-                modifier = Modifier.padding(innerPadding),
-            )
-        }
-    )
 }

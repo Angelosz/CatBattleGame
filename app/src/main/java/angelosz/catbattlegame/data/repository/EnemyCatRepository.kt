@@ -4,6 +4,8 @@ import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.ChapterEnemy
 import angelosz.catbattlegame.data.entities.EnemyAbility
 import angelosz.catbattlegame.data.entities.EnemyCat
+import angelosz.catbattlegame.ui.archives.data.ArchiveEnemyData
+import angelosz.catbattlegame.ui.archives.data.SimpleArchiveEnemyData
 import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 interface EnemyCatRepository {
@@ -15,4 +17,8 @@ interface EnemyCatRepository {
     suspend fun getEnemyCatsByCampaignChapterId(campaignChapterId: Long): List<EnemyCat>
     suspend fun getSimplifiedEnemiesByCampaignChapterId(campaignChapterId: Long): List<SimplifiedEnemyCatData>
     suspend fun getEnemyCatAbilities(enemyCatId: Long): List<Ability>
+
+    suspend fun getSimplifiedArchiveEnemiesPage(limit: Int, offset: Int): List<SimpleArchiveEnemyData>
+    suspend fun getArchiveEnemyData(enemyCatId: Long): ArchiveEnemyData
+    suspend fun getCount(): Int
 }

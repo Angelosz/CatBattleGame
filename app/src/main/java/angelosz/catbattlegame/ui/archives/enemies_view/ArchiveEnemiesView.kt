@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.armory.cats_view
+package angelosz.catbattlegame.ui.archives.enemies_view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,26 +15,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.armory.composables.ArmoryCatDetailsCard
-import angelosz.catbattlegame.ui.armory.composables.ArmoryCatGrid
+import angelosz.catbattlegame.ui.archives.composables.ArchiveEnemyDetailsCard
+import angelosz.catbattlegame.ui.archives.composables.ArchiveEnemyGrid
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.PaginationButtons
 
+
 @Composable
-fun ArmoryCatsView(
-    viewModel: ArmoryCatsViewModel = viewModel(factory = CatViewModelProvider.Factory),
+fun ArchiveEnemiesView(
+    viewModel: ArchiveEnemiesViewModel,
     innerPadding: PaddingValues,
     onFailure: () -> Unit,
-    pageLimit: Int = 12,
-    isLandscapeView: Boolean = false
+    isLandscapeView: Boolean,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    when(uiState.state){
+    when(uiState.screenState){
         ScreenState.SUCCESS -> {
             Box(
                 modifier = Modifier
@@ -43,31 +41,61 @@ fun ArmoryCatsView(
                 contentAlignment = Alignment.Center
             ){
                 if(isLandscapeView){
-                    HandleArmoryCatsLandscapeView(uiState, viewModel)
+                    HandleArchiveEnemiesLandscapeView(uiState, viewModel)
                 } else {
-                    HandleArmoryCatsPortraitView(uiState, viewModel)
+                    HandleArchiveEnemiesPortraitView(uiState, viewModel)
                 }
             }
         }
-        ScreenState.LOADING -> {
-            LoadingCard()
-        }
-        ScreenState.FAILURE -> {
-            FailureCard(onFailure)
-        }
+        ScreenState.LOADING -> LoadingCard()
+        ScreenState.FAILURE -> FailureCard(onFailure)
         ScreenState.INITIALIZING -> {
             LoadingCard()
-            LaunchedEffect(viewModel){
-                viewModel.setup(pageLimit)
+            LaunchedEffect(viewModel) {
+                viewModel.setup(pageLimit = 12)
             }
         }
     }
 }
 
 @Composable
-fun HandleArmoryCatsLandscapeView(
-    uiState: ArmoryCatsUiState,
-    viewModel: ArmoryCatsViewModel
+fun HandleArchiveEnemiesPortraitView(
+    uiState: ArchiveEnemiesUiState,
+    viewModel: ArchiveEnemiesViewModel,
+) {
+    if (uiState.isEnemySelected) {
+        ArchiveEnemyDetailsCard(
+            modifier = Modifier.padding(16.dp),
+            enemy = uiState.selectedEnemy,
+        )
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            ArchiveEnemyGrid(
+                modifier = Modifier.padding(8.dp),
+                enemies = uiState.enemies,
+                onCatCardClicked = { viewModel.selectEnemy(it.id) },
+                pageLimit = uiState.pageLimit,
+                imageSize = 112,
+            )
+            PaginationButtons(
+                isNotFirstPage = uiState.page > 0,
+                isNotLastPage = viewModel.isNotLastPage(),
+                onPreviousButtonClicked = viewModel::goToPreviousPage,
+                onNextButtonClicked = viewModel::goToNextPage
+            )
+        }
+    }
+}
+
+
+@Composable
+fun HandleArchiveEnemiesLandscapeView(
+    uiState: ArchiveEnemiesUiState,
+    viewModel: ArchiveEnemiesViewModel,
 ) {
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -80,54 +108,14 @@ fun HandleArmoryCatsLandscapeView(
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center
         ) {
-            ArmoryCatGrid(
+            ArchiveEnemyGrid(
                 modifier = Modifier
                     .padding(8.dp)
                     .width(448.dp),
-                cats = uiState.cats,
-                onCatCardClicked = { viewModel.selectCat(it.id)},
-                pageLimit = uiState.pageLimit,
-                imageSize = 96,
-                showExperience = true
-            )
-            PaginationButtons(
-                isNotFirstPage = uiState.page > 0,
-                isNotLastPage = viewModel.isNotLastPage(),
-                onPreviousButtonClicked = viewModel::goToPreviousPage,
-                onNextButtonClicked = viewModel::goToNextPage
-            )
-        }
-        ArmoryCatDetailsCard(
-            modifier = Modifier.width(300.dp),
-            cat = uiState.selectedCat,
-            imageSize = 256,
-        )
-    }
-}
-
-@Composable
-private fun HandleArmoryCatsPortraitView(
-    uiState: ArmoryCatsUiState,
-    viewModel: ArmoryCatsViewModel,
-) {
-    if (uiState.isDetailView) {
-        ArmoryCatDetailsCard(
-            modifier = Modifier.padding(16.dp),
-            cat = uiState.selectedCat,
-        )
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            ArmoryCatGrid(
-                modifier = Modifier.padding(8.dp),
-                cats = uiState.cats,
-                onCatCardClicked = { viewModel.selectCat(it.id) },
+                enemies = uiState.enemies,
+                onCatCardClicked = { viewModel.selectEnemy(it.id) },
                 pageLimit = uiState.pageLimit,
                 imageSize = 112,
-                showExperience = true
             )
             PaginationButtons(
                 isNotFirstPage = uiState.page > 0,
@@ -136,5 +124,9 @@ private fun HandleArmoryCatsPortraitView(
                 onNextButtonClicked = viewModel::goToNextPage
             )
         }
+        ArchiveEnemyDetailsCard(
+            modifier = Modifier.padding(16.dp),
+            enemy = uiState.selectedEnemy,
+        )
     }
 }

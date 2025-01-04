@@ -34,6 +34,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.armory.enums.CollectionsView
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
@@ -45,7 +46,8 @@ fun CombatResultScreen(
     combatResult: CombatResult,
     viewModel: CombatResultViewModel = viewModel(factory = CatViewModelProvider.Factory),
     onBackPressed: () -> Unit,
-    onReturnToHomePressed: () -> Unit
+    onReturnToHomePressed: () -> Unit,
+    goToArmory: (CollectionsView) -> Unit = {},
 ) {
     BackHandler(onBack = {})
     val uiState by viewModel.uiState.collectAsState()
@@ -134,14 +136,36 @@ fun CombatResultScreen(
                                     style = MaterialTheme.typography.labelLarge,
                                     textAlign = TextAlign.Center
                                 )
-                                Button(
-                                    modifier = Modifier.padding(8.dp),
-                                    onClick = onReturnToHomePressed
-                                ) {
-                                    Text(
+                                Row {
+                                    Button(
                                         modifier = Modifier.padding(4.dp),
-                                        text = "Return to Home"
-                                    )
+                                        onClick = onReturnToHomePressed
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.padding(4.dp),
+                                            text = "Home"
+                                        )
+                                    }
+                                    Button(
+                                        modifier = Modifier.padding(4.dp),
+                                        onClick = { goToArmory(CollectionsView.CATS) }
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.padding(4.dp),
+                                            text = "Armory"
+                                        )
+                                    }
+                                }
+                                if(viewModel.rewardIncludesBattleChest()){
+                                    Button(
+                                        modifier = Modifier.padding(4.dp),
+                                        onClick = { goToArmory(CollectionsView.BATTLE_CHESTS) }
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.padding(4.dp),
+                                            text = "Packages"
+                                        )
+                                    }
                                 }
                             }
                         }

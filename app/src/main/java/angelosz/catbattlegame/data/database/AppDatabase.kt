@@ -15,12 +15,15 @@ import angelosz.catbattlegame.data.entities.AbilityArmorDamageMultiplier
 import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.Campaign
 import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.data.entities.CampaignChapterState
+import angelosz.catbattlegame.data.entities.CampaignCompletionState
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
 import angelosz.catbattlegame.data.entities.ChapterEnemy
 import angelosz.catbattlegame.data.entities.ChapterReward
 import angelosz.catbattlegame.data.entities.EnemyAbility
 import angelosz.catbattlegame.data.entities.EnemyCat
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
@@ -38,14 +41,17 @@ import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
         PlayerTeam::class,
         PlayerTeamOwnedCat::class,
         Campaign::class,
+        CampaignCompletionState::class,
         CampaignChapter::class,
+        CampaignChapterState::class,
         EnemyCat::class,
+        EnemyDiscoveryState::class,
         EnemyAbility::class,
         ChapterEnemy::class,
         ChapterReward::class
     ],
     exportSchema = false,
-    version = 26)
+    version = 27)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao

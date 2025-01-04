@@ -1,6 +1,7 @@
-package angelosz.catbattlegame.ui.armory.composables
+package angelosz.catbattlegame.ui.archives.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,20 +30,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.Ability
+import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CatRole
-import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
-import angelosz.catbattlegame.ui.components.ExperienceBar
+import angelosz.catbattlegame.ui.archives.data.DetailedCatData
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
-
+import angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL
 
 @Composable
-fun ArmoryCatDetailsCard(
+fun ArchiveCatDetailsCard(
     modifier: Modifier = Modifier,
-    cat: DetailedArmoryCatData,
+    cat: DetailedCatData,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
     imageSize: Int = 300,
+    onAbilityClicked: (Int) -> Unit,
 ) {
     Card(
         modifier = modifier,
@@ -52,20 +54,22 @@ fun ArmoryCatDetailsCard(
             modifier = Modifier,
             contentAlignment = Alignment.Center,
         ) {
-            ArmoryCatDetailsCatContent(
+            ArchiveCatDetailsCatContent(
                 cat = cat,
                 imageSize = imageSize,
-                textSize = textSize
+                textSize = textSize,
+                onAbilityClicked = onAbilityClicked
             )
         }
     }
 }
 
 @Composable
-private fun ArmoryCatDetailsCatContent(
-    cat: DetailedArmoryCatData,
+private fun ArchiveCatDetailsCatContent(
+    cat: DetailedCatData,
     imageSize: Int = 300,
-    textSize: TextStyle = MaterialTheme.typography.bodyLarge
+    textSize: TextStyle = MaterialTheme.typography.bodyLarge,
+    onAbilityClicked: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -88,12 +92,6 @@ private fun ArmoryCatDetailsCatContent(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            ExperienceBar(
-                modifier = Modifier.padding(horizontal = 32.dp),
-                level = cat.level,
-                experience = cat.experience,
-                showText = true
-            )
             Text(
                 text = cat.description,
                 style = MaterialTheme.typography.bodyMedium,
@@ -115,12 +113,12 @@ private fun ArmoryCatDetailsCatContent(
                 ) {
                     Column {
                         Text(
-                            text = "Health: ${cat.health}",
+                            text = "Health: ${cat.baseHealth}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = "Defense: ${cat.defense}",
+                            text = "Defense: ${cat.baseDefense}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
@@ -139,12 +137,12 @@ private fun ArmoryCatDetailsCatContent(
                     }
                     Column {
                         Text(
-                            text = "Attack: ${cat.attack}",
+                            text = "Attack: ${cat.baseAttack}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "A. Speed: ${cat.speed}s",
+                            text = "A. Speed: ${cat.attackSpeed}s",
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
@@ -154,6 +152,25 @@ private fun ArmoryCatDetailsCatContent(
                             modifier = Modifier.padding(4.dp)
                         )
                     }
+                }
+            }
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
+            ) {
+                if (cat.evolutionLevel <= MAX_CAT_LEVEL) {
+                    Text(
+                        text = "Evolves at level: ${cat.evolutionLevel}",
+                        modifier = Modifier.padding(top = 8.dp, start = 16.dp)
+                    )
+                    Text(
+                        text = "Evolution: ${cat.nextEvolutionCat?.name}",
+                        modifier = Modifier.padding(top = 4.dp, bottom = 8.dp, start = 16.dp)
+                    )
                 }
             }
 
@@ -169,7 +186,9 @@ private fun ArmoryCatDetailsCatContent(
                     for (ability in cat.abilities) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                                .clickable(onClick = { onAbilityClicked(ability.id) })
                         ) {
                             Image(
                                 painter = painterResource(ability.icon),
@@ -193,18 +212,16 @@ private fun ArmoryCatDetailsCatContent(
 @Composable
 fun ArmoryCatDetailsCardPreview(){
     CatBattleGameTheme {
-        ArmoryCatDetailsCard(
-            cat = DetailedArmoryCatData(
+        ArchiveCatDetailsCard(
+            cat = DetailedCatData(
                 id = 1,
                 name = "Kitten Swordsman",
                 description = "A brave kitten wielding a wooden sword, eager to protect.",
                 image = R.drawable.kitten_swordman_300x300,
-                level = 1,
-                experience = 0,
-                health = 50,
-                attack = 15,
-                defense = 10,
-                speed = 1.2f,
+                baseHealth = 50,
+                baseAttack = 15,
+                baseDefense = 10,
+                attackSpeed = 1.2f,
                 role = CatRole.WARRIOR,
                 armorType = ArmorType.LIGHT,
                 rarity = CatRarity.KITTEN,
@@ -219,8 +236,11 @@ fun ArmoryCatDetailsCardPreview(){
                         name = "Quick Attack",
                         icon = R.drawable.ability_quick_attack_48,
                     )
-                )
-            )
+                ),
+                evolutionLevel = 5,
+                nextEvolutionCat = Cat(name= "Teen Swordman"),
+            ),
+            onAbilityClicked = {  }
         )
     }
 }

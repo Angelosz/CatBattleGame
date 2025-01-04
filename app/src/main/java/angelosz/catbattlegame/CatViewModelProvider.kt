@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import angelosz.catbattlegame.ui.archives.ArchivesScreenViewModel
+import angelosz.catbattlegame.ui.archives.ArchiveScreenViewModel
+import angelosz.catbattlegame.ui.archives.abilities_view.ArchiveAbilitiesViewModel
+import angelosz.catbattlegame.ui.archives.cats_view.ArchiveCatsViewModel
+import angelosz.catbattlegame.ui.archives.enemies_view.ArchiveEnemiesViewModel
 import angelosz.catbattlegame.ui.armory.ArmoryScreenViewModel
 import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestViewModel
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
@@ -85,14 +88,36 @@ object CatViewModelProvider {
             CombatResultViewModel(
                 getCatBattleApplication().container.campaignRepository,
                 getCatBattleApplication().container.playerRepository,
-                getCatBattleApplication().container.battleChestRepository
+                getCatBattleApplication().container.battleChestRepository,
+                getCatBattleApplication().container.enemyCatRepository
+            )
+        }
+
+        /* Archive ViewModels */
+        initializer {
+            ArchiveScreenViewModel()
+        }
+
+        initializer {
+            ArchiveCatsViewModel(
+                getCatBattleApplication().container.catRepository,
+                getCatBattleApplication().container.abilityRepository
             )
         }
 
         initializer {
-            ArchivesScreenViewModel()
+            ArchiveAbilitiesViewModel(
+                getCatBattleApplication().container.abilityRepository
+            )
         }
 
+        initializer {
+            ArchiveEnemiesViewModel(
+                getCatBattleApplication().container.enemyCatRepository
+            )
+        }
+
+        /* Armory ViewModels */
         initializer {
             ArmoryScreenViewModel()
         }

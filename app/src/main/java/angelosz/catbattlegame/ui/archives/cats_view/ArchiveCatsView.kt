@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.armory.cats_view
+package angelosz.catbattlegame.ui.archives.cats_view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,26 +15,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.armory.composables.ArmoryCatDetailsCard
-import angelosz.catbattlegame.ui.armory.composables.ArmoryCatGrid
+import angelosz.catbattlegame.ui.archives.composables.ArchiveCatDetailsCard
+import angelosz.catbattlegame.ui.archives.composables.ArchiveCatGrid
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.PaginationButtons
 
 @Composable
-fun ArmoryCatsView(
-    viewModel: ArmoryCatsViewModel = viewModel(factory = CatViewModelProvider.Factory),
+fun ArchiveCatsView(
+    viewModel: ArchiveCatsViewModel,
     innerPadding: PaddingValues,
     onFailure: () -> Unit,
-    pageLimit: Int = 12,
-    isLandscapeView: Boolean = false
+    onAbilityClicked: (Int) -> Unit,
+    isLandscapeView: Boolean,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    when(uiState.state){
+    when(uiState.screenState){
         ScreenState.SUCCESS -> {
             Box(
                 modifier = Modifier
@@ -43,31 +41,63 @@ fun ArmoryCatsView(
                 contentAlignment = Alignment.Center
             ){
                 if(isLandscapeView){
-                    HandleArmoryCatsLandscapeView(uiState, viewModel)
+                    HandleArchiveCatsLandscapeView(uiState, viewModel, onAbilityClicked)
                 } else {
-                    HandleArmoryCatsPortraitView(uiState, viewModel)
+                    HandleArchiveCatsPortraitView(uiState, viewModel, onAbilityClicked)
                 }
             }
         }
-        ScreenState.LOADING -> {
-            LoadingCard()
-        }
-        ScreenState.FAILURE -> {
-            FailureCard(onFailure)
-        }
+        ScreenState.LOADING -> LoadingCard()
+        ScreenState.FAILURE -> FailureCard(onFailure)
         ScreenState.INITIALIZING -> {
             LoadingCard()
-            LaunchedEffect(viewModel){
-                viewModel.setup(pageLimit)
+            LaunchedEffect(viewModel) {
+                viewModel.setup(pageLimit = 12)
             }
         }
     }
 }
 
 @Composable
-fun HandleArmoryCatsLandscapeView(
-    uiState: ArmoryCatsUiState,
-    viewModel: ArmoryCatsViewModel
+fun HandleArchiveCatsPortraitView(
+    uiState: ArchiveCatsUiState,
+    viewModel: ArchiveCatsViewModel,
+    onAbilityClicked: (Int) -> Unit
+) {
+    if (uiState.isCatSelected) {
+        ArchiveCatDetailsCard(
+            modifier = Modifier.padding(16.dp),
+            cat = uiState.selectedCat,
+            onAbilityClicked = onAbilityClicked
+        )
+    } else {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            ArchiveCatGrid(
+                modifier = Modifier.padding(8.dp),
+                cats = uiState.cats,
+                onCatCardClicked = { viewModel.selectCat(it.id) },
+                pageLimit = uiState.pageLimit,
+                imageSize = 112,
+            )
+            PaginationButtons(
+                isNotFirstPage = uiState.page > 0,
+                isNotLastPage = viewModel.isNotLastPage(),
+                onPreviousButtonClicked = viewModel::goToPreviousPage,
+                onNextButtonClicked = viewModel::goToNextPage
+            )
+        }
+    }
+}
+
+@Composable
+fun HandleArchiveCatsLandscapeView(
+    uiState: ArchiveCatsUiState,
+    viewModel: ArchiveCatsViewModel,
+    onAbilityClicked: (Int) -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -80,7 +110,7 @@ fun HandleArmoryCatsLandscapeView(
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center
         ) {
-            ArmoryCatGrid(
+            ArchiveCatGrid(
                 modifier = Modifier
                     .padding(8.dp)
                     .width(448.dp),
@@ -88,7 +118,6 @@ fun HandleArmoryCatsLandscapeView(
                 onCatCardClicked = { viewModel.selectCat(it.id)},
                 pageLimit = uiState.pageLimit,
                 imageSize = 96,
-                showExperience = true
             )
             PaginationButtons(
                 isNotFirstPage = uiState.page > 0,
@@ -97,44 +126,12 @@ fun HandleArmoryCatsLandscapeView(
                 onNextButtonClicked = viewModel::goToNextPage
             )
         }
-        ArmoryCatDetailsCard(
+        ArchiveCatDetailsCard(
             modifier = Modifier.width(300.dp),
             cat = uiState.selectedCat,
             imageSize = 256,
+            onAbilityClicked = onAbilityClicked,
         )
     }
 }
 
-@Composable
-private fun HandleArmoryCatsPortraitView(
-    uiState: ArmoryCatsUiState,
-    viewModel: ArmoryCatsViewModel,
-) {
-    if (uiState.isDetailView) {
-        ArmoryCatDetailsCard(
-            modifier = Modifier.padding(16.dp),
-            cat = uiState.selectedCat,
-        )
-    } else {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            ArmoryCatGrid(
-                modifier = Modifier.padding(8.dp),
-                cats = uiState.cats,
-                onCatCardClicked = { viewModel.selectCat(it.id) },
-                pageLimit = uiState.pageLimit,
-                imageSize = 112,
-                showExperience = true
-            )
-            PaginationButtons(
-                isNotFirstPage = uiState.page > 0,
-                isNotLastPage = viewModel.isNotLastPage(),
-                onPreviousButtonClicked = viewModel::goToPreviousPage,
-                onNextButtonClicked = viewModel::goToNextPage
-            )
-        }
-    }
-}

@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.data.repository
 
 import angelosz.catbattlegame.data.dao.PlayerDao
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
@@ -69,4 +70,6 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
         val catBasicData = dao.getPlayerTeamCats(teamId)
         return catBasicData
     }
+
+    override suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>) = dao.discoverEnemies(enemies)
 }
