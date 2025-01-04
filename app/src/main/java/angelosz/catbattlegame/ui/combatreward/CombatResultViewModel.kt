@@ -199,4 +199,19 @@ class CombatResultViewModel(
             }
         }
     }
+
+    fun rewardIncludesBattleChest(): Boolean {
+        val battleChestRewards = listOf(
+            RewardType.NEW_KITTEN,
+            RewardType.KITTEN_BOX,
+            RewardType.NEW_TEEN,
+            RewardType.TEEN_BOX,
+            RewardType.NEW_ADULT,
+            RewardType.ADULT_BOX
+        )
+        for(reward in uiState.value.chapterReward){
+            if(reward.rewardType in battleChestRewards) return true
+        }
+        return false
+    }
 }

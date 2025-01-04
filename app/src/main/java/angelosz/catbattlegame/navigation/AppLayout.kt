@@ -71,7 +71,7 @@ fun AppLayout(
         composable<ArchiveScreenRoute> {
             ArchivesScreen(
                 windowSize = windowSize,
-                returnToMenu = { navController.navigateUp() }
+                returnToMainMenu = { navController.navigateUp() }
             )
         }
         composable<CampaignMenuScreenRoute>{
@@ -113,6 +113,11 @@ fun AppLayout(
                 teamId = data.teamId,
                 chapterId = data.chapterId,
                 combatResult = data.combatResult,
+                goToArmory = { collection ->
+                    navController.navigate(ArmoryScreenRoute(collection)) {
+                        popUpTo(HomeScreenRoute){ inclusive = false}
+                    }
+                },
                 onBackPressed = { navController.popBackStack(HomeScreenRoute, false) },
                 onReturnToHomePressed = { navController.popBackStack(HomeScreenRoute, false) }
             )
