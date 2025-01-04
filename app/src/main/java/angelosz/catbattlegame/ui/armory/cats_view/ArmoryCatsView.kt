@@ -74,36 +74,35 @@ fun HandleArmoryCatsLandscapeView(
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-            Column(
+        Column(
+            modifier = Modifier
+                .weight(1f),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.Center
+        ) {
+            ArmoryCatGrid(
                 modifier = Modifier
-                    .weight(1f),
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.Center
-            ) {
-                ArmoryCatGrid(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .width(448.dp),
-                    cats = uiState.cats,
-                    onCatCardClicked = { viewModel.selectCat(it.id)},
-                    pageLimit = uiState.pageLimit,
-                    imageSize = 96,
-                    showExperience = true
-                )
-                PaginationButtons(
-                    isNotFirstPage = uiState.page > 0,
-                    isNotLastPage = viewModel.isNotLastPage(),
-                    onPreviousButtonClicked = viewModel::goToPreviousPage,
-                    onNextButtonClicked = viewModel::goToNextPage
-                )
-            }
-            ArmoryCatDetailsCard(
-                modifier = Modifier.width(300.dp),
-                cat = uiState.selectedCat,
-                onCloseClicked = viewModel::exitDetailView,
-                imageSize = 256,
+                    .padding(8.dp)
+                    .width(448.dp),
+                cats = uiState.cats,
+                onCatCardClicked = { viewModel.selectCat(it.id)},
+                pageLimit = uiState.pageLimit,
+                imageSize = 96,
+                showExperience = true
+            )
+            PaginationButtons(
+                isNotFirstPage = uiState.page > 0,
+                isNotLastPage = viewModel.isNotLastPage(),
+                onPreviousButtonClicked = viewModel::goToPreviousPage,
+                onNextButtonClicked = viewModel::goToNextPage
             )
         }
+        ArmoryCatDetailsCard(
+            modifier = Modifier.width(300.dp),
+            cat = uiState.selectedCat,
+            imageSize = 256,
+        )
+    }
 }
 
 @Composable
@@ -115,7 +114,6 @@ private fun HandleArmoryCatsPortraitView(
         ArmoryCatDetailsCard(
             modifier = Modifier.padding(16.dp),
             cat = uiState.selectedCat,
-            onCloseClicked = viewModel::exitDetailView,
         )
     } else {
         Column(

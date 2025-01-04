@@ -34,7 +34,6 @@ import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
 import angelosz.catbattlegame.ui.components.ExperienceBar
-import angelosz.catbattlegame.ui.components.RoundedTextButton
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 
@@ -42,8 +41,6 @@ import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 fun ArmoryCatDetailsCard(
     modifier: Modifier = Modifier,
     cat: DetailedArmoryCatData,
-    showCloseButton: Boolean = false,
-    onCloseClicked: () -> Unit,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
     imageSize: Int = 300,
 ) {
@@ -60,19 +57,6 @@ fun ArmoryCatDetailsCard(
                 imageSize = imageSize,
                 textSize = textSize
             )
-
-            if(showCloseButton){
-                RoundedTextButton(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp),
-                    text = "Hide",
-                    size = 64,
-                    onClick = onCloseClicked,
-                    textStyle = MaterialTheme.typography.headlineSmall
-                )
-            }
-
         }
     }
 }
@@ -236,8 +220,7 @@ fun ArmoryCatDetailsCardPreview(){
                         icon = R.drawable.ability_quick_attack_48,
                     )
                 )
-            ),
-            onCloseClicked = { },
+            )
         )
     }
 }
