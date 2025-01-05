@@ -15,9 +15,7 @@ import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
 import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.BasicCatData
 import angelosz.catbattlegame.ui.campaign.EnemyType
-import angelosz.catbattlegame.ui.teambuilder.TeamData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

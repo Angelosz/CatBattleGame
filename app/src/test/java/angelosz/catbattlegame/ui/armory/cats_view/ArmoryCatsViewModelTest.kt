@@ -2,6 +2,7 @@ package angelosz.catbattlegame.ui.armory.cats_view
 
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
@@ -11,7 +12,8 @@ import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
+import angelosz.catbattlegame.ui.archives.data.SimpleCatData
 import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import junit.framework.TestCase.assertEquals
@@ -167,6 +169,9 @@ class ArmoryCatsViewModelTest {
 class AbilityRepositoryForArmoryTest : AbilityRepository {
     override suspend fun getAllPlayerAbilities(): List<Ability> = emptyList()
     override suspend fun getAbilityById(id: Int): Ability = Ability(0)
+    override suspend fun getCatAbilitiesPage(limit: Int, offset: Int): List<Ability> = emptyList()
+
+    override suspend fun getCount(): Int = 0
     override suspend fun insertAbilities(abilities: List<Ability>) {}
     override suspend fun getCatAbilities(catId: Int): List<Ability> = emptyList()
     override suspend fun getEnemyCatAbilities(catId: Int): List<Ability> = emptyList()
@@ -182,6 +187,9 @@ class CatRepositoryForArmoryTest : CatRepository {
     override suspend fun getCatsById(ids: List<Int>): List<Cat>  = emptyList()
     override suspend fun getRandomCatByRarity(rarity: CatRarity): Cat = Cat()
     override suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>  = emptyList()
+    override suspend fun getSimpleCatDataFromPage(limit: Int, offset: Int): List<SimpleCatData> = emptyList()
+
+    override suspend fun getCount(): Int = 0
 }
 
 class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
@@ -225,5 +233,6 @@ class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
     override suspend fun getAllPlayerTeams(): List<PlayerTeam> = emptyList()
     override suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat) {}
     override suspend fun getTeamData(teamId: Long): List<BasicCatData> = emptyList()
+    override suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>) {}
 }
 

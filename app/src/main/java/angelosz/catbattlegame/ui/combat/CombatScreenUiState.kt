@@ -7,7 +7,6 @@ import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.teambuilder.TeamData
 
 data class CombatScreenUiState(
     val chapter: CampaignChapter = CampaignChapter(),

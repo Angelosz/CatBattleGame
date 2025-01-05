@@ -1,12 +1,13 @@
 package angelosz.catbattlegame.ui.armory.teams_view
 
+import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.ui.armory.data.ArmoryTeam
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import junit.framework.TestCase.assertEquals
@@ -218,4 +219,5 @@ class PlayerRepositoryForArmoryTeamsTest: PlayerAccountRepository {
     }
     override suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat) {}
     override suspend fun getTeamData(teamId: Long): List<BasicCatData> = emptyList()
+    override suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>) {}
 }

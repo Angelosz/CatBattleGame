@@ -1,7 +1,7 @@
-package angelosz.catbattlegame.ui.teamselection
+package angelosz.catbattlegame.ui.combat.teamselection
 
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.teambuilder.TeamData
+import angelosz.catbattlegame.ui.combat.TeamData
 
 data class TeamSelectionScreenUiState(
     val chapterId: Long = 1,

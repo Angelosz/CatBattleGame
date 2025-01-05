@@ -1,6 +1,5 @@
 package angelosz.catbattlegame.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,15 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 
@@ -41,23 +35,7 @@ fun ExperienceBar(
             contentAlignment = Alignment.Center,
             modifier = Modifier.size(levelCardSize.dp)
         ){
-            Image(
-                painter = painterResource(R.drawable.circular_button_128),
-                contentDescription = "Level $level",
-                modifier = Modifier.size(levelCardSize.dp)
-            )
-            Text(
-                text = "$level",
-                color = Color.White,
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    shadow = Shadow(
-                        color = Color.Black,
-                        offset = Offset(3f, 3f),
-                        blurRadius = 1f
-                    )
-                ),
-                fontWeight = FontWeight.Bold,
-            )
+            RoundedTextButton(text = "$level", textStyle = MaterialTheme.typography.headlineSmall)
         }
         Box(
             contentAlignment = Alignment.Center

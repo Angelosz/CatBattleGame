@@ -12,15 +12,11 @@ import angelosz.catbattlegame.ui.armory.ArmoryScreenViewModel
 import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestViewModel
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
 import angelosz.catbattlegame.ui.armory.teams_view.ArmoryTeamsViewModel
-import angelosz.catbattlegame.ui.battlechests.BattleChestsViewModel
 import angelosz.catbattlegame.ui.campaign.CampaignScreenViewModel
 import angelosz.catbattlegame.ui.combat.CombatScreenViewModel
-import angelosz.catbattlegame.ui.combatreward.CombatResultViewModel
-import angelosz.catbattlegame.ui.encyclopedia.EncyclopediaViewModel
+import angelosz.catbattlegame.ui.combat.combatreward.CombatResultViewModel
+import angelosz.catbattlegame.ui.combat.teamselection.TeamSelectionScreenViewModel
 import angelosz.catbattlegame.ui.home.HomeScreenViewModel
-import angelosz.catbattlegame.ui.playercollection.CollectionViewModel
-import angelosz.catbattlegame.ui.teambuilder.TeamBuilderViewModel
-import angelosz.catbattlegame.ui.teamselection.TeamSelectionScreenViewModel
 
 object CatViewModelProvider {
     val Factory = viewModelFactory {
@@ -30,37 +26,7 @@ object CatViewModelProvider {
             )
         }
 
-        initializer {
-            EncyclopediaViewModel(
-                getCatBattleApplication().container.catRepository,
-                getCatBattleApplication().container.abilityRepository
-            )
-        }
-
-        initializer {
-            CollectionViewModel(
-                getCatBattleApplication().container.catRepository,
-                getCatBattleApplication().container.abilityRepository,
-                getCatBattleApplication().container.playerRepository
-            )
-        }
-
-        initializer {
-            BattleChestsViewModel(
-                getCatBattleApplication().container.catRepository,
-                getCatBattleApplication().container.playerRepository,
-                getCatBattleApplication().container.battleChestRepository
-            )
-        }
-
-        initializer {
-            TeamBuilderViewModel(
-                getCatBattleApplication().container.catRepository,
-                getCatBattleApplication().container.playerRepository,
-                getCatBattleApplication().container.abilityRepository,
-            )
-        }
-
+        /* Campaign Selection */
         initializer {
             CampaignScreenViewModel(
                 getCatBattleApplication().container.campaignRepository,
@@ -74,6 +40,7 @@ object CatViewModelProvider {
             )
         }
 
+        /* Combat */
         initializer(){
             CombatScreenViewModel(
                 getCatBattleApplication().container.playerRepository,

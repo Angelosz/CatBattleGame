@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.domain.models
+package angelosz.catbattlegame.ui.combat
 
 import androidx.annotation.DrawableRes
 

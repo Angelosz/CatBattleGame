@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.combatreward
+package angelosz.catbattlegame.ui.combat.combatreward
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,7 @@ import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +31,9 @@ class CombatResultViewModel(
     private val battleChestRepository: BattleChestRepository,
     private val enemyCatRepository: EnemyCatRepository
 ): ViewModel() {
-    private val _uiState: MutableStateFlow<CombatResultUiState> = MutableStateFlow(CombatResultUiState())
+    private val _uiState: MutableStateFlow<CombatResultUiState> = MutableStateFlow(
+        CombatResultUiState()
+    )
     val uiState: StateFlow<CombatResultUiState> = _uiState
 
     fun setupCombatResult(teamId: Long, chapterId: Long, combatResult: CombatResult){

@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.teamselection
+package angelosz.catbattlegame.ui.combat.teamselection
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,11 +25,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.combat.TeamData
+import angelosz.catbattlegame.ui.combat.TeamPanel
 import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.teambuilder.TeamsList
 
 @Composable
 fun TeamSelectionScreen(
@@ -97,6 +102,61 @@ fun TeamSelectionScreen(
             }
             ScreenState.INITIALIZING -> {
 
+            }
+        }
+    }
+}
+
+@Composable
+fun TeamsList(
+    teams: List<TeamData>,
+    selectTeam: (TeamData) -> Unit = {},
+    deleteTeam: (TeamData) -> Unit = {},
+    createTeam: (TeamData) -> Unit = {},
+    panelsSize: Int = 360,
+    columns: Int = 1,
+    canDeleteTeam: Boolean = false,
+    canCreateTeam: Boolean = false,
+    selectedTeamId: Long = 0,
+    markSelectedTeamId: Boolean = false
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(columns),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        items(teams){ team ->
+            TeamPanel(
+                teamData = team,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .width(panelsSize.dp),
+                imageSize = 80,
+                spacedBy = 8,
+                onTeamCardClicked = selectTeam,
+                hasDeleteButton = canDeleteTeam,
+                onDeleteTeamClicked = deleteTeam,
+                onCatClicked = {},
+                markTeam = markSelectedTeamId && (selectedTeamId == team.teamId),
+            )
+        }
+        if(canCreateTeam){
+            item {
+                /* New Team TeamPanel */
+                TeamPanel(
+                    teamData = TeamData(
+                        teamId = 0,
+                        teamName = "Create New Team",
+                        cats = listOf()
+                    ),
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .width(panelsSize.dp),
+                    imageSize = 80,
+                    spacedBy = 8,
+                    onTeamCardClicked = createTeam,
+                    onDeleteTeamClicked = { },
+                    onCatClicked = {},
+                )
             }
         }
     }

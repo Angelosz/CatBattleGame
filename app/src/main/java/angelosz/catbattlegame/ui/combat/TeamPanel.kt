@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.teambuilder
+package angelosz.catbattlegame.ui.combat
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.domain.models.BasicCatData
 import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 

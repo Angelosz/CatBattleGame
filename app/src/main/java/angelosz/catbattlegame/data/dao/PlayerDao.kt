@@ -11,7 +11,7 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
-import angelosz.catbattlegame.domain.models.BasicCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import kotlinx.coroutines.flow.Flow
 

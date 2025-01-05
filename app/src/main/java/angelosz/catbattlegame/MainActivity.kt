@@ -11,6 +11,9 @@ import angelosz.catbattlegame.data.database.AppDatabase
 import angelosz.catbattlegame.domain.models.entities.PlayerAccount
 import angelosz.catbattlegame.domain.models.entities.PlayerTeam
 import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.PlayerAccount
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.navigation.AppLayout
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import kotlinx.coroutines.launch
@@ -39,7 +42,7 @@ class MainActivity : ComponentActivity() {
         val existingAccount = playerDao.getPlayerAccount()
         if(existingAccount == null){
             playerDao.insertOrUpdateAccount(PlayerAccount())
-            val ownedCatsIds = playerDao.getAllOwnedCats().map { it.id }
+            val ownedCatsIds = playerDao.getAllOwnedCats().map { it.catId }
             /* Create first default team */
             playerDao.insertPlayerTeam(
                 playerTeam = PlayerTeam(

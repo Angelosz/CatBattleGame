@@ -1,6 +1,4 @@
-package angelosz.catbattlegame.ui.teambuilder
-
-import angelosz.catbattlegame.domain.models.BasicCatData
+package angelosz.catbattlegame.ui.combat
 
 data class TeamData(
     val teamId: Long,

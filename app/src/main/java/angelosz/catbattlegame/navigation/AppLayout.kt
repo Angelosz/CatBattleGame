@@ -34,10 +34,10 @@ import angelosz.catbattlegame.ui.armory.ArmoryScreen
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
 import angelosz.catbattlegame.ui.campaign.CampaignScreen
 import angelosz.catbattlegame.ui.combat.CombatScreen
-import angelosz.catbattlegame.ui.combatreward.CombatResultScreen
+import angelosz.catbattlegame.ui.combat.combatreward.CombatResultScreen
 import angelosz.catbattlegame.ui.components.RoundedImageButton
 import angelosz.catbattlegame.ui.home.HomeScreen
-import angelosz.catbattlegame.ui.teamselection.TeamSelectionScreen
+import angelosz.catbattlegame.ui.combat.teamselection.TeamSelectionScreen
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
 @Composable

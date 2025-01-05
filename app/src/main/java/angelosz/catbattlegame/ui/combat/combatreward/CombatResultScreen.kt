@@ -1,4 +1,4 @@
-package angelosz.catbattlegame.ui.combatreward
+package angelosz.catbattlegame.ui.combat.combatreward
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image

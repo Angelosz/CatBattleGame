@@ -1,10 +1,10 @@
-package angelosz.catbattlegame.ui.teamselection
+package angelosz.catbattlegame.ui.combat.teamselection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.teambuilder.TeamData
+import angelosz.catbattlegame.ui.combat.TeamData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
