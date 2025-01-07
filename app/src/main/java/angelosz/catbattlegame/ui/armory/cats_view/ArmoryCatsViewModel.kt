@@ -65,6 +65,7 @@ class ArmoryCatsViewModel(
         return DetailedArmoryCatData(
             id = cat.id,
             name = cat.name,
+            title = cat.title,
             image = cat.image,
             description = cat.description,
             armorType = cat.armorType,

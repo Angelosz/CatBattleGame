@@ -51,6 +51,7 @@ class ArchiveCatsViewModel(
                 val details = DetailedCatData(
                     id = cat.id,
                     name = cat.name,
+                    title = cat.title,
                     description = cat.description,
                     image = cat.image,
                     baseHealth = cat.baseHealth,

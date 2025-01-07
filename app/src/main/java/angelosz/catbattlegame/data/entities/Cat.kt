@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import angelosz.catbattlegame.R
@@ -12,7 +13,8 @@ import angelosz.catbattlegame.domain.enums.CatRole
 data class Cat(
     @PrimaryKey
     val id: Int = 1,
-    val name: String = "Kitten Swordman",
+    val name: String = "Bob",
+    @StringRes val title: Int = R.string.empty_title,
     val description: String = "\"A brave kitten wielding a wooden sword, eager to protect.\"",
     val armorType: ArmorType = ArmorType.MEDIUM,
     val role: CatRole = CatRole.WARRIOR,

@@ -37,4 +37,32 @@
     <string name="combatmodifier_poisoned">Poisoned</string>
     <string name="combatmodifier_cleansed">Cleansed</string>
     <string name="combatmodifier_shielded">Shielded</string>
+
+    <!-- Cat titles -->
+    <string name="empty_title">%1$s</string>
+    <string name="the_kitten_swordman">%1$s, the Kitten Swordsman</string>
+    <string name="the_teen_swordman">%1$s, the Teen Swordsman</string>
+    <string name="the_swordsman">%1$s, the Swordsman</string>
+    <string name="the_elder_swordsman">%1$s, the Elder Swordsman</string>
+    <string name="the_kitten_priest">%1$s, the Kitten Priest</string>
+    <string name="the_teen_priest">%1$s, the Teen Priest</string>
+    <string name="the_priest">%1$s, the Priest</string>
+    <string name="the_elder_priest">%1$s, the Elder Priest</string>
+    <string name="the_kitten_mage">%1$s, the Kitten Mage</string>
+    <string name="the_teen_mage">%1$s, the Teen Mage</string>
+    <string name="the_mage">%1$s, the Mage</string>
+    <string name="the_elder_mage">%1$s, the Elder Mage</string>
+    <string name="the_kitten_paladin">%1$s, the Kitten Paladin</string>
+    <string name="the_teen_paladin">%1$s, the Teen Paladin</string>
+    <string name="the_paladin">%1$s, the Paladin</string>
+    <string name="the_elder_paladin">%1$s, the Elder Paladin</string>
+    <string name="the_kitten_rogue">%1$s, the Kitten Rogue</string>
+    <string name="the_teen_rogue">%1$s, the Teen Rogue</string>
+    <string name="the_rogue">%1$s, the Rogue</string>
+    <string name="the_elder_rogue">%1$s, the Elder Rogue</string>
+    <string name="the_kitten_monk">%1$s, the Kitten Monk</string>
+    <string name="the_teen_monk">%1$s, the Teen Monk</string>
+    <string name="the_monk">%1$s, the Monk</string>
+    <string name="the_elder_monk">%1$s, the Elder Monk</string>
+
 </resources>

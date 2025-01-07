@@ -73,7 +73,7 @@ private fun ArmoryCatDetailsCatContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = cat.name,
+            text = stringResource(cat.title, cat.name),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
@@ -196,7 +196,8 @@ fun ArmoryCatDetailsCardPreview(){
         ArmoryCatDetailsCard(
             cat = DetailedArmoryCatData(
                 id = 1,
-                name = "Kitten Swordsman",
+                name = "Bob",
+                title = R.string.the_kitten_swordman,
                 description = "A brave kitten wielding a wooden sword, eager to protect.",
                 image = R.drawable.kitten_swordman_300x300,
                 level = 1,

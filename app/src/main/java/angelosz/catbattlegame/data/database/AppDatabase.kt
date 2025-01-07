@@ -51,7 +51,7 @@ import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
         ChapterReward::class
     ],
     exportSchema = false,
-    version = 30)
+    version = 31)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao

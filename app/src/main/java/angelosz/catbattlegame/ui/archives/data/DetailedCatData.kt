@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.ui.archives.data
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
@@ -11,7 +12,8 @@ import angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL
 
 data class DetailedCatData(
     val id: Int = 0,
-    val name: String = "",
+    val name: String = "Bob",
+    @StringRes val title: Int = R.string.empty_title,
     val description: String = "",
     val armorType: ArmorType = ArmorType.MEDIUM,
     val role: CatRole = CatRole.WARRIOR,
