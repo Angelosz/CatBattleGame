@@ -2,6 +2,7 @@ package angelosz.catbattlegame.ui.armory.cats_view
 
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
+import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
 import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
@@ -12,10 +13,10 @@ import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.ui.archives.data.SimpleCatData
 import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -173,6 +174,8 @@ class AbilityRepositoryForArmoryTest : AbilityRepository {
 
     override suspend fun getCount(): Int = 0
     override suspend fun insertAbilities(abilities: List<Ability>) {}
+    override suspend fun insertCatAbilityCrossRefs(catAbilityCrossRefs: List<CatAbilityCrossRef>) {}
+
     override suspend fun getCatAbilities(catId: Int): List<Ability> = emptyList()
     override suspend fun getEnemyCatAbilities(catId: Int): List<Ability> = emptyList()
 }
@@ -197,12 +200,16 @@ class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
         return flowOf<PlayerAccount?>(null)
     }
     override suspend fun getPlayerAccount(): PlayerAccount? = null
-    override suspend fun createOrUpdateAccount(playerAccount: PlayerAccount) {}
+    override suspend fun insertPlayerAccount(playerAccount: PlayerAccount) {}
+    override suspend fun updateAccount(playerAccount: PlayerAccount) {}
+
     override suspend fun addCrystals(amount: Int) {}
     override suspend fun reduceCrystals(amount: Int) {}
     override suspend fun addGold(amount: Int) {}
     override suspend fun reduceGold(amount: Int) {}
     override suspend fun insertOwnedCat(ownedCat: OwnedCat) {}
+    override suspend fun insertOwnedCats(ownedCats: List<OwnedCat>) {}
+
     override suspend fun updateOwnedCat(ownedCat: OwnedCat) {}
     override suspend fun deleteOwnedCat(ownedCat: OwnedCat) {}
     override suspend fun getAllOwnedCats(): List<OwnedCat> = emptyList()

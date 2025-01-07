@@ -14,7 +14,8 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     /* Player Account */
     override suspend fun getPlayerAccountAsFlow(): Flow<PlayerAccount?> = dao.getPlayerAccountAsFlow()
     override suspend fun getPlayerAccount(): PlayerAccount? = dao.getPlayerAccount()
-    override suspend fun createOrUpdateAccount(playerAccount: PlayerAccount) = dao.insertOrUpdateAccount(playerAccount)
+    override suspend fun insertPlayerAccount(playerAccount: PlayerAccount) = dao.insertPlayerAccount(playerAccount)
+    override suspend fun updateAccount(playerAccount: PlayerAccount) = dao.updateAccount(playerAccount)
 
     /* Crystals */
     override suspend fun addCrystals(amount: Int) = dao.addCrystals(amount)
@@ -45,6 +46,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
 
     /* Owned Cats */
     override suspend fun insertOwnedCat(ownedCat: OwnedCat) = dao.insertOwnedCat(ownedCat)
+    override suspend fun insertOwnedCats(ownedCats: List<OwnedCat>) = dao.insertOwnedCats(ownedCats)
     override suspend fun updateOwnedCat(ownedCat: OwnedCat) = dao.updateOwnedCat(ownedCat)
     override suspend fun deleteOwnedCat(ownedCat: OwnedCat) = dao.deleteOwnedCat(ownedCat)
     override suspend fun getAllOwnedCats(): List<OwnedCat> = dao.getAllOwnedCats()

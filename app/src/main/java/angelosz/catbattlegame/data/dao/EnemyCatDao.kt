@@ -15,9 +15,15 @@ interface EnemyCatDao {
     @Insert
     suspend fun insertEnemyCat(enemyCat: EnemyCat): Long
     @Insert
+    suspend fun insertEnemyCats(enemyCats: List<EnemyCat>)
+    @Insert
     suspend fun insertEnemyAbility(enemyAbility: EnemyAbility): Long
     @Insert
+    suspend fun insertEnemyAbilities(enemyAbilities: List<EnemyAbility>)
+    @Insert
     suspend fun insertChapterEnemy(chapterEnemy: ChapterEnemy): Long
+    @Insert
+    suspend fun insertChapterEnemies(chapterEnemies: List<ChapterEnemy>)
 
     @Query("SELECT * FROM campaign_enemies WHERE id = :id")
     suspend fun getEnemyCatById(id: Long): EnemyCat

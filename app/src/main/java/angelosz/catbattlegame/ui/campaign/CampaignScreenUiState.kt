@@ -1,8 +1,8 @@
 package angelosz.catbattlegame.ui.campaign
 
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.data.entities.Campaign
-import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.ui.campaign.data.Campaign
+import angelosz.catbattlegame.ui.campaign.data.Chapter
 
 enum class CampaignSelectionStage {
     SELECTING_CAMPAIGN,
@@ -11,11 +11,11 @@ enum class CampaignSelectionStage {
 }
 
 data class CampaignScreenUiState (
-    val screenState: ScreenState = ScreenState.LOADING,
+    val screenState: ScreenState = ScreenState.INITIALIZING,
     val campaigns: List<Campaign> = listOf(),
     val selectedCampaign: Campaign = Campaign(0),
-    val campaignChapters: List<CampaignChapter> = listOf(),
-    val selectedCampaignChapter: CampaignChapter = CampaignChapter(),
+    val campaignChapters: List<Chapter> = listOf(),
+    val selectedCampaignChapter: Chapter = Chapter(),
     val selectedCampaignChapterEnemyCats: List<SimplifiedEnemyCatData> = listOf(),
     val stage: CampaignSelectionStage = CampaignSelectionStage.SELECTING_CAMPAIGN
 )

@@ -3,8 +3,6 @@ package angelosz.catbattlegame.ui.combat.combatreward
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.entities.BattleChest
-import angelosz.catbattlegame.data.entities.Campaign
-import angelosz.catbattlegame.data.entities.CampaignChapter
 import angelosz.catbattlegame.data.entities.ChapterReward
 import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.repository.BattleChestRepository
@@ -17,6 +15,8 @@ import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.campaign.data.Campaign
+import angelosz.catbattlegame.ui.campaign.data.Chapter
 import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,9 +63,8 @@ class CombatResultViewModel(
                             val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
                             completeCampaign(currentCampaign)
                             unlockNextCampaign(currentCampaign.nextCampaign)
-                        } else {
-                            unlockNextChapter(chapter.unlocksChapter)
                         }
+                        unlockNextChapter(chapter.unlocksChapter)
 
                         _uiState.update {
                             it.copy(
@@ -140,38 +139,20 @@ class CombatResultViewModel(
         }
     }
 
-    private suspend fun completeChapter(chapter: CampaignChapter) {
-        campaignRepository.updateCampaignChapter(
-            chapter.copy(
-                state = CampaignState.COMPLETED
-            )
-        )
+    private suspend fun completeChapter(chapter: Chapter) {
+        campaignRepository.updateChapterState(chapter.id, CampaignState.COMPLETED)
     }
 
-    private suspend fun unlockNextChapter(unlocksChapter: Long) {
-        val chapter = campaignRepository.getChapterById(unlocksChapter)
-        campaignRepository.updateCampaignChapter(
-            chapter.copy(
-                state = CampaignState.UNLOCKED
-            )
-        )
+    private suspend fun unlockNextChapter(chapterId: Long) {
+        campaignRepository.updateChapterState(chapterId, CampaignState.UNLOCKED)
     }
 
     private suspend fun completeCampaign(currentCampaign: Campaign) {
-        campaignRepository.updateCampaign(
-            currentCampaign.copy(
-                state = CampaignState.COMPLETED
-            )
-        )
+        campaignRepository.updateCampaignState(currentCampaign.id, CampaignState.COMPLETED)
     }
 
     private suspend fun unlockNextCampaign(campaignId: Long) {
-        val campaign = campaignRepository.getCampaignById(campaignId)
-        campaignRepository.updateCampaign(
-            campaign.copy(
-                state = CampaignState.UNLOCKED
-            )
-        )
+        campaignRepository.updateCampaignState(campaignId, CampaignState.UNLOCKED)
     }
 
     private suspend fun addRewards(chapterRewards: List<ChapterReward>) {

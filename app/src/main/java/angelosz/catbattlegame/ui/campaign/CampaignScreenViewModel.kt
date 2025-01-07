@@ -6,8 +6,8 @@ import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.domain.enums.CampaignState
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.data.entities.Campaign
-import angelosz.catbattlegame.data.entities.CampaignChapter
+import angelosz.catbattlegame.ui.campaign.data.Campaign
+import angelosz.catbattlegame.ui.campaign.data.Chapter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -20,11 +20,8 @@ class CampaignScreenViewModel(
     private val _uiState = MutableStateFlow(CampaignScreenUiState())
     val uiState: StateFlow<CampaignScreenUiState> = _uiState
 
-    init {
-        setupInitialData()
-    }
-
     fun setupInitialData() {
+        _uiState.update { it.copy(screenState = ScreenState.LOADING) }
         try {
             viewModelScope.launch {
                 val campaigns = campaignRepository.getAllCampaigns()
@@ -72,8 +69,8 @@ class CampaignScreenViewModel(
         }
     }
 
-    fun selectCampaignChapter(campaignChapter: CampaignChapter) {
-        if(campaignChapter.state == CampaignState.LOCKED) return
+    fun selectCampaignChapter(chapter: Chapter) {
+        if(chapter.state == CampaignState.LOCKED) return
 
         _uiState.update {
             it.copy(
@@ -82,11 +79,11 @@ class CampaignScreenViewModel(
         }
         viewModelScope.launch{
             try {
-                val enemyCats = enemyCatRepository.getSimplifiedEnemiesByCampaignChapterId(campaignChapter.id)
+                val enemyCats = enemyCatRepository.getSimplifiedEnemiesByCampaignChapterId(chapter.id)
                 _uiState.update {
                     it.copy(
                         screenState = ScreenState.SUCCESS,
-                        selectedCampaignChapter = campaignChapter,
+                        selectedCampaignChapter = chapter,
                         selectedCampaignChapterEnemyCats = enemyCats,
                         stage = CampaignSelectionStage.CHAPTER_SELECTED
                     )

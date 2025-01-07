@@ -6,28 +6,22 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.lifecycle.lifecycleScope
 import angelosz.catbattlegame.data.database.AppDatabase
-import angelosz.catbattlegame.domain.models.entities.PlayerAccount
-import angelosz.catbattlegame.domain.models.entities.PlayerTeam
-import angelosz.catbattlegame.domain.models.entities.PlayerTeamOwnedCat
-import angelosz.catbattlegame.data.entities.PlayerAccount
-import angelosz.catbattlegame.data.entities.PlayerTeam
-import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.navigation.AppLayout
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-
-
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        lifecycleScope.launch {
-            initializePlayerAccount()
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = AppDatabase.getInstance(applicationContext)
+            //db.clearAllTables()
         }
 
         setContent {
@@ -36,24 +30,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    private suspend fun initializePlayerAccount() {
-        val playerDao = AppDatabase.getInstance(applicationContext).playerDao()
-        val existingAccount = playerDao.getPlayerAccount()
-        if(existingAccount == null){
-            playerDao.insertOrUpdateAccount(PlayerAccount())
-            val ownedCatsIds = playerDao.getAllOwnedCats().map { it.catId }
-            /* Create first default team */
-            playerDao.insertPlayerTeam(
-                playerTeam = PlayerTeam(
-                    id = 1,
-                    name = "Default Team",
-                )
-            )
-            /*  Populate first team */
-            ownedCatsIds.forEachIndexed { index, catId -> playerDao.addCatToTeam(PlayerTeamOwnedCat(teamId = 1, ownedCatId = catId, index)) }
-        }
-    }
-
-
 }

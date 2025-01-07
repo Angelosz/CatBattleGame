@@ -27,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -40,10 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
-import angelosz.catbattlegame.data.entities.Campaign
-import angelosz.catbattlegame.data.entities.CampaignChapter
 import angelosz.catbattlegame.domain.enums.CampaignState
 import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.ui.campaign.data.Campaign
+import angelosz.catbattlegame.ui.campaign.data.Chapter
 import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatCard
@@ -121,7 +122,12 @@ fun CampaignScreen(
                     onReloadPressed = { viewModel.setupInitialData() }
                 )
             }
-            ScreenState.INITIALIZING -> { }
+            ScreenState.INITIALIZING -> {
+                LoadingCard()
+                LaunchedEffect(viewModel) {
+                    viewModel.setupInitialData()
+                }
+            }
         }
     }
 }
@@ -215,8 +221,8 @@ private fun ChapterInfoCard(
 
 @Composable
 fun CampaignChapterSelectionGrid(
-    chapters: List<CampaignChapter>,
-    onChapterClicked: (CampaignChapter) -> Unit
+    chapters: List<Chapter>,
+    onChapterClicked: (Chapter) -> Unit
 ) {
     if(chapters.isNotEmpty()){
         Column(

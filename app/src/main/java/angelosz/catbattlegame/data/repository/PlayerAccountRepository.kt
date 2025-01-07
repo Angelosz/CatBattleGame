@@ -13,7 +13,8 @@ interface PlayerAccountRepository {
     /* Player Account */
     suspend fun getPlayerAccountAsFlow(): Flow<PlayerAccount?>
     suspend fun getPlayerAccount(): PlayerAccount?
-    suspend fun createOrUpdateAccount(playerAccount: PlayerAccount)
+    suspend fun insertPlayerAccount(playerAccount: PlayerAccount)
+    suspend fun updateAccount(playerAccount: PlayerAccount)
 
     /* Crystals */
     suspend fun addCrystals(amount: Int)
@@ -25,6 +26,7 @@ interface PlayerAccountRepository {
 
     /* Owned Cats */
     suspend fun insertOwnedCat(ownedCat: OwnedCat)
+    suspend fun insertOwnedCats(ownedCats: List<OwnedCat>)
     suspend fun updateOwnedCat(ownedCat: OwnedCat)
     suspend fun deleteOwnedCat(ownedCat: OwnedCat)
 

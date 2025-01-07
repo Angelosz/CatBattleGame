@@ -11,8 +11,11 @@ import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 class OfflineEnemyCatRepository(val dao: EnemyCatDao): EnemyCatRepository {
     override suspend fun insertEnemyCat(enemyCat: EnemyCat): Long = dao.insertEnemyCat(enemyCat)
+    override suspend fun insertEnemyCats(enemyCats: List<EnemyCat>) = dao.insertEnemyCats(enemyCats)
     override suspend fun insertEnemyAbility(enemyAbility: EnemyAbility): Long = dao.insertEnemyAbility(enemyAbility)
+    override suspend fun insertEnemyAbilities(enemyAbilities: List<EnemyAbility>) = dao.insertEnemyAbilities(enemyAbilities)
     override suspend fun insertChapterEnemy(chapterEnemy: ChapterEnemy): Long = dao.insertChapterEnemy(chapterEnemy)
+    override suspend fun insertChapterEnemies(chapterEnemies: List<ChapterEnemy>) = dao.insertChapterEnemies(chapterEnemies)
     override suspend fun getEnemyCatById(id: Long): EnemyCat = dao.getEnemyCatById(id)
     override suspend fun getEnemyCatsByCampaignChapterId(campaignChapterId: Long): List<EnemyCat> = dao.getEnemyCatsByCampaignChapterId(campaignChapterId)
     override suspend fun getSimplifiedEnemiesByCampaignChapterId(campaignChapterId: Long): List<SimplifiedEnemyCatData> = dao.getSimplifiedEnemiesByCampaignChapterId(campaignChapterId)

@@ -2,35 +2,124 @@ package angelosz.catbattlegame.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.database.initialdata.AbilitiesInitialData
+import angelosz.catbattlegame.data.database.initialdata.CampaignsInitialData
+import angelosz.catbattlegame.data.database.initialdata.CatsInitialData
+import angelosz.catbattlegame.data.database.initialdata.ChaptersInitialData
+import angelosz.catbattlegame.data.database.initialdata.EnemyCatsInitialData
+import angelosz.catbattlegame.data.database.initialdata.PlayerInitialData
+import angelosz.catbattlegame.data.entities.PlayerAccount
+import angelosz.catbattlegame.data.entities.PlayerTeam
+import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.repository.AbilityRepository
+import angelosz.catbattlegame.data.repository.BattleChestRepository
+import angelosz.catbattlegame.data.repository.CampaignRepository
+import angelosz.catbattlegame.data.repository.CatRepository
+import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.CampaignState
+import angelosz.catbattlegame.domain.enums.ScreenState
+import angelosz.catbattlegame.utils.GameConstants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel(private val playerAccountRepository: PlayerAccountRepository): ViewModel() {
+class HomeScreenViewModel(
+    private val playerAccountRepository: PlayerAccountRepository,
+    private val campaignRepository: CampaignRepository,
+    private val catRepository: CatRepository,
+    private val abilityRepository: AbilityRepository,
+    private val enemyCatRepository: EnemyCatRepository,
+    private val battleChestRepository: BattleChestRepository
+    ): ViewModel() {
 
     private val _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(HomeScreenUiState())
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
-    init {
-        fetchPlayerData()
-    }
+    fun setup() {
+        _uiState.update { it.copy(screenState = ScreenState.LOADING) }
 
-    private fun fetchPlayerData() {
-        viewModelScope.launch{
-            val playerAccount = playerAccountRepository.getPlayerAccountAsFlow()
-            playerAccount.collect{ data ->
-                if(data != null)
-                    _uiState.update {
-                            it.copy(
-                                gold = data.gold,
-                                crystals = data.crystals
-                            )
-                    }
+        viewModelScope.launch {
+            try {
+                val playerAccount = initializePlayerAccount()
+
+                val isDifferentVersion = playerAccount.gameVersion != GameConstants.GAME_VERSION
+                if(isDifferentVersion){
+                    repopulateDatabase()
+
+                    playerAccountRepository.updateAccount(
+                        playerAccount.copy(
+                            gameVersion = GameConstants.GAME_VERSION
+                        )
+                    )
+                }
+
+                _uiState.update { it.copy(
+                    gold = playerAccount.gold,
+                    crystals = playerAccount.crystals,
+                    screenState = ScreenState.SUCCESS
+                ) }
+
+                setupPlayerDataCollector()
+            } catch (e: Exception){
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
         }
+        
     }
 
+    private suspend fun repopulateDatabase() {
+        val abilityInitialData = AbilitiesInitialData()
+        val enemyCatInitialData = EnemyCatsInitialData()
+        val chaptersInitialData = ChaptersInitialData()
+        
+        catRepository.insertCats(CatsInitialData().cats)
+        abilityRepository.insertAbilities(abilityInitialData.abilities)
+        abilityRepository.insertCatAbilityCrossRefs(abilityInitialData.getCatAbilitiesCrossRef())
+        enemyCatRepository.insertEnemyCats(enemyCatInitialData.enemyCats)
+        enemyCatRepository.insertEnemyAbilities(enemyCatInitialData.enemyAbilities)
+        enemyCatRepository.insertChapterEnemies(chaptersInitialData.chapterEnemies)
+        campaignRepository.insertCampaigns(CampaignsInitialData().campaigns)
+        campaignRepository.insertCampaignChapters(chaptersInitialData.campaignChapters)
+        campaignRepository.insertChapterRewards(chaptersInitialData.chapterRewards)
+    }
+
+    private suspend fun initializePlayerAccount(): PlayerAccount {
+        var playerAccount = playerAccountRepository.getPlayerAccount()
+        if(playerAccount == null){ 
+            playerAccount = PlayerAccount(gameVersion = GameConstants.GAME_VERSION)
+            val ownedCats = PlayerInitialData().ownedCats
+            val teamId = 1L
+            playerAccountRepository.insertPlayerAccount(playerAccount)
+            
+            playerAccountRepository.insertOwnedCats(ownedCats)
+            playerAccountRepository.insertPlayerTeam(PlayerTeam(id = teamId, name = "Team 1"))
+            ownedCats.forEachIndexed{ index, ownedCat ->
+                playerAccountRepository.addCatToTeam(
+                    PlayerTeamOwnedCat(teamId.toInt(), ownedCat.catId, index)
+                )
+            }
+
+            campaignRepository.updateCampaignState(1, CampaignState.UNLOCKED)
+            campaignRepository.updateChapterState(1, CampaignState.UNLOCKED)
+            repopulateDatabase()
+        }
+        
+        return playerAccount
+    }
+
+    private suspend fun setupPlayerDataCollector() {
+        val playerAccount = playerAccountRepository.getPlayerAccountAsFlow()
+        playerAccount.collect{ data ->
+            if(data != null)
+                _uiState.update {
+                    it.copy(
+                        gold = data.gold,
+                        crystals = data.crystals
+                    )
+                }
+        }
+    }
 }

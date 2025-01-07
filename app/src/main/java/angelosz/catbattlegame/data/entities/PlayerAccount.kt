@@ -12,5 +12,6 @@ data class PlayerAccount (
     val gold: Int = 1000,
     val crystals: Int = 0,
     val lastLogin: Long = System.currentTimeMillis(),
-    val lastDailyReward: Long = System.currentTimeMillis()
+    val lastDailyReward: Long = System.currentTimeMillis(),
+    val gameVersion: Int = 0
 )

@@ -7,9 +7,9 @@ import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
-import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.ui.armory.data.ArmoryTeam
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -170,12 +170,16 @@ class PlayerRepositoryForArmoryTeamsTest: PlayerAccountRepository {
         return flowOf<PlayerAccount?>(null)
     }
     override suspend fun getPlayerAccount(): PlayerAccount? = null
-    override suspend fun createOrUpdateAccount(playerAccount: PlayerAccount) {}
+    override suspend fun insertPlayerAccount(playerAccount: PlayerAccount) {}
+    override suspend fun updateAccount(playerAccount: PlayerAccount) {}
+
     override suspend fun addCrystals(amount: Int) {}
     override suspend fun reduceCrystals(amount: Int) {}
     override suspend fun addGold(amount: Int) {}
     override suspend fun reduceGold(amount: Int) {}
     override suspend fun insertOwnedCat(ownedCat: OwnedCat) {}
+    override suspend fun insertOwnedCats(ownedCats: List<OwnedCat>) {}
+
     override suspend fun updateOwnedCat(ownedCat: OwnedCat) {}
     override suspend fun deleteOwnedCat(ownedCat: OwnedCat) {}
     override suspend fun getAllOwnedCats(): List<OwnedCat> = emptyList()

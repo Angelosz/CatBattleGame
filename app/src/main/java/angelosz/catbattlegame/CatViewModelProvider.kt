@@ -22,7 +22,12 @@ object CatViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             HomeScreenViewModel(
-                getCatBattleApplication().container.playerRepository
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.campaignRepository,
+                getCatBattleApplication().container.catRepository,
+                getCatBattleApplication().container.abilityRepository,
+                getCatBattleApplication().container.enemyCatRepository,
+                getCatBattleApplication().container.battleChestRepository
             )
         }
 

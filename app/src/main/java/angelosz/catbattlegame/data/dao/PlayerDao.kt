@@ -11,20 +11,26 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
-import angelosz.catbattlegame.ui.combat.BasicCatData
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
+import angelosz.catbattlegame.ui.combat.BasicCatData
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlayerDao {
     /* Player Account */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdateAccount(playerAccount: PlayerAccount)
+    suspend fun insertPlayerAccount(playerAccount: PlayerAccount)
+    @Update
+    suspend fun updateAccount(playerAccount: PlayerAccount)
     @Query("Select * from player_account Limit 1")
     fun getPlayerAccountAsFlow(): Flow<PlayerAccount?>
 
     @Query("Select * from player_account Limit 1")
     suspend fun getPlayerAccount(): PlayerAccount?
+
+    @Query("Select gameVersion from player_account Limit 1")
+    suspend fun getGameVersion(): Int
+
 
     /* Crystals */
     @Query("Update player_account set crystals = crystals + :amount")
@@ -44,6 +50,8 @@ interface PlayerDao {
     /* Owned Cats */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOwnedCat(ownedCat: OwnedCat)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOwnedCats(ownedCats: List<OwnedCat>)
     @Update
     suspend fun updateOwnedCat(ownedCat: OwnedCat)
     @Delete

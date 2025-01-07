@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.FailureCard
+import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.RoundedImageButton
 
 
@@ -35,93 +39,125 @@ fun HomeScreen(
     onPlayButtonClick: () -> Unit,
     navigateToArchive: () -> Unit,
     navigateToCollections: () -> Unit,
+    viewModel:HomeScreenViewModel = viewModel(factory = CatViewModelProvider.Factory)
 ) {
     val isPortraitView = windowSize != WindowWidthSizeClass.Expanded
-    val background = if(isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape
 
-    val viewModel:HomeScreenViewModel = viewModel(factory = CatViewModelProvider.Factory)
     val uiState by viewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier
-        .fillMaxSize(),
-    ){
-        BackgroundImage(background)
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-                Image(
-                    painter = painterResource(R.mipmap.ic_launcher_foreground),
-                    contentDescription = "",
-                    modifier = Modifier.size(256.dp).padding(bottom = 64.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape)
+        when (uiState.screenState) {
+            ScreenState.SUCCESS -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(R.mipmap.ic_launcher_foreground),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(256.dp)
+                            .padding(bottom = 64.dp)
+                    )
+                    HomeButton(
+                        modifier = Modifier.padding(8.dp),
+                        image = R.drawable.button_play,
+                        contentDescription = "Play button",
+                        onButtonClicked = onPlayButtonClick
+                    )
+                }
+                HomeTopBar(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .systemBarsPadding(),
+                    gold = uiState.gold,
+                    crystals = uiState.crystals
                 )
-                HomeButtons(
-                    onPlayButtonClick = onPlayButtonClick
-                )
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .systemBarsPadding()
-        ){
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(start = 16.dp)
-            ){
-                Image(
-                    painter = painterResource(R.drawable.goldcoins_128),
-                    contentDescription = "Gold coins",
-                    modifier = Modifier.size(32.dp)
-                )
-                Text(
-                    text = "${uiState.gold}",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Image(
-                    painter = painterResource(R.drawable.crystals_128),
-                    contentDescription = "Crystals",
-                    modifier = Modifier.size(32.dp)
-                )
-                Text(
-                    text = "${uiState.crystals}",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = Color.White
+                HomeSideButtons(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(16.dp),
+                    navigateToCollections = navigateToCollections,
+                    navigateToArchive = navigateToArchive
                 )
             }
-        }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = 8.dp),
-        ) {
-            Column(){
-                RoundedImageButton(
-                    onClick = navigateToCollections,
-                    innerImage = R.drawable.collections_button_256,
-                )
-                RoundedImageButton(
-                    onClick = navigateToArchive,
-                    innerImage = R.drawable.archive_button_256,
-                )
+
+            ScreenState.LOADING -> LoadingCard()
+            ScreenState.FAILURE -> FailureCard({})
+            ScreenState.INITIALIZING -> {
+                LoadingCard()
+                LaunchedEffect(viewModel) {
+                    viewModel.setup()
+                }
             }
         }
     }
 }
 
 @Composable
-private fun HomeButtons(
-    onPlayButtonClick: () -> Unit
+fun HomeTopBar(
+    modifier: Modifier = Modifier,
+    gold: Int,
+    crystals: Int
+){
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.padding(start = 16.dp)
+        ) {
+            Image(
+                painter = painterResource(R.drawable.goldcoins_128),
+                contentDescription = "Gold coins",
+                modifier = Modifier.size(32.dp)
+            )
+            Text(
+                text = "$gold",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Image(
+                painter = painterResource(R.drawable.crystals_128),
+                contentDescription = "Crystals",
+                modifier = Modifier.size(32.dp)
+            )
+            Text(
+                text = "$crystals",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color.White
+            )
+        }
+    }
+}
+
+@Composable
+fun HomeSideButtons(
+    modifier: Modifier,
+    navigateToCollections: () -> Unit,
+    navigateToArchive: () -> Unit,
 ) {
-    HomeButton(
-        modifier = Modifier.padding(8.dp),
-        image = R.drawable.button_play,
-        contentDescription = "Play button",
-        onButtonClicked = onPlayButtonClick
-    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
+        Column() {
+            RoundedImageButton(
+                onClick = navigateToCollections,
+                innerImage = R.drawable.collections_button_256,
+            )
+            RoundedImageButton(
+                onClick = navigateToArchive,
+                innerImage = R.drawable.archive_button_256,
+            )
+        }
+    }
 }
