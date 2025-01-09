@@ -1,5 +1,8 @@
 package angelosz.catbattlegame.ui.home
 
+import android.util.Log
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -18,10 +22,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -31,7 +38,12 @@ import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.RoundedImageButton
-import angelosz.catbattlegame.ui.home.notifications.HomeNotification
+import angelosz.catbattlegame.ui.home.notifications.BattleChestNotification
+import angelosz.catbattlegame.ui.home.notifications.CatEvolutionNotification
+import angelosz.catbattlegame.ui.home.notifications.CurrencyRewardNotification
+import angelosz.catbattlegame.ui.home.notifications.LevelUpNotification
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -49,13 +61,15 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape)
         when (uiState.screenState) {
             ScreenState.SUCCESS -> {
                 if(uiState.notifications.isNotEmpty()){
-                    ManageNotifications(uiState.notifications, onNextClicked = {})
+                    BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait_blurry else R.drawable.homescreen_landscape_blurry)
+                    ManageNotification(viewModel, uiState)
                 } else {
+                    BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape)
                     HomeScreenContent(onPlayButtonClick, uiState, navigateToCollections, navigateToArchive)
                 }
             }
@@ -73,8 +87,42 @@ fun HomeScreen(
 }
 
 @Composable
-fun ManageNotifications(notifications: List<HomeNotification>, onNextClicked: () -> Unit) {
-    TODO("Not yet implemented")
+fun ManageNotification(viewModel: HomeScreenViewModel, uiState: HomeScreenUiState) {
+    val lootBoxAnimationOffsetY = remember { Animatable(0f) }
+    val coroutineScope = rememberCoroutineScope()
+    val notification = uiState.notifications.first()
+    Box(
+        modifier = Modifier.offset { IntOffset(0, lootBoxAnimationOffsetY.value.toInt()) }
+    ){
+        notification.display(
+            onAccept = {
+                coroutineScope.launch {
+                    try {
+                        lootBoxAnimationOffsetY.animateTo(
+                            2000f,
+                            animationSpec = tween(500)
+                        )
+                        when(notification){
+                            is LevelUpNotification -> {}
+                            is CatEvolutionNotification -> {}
+                            is BattleChestNotification -> { viewModel.addBattleChestToAccount(notification.rarity, notification.battleChestType) }
+                            is CurrencyRewardNotification -> { viewModel.addCurrencyToAccount(notification.amount, notification.currencyType) }
+                        }
+                        viewModel.closeNotification()
+                        delay(100)
+                        lootBoxAnimationOffsetY.snapTo(-2000f)
+                        lootBoxAnimationOffsetY.animateTo(
+                            0f,
+                            animationSpec = tween(500)
+                        )
+                    } catch (e: Exception) {
+                        Log.d("CatBattle: BattleChest", e.message.toString())
+                    }
+                }
+
+            }
+        )()
+    }
 }
 
 @Composable

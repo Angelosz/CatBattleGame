@@ -61,7 +61,8 @@ object CatViewModelProvider {
                 getCatBattleApplication().container.campaignRepository,
                 getCatBattleApplication().container.playerRepository,
                 getCatBattleApplication().container.battleChestRepository,
-                getCatBattleApplication().container.enemyCatRepository
+                getCatBattleApplication().container.catRepository,
+                getCatBattleApplication().container.enemyCatRepository,
             )
         }
 

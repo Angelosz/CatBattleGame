@@ -1,55 +1,312 @@
 package angelosz.catbattlegame.ui.home.notifications
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
+import angelosz.catbattlegame.domain.enums.RewardType
+import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.RoundedImageButton
+import angelosz.catbattlegame.ui.components.RoundedTextButton
+import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
-sealed class HomeNotification(open val id: Long){
-    abstract fun Display(): @Composable () -> Unit
+sealed class HomeNotification(open val id: Long, open val type: NotificationType){
+    abstract fun display(onAccept: () -> Unit): @Composable() (() -> Unit)
 }
 
 class LevelUpNotification(
-    override val id: Long,
+    override val id: Long = 0,
     val name: String,
     @DrawableRes val image: Int,
-    val level: Int
-): HomeNotification(id){
-    override fun Display(): @Composable () -> Unit {
-        TODO("Not yet implemented")
+    val level: Int,
+    val notificationText: String
+): HomeNotification(id, type = NotificationType.LEVEL_UP){
+    override fun display(onAccept: () -> Unit): @Composable() (() -> Unit) = {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ){
+            Card(
+                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
+            ) {
+                Text(
+                    text = "$name leveled up!",
+                    modifier = Modifier.padding(16.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            Image(
+                painter = painterResource(image),
+                contentDescription = name,
+                modifier = Modifier.size(256.dp).clickable(onClick = { onAccept() })
+            )
+            Box(
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.iconflash_256),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(128.dp)
+                        .align(Alignment.BottomCenter)
+                )
+                RoundedTextButton(
+                    size = 64,
+                    text = "$level",
+                    textStyle = MaterialTheme.typography.displayMedium,
+                    onClick = { onAccept() }
+                )
+            }
+        }
     }
 }
 
 class CatEvolutionNotification(
-    override val id: Long,
+    override val id: Long = 0,
     val name: String,
     @DrawableRes val image: Int,
     val evolutionName: String,
     @DrawableRes val evolutionImage: Int,
-): HomeNotification(id){
-    override fun Display(): @Composable () -> Unit {
-        TODO("Not yet implemented")
+    val notificationText: String
+): HomeNotification(id, type = NotificationType.CAT_EVOLUTION){
+    override fun display(onAccept: () -> Unit): @Composable() (() -> Unit) = {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.clickable(onClick = { onAccept() })
+        ){
+            Card(
+                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
+            ) {
+                Text(
+                    text = "$name evolved!",
+                    modifier = Modifier.padding(8.dp).width(256.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
+            Image(
+                painter = painterResource(evolutionImage),
+                contentDescription = evolutionName,
+                modifier = Modifier.size(192.dp)
+            )
+            Card(
+                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+            ) {
+                Text(
+                    text = evolutionName +
+                            if(notificationText.isNotEmpty()) "\n$notificationText"
+                            else "",
+                    modifier = Modifier.padding(8.dp).width(256.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }
     }
 }
 
 class BattleChestNotification(
-    override val id: Long,
+    override val id: Long = 0,
     val rarity: CatRarity,
-    val type: BattleChestType,
-    val text: String,
-): HomeNotification(id){
-    override fun Display(): @Composable () -> Unit {
-        TODO("Not yet implemented")
+    val battleChestType: BattleChestType,
+    val notificationText: String,
+): HomeNotification(id, type = NotificationType.BATTLE_CHEST_REWARD){
+    override fun display(onAccept: () -> Unit): @Composable() (() -> Unit) = {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
+            ) {
+                Text(
+                    text = "You have received a new Package!",
+                    modifier = Modifier.padding(8.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+
+            Image(
+                painter = painterResource(R.drawable.battlechest_512),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(32.dp)
+                    .clickable(onClick = { onAccept() })
+            )
+            if(notificationText.isNotEmpty())
+                Card(
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                ) {
+                    Text(
+                        text = notificationText,
+                        modifier = Modifier.padding(8.dp),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+        }
     }
 }
 
 class CurrencyRewardNotification(
-    override val id: Long,
-    @DrawableRes val image: Int,
+    override val id: Long = 0,
     val amount: Int,
+    val currencyType: RewardType,
     val notificationText: String
-): HomeNotification(id){
-    override fun Display(): @Composable () -> Unit {
-        TODO("Not yet implemented")
+): HomeNotification(id, type = NotificationType.CURRENCY_REWARD){
+    override fun display(onAccept: () -> Unit): @Composable () -> Unit = {
+        Column(
+            modifier = Modifier.clickable(onClick = {  onAccept() }),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
+            ) {
+                Text(
+                    text = "You got $amount ${
+                        when(currencyType){
+                            RewardType.GOLD -> "gold"
+                            RewardType.CRYSTAL -> "crystals"
+                            else -> "gold"
+                        }
+                    }!",
+                    modifier = Modifier.padding(16.dp),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+
+            RoundedImageButton(
+                onClick = { onAccept() },
+                innerImage =
+                    when(currencyType){
+                        RewardType.GOLD -> R.drawable.goldcoins_128
+                        RewardType.CRYSTAL -> R.drawable.crystals_128
+                        else -> R.drawable.goldcoins_128
+                    },
+                innerImageSize = 128,
+                outerImage = R.drawable.iconflash_256,
+                outerImageSize = 192,
+                modifier = Modifier.padding(32.dp)
+            )
+
+            if(notificationText.isNotEmpty()){
+                Card(
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                ) {
+                    Text(
+                        text = notificationText,
+                        modifier = Modifier.padding(8.dp),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun CurrencyPreview(){
+    CatBattleGameTheme() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            BackgroundImage(R.drawable.homescreen_portrait_blurry)
+            CurrencyRewardNotification(
+                id = 0,
+                amount = 10,
+                currencyType = RewardType.CRYSTAL,
+                notificationText = "Daily Reward"
+            ).display({})()
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun LevelUpPreview(){
+    CatBattleGameTheme() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            BackgroundImage(R.drawable.homescreen_portrait_blurry)
+            LevelUpNotification(
+                id = 0,
+                name = "Bob, the Swordsman",
+                image = R.drawable.kitten_swordman_300x300,
+                level = 3,
+                notificationText = "Level Up"
+            ).display({})()
+
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun BattleChestPreview(){
+    CatBattleGameTheme() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            BackgroundImage(R.drawable.homescreen_portrait_blurry)
+            BattleChestNotification(
+                id = 0,
+                rarity = CatRarity.KITTEN,
+                battleChestType = BattleChestType.NORMAL,
+                notificationText = "Weekly Reward"
+            ).display({})()
+
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun EvolutionPreview(){
+    CatBattleGameTheme() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            BackgroundImage(R.drawable.homescreen_portrait_blurry)
+            CatEvolutionNotification(
+                id = 0,
+                name = "Bob, the Kitten Swordsman",
+                image = R.drawable.kitten_swordman_300x300,
+                evolutionName = "Bob, the Teen Swordsman",
+                evolutionImage = R.drawable.teen_swordman_300x300,
+                notificationText = "was already in your armory, you gained 40 crystals instead."
+            ).display({})()
+
+        }
     }
 }

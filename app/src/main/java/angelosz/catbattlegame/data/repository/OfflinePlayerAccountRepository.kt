@@ -85,7 +85,8 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>) = dao.discoverEnemies(enemies)
 
     /* Notifications */
-    override suspend fun getAllNotifications(): Flow<List<NotificationsEntity>> = dao.getAllNotifications()
+    override suspend fun getAllNotificationsAsFlow(): Flow<List<NotificationsEntity>> = dao.getAllNotificationsFlow()
+    override suspend fun getAllNotifications(): List<NotificationsEntity> = dao.getAllNotifications()
     override suspend fun deleteNotification(notificationId: Long, type: NotificationType) {
         when(type) {
             NotificationType.LEVEL_UP -> dao.deleteCatNotification(notificationId)
@@ -102,6 +103,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
                 catName = notification.name,
                 catImage = notification.image,
                 level = notification.level,
+                notificationText = notification.notificationText,
                 notificationType = NotificationType.LEVEL_UP
             )
         )
@@ -114,6 +116,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
                 catImage = notification.image,
                 evolutionName = notification.evolutionName,
                 evolutionImage = notification.evolutionImage,
+                notificationText = notification.notificationText,
                 notificationType = NotificationType.CAT_EVOLUTION
             )
         )
@@ -126,7 +129,8 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
             name = catNotificationEntity.catName,
             image = catNotificationEntity.catImage,
             evolutionName = catNotificationEntity.evolutionName,
-            evolutionImage = catNotificationEntity.evolutionImage
+            evolutionImage = catNotificationEntity.evolutionImage,
+            notificationText = catNotificationEntity.notificationText
         )
     }
     override suspend fun getLevelUpNotification(notificationId: Long): LevelUpNotification {
@@ -135,7 +139,8 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
             id = notification.id,
             name = notification.catName,
             image = notification.catImage,
-            level = notification.level
+            level = notification.level,
+            notificationText = notification.notificationText
         )
     }
 
@@ -143,7 +148,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
         val id = dao.insertBattleChestNotification(
             BattleChestNotificationEntity(
                 battleChestRarity = notification.rarity,
-                battleChestType = notification.type,
+                battleChestType = notification.battleChestType,
                 notificationType = NotificationType.BATTLE_CHEST_REWARD
             )
         )
@@ -155,15 +160,15 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
         return BattleChestNotification(
             id = notification.id,
             rarity = notification.battleChestRarity,
-            type = notification.battleChestType,
-            text = notification.notificationText
+            battleChestType = notification.battleChestType,
+            notificationText = notification.notificationText
         )
     }
 
     override suspend fun insertCurrencyNotification(notification: CurrencyRewardNotification) {
         val id = dao.insertCurrencyNotification(
             CurrencyNotificationEntity(
-                currencyImage = notification.image,
+                type = notification.currencyType,
                 amount = notification.amount,
                 notificationText = notification.notificationText,
                 notificationType = NotificationType.CURRENCY_REWARD
@@ -176,7 +181,7 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
         val notification = dao.getCurrencyNotification(notificationId)
         return CurrencyRewardNotification(
             id = notification.id,
-            image = notification.currencyImage,
+            currencyType = notification.type,
             amount = notification.amount,
             notificationText = notification.notificationText
         )

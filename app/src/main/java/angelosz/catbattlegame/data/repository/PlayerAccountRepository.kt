@@ -60,7 +60,8 @@ interface PlayerAccountRepository {
     suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>)
 
     /* Notifications */
-    suspend fun getAllNotifications(): Flow<List<NotificationsEntity>>
+    suspend fun getAllNotificationsAsFlow(): Flow<List<NotificationsEntity>>
+    suspend fun getAllNotifications(): List<NotificationsEntity>
     suspend fun deleteNotification(notificationId: Long, type: NotificationType)
 
     /* Cat Notifications */

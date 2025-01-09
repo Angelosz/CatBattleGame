@@ -136,10 +136,12 @@ interface PlayerDao {
     /* Notifications */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotification(notification: NotificationsEntity): Long
+    @Query("Select * from notifications")
+    suspend fun getAllNotifications(): List<NotificationsEntity>
     @Query("Delete from notifications where notificationId = :id")
     suspend fun deleteNotification(id: Long)
     @Query("SELECT * from notifications")
-    fun getAllNotifications(): Flow<List<NotificationsEntity>>
+    fun getAllNotificationsFlow(): Flow<List<NotificationsEntity>>
 
     /* Cat Notifications */
     @Insert(onConflict = OnConflictStrategy.REPLACE)

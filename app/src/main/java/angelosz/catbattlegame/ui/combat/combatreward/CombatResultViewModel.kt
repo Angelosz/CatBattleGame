@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.ChapterReward
 import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
+import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.repository.BattleChestRepository
 import angelosz.catbattlegame.data.repository.CampaignRepository
+import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.BattleChestType
@@ -18,7 +20,13 @@ import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.campaign.data.Campaign
 import angelosz.catbattlegame.ui.campaign.data.Chapter
 import angelosz.catbattlegame.ui.combat.BasicCatData
+import angelosz.catbattlegame.ui.home.notifications.CatEvolutionNotification
+import angelosz.catbattlegame.ui.home.notifications.LevelUpNotification
+import angelosz.catbattlegame.utils.GameConstants.ADULT_DISENCHANT_VALUE
+import angelosz.catbattlegame.utils.GameConstants.ELDER_DISENCHANT_VALUE
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
+import angelosz.catbattlegame.utils.GameConstants.KITTEN_DISENCHANT_VALUE
+import angelosz.catbattlegame.utils.GameConstants.TEEN_DISENCHANT_VALUE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -29,6 +37,7 @@ class CombatResultViewModel(
     private val campaignRepository: CampaignRepository,
     private val playerAccountRepository: PlayerAccountRepository,
     private val battleChestRepository: BattleChestRepository,
+    private val catRepository: CatRepository,
     private val enemyCatRepository: EnemyCatRepository
 ): ViewModel() {
     private val _uiState: MutableStateFlow<CombatResultUiState> = MutableStateFlow(
@@ -120,15 +129,62 @@ class CombatResultViewModel(
     private suspend fun addCatsExperience(team: List<BasicCatData>, experience: Int) {
         team.forEach{ cat ->
             val ownedCat = playerAccountRepository.getOwnedCatByCatId(cat.catId)
+            val baseCat = catRepository.getCatById(cat.catId)
             val totalExperience = ownedCat.experience + experience
 
             if(totalExperience >= EXPERIENCE_PER_LEVEL){
+                val newLevel = ownedCat.level + 1
                 playerAccountRepository.updateOwnedCat(
                     ownedCat.copy(
                         experience = totalExperience - EXPERIENCE_PER_LEVEL,
-                        level = ownedCat.level + 1
+                        level = newLevel,
+                        healthModifier = ownedCat.healthModifier + (baseCat.baseHealth * 0.2).toInt(),
+                        attackModifier = ownedCat.attackModifier + (baseCat.baseAttack * 0.15).toInt(),
+                        defenseModifier = ownedCat.defenseModifier + (baseCat.baseDefense * 0.1).toInt(),
                     )
                 )
+                playerAccountRepository.insertLevelUpNotification(
+                    LevelUpNotification(
+                        name = baseCat.name,
+                        image = baseCat.image,
+                        level = newLevel,
+                        notificationText = ""
+                    )
+                )
+                if(newLevel >= baseCat.evolutionLevel){
+                    val evolutionCatId = baseCat.nextEvolutionId
+                    if(evolutionCatId != null){
+                        val evolutionCat = catRepository.getCatById(evolutionCatId)
+                        var message = ""
+                        if(playerAccountRepository.ownsCat(evolutionCatId)){
+                            val crystalValue = when(baseCat.rarity){
+                                CatRarity.KITTEN -> KITTEN_DISENCHANT_VALUE
+                                CatRarity.TEEN -> TEEN_DISENCHANT_VALUE
+                                CatRarity.ADULT -> ADULT_DISENCHANT_VALUE
+                                CatRarity.ELDER -> ELDER_DISENCHANT_VALUE
+                            }
+                            playerAccountRepository.addCrystals(crystalValue)
+                            message = "is already in your armory, you gained $crystalValue crystals instead!"
+                        } else {
+                            playerAccountRepository.insertOwnedCat(
+                                OwnedCat(
+                                    catId = evolutionCatId,
+                                    level = 1,
+                                    experience = 0
+                                )
+                            )
+                        }
+                        playerAccountRepository.insertEvolutionNotification(
+                            CatEvolutionNotification(
+                                name = baseCat.name,
+                                image = baseCat.image,
+                                evolutionName = evolutionCat.name,
+                                evolutionImage = evolutionCat.image,
+                                notificationText = message
+                            )
+                        )
+                    }
+                }
             } else {
                 playerAccountRepository.updateOwnedCat(
                     ownedCat.copy(
