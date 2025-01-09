@@ -11,6 +11,10 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.notifications.BattleChestNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.CatNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.CurrencyNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import angelosz.catbattlegame.ui.combat.BasicCatData
 import kotlinx.coroutines.flow.Flow
@@ -24,25 +28,20 @@ interface PlayerDao {
     suspend fun updateAccount(playerAccount: PlayerAccount)
     @Query("Select * from player_account Limit 1")
     fun getPlayerAccountAsFlow(): Flow<PlayerAccount?>
-
     @Query("Select * from player_account Limit 1")
     suspend fun getPlayerAccount(): PlayerAccount?
-
     @Query("Select gameVersion from player_account Limit 1")
     suspend fun getGameVersion(): Int
-
 
     /* Crystals */
     @Query("Update player_account set crystals = crystals + :amount")
     suspend fun addCrystals(amount: Int)
-
     @Query("Update player_account set crystals = crystals - :amount")
     suspend fun reduceCrystals(amount: Int)
 
     /* Gold */
     @Query("Update player_account set gold = gold + :amount")
     suspend fun addGold(amount: Int)
-
     @Query("Update player_account set gold = gold - :amount")
     suspend fun reduceGold(amount: Int)
 
@@ -133,4 +132,37 @@ interface PlayerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>)
+
+    /* Notifications */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNotification(notification: NotificationsEntity): Long
+    @Query("Delete from notifications where notificationId = :id")
+    suspend fun deleteNotification(id: Long)
+    @Query("SELECT * from notifications")
+    fun getAllNotifications(): Flow<List<NotificationsEntity>>
+
+    /* Cat Notifications */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCatNotification(notification: CatNotificationEntity): Long
+    @Query("Delete from cat_notifications where id = :id")
+    suspend fun deleteCatNotification(id: Long)
+    @Query("SELECT * from cat_notifications where id = :notificationId")
+    suspend fun getCatNotification(notificationId: Long): CatNotificationEntity
+
+    /* Battle Chest Notifications */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBattleChestNotification(notification: BattleChestNotificationEntity): Long
+    @Query("Delete from battle_chest_notifications where id = :id")
+    suspend fun deleteBattleChestNotification(id: Long)
+    @Query("SELECT * from battle_chest_notifications where id = :notificationId")
+    suspend fun getBattleChestNotification(notificationId: Long): BattleChestNotificationEntity
+
+    /* Currency Notifications */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCurrencyNotification(notification: CurrencyNotificationEntity): Long
+    @Query("Delete from currency_notifications where id = :id")
+    suspend fun deleteCurrencyNotification(id: Long)
+    @Query("SELECT * from currency_notifications where id = :notificationId")
+    suspend fun getCurrencyNotification(notificationId: Long): CurrencyNotificationEntity
+
 }

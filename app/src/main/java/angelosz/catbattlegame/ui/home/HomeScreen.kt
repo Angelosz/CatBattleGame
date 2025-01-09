@@ -31,6 +31,7 @@ import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.RoundedImageButton
+import angelosz.catbattlegame.ui.home.notifications.HomeNotification
 
 
 @Composable
@@ -52,39 +53,11 @@ fun HomeScreen(
         BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape)
         when (uiState.screenState) {
             ScreenState.SUCCESS -> {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(R.mipmap.ic_launcher_foreground),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(256.dp)
-                            .padding(bottom = 64.dp)
-                    )
-                    HomeButton(
-                        modifier = Modifier.padding(8.dp),
-                        image = R.drawable.button_play,
-                        contentDescription = "Play button",
-                        onButtonClicked = onPlayButtonClick
-                    )
+                if(uiState.notifications.isNotEmpty()){
+                    ManageNotifications(uiState.notifications, onNextClicked = {})
+                } else {
+                    HomeScreenContent(onPlayButtonClick, uiState, navigateToCollections, navigateToArchive)
                 }
-                HomeTopBar(
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .systemBarsPadding(),
-                    gold = uiState.gold,
-                    crystals = uiState.crystals
-                )
-                HomeSideButtons(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(16.dp),
-                    navigateToCollections = navigateToCollections,
-                    navigateToArchive = navigateToArchive
-                )
             }
 
             ScreenState.LOADING -> LoadingCard()
@@ -96,6 +69,59 @@ fun HomeScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun ManageNotifications(notifications: List<HomeNotification>, onNextClicked: () -> Unit) {
+    TODO("Not yet implemented")
+}
+
+@Composable
+private fun HomeScreenContent(
+    onPlayButtonClick: () -> Unit,
+    uiState: HomeScreenUiState,
+    navigateToCollections: () -> Unit,
+    navigateToArchive: () -> Unit,
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Image(
+                painter = painterResource(R.mipmap.ic_launcher_foreground),
+                contentDescription = "",
+                modifier = Modifier
+                    .size(256.dp)
+                    .padding(bottom = 64.dp)
+            )
+            HomeButton(
+                modifier = Modifier.padding(8.dp),
+                image = R.drawable.button_play,
+                contentDescription = "Play button",
+                onButtonClicked = onPlayButtonClick
+            )
+        }
+
+        HomeTopBar(
+            modifier = Modifier.Companion
+                .align(Alignment.TopStart)
+                .systemBarsPadding(),
+            gold = uiState.gold,
+            crystals = uiState.crystals
+        )
+        HomeSideButtons(
+            modifier = Modifier.Companion
+                .align(Alignment.CenterEnd)
+                .padding(16.dp),
+            navigateToCollections = navigateToCollections,
+            navigateToArchive = navigateToArchive
+        )
     }
 }
 

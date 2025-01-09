@@ -5,8 +5,14 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import angelosz.catbattlegame.ui.combat.BasicCatData
+import angelosz.catbattlegame.ui.home.notifications.BattleChestNotification
+import angelosz.catbattlegame.ui.home.notifications.CatEvolutionNotification
+import angelosz.catbattlegame.ui.home.notifications.CurrencyRewardNotification
+import angelosz.catbattlegame.ui.home.notifications.LevelUpNotification
+import angelosz.catbattlegame.ui.home.notifications.NotificationType
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerAccountRepository {
@@ -52,4 +58,22 @@ interface PlayerAccountRepository {
     suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat)
     suspend fun getTeamData(teamId: Long): List<BasicCatData>
     suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>)
+
+    /* Notifications */
+    suspend fun getAllNotifications(): Flow<List<NotificationsEntity>>
+    suspend fun deleteNotification(notificationId: Long, type: NotificationType)
+
+    /* Cat Notifications */
+    suspend fun insertLevelUpNotification(notification: LevelUpNotification)
+    suspend fun insertEvolutionNotification(notification: CatEvolutionNotification)
+    suspend fun getLevelUpNotification(notificationId: Long): LevelUpNotification
+    suspend fun getCatEvolutionNotification(notificationId: Long): CatEvolutionNotification
+
+    /* Battle Chest Notifications */
+    suspend fun insertBattleChestNotification(notification: BattleChestNotification)
+    suspend fun getBattleChestNotification(notificationId: Long): BattleChestNotification
+
+    /* Currency Notifications */
+    suspend fun insertCurrencyNotification(notification: CurrencyRewardNotification)
+    suspend fun getCurrencyNotification(notificationId: Long): CurrencyRewardNotification
 }

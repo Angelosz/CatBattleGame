@@ -28,6 +28,10 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.notifications.BattleChestNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.CatNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.CurrencyNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
 
 @Database(
     entities = [
@@ -48,10 +52,14 @@ import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
         EnemyDiscoveryState::class,
         EnemyAbility::class,
         ChapterEnemy::class,
-        ChapterReward::class
+        ChapterReward::class,
+        NotificationsEntity::class,
+        CatNotificationEntity::class,
+        BattleChestNotificationEntity::class,
+        CurrencyNotificationEntity::class
     ],
     exportSchema = false,
-    version = 31)
+    version = 32)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao

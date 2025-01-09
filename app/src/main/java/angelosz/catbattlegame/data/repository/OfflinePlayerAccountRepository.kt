@@ -6,8 +6,17 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.notifications.BattleChestNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.CatNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.CurrencyNotificationEntity
+import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import angelosz.catbattlegame.ui.combat.BasicCatData
+import angelosz.catbattlegame.ui.home.notifications.BattleChestNotification
+import angelosz.catbattlegame.ui.home.notifications.CatEvolutionNotification
+import angelosz.catbattlegame.ui.home.notifications.CurrencyRewardNotification
+import angelosz.catbattlegame.ui.home.notifications.LevelUpNotification
+import angelosz.catbattlegame.ui.home.notifications.NotificationType
 import kotlinx.coroutines.flow.Flow
 
 class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepository {
@@ -74,4 +83,102 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     }
 
     override suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>) = dao.discoverEnemies(enemies)
+
+    /* Notifications */
+    override suspend fun getAllNotifications(): Flow<List<NotificationsEntity>> = dao.getAllNotifications()
+    override suspend fun deleteNotification(notificationId: Long, type: NotificationType) {
+        when(type) {
+            NotificationType.LEVEL_UP -> dao.deleteCatNotification(notificationId)
+            NotificationType.CAT_EVOLUTION -> dao.deleteCatNotification(notificationId)
+            NotificationType.BATTLE_CHEST_REWARD -> dao.deleteBattleChestNotification(notificationId)
+            NotificationType.CURRENCY_REWARD -> dao.deleteCurrencyNotification(notificationId)
+        }
+        dao.deleteNotification(notificationId)
+    }
+
+    override suspend fun insertLevelUpNotification(notification: LevelUpNotification) {
+        val id = dao.insertCatNotification(
+            CatNotificationEntity(
+                catName = notification.name,
+                catImage = notification.image,
+                level = notification.level,
+                notificationType = NotificationType.LEVEL_UP
+            )
+        )
+        dao.insertNotification(NotificationsEntity(id, NotificationType.LEVEL_UP))
+    }
+    override suspend fun insertEvolutionNotification(notification: CatEvolutionNotification) {
+        val id = dao.insertCatNotification(
+            CatNotificationEntity(
+                catName = notification.name,
+                catImage = notification.image,
+                evolutionName = notification.evolutionName,
+                evolutionImage = notification.evolutionImage,
+                notificationType = NotificationType.CAT_EVOLUTION
+            )
+        )
+        dao.insertNotification(NotificationsEntity(id, NotificationType.CAT_EVOLUTION))
+    }
+    override suspend fun getCatEvolutionNotification(notificationId: Long): CatEvolutionNotification {
+        val catNotificationEntity = dao.getCatNotification(notificationId)
+        return CatEvolutionNotification(
+            id = catNotificationEntity.id,
+            name = catNotificationEntity.catName,
+            image = catNotificationEntity.catImage,
+            evolutionName = catNotificationEntity.evolutionName,
+            evolutionImage = catNotificationEntity.evolutionImage
+        )
+    }
+    override suspend fun getLevelUpNotification(notificationId: Long): LevelUpNotification {
+        val notification = dao.getCatNotification(notificationId)
+        return LevelUpNotification(
+            id = notification.id,
+            name = notification.catName,
+            image = notification.catImage,
+            level = notification.level
+        )
+    }
+
+    override suspend fun insertBattleChestNotification(notification: BattleChestNotification) {
+        val id = dao.insertBattleChestNotification(
+            BattleChestNotificationEntity(
+                battleChestRarity = notification.rarity,
+                battleChestType = notification.type,
+                notificationType = NotificationType.BATTLE_CHEST_REWARD
+            )
+        )
+        dao.insertNotification(NotificationsEntity(id, NotificationType.BATTLE_CHEST_REWARD))
+    }
+
+    override suspend fun getBattleChestNotification(notificationId: Long): BattleChestNotification {
+        val notification = dao.getBattleChestNotification(notificationId)
+        return BattleChestNotification(
+            id = notification.id,
+            rarity = notification.battleChestRarity,
+            type = notification.battleChestType,
+            text = notification.notificationText
+        )
+    }
+
+    override suspend fun insertCurrencyNotification(notification: CurrencyRewardNotification) {
+        val id = dao.insertCurrencyNotification(
+            CurrencyNotificationEntity(
+                currencyImage = notification.image,
+                amount = notification.amount,
+                notificationText = notification.notificationText,
+                notificationType = NotificationType.CURRENCY_REWARD
+            )
+        )
+        dao.insertNotification(NotificationsEntity(id, NotificationType.CURRENCY_REWARD))
+    }
+
+    override suspend fun getCurrencyNotification(notificationId: Long): CurrencyRewardNotification {
+        val notification = dao.getCurrencyNotification(notificationId)
+        return CurrencyRewardNotification(
+            id = notification.id,
+            image = notification.currencyImage,
+            amount = notification.amount,
+            notificationText = notification.notificationText
+        )
+    }
 }
