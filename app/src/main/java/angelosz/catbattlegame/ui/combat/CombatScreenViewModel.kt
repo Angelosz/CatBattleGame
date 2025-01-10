@@ -457,11 +457,3 @@ class CombatScreenViewModel(
     }
 }
 
-enum class CombatEffect {
-    DAMAGED,
-    HEALED,
-    POISONED,
-    ATTACKED,
-    NO_EFFECT,
-}
-
