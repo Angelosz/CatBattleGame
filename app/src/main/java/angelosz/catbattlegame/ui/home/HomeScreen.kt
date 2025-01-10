@@ -88,17 +88,18 @@ fun HomeScreen(
 
 @Composable
 fun ManageNotification(viewModel: HomeScreenViewModel, uiState: HomeScreenUiState) {
-    val lootBoxAnimationOffsetY = remember { Animatable(0f) }
+    val notificationAnimationOffsetY = remember { Animatable(0f) }
     val coroutineScope = rememberCoroutineScope()
     val notification = uiState.notifications.first()
+
     Box(
-        modifier = Modifier.offset { IntOffset(0, lootBoxAnimationOffsetY.value.toInt()) }
+        modifier = Modifier.offset { IntOffset(0, notificationAnimationOffsetY.value.toInt()) }
     ){
         notification.display(
             onAccept = {
                 coroutineScope.launch {
                     try {
-                        lootBoxAnimationOffsetY.animateTo(
+                        notificationAnimationOffsetY.animateTo(
                             2000f,
                             animationSpec = tween(500)
                         )
@@ -110,8 +111,8 @@ fun ManageNotification(viewModel: HomeScreenViewModel, uiState: HomeScreenUiStat
                         }
                         viewModel.closeNotification()
                         delay(100)
-                        lootBoxAnimationOffsetY.snapTo(-2000f)
-                        lootBoxAnimationOffsetY.animateTo(
+                        notificationAnimationOffsetY.snapTo(-2000f)
+                        notificationAnimationOffsetY.animateTo(
                             0f,
                             animationSpec = tween(500)
                         )
