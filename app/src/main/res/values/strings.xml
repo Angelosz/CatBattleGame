@@ -37,6 +37,10 @@
     <string name="combatmodifier_poisoned">Poisoned</string>
     <string name="combatmodifier_cleansed">Cleansed</string>
     <string name="combatmodifier_shielded">Shielded</string>
+    <string name="combatmodifier_health">Healthy</string>
+    <string name="combatmodifier_attack">Deadly</string>
+    <string name="combatmodifier_defense">Strong</string>
+    <string name="combatmodifier_speed">Swift</string>
 
     <!-- Cat titles -->
     <string name="empty_title">%1$s</string>
@@ -64,5 +68,7 @@
     <string name="the_teen_monk">%1$s, the Teen Monk</string>
     <string name="the_monk">%1$s, the Monk</string>
     <string name="the_elder_monk">%1$s, the Elder Monk</string>
+    <string name="poison">Poison</string>
+    <string name="damage_status_changing"><![CDATA[Damage & Status changing]]></string>
 
 </resources>
