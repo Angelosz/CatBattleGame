@@ -70,5 +70,15 @@
     <string name="the_elder_monk">%1$s, the Elder Monk</string>
     <string name="poison">Poison</string>
     <string name="damage_status_changing"><![CDATA[Damage & Status changing]]></string>
+    <string name="select_target_enemy">Select  target enemy</string>
+    <string name="player_turn">Your Turn</string>
+    <string name="ending_turn">Ending Turn</string>
+    <string name="enemy_turn">AI Turn</string>
+    <string name="combat_starting">Combat Starting!</string>
+    <string name="empty_string" />
+    <string name="select_target_ally">Select  target ally</string>
+    <string name="select_ally_team">Select ally team</string>
+    <string name="select_enemy_team">Select enemy team</string>
+    <string name="turn_passed">Turn Passed</string>
 
 </resources>
