@@ -8,22 +8,15 @@ En este juego, los jugadores pueden:
 - Coleccionar gatos y formar equipos de batalla (máximo 4 gatos por equipo).
 - Participar en batallas por turnos en diferentes modos de juego.
 - Mejorar sus gatos a través de evoluciones y experiencia.
-- Abrir lootboxes para obtener nuevos gatos y habilidades.
-- Participar en un sistema de recompensas diarias.
+- Abrir paquetes para obtener nuevos gatos.
+- Comprar paquetes en la tienda con oro que se obtiene en las batallas.
+- Desbloquear gatos con cristales que se obtienen al sacar un duplicado en un paquete.
 
 ### Características principales:
 1. **Colección de gatos**: Cada gato tiene estadísticas, habilidades y evoluciones únicas.
 2. **Sistema de combate por turnos**: Batallas estratégicas donde las decisiones del jugador importan.
 3. **Interfaz moderna**: Diseñada con Jetpack Compose para ofrecer una experiencia fluida y atractiva.
 4. **Persistencia de datos**: Uso de Room para almacenar datos locales como gatos, habilidades, equipos, y cuenta del jugador.
-
----
-
-## 📂 Estructura del Proyecto
-
-- **`data`**: Contiene las entidades de la base de datos (Room) como `Cat`, `OwnedCat`, `PlayerTeam`, etc., y sus DAOs.
-- **`repository`**: Maneja la lógica de negocio y la comunicación con la base de datos.
-- **`ui`**: Diseños de pantalla y componentes en Jetpack Compose.
 
 ---
 
@@ -49,7 +42,7 @@ Este proyecto está diseñado para:
 
 ---
 
-## 🎮 Cómo Ejecutar el Proyecto (Ahora mismo faltan los datos de la base de datos)
+## 🎮 Cómo Ejecutar el Proyecto
 
 1. Clona este repositorio:  
    ```bash
@@ -64,12 +57,23 @@ Este proyecto está diseñado para:
 ## 🗺️ Roadmap
 
 ### Próximos pasos:
-- Implementar un sistema de tutorial inicial.
-- Crear el sistema completo de combate por turnos.
-- Añadir más habilidades y efectos visuales durante el combate.
-- Mejorar las animaciones y la experiencia de usuario.
+- ~~Crear el sistema completo de combate por turnos.~~
+- Implemetar el desbloqueo de gatos con cristales.
+- Implementar tienda donde el jugador puede comprar paquetes por oro.
+- ~~Desarrollar un sistema de notificaciones.~~
+- Añadir soporte multilenguaje.
+- Añadir sonidos.
+- Añadir suficientes enemigos con interesantes habilidades y diseños para completar la segunda campaña.
+- Mejorar flujo de navegación, sobretodo en el combate/selección de campaña/selección de encuentro.
 - Publicar la aplicación en Google Play Store.
-- Desarrollar un sistema de notificaciones para recordar a los jugadores eventos importantes.
+
+
+### Una vez publicada:
+- Idea: Auto seleccionar objetivo de habilidades para que el jugador no tenga que dar más de un click en algunas situaciones.
+- Implementar filtrado de gatos en la enciclopedia.
+- Mejorar animaciones para seguir aprendiendo.
+- Añadir más gatos que coleccionar con nuevas habilidades.
+- Idea: Añadir progresión de cuenta de jugador con recompensas diarias y por niveles.
 
 ---
 
