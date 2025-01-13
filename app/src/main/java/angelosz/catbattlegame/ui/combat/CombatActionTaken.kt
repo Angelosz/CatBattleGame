@@ -6,4 +6,5 @@ enum class CombatActionTaken {
     POISONED,
     ATTACKED,
     NO_EFFECT,
+    SHIELDED
 }
