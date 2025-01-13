@@ -101,17 +101,9 @@ class HomeScreenViewModel(
         notificationsEntities.forEach {
             val notification = when (it.notificationType) {
                 NotificationType.LEVEL_UP -> playerAccountRepository.getLevelUpNotification(it.notificationId)
-                NotificationType.CAT_EVOLUTION -> playerAccountRepository.getCatEvolutionNotification(
-                    it.notificationId
-                )
-
-                NotificationType.BATTLE_CHEST_REWARD -> playerAccountRepository.getBattleChestNotification(
-                    it.notificationId
-                )
-
-                NotificationType.CURRENCY_REWARD -> playerAccountRepository.getCurrencyNotification(
-                    it.notificationId
-                )
+                NotificationType.CAT_EVOLUTION -> playerAccountRepository.getCatEvolutionNotification(it.notificationId)
+                NotificationType.BATTLE_CHEST_REWARD -> playerAccountRepository.getBattleChestNotification(it.notificationId)
+                NotificationType.CURRENCY_REWARD -> playerAccountRepository.getCurrencyNotification(it.notificationId)
             }
             notifications.add(notification)
         }
