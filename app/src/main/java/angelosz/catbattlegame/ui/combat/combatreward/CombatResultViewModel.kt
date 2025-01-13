@@ -138,8 +138,8 @@ class CombatResultViewModel(
                     ownedCat.copy(
                         experience = totalExperience - EXPERIENCE_PER_LEVEL,
                         level = newLevel,
-                        healthModifier = ownedCat.healthModifier + (baseCat.baseHealth * 0.2).toInt(),
-                        attackModifier = ownedCat.attackModifier + (baseCat.baseAttack * 0.15).toInt(),
+                        healthModifier = ownedCat.healthModifier + (baseCat.baseHealth * 0.1).toInt(),
+                        attackModifier = ownedCat.attackModifier + (baseCat.baseAttack * 0.1).toInt(),
                         defenseModifier = ownedCat.defenseModifier + (baseCat.baseDefense * 0.1).toInt(),
                     )
                 )

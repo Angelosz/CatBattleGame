@@ -2,6 +2,7 @@ package angelosz.catbattlegame.ui.combat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
@@ -9,7 +10,7 @@ import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
-import angelosz.catbattlegame.domain.enums.CombatModifiers
+import angelosz.catbattlegame.domain.enums.CombatModifier
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
@@ -219,6 +220,7 @@ class CombatScreenViewModel(
             CombatStage.PLAYER_TURN -> {}
             CombatStage.SELECTING_TARGETS, CombatStage.TARGETS_SELECTED -> {
                 _uiState.value.activeAbility?.setSelectedAllyCat(combatId)
+                _uiState.value.activeAbility?.selectAllyTeam(_uiState.value.teamCombatCats.map { it.cat.combatId })
                 if(_uiState.value.activeAbility?.isReady() == true){
                     _uiState.value = _uiState.value.copy(
                         numberOfTurns = _uiState.value.numberOfTurns + 1,
@@ -241,6 +243,7 @@ class CombatScreenViewModel(
             CombatStage.PLAYER_TURN -> {}
             CombatStage.SELECTING_TARGETS, CombatStage.TARGETS_SELECTED -> {
                 _uiState.value.activeAbility?.setSelectedEnemyCat(combatId)
+                _uiState.value.activeAbility?.selectEnemyTeam(_uiState.value.enemyCombatCats.map { it.cat.combatId })
                 if(_uiState.value.activeAbility?.isReady() == true){
                     _uiState.value = _uiState.value.copy(
                         numberOfTurns = _uiState.value.numberOfTurns + 1,
@@ -261,6 +264,7 @@ class CombatScreenViewModel(
     fun abilityClicked(ability: CombatAbility) {
         if(_uiState.value.activeAbility != null) _uiState.value.activeAbility!!.clear()
         _uiState.value = _uiState.value.copy(
+            abilityMessage = if(isAiTurn()) R.string.enemy_turn else ability.getMessage(),
             activeAbility = ability,
             combatStage = CombatStage.SELECTING_TARGETS
         )
@@ -278,6 +282,7 @@ class CombatScreenViewModel(
                 _uiState.value.activeAbility!!.apply(viewModel)
 
                 _uiState.value = _uiState.value.copy(
+                    abilityMessage = R.string.ending_turn,
                     numberOfTurns = _uiState.value.numberOfTurns + 1
                 )
 
@@ -287,19 +292,22 @@ class CombatScreenViewModel(
 
                 delay(750)
 
-                activeCat?.cat?.combatModifiers?.forEach{ (combatModifier, _) ->
-                    when(combatModifier){
-                        CombatModifiers.POISONED -> {
-                            val damage = (activeCat.cat.maxHealth * 0.05f).toInt()
-                            activeCat.takeDamage(damage, DamageType.ELEMENTAL)
-                            activeCat.cat.lastEffect = Pair(CombatEffect.POISONED, damage)
-                            activeCat.reduceCombatModifierTurn(combatModifier)
+                activeCat?.cat?.appliedCombatModifiers?.forEach{ appliedCombatModifier ->
+                    when(appliedCombatModifier.combatModifier){
+                        CombatModifier.POISONED -> {
+                            val damage = (activeCat.cat.maxHealth * appliedCombatModifier.amount).toInt()
+                            activeCat.takeDamage(damage, DamageType.POISON)
+                            activeCat.cat.lastCombatActionTaken = CombatAction(CombatActionTaken.POISONED, damage, DamageType.POISON)
+                            appliedCombatModifier.reduceDuration()
                             _uiState.update {
                                 it.copy(
                                     numberOfTurns = it.numberOfTurns + 1
                                 )
                             }
                             delay(750)
+                        }
+                        CombatModifier.STUNNED ->{
+                            appliedCombatModifier.reduceDuration()
                         }
                         else -> {}
                     }
@@ -312,12 +320,24 @@ class CombatScreenViewModel(
         }
     }
 
-    fun isAiTurn(): Boolean {
-        val newActiveCat = _uiState.value.activeCatId
+    private fun catIsInEnemyTeam(activeCatId: Int): Boolean {
         _uiState.value.enemyCombatCats.forEach { cat ->
-            if(cat.cat.combatId == newActiveCat) return true
+            if(cat.cat.combatId == activeCatId) return true
         }
         return false
+    }
+
+    fun isAiTurn(): Boolean {
+        val activeCatId = _uiState.value.activeCatId
+        _uiState.value.enemyCombatCats.forEach { cat ->
+            if(cat.cat.combatId == activeCatId) return true
+        }
+        return false
+    }
+
+    fun passedTurn(){
+        abilityClicked(EmptyAbility(Ability(0)))
+        useAbility()
     }
 
     private fun endTurn() {
@@ -326,8 +346,10 @@ class CombatScreenViewModel(
 
         if(abilityUsed != null){
             if(activeCat != null){
-                val initiativeToAdd = activeCat.cat.attackSpeed * abilityUsed.ability.attackSpeedMultiplier
+                val initiativeToAdd = activeCat.cat.getAttackSpeed * abilityUsed.ability.attackSpeedMultiplier
                 addInitiativeToCat(activeCat.cat.combatId, initiativeToAdd)
+                activeCat.reduceBuffsDuration()
+                activeCat.refreshBuffModifiers()
             }
             abilityUsed.clear()
         }
@@ -341,12 +363,25 @@ class CombatScreenViewModel(
 
         val newActiveCat = _uiState.value.catInitiatives.firstOrNull()?.catId
         if(newActiveCat != null){
-            _uiState.update {
-                it.copy(
-                    activeAbility = null,
-                    activeCatId = newActiveCat,
-                    combatStage = CombatStage.PLAYER_TURN
-                )
+            val catIsInEnemyTeam = catIsInEnemyTeam(newActiveCat)
+            if(catIsInEnemyTeam){
+                _uiState.update {
+                    it.copy(activeAbility = null,
+                        activeCatId = newActiveCat,
+                        abilityMessage = R.string.enemy_turn,
+                        combatStage = CombatStage.AI_TURN,
+                    )
+                }
+                executeAiTurn()
+            } else {
+                _uiState.update {
+                    it.copy(
+                        activeAbility = null,
+                        activeCatId = newActiveCat,
+                        abilityMessage = R.string.player_turn,
+                        combatStage = CombatStage.PLAYER_TURN
+                    )
+                }
             }
         } else {
             _uiState.update {
@@ -354,16 +389,6 @@ class CombatScreenViewModel(
                     screenState = ScreenState.FAILURE
                 )
             }
-        }
-
-        val isAiTurn = isAiTurn()
-        if (isAiTurn) {
-            _uiState.update {
-                it.copy(
-                    combatStage = CombatStage.AI_TURN
-                )
-            }
-            executeAiTurn()
         }
     }
 
@@ -383,15 +408,20 @@ class CombatScreenViewModel(
             val enemyCat = _uiState.value.enemyCombatCats.find { it.cat.combatId == _uiState.value.activeCatId }
 
             if(enemyCat != null){
-                abilityClicked(enemyCat.selectAbility())
-                val ability = _uiState.value.activeAbility
-                if(ability != null){
-                    enemyCat.selectTargets(
-                        playerCats = _uiState.value.teamCombatCats.map { cat -> cat.cat.combatId },
-                        enemyCats = _uiState.value.enemyCombatCats.map { cat -> cat.cat.combatId },
-                        ability = ability
-                    )
+                if(enemyCat.isStunned()){
+                    abilityClicked(EmptyAbility(Ability(0)))
                     useAbility()
+                } else {
+                    abilityClicked(enemyCat.selectAbility())
+                    val ability = _uiState.value.activeAbility
+                    if(ability != null){
+                        enemyCat.selectTargets(
+                            playerCats = _uiState.value.teamCombatCats.map { it.cat.combatId },
+                            enemyCats = _uiState.value.enemyCombatCats.map { it.cat.combatId },
+                            ability = ability
+                        )
+                        useAbility()
+                    }
                 }
             }
         }
@@ -403,9 +433,9 @@ class CombatScreenViewModel(
         initiatives.forEach { initiative ->
             val cat = getCat(initiative.catId)
             if(cat != null){
-                if(cat.cat.combatModifiers.contains(CombatModifiers.SLOWED)){
+                if(cat.isSlowed()){
                     initiative.initiative += 2.0f
-                    cat.reduceCombatModifierTurn(CombatModifiers.SLOWED)
+                    cat.reduceSlowDuration()
                 }
             }
             initiative.initiative -= firstInitiativeTime
@@ -426,7 +456,7 @@ class CombatScreenViewModel(
         }
         _uiState.update {
             it.copy(
-                catInitiatives = initiatives.sortedBy { it.initiative }
+                catInitiatives = initiatives.sortedBy { initiative -> initiative.initiative }
             )
         }
     }
@@ -434,25 +464,83 @@ class CombatScreenViewModel(
     fun damageCat(selectedCatId: Int, ability: Ability) {
         val cat = getCat(selectedCatId)
         if(cat != null){
-            val damage = (getCat(_uiState.value.activeCatId)?.cat?.attack ?: 0) * ability.damageMultiplier
+            if(ability.damageType != DamageType.POISON && cat.isShielded()){
+                cat.shieldAbsorbedDamage()
+                cat.cat.lastCombatActionTaken = CombatAction(CombatActionTaken.SHIELDED, 0, ability.damageType)
+                return
+            }
+            var damage = ((getCat(_uiState.value.activeCatId)?.cat?.getAttack ?: 0f) * ability.damageMultiplier) - cat.cat.getDefense
+            if(damage <= 0) damage = 1f
             cat.takeDamage(damage.toInt(), ability.damageType)
-            cat.cat.lastEffect = Pair(CombatEffect.DAMAGED, damage.toInt())
+            cat.cat.lastCombatActionTaken = CombatAction(CombatActionTaken.DAMAGED, damage.toInt(), ability.damageType)
         }
     }
 
     fun healCat(catId: Int, ability: Ability) {
         val cat = getCat(catId)
         if(cat != null){
-            val damage = (getCat(_uiState.value.activeCatId)?.cat?.attack ?: 0) * ability.damageMultiplier
+            val damage = (getCat(_uiState.value.activeCatId)?.cat?.getAttack ?: 0f) * ability.damageMultiplier
             cat.heal(damage.toInt(), ability.damageType)
-            cat.cat.lastEffect = Pair(CombatEffect.HEALED, damage.toInt())
+            cat.cat.lastCombatActionTaken = CombatAction(CombatActionTaken.HEALED, damage.toInt(), ability.damageType)
         }
     }
 
-    fun applyModifiers(catId: Int, combatModifier: CombatModifiers?) {
+    fun applyModifiers(catId: Int, ability: Ability) {
+        val selectedCat = getCat(_uiState.value.activeCatId)
         val cat = getCat(catId)
-        if(cat != null && combatModifier != null){
-            cat.addCombatModifier(combatModifier)
+        if(cat != null){
+            when(ability.combatModifier){
+                CombatModifier.SLOWED -> {
+                    cat.addCombatModifier(
+                        appliedCombatModifier = appliedCombatModifier(
+                            combatModifier = CombatModifier.SLOWED,
+                            amount = ability.combatModifierValue,
+                            duration = ability.combatModifierDuration
+                        )
+                    )
+                }
+                CombatModifier.STUNNED -> {
+                    cat.addCombatModifier(
+                        appliedCombatModifier = appliedCombatModifier(
+                            combatModifier = CombatModifier.STUNNED,
+                            duration = ability.combatModifierDuration
+                        )
+                    )
+                }
+                CombatModifier.POISONED -> {
+                    cat.addCombatModifier(
+                        appliedCombatModifier = appliedCombatModifier(
+                            combatModifier = CombatModifier.POISONED,
+                            amount = ability.combatModifierValue,
+                            duration = ability.combatModifierDuration
+                        )
+                    )
+                }
+                CombatModifier.CLEANSED -> {}
+                CombatModifier.SHIELDED -> {
+                    cat.addCombatModifier(
+                        appliedCombatModifier = appliedCombatModifier(
+                            combatModifier = CombatModifier.SHIELDED,
+                            duration = ability.combatModifierDuration
+                        )
+                    )
+                }
+                null -> {}
+                else -> {
+                    cat.addCombatModifier(
+                        appliedCombatModifier = appliedCombatModifier(
+                            combatModifier = ability.combatModifier,
+                            amount = if(selectedCat != null){
+                                ability.combatModifierValue + (selectedCat.cat.getAttack * ability.damageMultiplier)
+                            } else {
+                                ability.combatModifierValue
+                            },
+                            duration = ability.combatModifierDuration
+                        )
+                    )
+                    cat.refreshBuffModifiers()
+                }
+            }
         }
     }
 }

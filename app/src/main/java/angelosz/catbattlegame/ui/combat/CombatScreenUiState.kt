@@ -1,7 +1,8 @@
 package angelosz.catbattlegame.ui.combat
 
 import androidx.annotation.DrawableRes
-import angelosz.catbattlegame.data.entities.CampaignChapter
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.CombatStage
@@ -23,10 +24,9 @@ data class CombatScreenUiState(
     val catInitiatives: List<CatInitiativeData> = emptyList(),
 
     val activeCatId: Int = 0,
-
     val activeAbility: CombatAbility? = null,
-
-    val numberOfTurns: Int = 0
+    @StringRes val abilityMessage: Int = R.string.combat_starting,
+    val numberOfTurns: Int = 0,
 )
 
 data class CatInitiativeData(

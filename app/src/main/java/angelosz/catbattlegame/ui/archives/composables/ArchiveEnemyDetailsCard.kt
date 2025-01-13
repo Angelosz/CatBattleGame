@@ -179,9 +179,9 @@ fun ArchiveEnemyDetailsCardPreview(){
                 name = "Wool Ball",
                 description = "Round and round it goes",
                 image = R.drawable.enemy_wool_ball_300,
-                baseHealth = 50,
-                baseAttack = 15,
-                baseDefense = 10,
+                baseHealth = 50f,
+                baseAttack = 15f,
+                baseDefense = 10f,
                 attackSpeed = 1.2f,
                 armorType = ArmorType.LIGHT,
                 abilities = listOf(

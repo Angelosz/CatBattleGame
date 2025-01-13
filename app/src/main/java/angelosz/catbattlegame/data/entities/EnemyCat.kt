@@ -18,9 +18,9 @@ data class EnemyCat(
     @DrawableRes val image: Int = R.drawable.enemy_wool_ball_300,
     val armorType: ArmorType = ArmorType.LIGHT,
     val role: CatRole = CatRole.DEFENDER,
-    val baseHealth: Int = 50,
-    val baseAttack: Int = 10,
-    val baseDefense: Int = 10,
+    val baseHealth: Float = 50f,
+    val baseAttack: Float = 10f,
+    val baseDefense: Float = 10f,
     val attackSpeed: Float = 1f,
     val rarity: CatRarity = CatRarity.KITTEN,
     val enemyType: EnemyType = EnemyType.SIMPLE_ENEMY

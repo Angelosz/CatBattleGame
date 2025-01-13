@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,8 +30,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -39,9 +46,9 @@ import angelosz.catbattlegame.domain.enums.CombatStage
 import angelosz.catbattlegame.domain.enums.CombatState
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.components.BackgroundImage
+import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
-import angelosz.catbattlegame.ui.components.CatCard
 
 @Composable
 fun CombatScreen(
@@ -201,7 +208,7 @@ fun CombatScreen(
                             }
                             Box(
                                 modifier = Modifier
-                                    .weight(0.1f)
+                                    .weight(0.075f)
                                     .width(320.dp),
                                 contentAlignment = Alignment.Center
                             ){
@@ -210,21 +217,18 @@ fun CombatScreen(
                                 )
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.Start
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ){
                                     Text(
-                                        text = "<<",
-                                        style = MaterialTheme.typography.displayMedium,
+                                        text = "<<-",
+                                        style = MaterialTheme.typography.displaySmall,
                                         color = Color.White
                                     )
                                     uiState.catInitiatives.forEach { cat ->
-                                        Column(
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        Box(
+                                            contentAlignment = Alignment.Center
                                         ) {
-                                            Text(
-                                                text =  "%.2f".format(cat.initiative),
-                                                style = MaterialTheme.typography.labelMedium,
-                                            )
                                             Image(
                                                 painter = painterResource(cat.image),
                                                 contentDescription = null,
@@ -232,11 +236,134 @@ fun CombatScreen(
                                                     .size(48.dp)
                                                     .padding(horizontal = 2.dp)
                                             )
+                                            Text(
+                                                modifier = Modifier.align(Alignment.BottomCenter),
+                                                text =  "%.2f".format(cat.initiative),
+                                                color = Color.White,
+                                                style = MaterialTheme.typography.labelMedium.copy(
+                                                    shadow = Shadow(
+                                                        color = Color.Black,
+                                                        offset = Offset(3f, 3f),
+                                                        blurRadius = 1f
+                                                    ),
+                                                )
+                                            )
                                         }
                                     }
                                 }
                             }
-
+                            /*
+                                Abilities
+                             */
+                            Card(
+                                colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
+                            ) {
+                                Text(
+                                    text = stringResource(uiState.abilityMessage),
+                                    modifier = Modifier
+                                        .padding(4.dp)
+                                        .width(256.dp),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                            }
+                            val activeCat = viewModel.playerCatIsActive()
+                            if(activeCat != null){
+                                Column(
+                                    modifier = Modifier.weight(0.1f),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    if(activeCat.isStunned()){
+                                        Card(
+                                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
+                                        ) {
+                                            Column(
+                                                horizontalAlignment = Alignment.CenterHorizontally
+                                            ){
+                                                Text(
+                                                    text = stringResource(R.string.your_cat_is_stunned),
+                                                    modifier = Modifier
+                                                        .padding(8.dp)
+                                                        .width(256.dp),
+                                                    textAlign = TextAlign.Center,
+                                                    style = MaterialTheme.typography.labelLarge
+                                                )
+                                                Button(
+                                                    modifier = Modifier.padding(8.dp),
+                                                    onClick = { if(uiState.combatStage == CombatStage.PLAYER_TURN) viewModel.passedTurn() }
+                                                ){
+                                                    Text(
+                                                        modifier = Modifier.padding(8.dp),
+                                                        text = stringResource(R.string.end_turn)
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        LazyVerticalGrid(
+                                            columns = GridCells.Fixed(2),
+                                            modifier = Modifier.padding(4.dp),
+                                            horizontalArrangement = Arrangement.spacedBy(
+                                                4.dp,
+                                                Alignment.CenterHorizontally
+                                            ),
+                                            verticalArrangement = Arrangement.spacedBy(4.dp)
+                                        ) {
+                                            items(activeCat.cat.abilities) { ability ->
+                                                Row(
+                                                    verticalAlignment = Alignment.CenterVertically,
+                                                    modifier = Modifier
+                                                        .clickable(onClick = {
+                                                            if (!ability.onCooldown() && uiState.combatStage != CombatStage.ENDING_TURN) {
+                                                                viewModel.abilityClicked(ability)
+                                                            }
+                                                        })
+                                                        .background(
+                                                            color = when {
+                                                                ability.onCooldown() -> Color.DarkGray
+                                                                ability == uiState.activeAbility -> Color.LightGray
+                                                                else -> Color.White
+                                                            }
+                                                        )
+                                                ) {
+                                                    Box(
+                                                        contentAlignment = Alignment.Center
+                                                    ) {
+                                                        Image(
+                                                            painter = painterResource(ability.ability.icon),
+                                                            contentDescription = "${ability.ability.name} ability icon",
+                                                            modifier = Modifier.size(40.dp),
+                                                        )
+                                                        if(ability.onCooldown()){
+                                                            Text(
+                                                                text = "${ability.getCooldownRemaining()}",
+                                                                color = Color.White,
+                                                                style = MaterialTheme.typography.headlineLarge.copy(
+                                                                    shadow = Shadow(
+                                                                        color = Color.Black,
+                                                                        offset = Offset(3f, 3f),
+                                                                        blurRadius = 1f
+                                                                    )
+                                                                ),
+                                                                fontWeight = FontWeight.Bold,
+                                                            )
+                                                        }
+                                                    }
+                                                    Text(
+                                                        text = ability.ability.name,
+                                                        modifier = Modifier.padding(2.dp)
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                Spacer(modifier = Modifier.weight(0.1f))
+                            }
+                            /*
+                                Player Team
+                             */
                             Column(
                                 modifier = Modifier
                                     .weight(0.35f)
@@ -270,54 +397,7 @@ fun CombatScreen(
                                     }
                                 )
                             }
-                            val activeCat = viewModel.playerCatIsActive()
-                            if(activeCat != null){
-                                Column(
-                                    modifier = Modifier.weight(0.2f)
-                                ) {
-                                    LazyVerticalGrid(
-                                        columns = GridCells.Fixed(2),
-                                        modifier = Modifier.padding(4.dp),
-                                        horizontalArrangement = Arrangement.spacedBy(
-                                            4.dp,
-                                            Alignment.CenterHorizontally
-                                        ),
-                                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                                    ) {
-                                        items(activeCat.cat.abilities) { ability ->
-                                            Row(
-                                                verticalAlignment = Alignment.CenterVertically,
-                                                modifier = Modifier
-                                                    .padding(8.dp)
-                                                    .clickable(onClick = {
-                                                        if (!ability.onCooldown() && uiState.combatStage != CombatStage.ENDING_TURN) {
-                                                            viewModel.abilityClicked(ability)
-                                                        }
-                                                    })
-                                                    .background(
-                                                        color = when {
-                                                            ability.onCooldown() -> Color.DarkGray
-                                                            ability == uiState.activeAbility -> Color.LightGray
-                                                            else -> Color.White
-                                                        }
-                                                    )
-                                            ) {
-                                                Image(
-                                                    painter = painterResource(ability.ability.icon),
-                                                    contentDescription = "${ability.ability.name} ability icon",
-                                                    modifier = Modifier.size(48.dp),
-                                                )
-                                                Text(
-                                                    text = ability.ability.name,
-                                                    modifier = Modifier.padding(8.dp)
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                Spacer(modifier = Modifier.weight(0.2f))
-                            }
+
                         }
                     }
                     CombatState.FINISHED -> {

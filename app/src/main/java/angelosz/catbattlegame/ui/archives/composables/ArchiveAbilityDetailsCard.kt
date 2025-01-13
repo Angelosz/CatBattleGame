@@ -26,7 +26,7 @@ import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.domain.enums.AbilityTarget
 import angelosz.catbattlegame.domain.enums.AbilityType
-import angelosz.catbattlegame.domain.enums.CombatModifiers
+import angelosz.catbattlegame.domain.enums.CombatModifier
 import angelosz.catbattlegame.domain.enums.DamageType
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 
@@ -115,7 +115,7 @@ fun CatAbilityCardPreview(){
                 damageType = DamageType.ELEMENTAL,
                 attackSpeedMultiplier = 1f,
                 damageMultiplier = 1f,
-                combatModifier = CombatModifiers.SHIELDED,
+                combatModifier = CombatModifier.SHIELDED,
                 targets = AbilityTarget.ALLY,
                 cooldown = 3
             )
