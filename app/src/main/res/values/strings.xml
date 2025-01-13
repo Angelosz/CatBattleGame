@@ -69,7 +69,7 @@
     <string name="the_monk">%1$s, the Monk</string>
     <string name="the_elder_monk">%1$s, the Elder Monk</string>
     <string name="poison">Poison</string>
-    <string name="damage_status_changing"><![CDATA[Damage & Status changing]]></string>
+    <string name="damage_status_changing">Damage and Status changing</string>
     <string name="select_target_enemy">Select  target enemy</string>
     <string name="player_turn">Your Turn</string>
     <string name="ending_turn">Ending Turn</string>
@@ -80,5 +80,6 @@
     <string name="select_ally_team">Select ally team</string>
     <string name="select_enemy_team">Select enemy team</string>
     <string name="turn_passed">Turn Passed</string>
-
+    <string name="end_turn">End Turn</string>
+    <string name="your_cat_is_stunned">Your cat is Stunned!</string>
 </resources>
