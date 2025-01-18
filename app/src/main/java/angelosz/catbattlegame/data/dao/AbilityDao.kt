@@ -11,16 +11,17 @@ import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
 interface AbilityDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAbilities(abilities: List<Ability>)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCatAbilityCrossRefs(abilities: List<CatAbilityCrossRef>)
+    @Query("DELETE FROM abilities")
+    suspend fun clearAbilitiesTable()
+    @Query("DELETE FROM cat_ability_crossref")
+    suspend fun clearAbilityCrossRefsTable()
 
     @Query("Select * from abilities where abilitySource = 'PLAYER'")
     suspend fun getAllPlayerAbilities(): List<Ability>
-
     @Query("Select * from abilities where id = :id")
     suspend fun getAbilityById(id: Int): Ability
-
     @Query("SELECT * FROM abilities where abilitySource = 'PLAYER' ORDER BY id ASC LIMIT :limit OFFSET :offset")
     suspend fun getCatAbilitiesPage(limit: Int, offset: Int): List<Ability>
 

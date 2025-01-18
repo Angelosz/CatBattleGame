@@ -15,10 +15,12 @@ import angelosz.catbattlegame.domain.enums.CampaignState
 @Dao
 interface CampaignDao {
     /* Campaign */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCampaign(campaign: CampaignEntity): Long
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCampaigns(campaigns: List<CampaignEntity>)
+    @Query("DELETE FROM campaign")
+    suspend fun clearCampaignsTable()
 
     @Query("Select * from Campaign")
     suspend fun getAllCampaigns(): List<CampaignEntity>
@@ -30,10 +32,12 @@ interface CampaignDao {
     suspend fun updateCampaignState(campaignCompletionState: CampaignCompletionState)
 
     /* Campaign Chapters */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCampaignChapter(campaignChapter: CampaignChapter): Long
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCampaignChapters(campaignChapters: List<CampaignChapter>)
+    @Query("DELETE FROM campaign_chapter")
+    suspend fun clearCampaignChaptersTable()
 
     @Update
     suspend fun updateCampaignChapter(campaignChapter: CampaignChapter)
@@ -48,10 +52,12 @@ interface CampaignDao {
     suspend fun updateChapterState(campaignChapterState: CampaignChapterState)
 
     /* Chapter Rewards */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChapterReward(chapterReward: ChapterReward): Long
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChapterRewards(chapterRewards: List<ChapterReward>)
+    @Query("DELETE FROM chapter_reward")
+    suspend fun clearChapterRewardsTable()
 
     @Query("Select * from chapter_reward where chapterId = :chapterId")
     suspend fun getChapterRewards(chapterId: Long): List<ChapterReward>

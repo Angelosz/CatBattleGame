@@ -11,10 +11,13 @@ import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 interface EnemyCatRepository {
     suspend fun insertEnemyCat(enemyCat: EnemyCat): Long
     suspend fun insertEnemyCats(enemyCats: List<EnemyCat>)
+    suspend fun clearEnemyCatsTable()
     suspend fun insertEnemyAbility(enemyAbility: EnemyAbility): Long
     suspend fun insertEnemyAbilities(enemyAbilities: List<EnemyAbility>)
+    suspend fun clearEnemyAbilitiesTable()
     suspend fun insertChapterEnemy(chapterEnemy: ChapterEnemy): Long
     suspend fun insertChapterEnemies(chapterEnemies: List<ChapterEnemy>)
+    suspend fun clearChapterEnemiesTable()
 
     suspend fun getEnemyCatById(id: Long): EnemyCat
     suspend fun getEnemyCatsByCampaignChapterId(campaignChapterId: Long): List<EnemyCat>

@@ -2,6 +2,7 @@ package angelosz.catbattlegame.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.ChapterEnemy
@@ -12,18 +13,24 @@ import angelosz.catbattlegame.ui.campaign.SimplifiedEnemyCatData
 
 @Dao
 interface EnemyCatDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEnemyCat(enemyCat: EnemyCat): Long
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEnemyCats(enemyCats: List<EnemyCat>)
-    @Insert
+    @Query("DELETE FROM campaign_enemies")
+    suspend fun clearEnemyCatsTable()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEnemyAbility(enemyAbility: EnemyAbility): Long
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEnemyAbilities(enemyAbilities: List<EnemyAbility>)
-    @Insert
+    @Query("DELETE FROM campaign_enemy_ability")
+    suspend fun clearEnemyAbilitiesTable()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChapterEnemy(chapterEnemy: ChapterEnemy): Long
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChapterEnemies(chapterEnemies: List<ChapterEnemy>)
+    @Query("DELETE FROM chapter_enemy")
+    suspend fun clearChapterEnemiesTable()
 
     @Query("SELECT * FROM campaign_enemies WHERE id = :id")
     suspend fun getEnemyCatById(id: Long): EnemyCat

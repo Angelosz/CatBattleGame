@@ -10,6 +10,8 @@ interface AbilityRepository {
     suspend fun getCount(): Int
     suspend fun insertAbilities(abilities: List<Ability>)
     suspend fun insertCatAbilityCrossRefs(catAbilityCrossRefs: List<CatAbilityCrossRef>)
+    suspend fun clearAbilitiesTable()
+    suspend fun clearAbilityCrossRefsTable()
     suspend fun getCatAbilities(catId: Int): List<Ability>
     suspend fun getEnemyCatAbilities(catId: Int): List<Ability>
 }

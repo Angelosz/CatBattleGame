@@ -13,8 +13,9 @@ import angelosz.catbattlegame.ui.campaign.data.Chapter
 class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Campaign */
     override suspend fun insertCampaign(campaign: CampaignEntity): Long = dao.insertCampaign(campaign)
-
     override suspend fun insertCampaigns(campaigns: List<CampaignEntity>) = dao.insertCampaigns(campaigns)
+    override suspend fun clearCampaignsTable() = dao.clearCampaignsTable()
+
     override suspend fun getAllCampaigns(): List<Campaign> {
         val campaigns = dao.getAllCampaigns()
         return campaigns.map { campaign ->
@@ -50,6 +51,7 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Campaign Chapters */
     override suspend fun insertCampaignChapter(campaignChapter: CampaignChapter): Long = dao.insertCampaignChapter(campaignChapter)
     override suspend fun insertCampaignChapters(campaignChapters: List<CampaignChapter>) = dao.insertCampaignChapters(campaignChapters)
+    override suspend fun clearCampaignChaptersTable() = dao.clearCampaignChaptersTable()
     override suspend fun updateCampaignChapter(campaignChapter: CampaignChapter) = dao.updateCampaignChapter(campaignChapter)
     override suspend fun getCampaignChaptersByCampaignId(campaignId: Long): List<Chapter> {
         val chapters = dao.getCampaignChaptersByCampaignId(campaignId)
@@ -94,5 +96,6 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     /* Chapter Rewards */
     override suspend fun insertChapterReward(chapterReward: ChapterReward): Long = dao.insertChapterReward(chapterReward)
     override suspend fun insertChapterRewards(chapterRewards: List<ChapterReward>) = dao.insertChapterRewards(chapterRewards)
+    override suspend fun clearChapterRewardsTable() = dao.clearChapterRewardsTable()
     override suspend fun getChapterRewards(chapterId: Long): List<ChapterReward> = dao.getChapterRewards(chapterId)
 }
