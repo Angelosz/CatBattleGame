@@ -10,7 +10,7 @@ class CatsInitialData {
     val cats = listOf(
         Cat(
             id = 1,
-            name = "Bob",
+            name = "Max",
             title = R.string.the_kitten_swordman,
             description = "\"A brave kitten wielding a wooden sword, eager to protect.\"",
             armorType = ArmorType.LIGHT,
@@ -26,7 +26,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 2,
-            name = "Bob",
+            name = "Max",
             title = R.string.the_teen_swordman,
             description = "\"Now a skilled swordsman in training, honing their blade.\"",
             armorType = ArmorType.MEDIUM,
@@ -42,7 +42,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 3,
-            name = "Bob",
+            name = "Max",
             title = R.string.the_swordsman,
             description = "\"A battle-hardened warrior clad in shining armor, ready to fight.\"",
             armorType = ArmorType.HEAVY,
@@ -56,7 +56,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 4,
-            name = "Bob",
+            name = "Max",
             title = R.string.the_elder_swordsman,
             description = "\"A legendary swordsman whose blade cleaves through destiny itself.\"",
             armorType = ArmorType.ETHEREAL,
@@ -71,7 +71,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 5,
-            name = "Bob",
+            name = "Milo",
             title = R.string.the_kitten_priest,
             description = "\"A gentle kitten, learning to heal and bless with care.\"",
             armorType = ArmorType.LIGHT,
@@ -87,7 +87,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 6,
-            name = "Bob",
+            name = "Milo",
             title = R.string.the_teen_priest,
             description = "\"A devoted healer, growing stronger in their sacred duties.\"",
             armorType = ArmorType.LIGHT,
@@ -103,7 +103,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 7,
-            name = "Bob",
+            name = "Milo",
             title = R.string.the_priest,
             description = "\"A master of divine magic, radiating peace and protection.\"",
             armorType = ArmorType.LIGHT,
@@ -117,7 +117,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 8,
-            name = "Bob",
+            name = "Milo",
             title = R.string.the_elder_priest,
             description = "\"A beacon of hope, channeling celestial energy to save all.\"",
             armorType = ArmorType.LIGHT,
@@ -132,7 +132,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 9,
-            name = "Bob",
+            name = "Zoe",
             title = R.string.the_kitten_paladin,
             description = "\"A tiny protector, carrying a shield too big for their size.\"",
             armorType = ArmorType.MEDIUM,
@@ -148,7 +148,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 10,
-            name = "Bob",
+            name = "Zoe",
             title = R.string.the_teen_paladin,
             description = "\"An aspiring guardian, balancing strength and devotion.\"",
             armorType = ArmorType.MEDIUM,
@@ -164,7 +164,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 11,
-            name = "Bob",
+            name = "Zoe",
             title = R.string.the_paladin,
             description = "\"A noble defender, armored in righteousness and steel.\"",
             armorType = ArmorType.HEAVY,
@@ -178,7 +178,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 12,
-            name = "Bob",
+            name = "Zoe",
             title = R.string.the_elder_paladin,
             description = "\"An unyielding sentinel, blessed by the gods to stand eternal.\"",
             armorType = ArmorType.HEROIC,
@@ -193,7 +193,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 13,
-            name = "Bob",
+            name = "Lily",
             title = R.string.the_kitten_mage,
             description = "\"A curious kitten, experimenting with sparks and spells.\"",
             armorType = ArmorType.LIGHT,
@@ -209,7 +209,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 14,
-            name = "Bob",
+            name = "Lily",
             title = R.string.the_teen_mage,
             description = "\"A budding sorcerer, mastering the arcane with each spell cast.\"",
             armorType = ArmorType.LIGHT,
@@ -225,7 +225,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 15,
-            name = "Bob",
+            name = "Lily",
             title = R.string.the_mage,
             description = "\"A grand wizard, weaving powerful magic to reshape the world.\"",
             armorType = ArmorType.LIGHT,
@@ -239,7 +239,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 16,
-            name = "Bob",
+            name = "Lily",
             title = R.string.the_elder_mage,
             description = "\"An ancient spellcaster, commanding the elements with a flick of their paw.\"",
             armorType = ArmorType.ELEMENTAL,
@@ -254,7 +254,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 17,
-            name = "Bob",
+            name = "Nia",
             title = R.string.the_kitten_rogue,
             description = "\"A sneaky little furball always lurking in the shadows, ready to pounce on unsuspecting toys.\"",
             armorType = ArmorType.MEDIUM,
@@ -270,7 +270,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 18,
-            name = "Bob",
+            name = "Nia",
             title = R.string.the_teen_rogue,
             description = "\"Quick and cunning, this adolescent cat uses stealth and speed to outsmart its foes.\"",
             armorType = ArmorType.MEDIUM,
@@ -286,7 +286,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 19,
-            name = "Bob",
+            name = "Nia",
             title = R.string.the_rogue,
             description = "\"A master of the shadows, this cat strikes with deadly precision and vanishes without a trace.\"",
             armorType = ArmorType.MEDIUM,
@@ -300,7 +300,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 20,
-            name = "Bob",
+            name = "Nia",
             title = R.string.the_elder_rogue,
             description = "\"A legendary phantom of the night, this feline thief is a whisper on the wind and the terror of treasure troves.\"",
             armorType = ArmorType.MEDIUM,
@@ -315,7 +315,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 21,
-            name = "Bob",
+            name = "Kai",
             title = R.string.the_kitten_monk,
             description = "\"A serene kitten practicing balance with playful swipes and tiny meditative poses.\"",
             armorType = ArmorType.MEDIUM,
@@ -331,7 +331,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 22,
-            name = "Bob",
+            name = "Kai",
             title = R.string.the_teen_monk,
             description = "\"Disciplined and determined, this young feline channels its energy into swift, focused strikes.\"",
             armorType = ArmorType.MEDIUM,
@@ -347,7 +347,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 23,
-            name = "Bob",
+            name = "Kai",
             title = R.string.the_monk,
             description = "\"A graceful warrior in perfect harmony, this cat strikes with the precision of flowing water.\"",
             armorType = ArmorType.MEDIUM,
@@ -361,7 +361,7 @@ class CatsInitialData {
         ),
         Cat(
             id = 24,
-            name = "Bob",
+            name = "Kai",
             title = R.string.the_elder_monk,
             description = "\"A mystical master of martial arts, this cat embodies tranquility and strength, a living legend among its kind.\"",
             armorType = ArmorType.MEDIUM,
