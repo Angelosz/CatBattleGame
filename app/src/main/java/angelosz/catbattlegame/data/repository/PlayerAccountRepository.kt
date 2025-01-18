@@ -23,10 +23,12 @@ interface PlayerAccountRepository {
     suspend fun updateAccount(playerAccount: PlayerAccount)
 
     /* Crystals */
+    suspend fun getCrystalsAmount(): Int
     suspend fun addCrystals(amount: Int)
     suspend fun reduceCrystals(amount: Int)
 
     /* Gold */
+    suspend fun getGoldAmount(): Int
     suspend fun addGold(amount: Int)
     suspend fun reduceGold(amount: Int)
 

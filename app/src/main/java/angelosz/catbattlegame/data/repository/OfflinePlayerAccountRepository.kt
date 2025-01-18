@@ -27,28 +27,30 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun updateAccount(playerAccount: PlayerAccount) = dao.updateAccount(playerAccount)
 
     /* Crystals */
+    override suspend fun getCrystalsAmount(): Int = dao.getCrystalsAmount()
     override suspend fun addCrystals(amount: Int) = dao.addCrystals(amount)
     override suspend fun reduceCrystals(amount: Int) {
-        val crystals = dao.getPlayerAccount()?.gold
+        val crystals = dao.getPlayerAccount()?.crystals
         if(crystals != null){
             if(amount > crystals){
-                dao.reduceCrystals(amount)
-            } else {
                 dao.reduceCrystals(crystals)
+            } else {
+                dao.reduceCrystals(amount)
             }
         }
 
     }
 
     /* Gold */
+    override suspend fun getGoldAmount(): Int = dao.getGoldAmount()
     override suspend fun addGold(amount: Int) = dao.addGold(amount)
     override suspend fun reduceGold(amount: Int) {
         val gold = dao.getPlayerAccount()?.gold
         if(gold != null){
             if(amount > gold){
-                dao.reduceGold(amount)
-            } else {
                 dao.reduceGold(gold)
+            } else {
+                dao.reduceGold(amount)
             }
         }
     }

@@ -34,12 +34,16 @@ interface PlayerDao {
     suspend fun getGameVersion(): Int
 
     /* Crystals */
+    @Query("Select crystals from player_account Limit 1")
+    suspend fun getCrystalsAmount(): Int
     @Query("Update player_account set crystals = crystals + :amount")
     suspend fun addCrystals(amount: Int)
     @Query("Update player_account set crystals = crystals - :amount")
     suspend fun reduceCrystals(amount: Int)
 
     /* Gold */
+    @Query("Select gold from player_account Limit 1")
+    suspend fun getGoldAmount(): Int
     @Query("Update player_account set gold = gold + :amount")
     suspend fun addGold(amount: Int)
     @Query("Update player_account set gold = gold - :amount")
