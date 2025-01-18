@@ -26,4 +26,5 @@ data class DetailedCatData(
     val abilities: List<Ability> = emptyList(),
     val evolutionLevel: Int = MAX_CAT_LEVEL + 1,
     val nextEvolutionCat: Cat? = Cat(),
+    val playerOwnsIt: Boolean = false
 )
