@@ -27,6 +27,7 @@ import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.home.notifications.HomeNotification
 import angelosz.catbattlegame.ui.home.notifications.NotificationType
 import angelosz.catbattlegame.utils.GameConstants
+import angelosz.catbattlegame.utils.GameConstants.GET_BATTLECHEST_GOLD_COST
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -55,6 +56,7 @@ class HomeScreenViewModel(
 
                 val isDifferentVersion = playerAccount.gameVersion != GameConstants.GAME_VERSION
                 if (isDifferentVersion) {
+                    emptyInitialDataFromDatabase()
                     repopulateDatabase()
 
                     playerAccountRepository.updateAccount(
@@ -76,13 +78,29 @@ class HomeScreenViewModel(
                     )
                 }
 
-                setupNotificationCollector()
-                setupPlayerDataCollector()
+                viewModelScope.launch {
+                    setupPlayerDataCollector()
+                }
+                viewModelScope.launch {
+                    setupNotificationCollector()
+                }
             } catch (e: Exception) {
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
         }
 
+    }
+
+    private suspend fun emptyInitialDataFromDatabase() {
+        catRepository.clearCatsTable()
+        enemyCatRepository.clearEnemyCatsTable()
+        enemyCatRepository.clearChapterEnemiesTable()
+        enemyCatRepository.clearEnemyAbilitiesTable()
+        abilityRepository.clearAbilitiesTable()
+        abilityRepository.clearAbilityCrossRefsTable()
+        campaignRepository.clearCampaignsTable()
+        campaignRepository.clearCampaignChaptersTable()
+        campaignRepository.clearChapterRewardsTable()
     }
 
     private suspend fun setupNotificationCollector() {
@@ -200,6 +218,38 @@ class HomeScreenViewModel(
                         playerAccountRepository.addCrystals(amount)
                     }
                     else -> {}
+                }
+            } catch (e: Exception){
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    fun openShop() {
+        _uiState.update {
+            it.copy(
+                shopIsOpen = true
+            )
+        }
+    }
+
+    fun closeShop() {
+        _uiState.update {
+            it.copy(
+                shopIsOpen = false
+            )
+        }
+    }
+
+    fun battleChestWasBought(catRarity: CatRarity) {
+        viewModelScope.launch {
+            try{
+                val cost = GET_BATTLECHEST_GOLD_COST(catRarity)
+                val playerGold = playerAccountRepository.getGoldAmount()
+
+                if(playerGold >= cost){
+                    playerAccountRepository.reduceGold(cost)
+                    addBattleChestToAccount(catRarity, BattleChestType.NORMAL)
                 }
             } catch (e: Exception){
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }

@@ -46,11 +46,16 @@ fun ArmoryScreen(
     val isLandscapeView = windowSize == WindowWidthSizeClass.Expanded
 
     val onBackButtonPressed = determineBackButtonAction(
-        uiState,
-        armoryCatsViewModel,
-        armoryTeamsViewModel,
-        armoryBattleChestViewModel,
-        returnToMainMenu,
+        uiState = uiState,
+        armoryCatsViewModel = armoryCatsViewModel,
+        armoryTeamsViewModel =  armoryTeamsViewModel,
+        armoryBattleChestViewModel = armoryBattleChestViewModel,
+        returnToMainMenu = {
+            if (armoryTeamsViewModel.hasTeamSelected()) {
+                armoryTeamsViewModel.saveTeam()
+            }
+            returnToMainMenu()
+        },
     )
     BackHandler(onBack = onBackButtonPressed)
 
@@ -139,7 +144,11 @@ private fun determineBackButtonAction(
     returnToMainMenu: () -> Unit,
 ): () -> Unit = {
     when (uiState.selectedCollection) {
-        CollectionsView.CATS -> if (armoryCatsViewModel.uiState.value.isDetailView) armoryCatsViewModel.exitDetailView() else returnToMainMenu()
+        CollectionsView.CATS ->{
+            if (armoryCatsViewModel.uiState.value.isDetailView)
+                armoryCatsViewModel.exitDetailView()
+            else returnToMainMenu()
+        }
         CollectionsView.TEAMS -> {
             if (armoryTeamsViewModel.hasTeamSelected()) {
                 armoryTeamsViewModel.saveTeam()
