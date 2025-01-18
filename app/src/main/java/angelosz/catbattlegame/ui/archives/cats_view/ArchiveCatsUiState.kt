@@ -7,6 +7,8 @@ import angelosz.catbattlegame.ui.archives.data.SimpleCatData
 data class ArchiveCatsUiState (
     val screenState: ScreenState = ScreenState.INITIALIZING,
 
+    val playerCrystals: Int = 0,
+
     val cats: List<SimpleCatData> = emptyList(),
     val selectedCat: DetailedCatData = DetailedCatData(),
     val isCatSelected: Boolean = false,

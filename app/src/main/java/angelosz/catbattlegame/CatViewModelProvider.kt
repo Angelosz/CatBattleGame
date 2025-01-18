@@ -74,7 +74,8 @@ object CatViewModelProvider {
         initializer {
             ArchiveCatsViewModel(
                 getCatBattleApplication().container.catRepository,
-                getCatBattleApplication().container.abilityRepository
+                getCatBattleApplication().container.abilityRepository,
+                getCatBattleApplication().container.playerRepository
             )
         }
 

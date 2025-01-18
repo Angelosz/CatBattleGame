@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,7 @@ import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.ui.archives.data.DetailedCatData
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
+import angelosz.catbattlegame.utils.GameConstants
 import angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL
 
 @Composable
@@ -44,7 +46,9 @@ fun ArchiveCatDetailsCard(
     cat: DetailedCatData,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
     imageSize: Int = 300,
+    playerCrystals: Int = 0,
     onAbilityClicked: (Int) -> Unit,
+    onCatPurchased: (Int) -> Unit
 ) {
     Card(
         modifier = modifier,
@@ -58,7 +62,9 @@ fun ArchiveCatDetailsCard(
                 cat = cat,
                 imageSize = imageSize,
                 textSize = textSize,
-                onAbilityClicked = onAbilityClicked
+                onAbilityClicked = onAbilityClicked,
+                playerCrystals = playerCrystals,
+                onCatPurchased = onCatPurchased
             )
         }
     }
@@ -69,7 +75,9 @@ private fun ArchiveCatDetailsCatContent(
     cat: DetailedCatData,
     imageSize: Int = 300,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
-    onAbilityClicked: (Int) -> Unit
+    playerCrystals: Int,
+    onAbilityClicked: (Int) -> Unit,
+    onCatPurchased: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -204,6 +212,61 @@ private fun ArchiveCatDetailsCatContent(
                     }
                 }
             }
+            if(!cat.playerOwnsIt){
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                ) {
+                    val crystalCost = GameConstants.GET_CAT_CRYSTAL_COST(cat.rarity)
+                    Button(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .align(Alignment.CenterHorizontally),
+                        enabled = playerCrystals >= crystalCost,
+                        onClick = { onCatPurchased(cat.id) }
+                    ){
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                text = "Unlock for $crystalCost",
+                                modifier = Modifier.padding(8.dp)
+                            )
+                            Image(
+                                painter = painterResource(R.drawable.crystals_128),
+                                contentDescription = null,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
+                    }
+                }
+            } else {
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    ),
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                ) {
+                    Button(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .align(Alignment.CenterHorizontally),
+                        enabled = false,
+                        onClick = { }
+                    ){
+                        Text(
+                            text = "Owned",
+                            modifier = Modifier.padding(8.dp)
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -241,7 +304,8 @@ fun ArmoryCatDetailsCardPreview(){
                 evolutionLevel = 5,
                 nextEvolutionCat = Cat(name= "Teen Swordman"),
             ),
-            onAbilityClicked = {  }
+            onAbilityClicked = {},
+            onCatPurchased = {}
         )
     }
 }

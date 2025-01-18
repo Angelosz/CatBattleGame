@@ -68,7 +68,9 @@ fun HandleArchiveCatsPortraitView(
         ArchiveCatDetailsCard(
             modifier = Modifier.padding(16.dp),
             cat = uiState.selectedCat,
-            onAbilityClicked = onAbilityClicked
+            playerCrystals = uiState.playerCrystals,
+            onAbilityClicked = onAbilityClicked,
+            onCatPurchased = { viewModel.catWasPurchased(it) }
         )
     } else {
         Column(
@@ -130,7 +132,9 @@ fun HandleArchiveCatsLandscapeView(
             modifier = Modifier.width(300.dp),
             cat = uiState.selectedCat,
             imageSize = 256,
+            playerCrystals = uiState.playerCrystals,
             onAbilityClicked = onAbilityClicked,
+            onCatPurchased = { viewModel.catWasPurchased(it) }
         )
     }
 }

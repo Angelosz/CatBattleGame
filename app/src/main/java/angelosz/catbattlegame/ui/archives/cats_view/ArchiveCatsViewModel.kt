@@ -2,10 +2,13 @@ package angelosz.catbattlegame.ui.archives.cats_view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
+import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.archives.data.DetailedCatData
+import angelosz.catbattlegame.utils.GameConstants
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +16,8 @@ import kotlinx.coroutines.launch
 
 class ArchiveCatsViewModel(
     private val catsRepository: CatRepository,
-    private val abilitiesRepository: AbilityRepository
+    private val abilitiesRepository: AbilityRepository,
+    private val playerAccountRepository: PlayerAccountRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(ArchiveCatsUiState())
     val uiState: StateFlow<ArchiveCatsUiState> = _uiState
@@ -28,10 +32,12 @@ class ArchiveCatsViewModel(
                     offset = _uiState.value.page * _uiState.value.pageLimit
                 )
                 val totalNumberOfCats = catsRepository.getCount()
+                val playerCrystals = playerAccountRepository.getCrystalsAmount()
 
                 _uiState.update {
                     it.copy(
                         screenState = ScreenState.SUCCESS,
+                        playerCrystals = playerCrystals,
                         cats = cats,
                         totalNumberOfCats = totalNumberOfCats,
                     )
@@ -63,7 +69,8 @@ class ArchiveCatsViewModel(
                     rarity = cat.rarity,
                     abilities = catAbilities,
                     evolutionLevel = cat.evolutionLevel,
-                    nextEvolutionCat = if(cat.nextEvolutionId != null) catsRepository.getCatById(cat.nextEvolutionId) else null
+                    nextEvolutionCat = if(cat.nextEvolutionId != null) catsRepository.getCatById(cat.nextEvolutionId) else null,
+                    playerOwnsIt = playerAccountRepository.ownsCat(cat.id)
                 )
 
                 _uiState.update {
@@ -127,6 +134,23 @@ class ArchiveCatsViewModel(
                     )
                 }
             } catch (e: Exception) {
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    fun catWasPurchased(catId: Int) {
+        viewModelScope.launch {
+            try{
+                val cat = catsRepository.getCatById(catId)
+                val playerCrystals = playerAccountRepository.getCrystalsAmount()
+                val crystalsCost = GameConstants.GET_CAT_CRYSTAL_COST(cat.rarity)
+                if(crystalsCost <= playerCrystals && !playerAccountRepository.ownsCat(catId)){
+                    playerAccountRepository.reduceCrystals(crystalsCost)
+                    playerAccountRepository.insertOwnedCat(OwnedCat(catId = cat.id))
+                    selectCat(cat.id)
+                }
+            } catch(e: Exception){
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
         }
