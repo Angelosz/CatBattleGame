@@ -2,6 +2,7 @@ package angelosz.catbattlegame.data
 
 import android.content.Context
 import angelosz.catbattlegame.data.database.AppDatabase
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.BattleChestRepository
 import angelosz.catbattlegame.data.repository.CampaignRepository
@@ -16,6 +17,7 @@ import angelosz.catbattlegame.data.repository.OfflinePlayerAccountRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
 
 interface AppContainer {
+    val dataStoreRepository: DataStoreRepository
     val catRepository: CatRepository
     val abilityRepository: AbilityRepository
     val playerRepository: PlayerAccountRepository
@@ -26,6 +28,7 @@ interface AppContainer {
 
 class AppDataContainer(context: Context): AppContainer{
     private val database: AppDatabase = AppDatabase.getInstance(context)
+    override val dataStoreRepository = DataStoreRepository(context)
     override val catRepository: OfflineCatDaoRepository = OfflineCatDaoRepository(database.catDao())
     override val abilityRepository: OfflineAbilityRepository = OfflineAbilityRepository(database.abilityDao())
     override val playerRepository: PlayerAccountRepository = OfflinePlayerAccountRepository(database.playerDao())

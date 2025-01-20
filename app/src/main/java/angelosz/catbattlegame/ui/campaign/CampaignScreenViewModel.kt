@@ -2,6 +2,7 @@ package angelosz.catbattlegame.ui.campaign
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
 import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.domain.enums.CampaignState
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 
 class CampaignScreenViewModel(
     private val campaignRepository: CampaignRepository,
-    private val enemyCatRepository: EnemyCatRepository
+    private val enemyCatRepository: EnemyCatRepository,
+    private val dataStoreRepository: DataStoreRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(CampaignScreenUiState())
     val uiState: StateFlow<CampaignScreenUiState> = _uiState
@@ -25,10 +27,14 @@ class CampaignScreenViewModel(
         try {
             viewModelScope.launch {
                 val campaigns = campaignRepository.getAllCampaigns()
+                val selectedCampaignId = dataStoreRepository.getSelectedCampaign()
                 _uiState.update {
                     it.copy(
                         screenState = ScreenState.SUCCESS,
-                        campaigns = campaigns
+                        campaigns = campaigns,
+                        selectedCampaign = campaigns.find { campaign ->
+                            campaign.id.toInt() == selectedCampaignId }
+                            ?: Campaign(0),
                     )
                 }
             }
@@ -49,6 +55,7 @@ class CampaignScreenViewModel(
         }
         viewModelScope.launch{
             try {
+                dataStoreRepository.saveSelectedCampaign(campaign.id.toInt())
                 val campaignChapters = campaignRepository.getCampaignChaptersByCampaignId(campaign.id)
 
                 _uiState.update {

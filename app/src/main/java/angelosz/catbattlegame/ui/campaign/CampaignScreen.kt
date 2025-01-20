@@ -80,7 +80,8 @@ fun CampaignScreen(
                         )
                         CampaignSelectionCarousel(
                             campaigns = uiState.campaigns,
-                            onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) }
+                            onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) },
+                            selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
                         )
                     }
                     CampaignSelectionStage.SELECTING_CHAPTER -> {
@@ -95,20 +96,21 @@ fun CampaignScreen(
                             chapters = uiState.campaignChapters,
                             onChapterClicked = { chapter ->
                                 if(chapter.state != CampaignState.LOCKED) {
-                                    viewModel.selectCampaignChapter(chapter)
+                                    //viewModel.selectCampaignChapter(chapter)
+                                    onChapterSelected(chapter.id)
                                 }
                             }
                         )
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {
-                        BackHandler(onBack = { viewModel.backToCampaignChapterSelection() })
+                        /*BackHandler(onBack = { viewModel.backToCampaignChapterSelection() })
                         BackButton(
                             modifier = Modifier
                                 .align(Alignment.BottomEnd)
                                 .padding(horizontal = 32.dp, vertical = 56.dp),
                             onBackPressed = { viewModel.backToCampaignChapterSelection() }
                         )
-                        ChapterInfoCard(uiState, onChooseTeamClicked = onChapterSelected)
+                        ChapterInfoCard(uiState, onChooseTeamClicked = onChapterSelected)*/
                     }
                 }
 
@@ -274,10 +276,11 @@ fun CampaignChapterSelectionGrid(
 @Composable
 private fun CampaignSelectionCarousel(
     campaigns: List<Campaign>,
-    onCampaignClicked: (Campaign) -> Unit
+    onCampaignClicked: (Campaign) -> Unit,
+    selectedCampaignIndex: Int = 0
 ) {
     if (campaigns.isNotEmpty()) {
-        var selectedImageIndex by remember { mutableIntStateOf(0) }
+        var selectedImageIndex by remember { mutableIntStateOf(if(selectedCampaignIndex >= 0) selectedCampaignIndex else 0) }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
