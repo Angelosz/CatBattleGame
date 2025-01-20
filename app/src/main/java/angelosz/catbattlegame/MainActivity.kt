@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import angelosz.catbattlegame.data.database.AppDatabase
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
 import angelosz.catbattlegame.navigation.AppLayout
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +22,9 @@ class MainActivity : ComponentActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val db = AppDatabase.getInstance(applicationContext)
+            val dataStore = DataStoreRepository(applicationContext)
             db.clearAllTables()
+            dataStore.clearSelectedCampaign()
         }
 
         setContent {
