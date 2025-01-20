@@ -119,6 +119,27 @@ class CombatScreenViewModel(
                         enemyCatDied(catId)
                     }
                 )
+
+                EnemyType.SUMMONER -> SummonerEnemy(
+                    CombatCatData.build(
+                        combatId = firstCombatId + index,
+                        enemyCat = enemyCat,
+                        combatAbilities = combatAbilities
+                    ),
+                    onDeath = { catId ->
+                        enemyCatDied(catId)
+                    }
+                )
+                EnemyType.UNIQUE_SUMMONER -> UniqueSummonEnemy(
+                    CombatCatData.build(
+                        combatId = firstCombatId + index,
+                        enemyCat = enemyCat,
+                        combatAbilities = combatAbilities
+                    ),
+                    onDeath = { catId ->
+                        enemyCatDied(catId)
+                    }
+                )
             }
         }
     }
@@ -412,14 +433,13 @@ class CombatScreenViewModel(
                     abilityClicked(EmptyAbility(Ability(0)))
                     useAbility()
                 } else {
-                    abilityClicked(enemyCat.selectAbility())
+                    abilityClicked(enemyCat.selectAbility(
+                        playerCats = _uiState.value.teamCombatCats.map { it.cat.combatId },
+                        enemyCats = _uiState.value.enemyCombatCats.map { it.cat.combatId },
+                        )
+                    )
                     val ability = _uiState.value.activeAbility
                     if(ability != null){
-                        enemyCat.selectTargets(
-                            playerCats = _uiState.value.teamCombatCats.map { it.cat.combatId },
-                            enemyCats = _uiState.value.enemyCombatCats.map { it.cat.combatId },
-                            ability = ability
-                        )
                         useAbility()
                     }
                 }
@@ -542,6 +562,10 @@ class CombatScreenViewModel(
                 }
             }
         }
+    }
+
+    fun summonCatForCurrentTeam(summonId: Float) {
+        TODO("Not yet implemented")
     }
 }
 
