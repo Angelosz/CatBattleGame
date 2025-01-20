@@ -44,8 +44,8 @@ class EnemyCatsInitialData {
             baseHealth = 1f, image = R.drawable.enemy_hose_300),
         EnemyCat(id = 11, name = "Ant Worker",
             baseHealth = 1f, image = R.drawable.enemy_worker_ant_300),
-        EnemyCat(id = 12, name = "Ant Queen",
-            baseHealth = 1f, image = R.drawable.enemy_worker_ant_300),
+        EnemyCat(id = 12, name = "Ant Warrior",
+            baseHealth = 1f, image = R.drawable.enemy_warrior_ant_300),
         EnemyCat(id = 13, name = "Angry Snail",
             baseHealth = 1f, image = R.drawable.enemy_angry_snail_300),
         EnemyCat(id = 14, name = "Happy Snail",
@@ -60,6 +60,10 @@ class EnemyCatsInitialData {
             baseHealth = 1f, image = R.drawable.enemy_mother_racoon_300),
         EnemyCat(id = 19, name = "Dark Rogue",
             baseHealth = 1f, image = R.drawable.enemy_dark_rogue_300),
+        EnemyCat(id = 20, name = "Ant Queen",
+            baseHealth = 1f, image = R.drawable.enemy_queen_ant_300),
+        EnemyCat(id = 21, name = "Hunter Gnome",
+            baseHealth = 1f, image = R.drawable.enemy_hunter_gnome_300),
     )
 
     private val enemyAbilities: Map<Long, List<Int>> = mapOf(
