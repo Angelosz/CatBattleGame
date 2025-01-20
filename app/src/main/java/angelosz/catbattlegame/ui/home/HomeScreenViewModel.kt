@@ -137,11 +137,11 @@ class HomeScreenViewModel(
         abilityRepository.insertAbilities(abilityInitialData.abilities)
         abilityRepository.insertCatAbilityCrossRefs(abilityInitialData.getCatAbilitiesCrossRef())
         enemyCatRepository.insertEnemyCats(enemyCatInitialData.enemyCats)
-        enemyCatRepository.insertEnemyAbilities(enemyCatInitialData.enemyAbilities)
-        enemyCatRepository.insertChapterEnemies(chaptersInitialData.chapterEnemies)
+        enemyCatRepository.insertEnemyAbilities(enemyCatInitialData.getEnemyAbilities())
+        enemyCatRepository.insertChapterEnemies(chaptersInitialData.getChapterEnemies())
         campaignRepository.insertCampaigns(CampaignsInitialData().campaigns)
         campaignRepository.insertCampaignChapters(chaptersInitialData.campaignChapters)
-        campaignRepository.insertChapterRewards(chaptersInitialData.chapterRewards)
+        campaignRepository.insertChapterRewards(chaptersInitialData.getChapterRewards())
     }
 
     private suspend fun initializePlayerAccount(): PlayerAccount {
