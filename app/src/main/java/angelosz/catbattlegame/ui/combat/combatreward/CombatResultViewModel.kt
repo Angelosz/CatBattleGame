@@ -157,7 +157,7 @@ class CombatResultViewModel(
                         val evolutionCat = catRepository.getCatById(evolutionCatId)
                         var message = ""
                         if(playerAccountRepository.ownsCat(evolutionCatId)){
-                            val crystalValue = when(baseCat.rarity){
+                            val crystalValue = when(evolutionCat.rarity){
                                 CatRarity.KITTEN -> KITTEN_DISENCHANT_VALUE
                                 CatRarity.TEEN -> TEEN_DISENCHANT_VALUE
                                 CatRarity.ADULT -> ADULT_DISENCHANT_VALUE
