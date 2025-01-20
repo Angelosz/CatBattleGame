@@ -47,7 +47,7 @@ class ChaptersInitialData {
             campaignId = 2,
             order = 1,
             name = "Sparrowing",
-            description = "\"Seems like a scout!\"",
+            description = "\"A little sparrow exploring the woods\"",
             image = R.drawable.enemy_chapter_sparrow,
             unlocksChapter = 5,
         ),
@@ -55,83 +55,291 @@ class ChaptersInitialData {
             id = 5,
             campaignId = 2,
             order = 2,
+            name = "Garden Snails",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_snails,
+            unlocksChapter = 6,
+        ),
+        CampaignChapter(
+            id = 6,
+            campaignId = 2,
+            order = 3,
+            name = "Garden Gnome Squad",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_angry_gnome,
+            unlocksChapter = 7,
+        ),
+        CampaignChapter(
+            id = 7,
+            campaignId = 2,
+            order = 4,
+            name = "Garden Tools",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_garden_tools,
+            unlocksChapter = 8,
+        ),
+        CampaignChapter(
+            id = 8,
+            campaignId = 2,
+            order = 5,
+            name = "Worker Ants",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_worker_ant,
+            unlocksChapter = 9,
+        ),
+        CampaignChapter(
+            id = 9,
+            campaignId = 2,
+            order = 6,
+            name = "Ant Colony",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_worker_ant,
+            unlocksChapter = 10,
+        ),
+        CampaignChapter(
+            id = 10,
+            campaignId = 2,
+            order = 7,
+            name = "Hunter Gnome",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_angry_gnome,
+            unlocksChapter = 11,
+        ),
+        CampaignChapter(
+            id = 11,
+            campaignId = 2,
+            order = 8,
+            name = "Young Racoon",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_racoon,
+            unlocksChapter = 12,
+        ),
+        CampaignChapter(
+            id = 12,
+            campaignId = 2,
+            order = 9,
+            name = "Hedgehog",
+            description = "\"Chomp Chomp\"",
+            image = R.drawable.enemy_chapter_hedgehog,
+            unlocksChapter = 13,
+        ),
+        CampaignChapter(
+            id = 13,
+            campaignId = 2,
+            order = 10,
+            name = "Mosquitos!",
+            description = "\"What are they defending?\"",
+            image = R.drawable.enemy_chapter_mosquito,
+            unlocksChapter = 14,
+        ),
+        CampaignChapter(
+            id = 14,
+            campaignId = 2,
+            order = 11,
             name = "Guards!",
             description = "\"What are they defending?\"",
             image = R.drawable.enemy_chapter_birdguards,
-            unlocksChapter = 6,
+            unlocksChapter = 15,
+        ),
+        CampaignChapter(
+            id = 15,
+            campaignId = 2,
+            order = 12,
+            name = "The Dark Rogue!",
+            description = "\"Where are they going?!\"",
+            image = R.drawable.enemy_chapter_dark_rogue,
+            unlocksChapter = 16,
+            isLastCampaignChapter = true
         )
         /*  End Second Campaign */
     )
 
-    val chapterRewards = listOf(
+    data class Reward(
+        val type: RewardType,
+        val amount: Int = 1
+    )
+
+    val chapterRewards: Map<Long, List<Reward>> = mapOf(
         /* First Campaign */
-        ChapterReward(
-            chapterId = 1,
-            rewardType = RewardType.GOLD,
-            amount = 32
+        1L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 28
+            ),
+            Reward(
+                type = RewardType.NEW_KITTEN,
+            ),
         ),
-        ChapterReward(
-            chapterId = 1,
-            rewardType = RewardType.NEW_KITTEN,
+        2L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 34
+            ),
+            Reward(
+                type = RewardType.NEW_KITTEN,
+            )
         ),
-        ChapterReward(
-            chapterId = 2,
-            rewardType = RewardType.GOLD,
-            amount = 48
-        ),
-        ChapterReward(
-            chapterId = 2,
-            rewardType = RewardType.NEW_KITTEN,
-        ),
-        ChapterReward(
-            chapterId = 3,
-            rewardType = RewardType.GOLD,
-            amount = 60
-        ),
-        ChapterReward(
-            chapterId = 3,
-            rewardType = RewardType.NEW_KITTEN,
-        ),
-        ChapterReward(
-            chapterId = 3,
-            rewardType = RewardType.KITTEN_BOX,
+        3L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 38
+            ),
+            Reward(
+                type = RewardType.NEW_KITTEN,
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
         ),
         /*  End First Campaign */
 
         /* Second Campaign */
-        ChapterReward(
-            chapterId = 4,
-            rewardType = RewardType.GOLD,
-            amount = 80
+        4L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 44
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
         ),
-        ChapterReward(
-            chapterId = 4,
-            rewardType = RewardType.KITTEN_BOX,
+        5L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 52
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
         ),
-        ChapterReward(
-            chapterId = 5,
-            rewardType = RewardType.GOLD,
-            amount = 120
+        6L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
         ),
-        ChapterReward(
-            chapterId = 5,
-            rewardType = RewardType.KITTEN_BOX,
+        7L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        8L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        9L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        10L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        11L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        12L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        13L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        14L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
+        ),
+        15L to listOf(
+            Reward(
+                type = RewardType.GOLD,
+                amount = 60
+            ),
+            Reward(
+                type = RewardType.KITTEN_BOX,
+            ),
         ),
         /*  End Second Campaign */
     )
 
-    val chapterEnemies = listOf(
-        /* First Campaign */
-        ChapterEnemy(chapterId = 1, enemyCatId = 1, order = 1),
-        ChapterEnemy(chapterId = 2, enemyCatId = 2, order = 1),
-        ChapterEnemy(chapterId = 2, enemyCatId = 2, order = 2),
-        ChapterEnemy(chapterId = 3, enemyCatId = 3, order = 1),
-        /*  End First Campaign */
+    fun getChapterRewards(): List<ChapterReward> =
+        chapterRewards.flatMap { (id, rewards) ->
+            rewards.map{ reward ->
+                ChapterReward(
+                    chapterId = id,
+                    rewardType = reward.type,
+                    amount = reward.amount
+                )
+            }
+        }
 
-        /* Second Campaign */
-        ChapterEnemy(chapterId = 4, enemyCatId = 4, order = 1),
-        ChapterEnemy(chapterId = 5, enemyCatId = 5, order = 1),
-        ChapterEnemy(chapterId = 5, enemyCatId = 6, order = 2),
-        /*  End Second Campaign */
+    val enemies: Map<Long, List<Long>> = mapOf(
+        1L to listOf(1L),
+        2L to listOf(2L, 2L),
+        3L to listOf(3L),
+        4L to listOf(4L),
+        5L to listOf(13L, 14L),
+        6L to listOf(7L, 7L, 7L, 7L),
+        7L to listOf(9L, 10L),
+        8L to listOf(11L),
+        9L to listOf(11L),
+        10L to listOf(7L, 8L),
+        11L to listOf(17L),
+        12L to listOf(16L),
+        13L to listOf(15L, 15L),
+        14L to listOf(5L, 6L),
+        15L to listOf(19L),
     )
+
+    fun getChapterEnemies(): List<ChapterEnemy> = enemies.flatMap { (id, enemies) ->
+        enemies.map { enemy ->
+            ChapterEnemy(
+                chapterId = id,
+                enemyCatId = enemy
+            )
+        }
+    }
 }
