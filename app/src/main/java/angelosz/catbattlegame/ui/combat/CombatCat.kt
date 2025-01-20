@@ -26,6 +26,7 @@ import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.data.entities.OwnedCat
+import angelosz.catbattlegame.domain.enums.AbilityType
 import angelosz.catbattlegame.domain.enums.ArmorType
 import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.domain.enums.CombatModifier
@@ -422,15 +423,72 @@ interface CombatCat{
 class PlayerCombatCat(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : CombatCat {}
 
 sealed class EnemyCombatCat(override val cat: CombatCatData) : CombatCat {
-    abstract fun selectAbility(): CombatAbility
+    abstract fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility
     abstract fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility)
 }
 
 class SimpleEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
-    override fun selectAbility(): CombatAbility {
+    override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
         val notOnCooldownAbilities = cat.abilities.filter { ability -> !ability.onCooldown()}
         if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
-        return notOnCooldownAbilities.random()
+        val ability = notOnCooldownAbilities.random()
+        selectTargets(playerCats, enemyCats, ability)
+        return ability
+    }
+
+    override fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility) {
+        ability.selectAllyTeam(enemyCats)
+        ability.setSelectedAllyCat(enemyCats.random())
+        ability.selectEnemyTeam(playerCats)
+        ability.setSelectedEnemyCat(playerCats.random())
+    }
+}
+
+class SummonerEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
+    override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
+        var selectedAbility = cat.abilities.find { ability -> ability.ability.abilityType == AbilityType.SUMMON }
+        if(selectedAbility != null && !selectedAbility.onCooldown() && enemyCats.size < 4){
+            selectTargets(playerCats, enemyCats, selectedAbility)
+            return selectedAbility
+        }
+
+        val notOnCooldownAbilities = cat.abilities.filter {
+            ability -> !ability.onCooldown()
+                && ability.ability.abilityType != AbilityType.SUMMON
+        }
+        if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
+        selectedAbility = notOnCooldownAbilities.random()
+        selectTargets(playerCats, enemyCats, selectedAbility)
+        return selectedAbility
+    }
+
+    override fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility) {
+        ability.selectAllyTeam(enemyCats)
+        ability.setSelectedAllyCat(enemyCats.random())
+        ability.selectEnemyTeam(playerCats)
+        ability.setSelectedEnemyCat(playerCats.random())
+    }
+}
+
+class UniqueSummonEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
+    override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
+        var selectedAbility = cat.abilities.find { ability -> ability.ability.abilityType == AbilityType.SUMMON }
+        if(selectedAbility != null && !selectedAbility.onCooldown() && enemyCats.size < 4){
+            val summonId = selectedAbility.ability.combatModifierValue
+            if(!enemyCats.contains(summonId.toInt())){
+                selectTargets(playerCats, enemyCats, selectedAbility)
+                return selectedAbility
+            }
+        }
+
+        val notOnCooldownAbilities = cat.abilities.filter {
+                ability -> !ability.onCooldown()
+                && ability.ability.abilityType != AbilityType.SUMMON
+        }
+        if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
+        selectedAbility = notOnCooldownAbilities.random()
+        selectTargets(playerCats, enemyCats, selectedAbility)
+        return selectedAbility
     }
 
     override fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility) {
