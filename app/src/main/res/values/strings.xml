@@ -82,4 +82,6 @@
     <string name="turn_passed">Turn Passed</string>
     <string name="end_turn">End Turn</string>
     <string name="your_cat_is_stunned">Your cat is Stunned!</string>
+    <string name="ability_type_summon">Summon</string>
+    <string name="ability_type_unique_summon">Unique Summon</string>
 </resources>
