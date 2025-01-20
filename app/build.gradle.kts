@@ -81,6 +81,9 @@ dependencies {
     // Kotlin coroutines support for Room
     implementation (libs.androidx.room.ktx)
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
 
