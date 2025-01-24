@@ -84,4 +84,5 @@
     <string name="your_cat_is_stunned">Your cat is Stunned!</string>
     <string name="ability_type_summon">Summon</string>
     <string name="ability_type_unique_summon">Unique Summon</string>
+    <string name="ability_type_clone">Clone</string>
 </resources>
