@@ -179,7 +179,7 @@ fun BottomGeneralBar(navigateToBattleChests: () -> Unit, navigateToTeamBuild: ()
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(128.dp)
+            .height(144.dp)
             .background(Color.Black),
         contentAlignment = Alignment.Center
     ) {
@@ -199,11 +199,15 @@ fun BottomGeneralBar(navigateToBattleChests: () -> Unit, navigateToTeamBuild: ()
         ) {
             RoundedImageButton(
                 onClick = navigateToTeamBuild,
-                innerImage = R.drawable.teams_button_256,
+                innerImage = R.drawable.collections_button_256,
             )
             RoundedImageButton(
                 onClick = navigateToBattleChests,
-                innerImage = R.drawable.battlechest_256,
+                innerImage = R.drawable.archive_button_256,
+            )
+            RoundedImageButton(
+                    onClick = navigateToBattleChests,
+            innerImage = R.drawable.battlechest_256,
             )
 
         }

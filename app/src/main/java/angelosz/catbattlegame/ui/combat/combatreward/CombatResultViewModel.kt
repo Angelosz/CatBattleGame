@@ -85,7 +85,7 @@ class CombatResultViewModel(
                             )
                         }
                     } else {
-                        val experience = chapter.experience / 10
+                        val experience = chapter.experience / 4
                         addCatsExperience(team, experience)
 
                         _uiState.update {

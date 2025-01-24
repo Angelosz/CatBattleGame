@@ -283,13 +283,13 @@ fun CombatScreen(
                                                 Text(
                                                     text = stringResource(R.string.your_cat_is_stunned),
                                                     modifier = Modifier
-                                                        .padding(8.dp)
+                                                        .padding(2.dp)
                                                         .width(256.dp),
                                                     textAlign = TextAlign.Center,
                                                     style = MaterialTheme.typography.labelLarge
                                                 )
                                                 Button(
-                                                    modifier = Modifier.padding(8.dp),
+                                                    modifier = Modifier.padding(2.dp),
                                                     onClick = { if(uiState.combatStage == CombatStage.PLAYER_TURN) viewModel.passedTurn() }
                                                 ){
                                                     Text(

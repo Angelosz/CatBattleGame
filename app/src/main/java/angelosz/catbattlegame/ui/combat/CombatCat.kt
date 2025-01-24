@@ -113,6 +113,28 @@ class CombatCatData(
                 armorType = enemyCat.armorType
             )
         }
+
+        fun copy(
+            newCombatId: Int,
+            combatCatData: CombatCatData
+        ): CombatCatData = CombatCatData(
+            combatId = newCombatId,
+            name = combatCatData.name,
+            image = combatCatData.image,
+            currentHealth = combatCatData.currentHealth,
+            maxHealth = combatCatData.maxHealth,
+            healthModifier = combatCatData.healthModifier,
+            attack = combatCatData.attack,
+            attackModifier = combatCatData.attackModifier,
+            defense = combatCatData.defense,
+            defenseModifier = combatCatData.defenseModifier,
+            attackSpeed = combatCatData.attackSpeed,
+            attackSpeedModifier = combatCatData.attackSpeedModifier,
+            initiative = combatCatData.initiative,
+            abilities = combatCatData.abilities,
+            role = combatCatData.role,
+            armorType = combatCatData.armorType,
+        )
     }
 
     fun calculateHealthPercentage(): Float {
@@ -418,6 +440,14 @@ interface CombatCat{
             }
         }
     }
+
+    fun getSlowAmount(): Float {
+        var slowAmount = 0.0f
+        cat.appliedCombatModifiers.forEach {
+            if(it.combatModifier == CombatModifier.SLOWED) slowAmount += it.amount
+        }
+        return slowAmount
+    }
 }
 
 class PlayerCombatCat(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : CombatCat {}
@@ -446,8 +476,12 @@ class SimpleEnemy(override val cat: CombatCatData, override val onDeath: (Int) -
 
 class SummonerEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
     override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
-        var selectedAbility = cat.abilities.find { ability -> ability.ability.abilityType == AbilityType.SUMMON }
-        if(selectedAbility != null && !selectedAbility.onCooldown() && enemyCats.size < 4){
+        var selectedAbility = cat.abilities.find { ability ->
+            (ability.ability.abilityType == AbilityType.SUMMON
+                    || ability.ability.abilityType == AbilityType.CLONE)
+                    && !ability.onCooldown()
+        }
+        if(selectedAbility != null && enemyCats.size < 4){
             selectTargets(playerCats, enemyCats, selectedAbility)
             return selectedAbility
         }
@@ -455,6 +489,7 @@ class SummonerEnemy(override val cat: CombatCatData, override val onDeath: (Int)
         val notOnCooldownAbilities = cat.abilities.filter {
             ability -> !ability.onCooldown()
                 && ability.ability.abilityType != AbilityType.SUMMON
+                && ability.ability.abilityType != AbilityType.CLONE
         }
         if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
         selectedAbility = notOnCooldownAbilities.random()

@@ -39,6 +39,7 @@ sealed class CombatAbility(){
                 when(Pair(ability.abilityType, ability.targets)){
                     Pair(AbilityType.DAMAGE, AbilityTarget.SINGLE_ENEMY) -> SingleTargetDamageAbility(ability)
                     Pair(AbilityType.DAMAGE_STATUS_CHANGING, AbilityTarget.SINGLE_ENEMY) -> SingleTargetDamageAbility(ability)
+                    Pair(AbilityType.DAMAGE_STATUS_CHANGING, AbilityTarget.ENEMY_TEAM) -> AoEDamageAbility(ability)
                     Pair(AbilityType.HEALING, AbilityTarget.ALLY) -> SingleTargetHealingAbility(ability)
                     Pair(AbilityType.HEALING, AbilityTarget.TEAM) -> AoEHealAbility(ability)
                     Pair(AbilityType.DAMAGE, AbilityTarget.ENEMY_TEAM) -> AoEDamageAbility(ability)
@@ -47,6 +48,7 @@ sealed class CombatAbility(){
                     Pair(AbilityType.STATUS_CHANGING, AbilityTarget.TEAM) -> AoeTeamStatusChangingAbility(ability)
                     Pair(AbilityType.STATUS_CHANGING, AbilityTarget.ENEMY_TEAM) -> AoeEnemyTeamStatusChangingAbility(ability)
                     Pair(AbilityType.SUMMON, AbilityTarget.ENEMY_TEAM) -> EnemySummonAbility(ability)
+                    Pair(AbilityType.CLONE, AbilityTarget.ENEMY_TEAM) -> EnemyCloneAbility(ability)
 
                     else -> EmptyAbility(ability)
                 }
@@ -274,7 +276,6 @@ class SingleEnemyStatusChangingAbility(override val ability: Ability): CombatAbi
     override fun getMessage(): Int = R.string.select_target_enemy
 }
 
-
 class SingleAllyStatusChangingAbility(override val ability: Ability): CombatAbility(){
     private var selectedCatId: Int? = null
 
@@ -394,7 +395,7 @@ class AoeEnemyTeamStatusChangingAbility(override val ability: Ability): CombatAb
 
 class EnemySummonAbility(override val ability: Ability): CombatAbility(){
     private var selectedCats: List<Int> = listOf()
-    private val summonId = ability.combatModifierValue
+    private val summonId = ability.combatModifierValue.toLong()
 
     override fun setSelectedEnemyCat(catCombatId: Int) { }
     override fun setSelectedAllyCat(catCombatId: Int) { }
@@ -418,6 +419,40 @@ class EnemySummonAbility(override val ability: Ability): CombatAbility(){
 
     override fun apply(viewModel: CombatScreenViewModel) {
         viewModel.summonCatForCurrentTeam(summonId)
+    }
+
+    override fun clear() {
+        selectedCats = emptyList()
+    }
+
+    override fun getMessage(): Int = R.string.select_ally_team
+}
+
+class EnemyCloneAbility(override val ability: Ability): CombatAbility(){
+    private var selectedCats: List<Int> = listOf()
+
+    override fun setSelectedEnemyCat(catCombatId: Int) { }
+    override fun setSelectedAllyCat(catCombatId: Int) { }
+    override fun selectEnemyTeam(enemyTeam: List<Int>) { }
+    override fun selectAllyTeam(allyTeam: List<Int>) {
+        if(selectedCats.isEmpty()){
+            selectedCats = allyTeam
+        } else {
+            selectedCats = emptyList()
+        }
+    }
+
+
+    override fun getSelectedCatsIds(): List<Int> {
+        return selectedCats
+    }
+
+    override fun isReady(): Boolean {
+        return true
+    }
+
+    override fun apply(viewModel: CombatScreenViewModel) {
+        viewModel.cloneEnemy()
     }
 
     override fun clear() {

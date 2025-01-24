@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class CombatScreenViewModel(
     private val playerAccountRepository: PlayerAccountRepository,
@@ -106,41 +107,49 @@ class CombatScreenViewModel(
     }
     private suspend fun buildEnemyCombatCatsTeam(chapterEnemies: List<EnemyCat>, firstCombatId: Int): List<EnemyCombatCat> {
         return chapterEnemies.mapIndexed { index, enemyCat ->
-            val catAbilities = abilityRepository.getEnemyCatAbilities(enemyCat.id.toInt())
-            val combatAbilities = CombatAbility.build(catAbilities)
-            when(enemyCat.enemyType) {
-                EnemyType.SIMPLE_ENEMY -> SimpleEnemy(
-                    CombatCatData.build(
-                        combatId = firstCombatId + index,
-                        enemyCat = enemyCat,
-                        combatAbilities = combatAbilities
-                    ),
-                    onDeath = { catId ->
-                        enemyCatDied(catId)
-                    }
-                )
+            createEnemyCombatCat(enemyCat, firstCombatId + index)
+        }
+    }
 
-                EnemyType.SUMMONER -> SummonerEnemy(
-                    CombatCatData.build(
-                        combatId = firstCombatId + index,
-                        enemyCat = enemyCat,
-                        combatAbilities = combatAbilities
-                    ),
-                    onDeath = { catId ->
-                        enemyCatDied(catId)
-                    }
-                )
-                EnemyType.UNIQUE_SUMMONER -> UniqueSummonEnemy(
-                    CombatCatData.build(
-                        combatId = firstCombatId + index,
-                        enemyCat = enemyCat,
-                        combatAbilities = combatAbilities
-                    ),
-                    onDeath = { catId ->
-                        enemyCatDied(catId)
-                    }
-                )
-            }
+    private suspend fun createEnemyCombatCat(
+        enemyCat: EnemyCat,
+        combatId: Int,
+    ): EnemyCombatCat {
+        val catAbilities = abilityRepository.getEnemyCatAbilities(enemyCat.id.toInt())
+        val combatAbilities = CombatAbility.build(catAbilities)
+        return when (enemyCat.enemyType) {
+            EnemyType.SIMPLE_ENEMY -> SimpleEnemy(
+                CombatCatData.build(
+                    combatId = combatId,
+                    enemyCat = enemyCat,
+                    combatAbilities = combatAbilities
+                ),
+                onDeath = { catId ->
+                    enemyCatDied(catId)
+                }
+            )
+
+            EnemyType.SUMMONER -> SummonerEnemy(
+                CombatCatData.build(
+                    combatId = combatId,
+                    enemyCat = enemyCat,
+                    combatAbilities = combatAbilities
+                ),
+                onDeath = { catId ->
+                    enemyCatDied(catId)
+                }
+            )
+
+            EnemyType.UNIQUE_SUMMONER -> UniqueSummonEnemy(
+                CombatCatData.build(
+                    combatId = combatId,
+                    enemyCat = enemyCat,
+                    combatAbilities = combatAbilities
+                ),
+                onDeath = { catId ->
+                    enemyCatDied(catId)
+                }
+            )
         }
     }
 
@@ -167,14 +176,14 @@ class CombatScreenViewModel(
         }
     }
 
-    private fun setupInitialInitiative(): MutableList<CatInitiativeData> {
+    private fun setupInitialInitiative(): List<CatInitiativeData> {
         val catInitiatives = mutableListOf<CatInitiativeData>()
         _uiState.value.teamCombatCats.forEach { cat ->
             catInitiatives.add(
                 CatInitiativeData(
                     catId = cat.cat.combatId,
                     image = cat.cat.image,
-                    initiative = cat.cat.initiative
+                    initiative = cat.cat.initiative + Random.nextFloat()
                 )
             )
         }
@@ -183,11 +192,27 @@ class CombatScreenViewModel(
                 CatInitiativeData(
                     catId = cat.cat.combatId,
                     image = cat.cat.image,
-                    initiative = cat.cat.initiative
+                    initiative = cat.cat.initiative + Random.nextFloat()
                 )
             )
         }
-        return catInitiatives.shuffled().sortedBy { it.initiative }.toMutableList()
+        return catInitiatives.shuffled().sortedBy { it.initiative }
+    }
+
+    private fun addCatToInitiative(cat: CombatCat){
+        val initiatives = _uiState.value.catInitiatives.toMutableList()
+        initiatives.add(
+            CatInitiativeData(
+                catId = cat.cat.combatId,
+                image = cat.cat.image,
+                initiative = cat.cat.initiative
+            )
+        )
+        _uiState.update {
+            it.copy(
+                catInitiatives = initiatives.sortedBy { initiative -> initiative.initiative }
+            )
+        }
     }
 
     private fun enemyCatDied(catId: Int) {
@@ -368,7 +393,7 @@ class CombatScreenViewModel(
         if(abilityUsed != null){
             if(activeCat != null){
                 val initiativeToAdd = activeCat.cat.getAttackSpeed * abilityUsed.ability.attackSpeedMultiplier
-                addInitiativeToCat(activeCat.cat.combatId, initiativeToAdd)
+                addInitiativeToCat(activeCat, initiativeToAdd)
                 activeCat.reduceBuffsDuration()
                 activeCat.refreshBuffModifiers()
             }
@@ -451,28 +476,25 @@ class CombatScreenViewModel(
         val initiatives = _uiState.value.catInitiatives
         val firstInitiativeTime = initiatives.firstOrNull()?.initiative ?: 0.0f
         initiatives.forEach { initiative ->
-            val cat = getCat(initiative.catId)
-            if(cat != null){
-                if(cat.isSlowed()){
-                    initiative.initiative += 2.0f
-                    cat.reduceSlowDuration()
-                }
-            }
             initiative.initiative -= firstInitiativeTime
             if(initiative.initiative < 0) initiative.initiative = 0.0f
         }
         _uiState.update {
             it.copy(
-                catInitiatives = initiatives
+                catInitiatives = initiatives.sortedBy { initiative -> initiative.initiative }
             )
         }
     }
 
-    private fun addInitiativeToCat(catId: Int, initiative: Float){
+    private fun addInitiativeToCat(combatCat: CombatCat, initiativeToAdd: Float){
         val initiatives = _uiState.value.catInitiatives
-        val cat = initiatives.find { it.catId == catId }
-        if(cat != null){
-            cat.initiative += initiative
+        val catInitiative = initiatives.find { it.catId == combatCat.cat.combatId }
+        if(catInitiative != null){
+            if(combatCat.isSlowed()){
+                catInitiative.initiative += combatCat.getSlowAmount()
+                combatCat.reduceSlowDuration()
+            }
+            catInitiative.initiative += initiativeToAdd
         }
         _uiState.update {
             it.copy(
@@ -564,8 +586,60 @@ class CombatScreenViewModel(
         }
     }
 
-    fun summonCatForCurrentTeam(summonId: Float) {
-        TODO("Not yet implemented")
+    fun summonCatForCurrentTeam(summonId: Long) {
+        viewModelScope.launch {
+            val cat = enemyCatRepository.getEnemyCatById(summonId)
+            val combatCat = createEnemyCombatCat(cat, getHighestCombatId() + 1)
+            addEnemyToTeam(combatCat)
+        }
+    }
+
+    private fun enemyTeamNotFull(): Boolean {
+        return _uiState.value.enemyCombatCats.size < 4
+    }
+
+    fun cloneEnemy() {
+        if(enemyTeamNotFull()){
+            val currentEnemy = getEnemyCat(_uiState.value.activeCatId)
+            if(currentEnemy != null){
+                val combatData = CombatCatData.copy(getHighestCombatId() + 1, currentEnemy.cat)
+                val newCat = when(currentEnemy){
+                    is SimpleEnemy -> SimpleEnemy(combatData, onDeath = currentEnemy.onDeath)
+                    is SummonerEnemy -> SummonerEnemy(combatData, onDeath = currentEnemy.onDeath)
+                    is UniqueSummonEnemy -> UniqueSummonEnemy(combatData, onDeath = currentEnemy.onDeath)
+                }
+                addEnemyToTeam(newCat)
+            }
+        }
+    }
+
+    private fun getEnemyCat(catId: Int): EnemyCombatCat? = _uiState.value.enemyCombatCats.find { catId == it.cat.combatId }
+
+    private fun getHighestCombatId(): Int {
+        var highestCombatId = 0
+        (_uiState.value.teamCombatCats + _uiState.value.enemyCombatCats).forEach{
+            if(highestCombatId < it.cat.combatId) highestCombatId = it.cat.combatId
+        }
+        return highestCombatId
+    }
+
+    private fun addEnemyToTeam(enemyCombatCat: EnemyCombatCat) {
+        val enemyCats = _uiState.value.enemyCombatCats.toMutableList()
+        val initiatives = _uiState.value.catInitiatives.toMutableList()
+        enemyCats.add(enemyCombatCat)
+        initiatives.add(
+            CatInitiativeData(
+                catId = enemyCombatCat.cat.combatId,
+                image = enemyCombatCat.cat.image,
+                initiative = enemyCombatCat.cat.initiative + Random.nextFloat()
+            )
+        )
+        _uiState.update {
+            it.copy(
+                enemyCombatCats = enemyCats,
+                catInitiatives = initiatives.sortedBy { initiative -> initiative.initiative },
+            )
+        }
     }
 }
 
