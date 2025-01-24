@@ -211,7 +211,7 @@ interface CombatCat{
                     Image(
                         painter = painterResource(
                             when(appliedCombatModifier.combatModifier){
-                                CombatModifier.SLOWED -> R.drawable.goldcoins_128
+                                CombatModifier.SLOWED -> R.drawable.icon_slow
                                 CombatModifier.STUNNED -> R.drawable.stun_icon
                                 CombatModifier.POISONED -> R.drawable.poison_icon
                                 CombatModifier.CLEANSED -> R.drawable.goldcoins_128
