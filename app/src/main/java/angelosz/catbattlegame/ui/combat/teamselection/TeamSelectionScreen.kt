@@ -3,8 +3,10 @@ package angelosz.catbattlegame.ui.combat.teamselection
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
@@ -52,44 +54,46 @@ fun TeamSelectionScreen(
 
         when(uiState.screenState){
             ScreenState.SUCCESS -> {
-                if(isPortraitView){
-                    Column(
-                        modifier = Modifier
-                            .systemBarsPadding()
-                            .fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        TeamsList(
-                            teams = uiState.teams,
-                            selectTeam = { teamData ->
-                                viewModel.selectTeam(teamData.teamId)
-                                         },
-                            selectedTeamId = uiState.teamId,
-                            markSelectedTeamId = true
-                        )
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.BottomCenter
-                        ){
-                            Button(
-                                modifier = Modifier.padding(8.dp),
-                                onClick = { onStartFightClicked(chapterId, uiState.teamId) }
-                            ){
-                                Text(
-                                    modifier = Modifier.padding(4.dp),
-                                    text = "Choose Team",
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                            }
-                        }
-                    }
-                    BackButton(
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .padding(horizontal = 32.dp, vertical = 56.dp),
-                        onBackPressed = onBackPressed
+                Column(
+                    modifier = Modifier
+                        .systemBarsPadding()
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    TeamsList(
+                        teams = uiState.teams,
+                        selectTeam = { teamData ->
+                            viewModel.selectTeam(teamData.teamId)
+                                     },
+                        columns = if(isPortraitView) 1 else 2,
+                        selectedTeamId = uiState.teamId,
+                        markSelectedTeamId = true,
                     )
                 }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(128.dp)
+                        .align(Alignment.BottomCenter),
+                    contentAlignment = Alignment.Center
+                ){
+                    Button(
+                        modifier = Modifier.padding(8.dp),
+                        onClick = { onStartFightClicked(chapterId, uiState.teamId) }
+                    ){
+                        Text(
+                            modifier = Modifier.padding(4.dp),
+                            text = "Choose Team",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
+                }
+                BackButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(horizontal = 32.dp, vertical = 56.dp),
+                    onBackPressed = onBackPressed
+                )
             }
             ScreenState.LOADING -> {
                 LoadingCard()
@@ -158,6 +162,12 @@ fun TeamsList(
                     onCatClicked = {},
                 )
             }
+        }
+        item {
+            Spacer(modifier = Modifier.height(64.dp))
+        }
+        item {
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }

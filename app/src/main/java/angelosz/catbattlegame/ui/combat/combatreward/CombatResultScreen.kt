@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -49,7 +49,7 @@ fun CombatResultScreen(
     onReturnToHomePressed: () -> Unit,
     goToArmory: (CollectionsView) -> Unit = {},
 ) {
-    BackHandler(onBack = {})
+    BackHandler(onBack = onReturnToHomePressed)
     val uiState by viewModel.uiState.collectAsState()
 
     Box(
@@ -63,6 +63,7 @@ fun CombatResultScreen(
                 Card(
                     modifier = Modifier
                         .padding(16.dp)
+                        .width(384.dp)
                 ){
                     Column(
                         modifier = Modifier
@@ -72,8 +73,7 @@ fun CombatResultScreen(
                     ) {
                         Text(
                             modifier = Modifier
-                                .padding(8.dp)
-                                .fillMaxWidth(),
+                                .padding(8.dp),
                             text = when(uiState.combatResult) {
                                 CombatResult.PLAYER_WON -> "Victory!"
                                 CombatResult.PLAYER_LOST -> "Defeat :("
@@ -94,8 +94,7 @@ fun CombatResultScreen(
                             ) {
                                 Text(
                                     modifier = Modifier
-                                        .padding(4.dp)
-                                        .fillMaxWidth(),
+                                        .padding(4.dp),
                                     text = "Loot:",
                                     style = MaterialTheme.typography.labelLarge,
                                     textAlign = TextAlign.Center
@@ -130,8 +129,7 @@ fun CombatResultScreen(
                                 }
                                 Text(
                                     modifier = Modifier
-                                        .padding(vertical = 8.dp)
-                                        .fillMaxWidth(),
+                                        .padding(vertical = 8.dp),
                                     text = "Experience: ${uiState.experienceGained}",
                                     style = MaterialTheme.typography.labelLarge,
                                     textAlign = TextAlign.Center

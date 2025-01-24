@@ -78,28 +78,37 @@ fun CampaignScreen(
                                 .padding(horizontal = 32.dp, vertical = 56.dp),
                             onBackPressed = onBackButtonPressed
                         )
-                        CampaignSelectionCarousel(
-                            campaigns = uiState.campaigns,
-                            onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) },
-                            selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
-                        )
+                        if(isPortraitView){
+                            PortraitCampaignSelectionCarousel(
+                                campaigns = uiState.campaigns,
+                                onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) },
+                                selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
+                            )
+                        } else {
+                            LandscapeCampaignSelectionCarousel(
+                                campaigns = uiState.campaigns,
+                                onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) },
+                                selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
+                            )
+                        }
                     }
                     CampaignSelectionStage.SELECTING_CHAPTER -> {
                         BackHandler(onBack = { viewModel.backToCampaignSelection() })
-                        BackButton(
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(horizontal = 32.dp, vertical = 56.dp),
-                            onBackPressed = { viewModel.backToCampaignSelection() }
-                        )
                         CampaignChapterSelectionGrid(
                             chapters = uiState.campaignChapters,
+                            chapterPerRow = if(isPortraitView) 3 else 6,
                             onChapterClicked = { chapter ->
                                 if(chapter.state != CampaignState.LOCKED) {
                                     //viewModel.selectCampaignChapter(chapter)
                                     onChapterSelected(chapter.id)
                                 }
                             }
+                        )
+                        BackButton(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(horizontal = 32.dp, vertical = 56.dp),
+                            onBackPressed = { viewModel.backToCampaignSelection() }
                         )
                     }
                     CampaignSelectionStage.CHAPTER_SELECTED -> {
@@ -224,6 +233,7 @@ private fun ChapterInfoCard(
 @Composable
 fun CampaignChapterSelectionGrid(
     chapters: List<Chapter>,
+    chapterPerRow: Int,
     onChapterClicked: (Chapter) -> Unit
 ) {
     if(chapters.isNotEmpty()){
@@ -234,14 +244,13 @@ fun CampaignChapterSelectionGrid(
             ) {
             LazyVerticalGrid(
                 modifier = Modifier
-                    .padding(32.dp)
-                    .fillMaxSize(),
-                columns = GridCells.Fixed(3),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(32.dp),
+                columns = GridCells.Fixed(chapterPerRow),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(chapters) { chapter ->
-                    Box {
+                    Box(contentAlignment = Alignment.Center) {
                         RoundedImageButton(
                             onClick = { onChapterClicked(chapter) },
                             innerImage = chapter.image,
@@ -274,7 +283,7 @@ fun CampaignChapterSelectionGrid(
 }
 
 @Composable
-private fun CampaignSelectionCarousel(
+private fun PortraitCampaignSelectionCarousel(
     campaigns: List<Campaign>,
     onCampaignClicked: (Campaign) -> Unit,
     selectedCampaignIndex: Int = 0
@@ -285,6 +294,88 @@ private fun CampaignSelectionCarousel(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
+        ) {
+            if (selectedImageIndex > 0) {
+                RoundedImageButton(
+                    outerImage = R.drawable.iconflash_256,
+                    outerImageSize = 128,
+                    innerImage = campaigns[selectedImageIndex - 1].image,
+                    innerImageSize = 92,
+                    onClick = { selectedImageIndex-- },
+                )
+            } else {
+                Spacer(modifier = Modifier.size(128.dp))
+            }
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(vertical = 48.dp),
+            ) {
+                RoundedImageButton(
+                    outerImage = R.drawable.iconflash_256,
+                    outerImageSize = 256,
+                    innerImage = campaigns[selectedImageIndex].image,
+                    innerImageSize = 196,
+                    onClick = {
+                        if (campaigns[selectedImageIndex].state != CampaignState.LOCKED) {
+                            onCampaignClicked(campaigns[selectedImageIndex])
+                        }
+                    },
+                )
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White
+                    )
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(
+                            horizontal = 16.dp,
+                            vertical = 8.dp
+                        )
+                    ) {
+                        if (campaigns[selectedImageIndex].state == CampaignState.LOCKED) {
+                            Icon(
+                                imageVector = Icons.Filled.Lock,
+                                contentDescription = "Locked Campaign",
+                                modifier = Modifier.padding(horizontal = 4.dp)
+                            )
+                        }
+                        Text(
+                            text = campaigns[selectedImageIndex].name,
+                        )
+                    }
+                }
+            }
+            if (selectedImageIndex < campaigns.lastIndex) {
+                RoundedImageButton(
+                    outerImage = R.drawable.iconflash_256,
+                    outerImageSize = 128,
+                    innerImage = campaigns[selectedImageIndex + 1].image,
+                    innerImageSize = 92,
+                    onClick = { selectedImageIndex++ },
+                )
+            } else {
+                Spacer(modifier = Modifier.size(128.dp))
+            }
+        }
+    }
+}
+
+
+@Composable
+private fun LandscapeCampaignSelectionCarousel(
+    campaigns: List<Campaign>,
+    onCampaignClicked: (Campaign) -> Unit,
+    selectedCampaignIndex: Int = 0
+) {
+    if (campaigns.isNotEmpty()) {
+        var selectedImageIndex by remember { mutableIntStateOf(if(selectedCampaignIndex >= 0) selectedCampaignIndex else 0) }
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (selectedImageIndex > 0) {
                 RoundedImageButton(

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -124,9 +125,13 @@ fun HandleArchiveEnemiesLandscapeView(
                 onNextButtonClicked = viewModel::goToNextPage
             )
         }
-        ArchiveEnemyDetailsCard(
-            modifier = Modifier.padding(16.dp),
-            enemy = uiState.selectedEnemy,
-        )
+        if (uiState.isEnemySelected){
+            ArchiveEnemyDetailsCard(
+                modifier = Modifier.padding(16.dp).width(332.dp),
+                enemy = uiState.selectedEnemy,
+            )
+        } else {
+            Spacer(modifier = Modifier.width(332.dp).padding(16.dp))
+        }
     }
 }

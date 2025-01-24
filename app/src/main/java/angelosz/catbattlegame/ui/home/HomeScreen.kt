@@ -229,7 +229,7 @@ fun LandscapeShopScreen(
     ){}
     Card(
         modifier = Modifier
-            .padding(32.dp)
+            .padding(16.dp)
             .width(512.dp)
     ){
         Column(
@@ -253,7 +253,7 @@ fun LandscapeShopScreen(
                 Pair(CatRarity.ADULT, ADULT_BATTLECHEST_COST),
             )
             LazyVerticalGrid(
-                modifier = Modifier.height(192.dp),
+                modifier = Modifier.height(208.dp),
                 columns = GridCells.Fixed(2),
                 content = {
                     items(items){ item ->
