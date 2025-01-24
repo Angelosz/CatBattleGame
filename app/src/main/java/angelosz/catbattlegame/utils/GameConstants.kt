@@ -6,7 +6,7 @@ object GameConstants {
     const val GAME_VERSION = 1
 
     const val MAX_CAT_LEVEL = 30
-    const val EXPERIENCE_PER_LEVEL = 500
+    const val EXPERIENCE_PER_LEVEL = 400
 
     const val KITTEN_DISENCHANT_VALUE = 25
     const val KITTEN_CRYSTAL_COST = 100
