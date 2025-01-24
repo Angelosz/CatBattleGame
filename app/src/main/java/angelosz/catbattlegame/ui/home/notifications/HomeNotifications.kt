@@ -51,15 +51,15 @@ class LevelUpNotification(
             ) {
                 Text(
                     text = "$name leveled up!",
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(8.dp),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
             Image(
                 painter = painterResource(image),
                 contentDescription = name,
-                modifier = Modifier.size(256.dp).clickable(onClick = { onAccept() })
+                modifier = Modifier.size(192.dp).clickable(onClick = { onAccept() })
             )
             Box(
                 contentAlignment = Alignment.Center
@@ -68,13 +68,13 @@ class LevelUpNotification(
                     painter = painterResource(R.drawable.iconflash_256),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(128.dp)
+                        .size(96.dp)
                         .align(Alignment.BottomCenter)
                 )
                 RoundedTextButton(
-                    size = 64,
+                    size = 48,
                     text = "$level",
-                    textStyle = MaterialTheme.typography.displayMedium,
+                    textStyle = MaterialTheme.typography.displaySmall,
                     onClick = { onAccept() }
                 )
             }
@@ -120,7 +120,7 @@ class CatEvolutionNotification(
                             else "",
                     modifier = Modifier.padding(8.dp).width(256.dp),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleSmall
                 )
             }
         }
@@ -145,7 +145,7 @@ class BattleChestNotification(
                     text = "You have received a new Package!",
                     modifier = Modifier.padding(8.dp),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 
@@ -153,7 +153,8 @@ class BattleChestNotification(
                 painter = painterResource(R.drawable.battlechest_512),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(32.dp)
+                    .padding(16.dp)
+                    .size(192.dp)
                     .clickable(onClick = { onAccept() })
             )
             if(notificationText.isNotEmpty())
@@ -194,9 +195,9 @@ class CurrencyRewardNotification(
                             else -> "gold"
                         }
                     }!",
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(8.dp),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 
@@ -211,7 +212,6 @@ class CurrencyRewardNotification(
                 innerImageSize = 128,
                 outerImage = R.drawable.iconflash_256,
                 outerImageSize = 192,
-                modifier = Modifier.padding(32.dp)
             )
 
             if(notificationText.isNotEmpty()){
