@@ -10,8 +10,8 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 1,
             name = "Wool Ball",
-            baseHealth = 60f,
-            baseAttack = 18f,
+            baseHealth = 50f,
+            baseAttack = 16f,
             baseDefense = 1.2f,
             attackSpeed = 1.25f,
             image = R.drawable.enemy_wool_ball_300

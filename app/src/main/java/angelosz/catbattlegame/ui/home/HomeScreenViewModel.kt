@@ -161,6 +161,8 @@ class HomeScreenViewModel(
             }
 
             campaignRepository.updateCampaignState(1, CampaignState.UNLOCKED)
+            campaignRepository.updateCampaignState(3, CampaignState.DEVELOPMENT)
+            campaignRepository.updateCampaignState(4, CampaignState.DEVELOPMENT)
             campaignRepository.updateChapterState(1, CampaignState.UNLOCKED)
             repopulateDatabase()
         }

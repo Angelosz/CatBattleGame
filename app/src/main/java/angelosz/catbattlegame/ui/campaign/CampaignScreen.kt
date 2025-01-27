@@ -37,6 +37,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -221,7 +223,7 @@ private fun ChapterInfoCard(
                 ){
                     Text(
                         modifier = Modifier.padding(2.dp),
-                        text = "Start",
+                        text = stringResource(R.string.start),
                         style = MaterialTheme.typography.headlineSmall
                     )
                 }
@@ -270,7 +272,7 @@ fun CampaignChapterSelectionGrid(
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Lock,
-                                    contentDescription = "Locked Chapter",
+                                    contentDescription = stringResource(R.string.locked_chapter),
                                     modifier = Modifier.padding(4.dp),
                                 )
                             }
@@ -317,7 +319,8 @@ private fun PortraitCampaignSelectionCarousel(
                     innerImage = campaigns[selectedImageIndex].image,
                     innerImageSize = 196,
                     onClick = {
-                        if (campaigns[selectedImageIndex].state != CampaignState.LOCKED) {
+                        if (campaigns[selectedImageIndex].state != CampaignState.LOCKED
+                            && campaigns[selectedImageIndex].state != CampaignState.DEVELOPMENT) {
                             onCampaignClicked(campaigns[selectedImageIndex])
                         }
                     },
@@ -335,16 +338,31 @@ private fun PortraitCampaignSelectionCarousel(
                             vertical = 8.dp
                         )
                     ) {
-                        if (campaigns[selectedImageIndex].state == CampaignState.LOCKED) {
+                        if (campaigns[selectedImageIndex].state == CampaignState.LOCKED
+                            || campaigns[selectedImageIndex].state == CampaignState.DEVELOPMENT) {
                             Icon(
                                 imageVector = Icons.Filled.Lock,
-                                contentDescription = "Locked Campaign",
+                                contentDescription = stringResource(R.string.locked_campaign),
                                 modifier = Modifier.padding(horizontal = 4.dp)
                             )
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = campaigns[selectedImageIndex].name,
+                                )
+                                if(campaigns[selectedImageIndex].state == CampaignState.DEVELOPMENT){
+                                    Text(
+                                        text = stringResource(R.string.in_development),
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        } else {
+                            Text(
+                                text = campaigns[selectedImageIndex].name,
+                            )
                         }
-                        Text(
-                            text = campaigns[selectedImageIndex].name,
-                        )
                     }
                 }
             }
@@ -417,16 +435,27 @@ private fun LandscapeCampaignSelectionCarousel(
                             vertical = 8.dp
                         )
                     ) {
-                        if (campaigns[selectedImageIndex].state == CampaignState.LOCKED) {
+                        if (campaigns[selectedImageIndex].state == CampaignState.LOCKED
+                            || campaigns[selectedImageIndex].state == CampaignState.DEVELOPMENT) {
                             Icon(
                                 imageVector = Icons.Filled.Lock,
-                                contentDescription = "Locked Campaign",
+                                contentDescription = stringResource(R.string.locked_campaign),
                                 modifier = Modifier.padding(horizontal = 4.dp)
                             )
+                            Text(
+                                text = campaigns[selectedImageIndex].name,
+                            )
+                            if(campaigns[selectedImageIndex].state == CampaignState.DEVELOPMENT){
+                                Text(
+                                    text = stringResource(R.string.in_development),
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        } else {
+                            Text(
+                                text = campaigns[selectedImageIndex].name,
+                            )
                         }
-                        Text(
-                            text = campaigns[selectedImageIndex].name,
-                        )
                     }
                 }
             }

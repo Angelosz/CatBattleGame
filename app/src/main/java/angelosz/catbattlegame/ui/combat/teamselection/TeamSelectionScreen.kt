@@ -65,27 +65,31 @@ fun TeamSelectionScreen(
                         selectTeam = { teamData ->
                             viewModel.selectTeam(teamData.teamId)
                                      },
+                        onChooseTeamClicked = { onStartFightClicked(chapterId, uiState.teamId) },
                         columns = if(isPortraitView) 1 else 2,
                         selectedTeamId = uiState.teamId,
                         markSelectedTeamId = true,
+                        addChooseTeamAsItem = isPortraitView
                     )
                 }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(128.dp)
-                        .align(Alignment.BottomCenter),
-                    contentAlignment = Alignment.Center
-                ){
-                    Button(
-                        modifier = Modifier.padding(8.dp),
-                        onClick = { onStartFightClicked(chapterId, uiState.teamId) }
+                if(!isPortraitView){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(128.dp)
+                            .align(Alignment.BottomCenter),
+                        contentAlignment = Alignment.Center
                     ){
-                        Text(
-                            modifier = Modifier.padding(4.dp),
-                            text = "Choose Team",
-                            style = MaterialTheme.typography.headlineSmall
-                        )
+                        Button(
+                            modifier = Modifier.padding(8.dp),
+                            onClick = { onStartFightClicked(chapterId, uiState.teamId) }
+                        ){
+                            Text(
+                                modifier = Modifier.padding(4.dp),
+                                text = "Choose Team",
+                                style = MaterialTheme.typography.headlineSmall
+                            )
+                        }
                     }
                 }
                 BackButton(
@@ -117,12 +121,14 @@ fun TeamsList(
     selectTeam: (TeamData) -> Unit = {},
     deleteTeam: (TeamData) -> Unit = {},
     createTeam: (TeamData) -> Unit = {},
+    onChooseTeamClicked: () -> Unit = {},
     panelsSize: Int = 360,
     columns: Int = 1,
     canDeleteTeam: Boolean = false,
     canCreateTeam: Boolean = false,
     selectedTeamId: Long = 0,
-    markSelectedTeamId: Boolean = false
+    markSelectedTeamId: Boolean = false,
+    addChooseTeamAsItem: Boolean
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(columns),
@@ -163,11 +169,33 @@ fun TeamsList(
                 )
             }
         }
-        item {
-            Spacer(modifier = Modifier.height(64.dp))
-        }
-        item {
-            Spacer(modifier = Modifier.height(64.dp))
+        if(addChooseTeamAsItem){
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(128.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Button(
+                        modifier = Modifier.padding(8.dp),
+                        onClick = onChooseTeamClicked
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(4.dp),
+                            text = "Choose Team",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
+                }
+            }
+        } else {
+            item {
+                Spacer(modifier = Modifier.height(64.dp))
+            }
+            item {
+                Spacer(modifier = Modifier.height(64.dp))
+            }
         }
     }
-}
+        }

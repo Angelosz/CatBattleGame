@@ -44,9 +44,13 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
     }
 
     override suspend fun getCampaignState(campaignId: Long): CampaignState = dao.getCampaignState(campaignId)
-    override suspend fun updateCampaignState(campaignId: Long, state: CampaignState) = dao.updateCampaignState(
-        CampaignCompletionState(campaignId, state)
-    )
+    override suspend fun updateCampaignState(campaignId: Long, state: CampaignState) {
+        val campaign = dao.getCampaignState(campaignId)
+        if(campaign != null){
+            if(campaign == CampaignState.DEVELOPMENT) return
+        }
+        dao.updateCampaignState(CampaignCompletionState(campaignId, state))
+    }
 
     /* Campaign Chapters */
     override suspend fun insertCampaignChapter(campaignChapter: CampaignChapter): Long = dao.insertCampaignChapter(campaignChapter)

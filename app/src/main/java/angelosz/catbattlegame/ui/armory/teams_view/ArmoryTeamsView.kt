@@ -17,9 +17,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.armory.composables.ArmoryCatGrid
 import angelosz.catbattlegame.ui.armory.composables.TeamDisplay
@@ -105,7 +107,7 @@ fun HandleArmoryTeamsPortraitView(uiState: ArmoryTeamsUiState, viewModel: Armory
                         team = team,
                         onTeamClicked = { id -> viewModel.selectTeam(id) },
                         hasButton = true,
-                        buttonText = "Delete",
+                        buttonText = stringResource(R.string.delete),
                         onButtonClick = viewModel::deleteTeam
                     )
                 }
@@ -114,7 +116,7 @@ fun HandleArmoryTeamsPortraitView(uiState: ArmoryTeamsUiState, viewModel: Armory
                         modifier = Modifier.padding(8.dp),
                         team = ArmoryTeam(
                             teamId = 0,
-                            teamName = "Create New Team",
+                            teamName = stringResource(R.string.create_new_team),
                             cats = emptyList()
                         ),
                         onTeamClicked = { viewModel.createTeam() }
@@ -168,7 +170,7 @@ fun HandleArmoryTeamsLandscapeView(uiState: ArmoryTeamsUiState, viewModel: Armor
                         team = team,
                         onTeamClicked = { id -> viewModel.selectTeam(id) },
                         hasButton = true,
-                        buttonText = "Delete",
+                        buttonText = stringResource(R.string.delete),
                         onButtonClick = viewModel::deleteTeam
                     )
                 }
@@ -177,7 +179,7 @@ fun HandleArmoryTeamsLandscapeView(uiState: ArmoryTeamsUiState, viewModel: Armor
                         modifier = Modifier.padding(8.dp),
                         team = ArmoryTeam(
                             teamId = 0,
-                            teamName = "Create New Team",
+                            teamName = stringResource(R.string.create_new_team),
                             cats = emptyList()
                         ),
                         onTeamClicked = { viewModel.createTeam() }
