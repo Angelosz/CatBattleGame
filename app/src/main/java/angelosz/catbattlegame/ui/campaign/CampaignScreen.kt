@@ -170,12 +170,12 @@ private fun ChapterInfoCard(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = uiState.selectedCampaignChapter.name,
+                    text = stringResource(uiState.selectedCampaignChapter.name),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Text(
-                    text = uiState.selectedCampaignChapter.description,
+                    text = stringResource(uiState.selectedCampaignChapter.description),
                     modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp),
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -349,7 +349,7 @@ private fun PortraitCampaignSelectionCarousel(
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
-                                    text = campaigns[selectedImageIndex].name,
+                                    text = stringResource(campaigns[selectedImageIndex].name),
                                 )
                                 if(campaigns[selectedImageIndex].state == CampaignState.DEVELOPMENT){
                                     Text(
@@ -360,7 +360,7 @@ private fun PortraitCampaignSelectionCarousel(
                             }
                         } else {
                             Text(
-                                text = campaigns[selectedImageIndex].name,
+                                text = stringResource(campaigns[selectedImageIndex].name),
                             )
                         }
                     }
@@ -443,7 +443,7 @@ private fun LandscapeCampaignSelectionCarousel(
                                 modifier = Modifier.padding(horizontal = 4.dp)
                             )
                             Text(
-                                text = campaigns[selectedImageIndex].name,
+                                text = stringResource(campaigns[selectedImageIndex].name),
                             )
                             if(campaigns[selectedImageIndex].state == CampaignState.DEVELOPMENT){
                                 Text(
@@ -453,7 +453,7 @@ private fun LandscapeCampaignSelectionCarousel(
                             }
                         } else {
                             Text(
-                                text = campaigns[selectedImageIndex].name,
+                                text = stringResource(campaigns[selectedImageIndex].name),
                             )
                         }
                     }

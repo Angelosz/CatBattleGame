@@ -69,14 +69,14 @@ private fun ArchiveEnemyDetailsCardContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = enemy.name,
+            text = stringResource(enemy.name),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
         Image(
             painter = painterResource(enemy.image),
-            contentDescription = enemy.name,
+            contentDescription = stringResource(enemy.name),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(imageSize.dp),
@@ -86,7 +86,7 @@ private fun ArchiveEnemyDetailsCardContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = enemy.description,
+                text = stringResource(enemy.description),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -157,7 +157,7 @@ private fun ArchiveEnemyDetailsCardContent(
                                 modifier = Modifier.size(48.dp)
                             )
                             Text(
-                                text = ability.name,
+                                text = stringResource(ability.name),
                                 style = textSize,
                                 modifier = Modifier.padding(8.dp)
                             )
@@ -176,8 +176,8 @@ fun ArchiveEnemyDetailsCardPreview(){
         ArchiveEnemyDetailsCard(
             enemy = ArchiveEnemyData(
                 id = 1,
-                name = "Wool Ball",
-                description = "Round and round it goes",
+                name = R.string.enemy_wool_ball,
+                description = R.string.enemy_wool_ball_desc,
                 image = R.drawable.enemy_wool_ball_300,
                 baseHealth = 50f,
                 baseAttack = 15f,
@@ -187,12 +187,12 @@ fun ArchiveEnemyDetailsCardPreview(){
                 abilities = listOf(
                     Ability(
                         id = 1,
-                        name = "Quick Attack",
+                        name = R.string.ability_quick_attack,
                         icon = R.drawable.ability_quick_attack_48,
                     ),
                     Ability(
                         id = 2,
-                        name = "Quick Attack",
+                        name = R.string.ability_quick_attack,
                         icon = R.drawable.ability_quick_attack_48,
                     )
                 ),

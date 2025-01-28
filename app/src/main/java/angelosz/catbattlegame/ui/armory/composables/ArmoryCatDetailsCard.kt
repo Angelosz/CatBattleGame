@@ -80,7 +80,7 @@ private fun ArmoryCatDetailsCatContent(
         )
         Image(
             painter = painterResource(cat.image),
-            contentDescription = cat.name,
+            contentDescription = stringResource(cat.name),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(imageSize.dp),
@@ -95,7 +95,7 @@ private fun ArmoryCatDetailsCatContent(
                 showText = true
             )
             Text(
-                text = cat.description,
+                text = stringResource(cat.description),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -185,7 +185,7 @@ private fun ArmoryCatDetailsCatContent(
                                 modifier = Modifier.size(48.dp)
                             )
                             Text(
-                                text = ability.name,
+                                text = stringResource(ability.name),
                                 style = textSize,
                                 modifier = Modifier.padding(8.dp)
                             )
@@ -204,9 +204,9 @@ fun ArmoryCatDetailsCardPreview(){
         ArmoryCatDetailsCard(
             cat = DetailedArmoryCatData(
                 id = 1,
-                name = "Bob",
+                name = R.string.the_swordsman_name,
                 title = R.string.the_kitten_swordman,
-                description = "A brave kitten wielding a wooden sword, eager to protect.",
+                description = R.string.the_kitten_swordsman_desc,
                 image = R.drawable.kitten_swordman_300x300,
                 level = 1,
                 experience = 0,
@@ -220,12 +220,12 @@ fun ArmoryCatDetailsCardPreview(){
                 abilities = listOf(
                     Ability(
                         id = 1,
-                        name = "Quick Attack",
+                        name = R.string.ability_quick_attack,
                         icon = R.drawable.ability_quick_attack_48,
                     ),
                     Ability(
                         id = 2,
-                        name = "Quick Attack",
+                        name = R.string.ability_quick_attack,
                         icon = R.drawable.ability_quick_attack_48,
                     )
                 )

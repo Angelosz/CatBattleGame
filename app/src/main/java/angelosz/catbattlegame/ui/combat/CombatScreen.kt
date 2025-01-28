@@ -442,7 +442,7 @@ private fun AbilitiesDisplay(
                                     painter = painterResource(ability.ability.icon),
                                     contentDescription = stringResource(
                                         R.string.ability_icon_desc,
-                                        ability.ability.name
+                                        stringResource(ability.ability.name)
                                     ),
                                     modifier = Modifier.size(40.dp),
                                 )
@@ -462,7 +462,7 @@ private fun AbilitiesDisplay(
                                 }
                             }
                             Text(
-                                text = ability.ability.name,
+                                text = stringResource(ability.ability.name),
                                 modifier = Modifier.padding(2.dp)
                             )
                         }

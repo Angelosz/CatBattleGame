@@ -7,29 +7,29 @@ class CampaignsInitialData {
     val campaigns = listOf(
         CampaignEntity(
             id = 1,
-            name = "Dangers in the house",
-            description = "\"Defend your owner's house against dangerous enemies(and toys)!\"",
+            name = R.string.campaign_title_1,
+            description = R.string.campaign_desc_1,
             image = R.drawable.house_campaign_icon_256,
             nextCampaign = 2
         ),
         CampaignEntity(
             id = 2,
-            name = "Dangers in the garden",
-            description = "\"Defend your owner's garden against the thieves!\"",
+            name = R.string.campaign_title_2,
+            description = R.string.campaign_desc_2,
             image = R.drawable.garden_campaign_icon_256,
             nextCampaign = 3
         ),
         CampaignEntity(
             id = 3,
-            name = "Dangers in the dark forest",
-            description = "\"Pursue the thieves that stole your owner's treasure!\"",
+            name = R.string.campaign_title_3,
+            description = R.string.campaign_desc_3,
             image = R.drawable.darkforest_campaign_icon_256,
             nextCampaign = 4
         ),
         CampaignEntity(
             id = 4,
-            name = "Dangers in the pirate cave",
-            description = "\"Assault the pirate cave and retrieve your owner's treasure!\"",
+            name = R.string.campaign_title_4,
+            description = R.string.campaign_desc_4,
             image = R.drawable.piratecave_campaign_icon_256,
             nextCampaign = 5
         )

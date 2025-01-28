@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import angelosz.catbattlegame.R
@@ -13,8 +14,8 @@ import angelosz.catbattlegame.ui.campaign.EnemyType
 data class EnemyCat(
     @PrimaryKey
     val id: Long = 1,
-    val name: String = "Enemy",
-    val description: String = "Enemy description",
+    @StringRes val name: Int = R.string.enemy_wool_ball,
+    @StringRes val description: Int = R.string.enemy_wool_ball_desc,
     @DrawableRes val image: Int = R.drawable.enemy_wool_ball_300,
     val armorType: ArmorType = ArmorType.LIGHT,
     val role: CatRole = CatRole.DEFENDER,

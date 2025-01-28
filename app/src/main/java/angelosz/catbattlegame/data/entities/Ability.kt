@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.data.entities
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import angelosz.catbattlegame.R
@@ -13,8 +14,8 @@ import angelosz.catbattlegame.domain.enums.DamageType
 @Entity(tableName = "abilities")
 data class Ability(
     @PrimaryKey val id: Int,
-    val name: String = "",
-    val description: String = "",
+    @StringRes val name: Int = R.string.ability_quick_attack,
+    @StringRes val description: Int = R.string.ability_quick_attack_desc,
     val damageMultiplier: Float = 1f,
     val attackSpeedMultiplier: Float = 1f, //1 = 100% base attack speed.
     val combatModifier: CombatModifier? = null, //CombatModifier, Turn duration

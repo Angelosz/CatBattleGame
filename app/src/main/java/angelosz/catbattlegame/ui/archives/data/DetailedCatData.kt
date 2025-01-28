@@ -12,9 +12,9 @@ import angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL
 
 data class DetailedCatData(
     val id: Int = 0,
-    val name: String = "Bob",
+    @StringRes val name: Int = R.string.the_swordsman_name,
     @StringRes val title: Int = R.string.empty_title,
-    val description: String = "",
+    @StringRes val description: Int = R.string.empty_title,
     val armorType: ArmorType = ArmorType.MEDIUM,
     val role: CatRole = CatRole.WARRIOR,
     val baseHealth: Float = 50f,

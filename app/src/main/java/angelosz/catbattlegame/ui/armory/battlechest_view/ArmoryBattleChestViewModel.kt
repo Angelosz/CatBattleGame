@@ -140,7 +140,7 @@ class ArmoryBattleChestViewModel(
     }
 
     private suspend fun addCatToPlayerAccount(cat: Cat){
-        var message = "You got ${cat.name}!"
+        var message = "You got a new Cat!"
         if(!playerAccountRepository.ownsCat(cat.id)){
             playerAccountRepository.insertOwnedCat(
                 OwnedCat(
@@ -150,7 +150,7 @@ class ArmoryBattleChestViewModel(
                 )
             )
         } else {
-            message = "You already have a ${cat.name}, you received ${disenchantCat(cat)} crystals instead!"
+            message = "It seems you already have it! You received ${disenchantCat(cat)} crystals instead!"
         }
         _uiState.update {
             it.copy(

@@ -85,14 +85,14 @@ private fun ArchiveCatDetailsCatContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = stringResource(cat.title, cat.name),
+            text = stringResource(cat.title, stringResource(cat.name)),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
         Image(
             painter = painterResource(cat.image),
-            contentDescription = cat.name,
+            contentDescription = stringResource(cat.name),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(imageSize.dp),
@@ -101,7 +101,7 @@ private fun ArchiveCatDetailsCatContent(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = cat.description,
+                text = stringResource(cat.description),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -183,10 +183,12 @@ private fun ArchiveCatDetailsCatContent(
                         text = stringResource(R.string.evolves_at_level, cat.evolutionLevel),
                         modifier = Modifier.padding(top = 8.dp, start = 16.dp)
                     )
-                    Text(
-                        text = stringResource(R.string.evolution_title, cat.nextEvolutionCat?.name ?: ""),
-                        modifier = Modifier.padding(top = 4.dp, bottom = 8.dp, start = 16.dp)
-                    )
+                    if(cat.nextEvolutionCat != null){
+                        Text(
+                            text = stringResource(R.string.evolution_title, stringResource(cat.nextEvolutionCat.name)),
+                            modifier = Modifier.padding(top = 4.dp, bottom = 8.dp, start = 16.dp)
+                        )
+                    }
                 }
             }
 
@@ -212,7 +214,7 @@ private fun ArchiveCatDetailsCatContent(
                                 modifier = Modifier.size(48.dp)
                             )
                             Text(
-                                text = ability.name,
+                                text = stringResource(ability.name),
                                 style = textSize,
                                 modifier = Modifier.padding(8.dp)
                             )
@@ -286,9 +288,9 @@ fun ArmoryCatDetailsCardPreview(){
         ArchiveCatDetailsCard(
             cat = DetailedCatData(
                 id = 1,
-                name = "Bob",
+                name = R.string.the_swordsman_name,
                 title = R.string.the_kitten_swordman,
-                description = "A brave kitten wielding a wooden sword, eager to protect.",
+                description = R.string.the_kitten_swordsman_desc,
                 image = R.drawable.kitten_swordman_300x300,
                 baseHealth = 50f,
                 baseAttack = 15f,
@@ -300,17 +302,17 @@ fun ArmoryCatDetailsCardPreview(){
                 abilities = listOf(
                     Ability(
                         id = 1,
-                        name = "Quick Attack",
+                        name = R.string.ability_quick_attack,
                         icon = R.drawable.ability_quick_attack_48,
                     ),
                     Ability(
                         id = 2,
-                        name = "Quick Attack",
+                        name = R.string.ability_quick_attack,
                         icon = R.drawable.ability_quick_attack_48,
                     )
                 ),
                 evolutionLevel = 5,
-                nextEvolutionCat = Cat(name= "Teen Swordman"),
+                nextEvolutionCat = Cat(name = R.string.the_swordsman_name),
             ),
             onAbilityClicked = {},
             onCatPurchased = {}

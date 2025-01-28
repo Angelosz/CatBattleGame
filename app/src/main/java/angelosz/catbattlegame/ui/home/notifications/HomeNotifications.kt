@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.ui.home.notifications
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,7 +38,7 @@ sealed class HomeNotification(open val id: Long, open val type: NotificationType
 
 class LevelUpNotification(
     override val id: Long = 0,
-    val name: String,
+    @StringRes val name: Int,
     @DrawableRes val image: Int,
     val level: Int,
     val notificationText: String
@@ -50,7 +52,7 @@ class LevelUpNotification(
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
             ) {
                 Text(
-                    text = "$name leveled up!",
+                    text = stringResource(R.string.notification_level_up, stringResource(name)),
                     modifier = Modifier.padding(8.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
@@ -58,8 +60,10 @@ class LevelUpNotification(
             }
             Image(
                 painter = painterResource(image),
-                contentDescription = name,
-                modifier = Modifier.size(192.dp).clickable(onClick = { onAccept() })
+                contentDescription = stringResource(name),
+                modifier = Modifier
+                    .size(192.dp)
+                    .clickable(onClick = { onAccept() })
             )
             Box(
                 contentAlignment = Alignment.Center
@@ -84,9 +88,9 @@ class LevelUpNotification(
 
 class CatEvolutionNotification(
     override val id: Long = 0,
-    val name: String,
+    @StringRes val name: Int,
     @DrawableRes val image: Int,
-    val evolutionName: String,
+    @StringRes val evolutionName: Int,
     @DrawableRes val evolutionImage: Int,
     val notificationText: String
 ): HomeNotification(id, type = NotificationType.CAT_EVOLUTION){
@@ -100,25 +104,28 @@ class CatEvolutionNotification(
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
             ) {
                 Text(
-                    text = "$name evolved!",
-                    modifier = Modifier.padding(8.dp).width(256.dp),
+                    text = stringResource(R.string.notification_evolved, stringResource(name)),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .width(256.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
             Image(
                 painter = painterResource(evolutionImage),
-                contentDescription = evolutionName,
+                contentDescription = stringResource(evolutionName),
                 modifier = Modifier.size(192.dp)
             )
             Card(
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
             ) {
                 Text(
-                    text = evolutionName +
-                            if(notificationText.isNotEmpty()) "\n$notificationText"
+                    text = if(notificationText.isNotEmpty()) "\n$notificationText"
                             else "",
-                    modifier = Modifier.padding(8.dp).width(256.dp),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .width(256.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleSmall
                 )
@@ -142,7 +149,7 @@ class BattleChestNotification(
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
             ) {
                 Text(
-                    text = "You have received a new Package!",
+                    text = stringResource(R.string.notification_new_package),
                     modifier = Modifier.padding(8.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
@@ -188,13 +195,13 @@ class CurrencyRewardNotification(
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
             ) {
                 Text(
-                    text = "You got $amount ${
-                        when(currencyType){
-                            RewardType.GOLD -> "gold"
-                            RewardType.CRYSTAL -> "crystals"
-                            else -> "gold"
+                    text = stringResource(
+                        R.string.notification_currency, amount, when (currencyType) {
+                            RewardType.GOLD -> stringResource(R.string.gold_coins)
+                            RewardType.CRYSTAL -> stringResource(R.string.crystals)
+                            else -> stringResource(R.string.gold_coins)
                         }
-                    }!",
+                    ),
                     modifier = Modifier.padding(8.dp),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
@@ -259,7 +266,7 @@ fun LevelUpPreview(){
             BackgroundImage(R.drawable.homescreen_portrait_blurry)
             LevelUpNotification(
                 id = 0,
-                name = "Bob, the Swordsman",
+                name = R.string.the_swordsman_name,
                 image = R.drawable.kitten_swordman_300x300,
                 level = 3,
                 notificationText = "Level Up"
@@ -300,9 +307,9 @@ fun EvolutionPreview(){
             BackgroundImage(R.drawable.homescreen_portrait_blurry)
             CatEvolutionNotification(
                 id = 0,
-                name = "Bob, the Kitten Swordsman",
+                name = R.string.the_swordsman_name,
                 image = R.drawable.kitten_swordman_300x300,
-                evolutionName = "Bob, the Teen Swordsman",
+                evolutionName = R.string.the_swordsman_name,
                 evolutionImage = R.drawable.teen_swordman_300x300,
                 notificationText = "was already in your armory, you gained 40 crystals instead."
             ).display({})()

@@ -10,9 +10,9 @@ import angelosz.catbattlegame.domain.enums.CatRole
 
 data class DetailedArmoryCatData(
     val id: Int = 0,
-    val name: String = "Bob",
+    @StringRes val name: Int = R.string.the_swordsman_name,
     @StringRes val title: Int = R.string.empty_title,
-    val description: String = "",
+    @StringRes val description: Int = R.string.the_swordsman_desc,
     val armorType: ArmorType = ArmorType.LIGHT,
     val role: CatRole = CatRole.WARRIOR,
     val health: Float = 10f,

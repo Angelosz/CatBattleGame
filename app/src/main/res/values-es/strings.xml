@@ -16,32 +16,64 @@
     <string name="catrole_healer">Sanador</string>
     <string name="catrole_defender">Defensor</string>
 
+    <!-- Cat Names -->
+    <string name="the_swordsman_name">Max</string>
+    <string name="the_priest_name">Milo</string>
+    <string name="the_paladin_name">Zoe</string>
+    <string name="the_mage_name">Lily</string>
+    <string name="the_rogue_name">Nia</string>
+    <string name="the_monk_name">Kai</string>
+
     <!-- Cat titles -->
     <string name="empty_title">%1$s</string>
     <string name="the_kitten_swordman">%1$s, el Cachorro Espadachín</string>
+    <string name="the_kitten_swordsman_desc">\"Un valiente gatito empuñando una espada de madera, ansioso por proteger.\"</string>
     <string name="the_teen_swordman">%1$s, el Joven Espadachín</string>
+    <string name="the_teen_swordsman_desc">\"Ahora un espadachín habilidoso en entrenamiento, perfeccionando su hoja.\"</string>
     <string name="the_swordsman">%1$s, el Espadachín</string>
+    <string name="the_swordsman_desc">\"Un guerrero curtido en batalla, vestido con una armadura brillante, listo para luchar.\"</string>
     <string name="the_elder_swordsman">%1$s, el Anciano Espadachín</string>
+    <string name="the_elder_swordsman_desc">\"Un espadachín legendario cuya espada corta incluso el destino mismo.\"</string>
     <string name="the_kitten_priest">%1$s, el Cachorro Sacerdote</string>
+    <string name="the_kitten_priest_desc">"Un gatito gentil, aprendiendo a sanar y bendecir con cuidado."</string>
     <string name="the_teen_priest">%1$s, el Joven Sacerdote</string>
+    <string name="the_teen_priest_desc">"Un sanador devoto, creciendo en fuerza en sus deberes sagrados."</string>
     <string name="the_priest">%1$s, el Sacerdote</string>
+    <string name="the_priest_desc">"Un maestro de la magia divina, irradiando paz y protección."</string>
     <string name="the_elder_priest">%1$s, el Anciano Sacerdote</string>
+    <string name="the_elder_priest_desc">"Un faro de esperanza, canalizando energía celestial para salvar a todos."</string>
     <string name="the_kitten_mage">%1$s, la Cachorra Maga</string>
+    <string name="the_kitten_mage_desc">"Una curiosa gatita, experimentando con chispas y hechizos."</string>
     <string name="the_teen_mage">%1$s, la Joven Maga</string>
+    <string name="the_teen_mage_desc">"Una joven hechicera en ciernes, dominando lo arcano con cada hechizo lanzado."</string>
     <string name="the_mage">%1$s, la Maga</string>
+    <string name="the_mage_desc">"Una gran maga, tejiendo poderosa magia para transformar el mundo."</string>
     <string name="the_elder_mage">%1$s, la Anciana Maga</string>
+    <string name="the_elder_mage_desc">"Una antigua hechicera, controlando los elementos con un simple movimiento de su pata."</string>
     <string name="the_kitten_paladin">%1$s, la Cachorra Paladina</string>
+    <string name="the_kitten_paladin_desc">"Una pequeña protectora, cargando un escudo demasiado grande para su tamaño."</string>
     <string name="the_teen_paladin">%1$s, la Joven Paladina</string>
+    <string name="the_teen_paladin_desc">"Una guardiana aspirante, equilibrando fuerza y devoción."</string>
     <string name="the_paladin">%1$s, la Paladina</string>
+    <string name="the_paladin_desc">"Una noble defensora, armada con rectitud y acero."</string>
     <string name="the_elder_paladin">%1$s, la Anciana Paladina</string>
+    <string name="the_elder_paladin_desc">"Una centinela inquebrantable, bendecida por los dioses para permanecer eterna."</string>
     <string name="the_kitten_rogue">%1$s, la Cachorra Pícara</string>
+    <string name="the_kitten_rogue_desc">"Una pequeña bola de pelos astuta, siempre acechando en las sombras, lista para abalanzarse sobre juguetes desprevenidos."</string>
     <string name="the_teen_rogue">%1$s, la Joven Pícara</string>
+    <string name="the_teen_rogue_desc">"Rápida y astuta, esta joven gata usa el sigilo y la velocidad para burlar a sus enemigos."</string>
     <string name="the_rogue">%1$s, la Pícara</string>
+    <string name="the_rogue_desc">"Una maestra de las sombras, esta gata ataca con precisión letal y desaparece sin dejar rastro."</string>
     <string name="the_elder_rogue">%1$s, la Anciana Pícara</string>
+    <string name="the_elder_rogue_desc">"Una legendaria fantasma de la noche, esta ladróna felina es un susurro en el viento y el terror de los tesoros."</string>
     <string name="the_kitten_monk">%1$s, el Cachorro Monje</string>
+    <string name="the_kitten_monk_desc">"Un sereno gatito practicando el equilibrio con golpes juguetones y pequeñas poses meditativas."</string>
     <string name="the_teen_monk">%1$s, el Joven Monje</string>
+    <string name="the_teen_monk_desc">"Disciplinado y decidido, este joven felino canaliza su energía en golpes rápidos y enfocados."</string>
     <string name="the_monk">%1$s, el Monje</string>
+    <string name="the_monk_desc">"Un guerrero elegante en perfecta armonía, este gato golpea con la precisión del agua que fluye."</string>
     <string name="the_elder_monk">%1$s, el Anciano Monje</string>
+    <string name="the_elder_monk_desc">"Un maestro místico de las artes marciales, este gato personifica la tranquilidad y la fuerza, una leyenda viviente entre los suyos."</string>
 
     <!-- Armor Types -->
     <string name="armortype_light">Ligera</string>
@@ -50,6 +82,58 @@
     <string name="armortype_heroic">Heroica</string>
     <string name="armortype_elemental">Elemental</string>
     <string name="armortype_ethereal">Etérea</string>
+
+    <!-- Abilities -->
+    <string name="ability_quick_attack">Ataque Rápido</string>
+    <string name="ability_quick_attack_desc">"Un ataque veloz que inflige daño inmediato con una velocidad de acción superior."</string>
+    <string name="ability_heal_ally">Curar Aliado</string>
+    <string name="ability_heal_ally_desc">"Restaura la salud de un aliado, sanando sus heridas con magia restauradora."</string>
+    <string name="ability_divine_shield">Escudo Divino</string>
+    <string name="ability_divine_shield_desc">"Protege a un aliado, reduciendo el daño que recibe durante un breve período." El aliado queda PROTEGIDO para el próximo daño físico que reciba.</string>
+    <string name="ability_back_stab">Puñalada por la Espalda</string>
+    <string name="ability_back_stab_desc">"Un ataque sorpresa por la espalda que inflige daño adicional."</string>
+    <string name="ability_fire_ball">Bola de Fuego</string>
+    <string name="ability_fire_ball_desc">"Lanza una bola de fuego que explota al impactar, infligiendo una gran cantidad de daño."</string>
+    <string name="ability_magic_attack">Ataque Mágico</string>
+    <string name="ability_magic_attack_desc">"Un hechizo mágico que inflige daño directo al enemigo."</string>
+    <string name="ability_punch">Puñetazo</string>
+    <string name="ability_punch_desc">"Un golpe directo con una poderosa pata."</string>
+    <string name="ability_healing_punch">Puñetazo Sanador</string>
+    <string name="ability_healing_punch_desc">"Un golpe infundido con energía restauradora, curando a un aliado."</string>
+    <string name="ability_inspire">Inspirar</string>
+    <string name="ability_inspire_desc">"Motiva a los aliados, aumentando su salud en combate."</string>
+    <string name="ability_justice">Justicia</string>
+    <string name="ability_justice_desc">"Un ataque justo que castiga a los enemigos con imparcialidad." Aplica ATURDIDO al enemigo.</string>
+    <string name="aiblity_roll">Rodar</string>
+    <string name="aiblity_roll_desc">"Un rodar que inflige daño."</string>
+    <string name="ability_big_roll">Gran Rodar</string>
+    <string name="ability_big_roll_desc">"Un rodar poderoso que inflige daño adicional."</string>
+    <string name="ability_poison">Veneno</string>
+    <string name="ability_poison_desc">"Cubre tus garras con veneno, infligiendo daño continuo a un enemigo."</string>
+    <string name="ability_poison_cloud">Nube de Veneno</string>
+    <string name="ability_poison_cloud_desc">"Libera una nube tóxica, envenenando a todos los enemigos en el área e infligiendo daño continuo."</string>
+    <string name="ability_fire_embers">Brasas Ardientes</string>
+    <string name="ability_fire_embers_desc">"Esparce brasas ardientes sobre un área amplia, infligiendo daño leve por fuego a todos los enemigos."</string>
+    <string name="ability_fire_blaze">Llamarada de Fuego</string>
+    <string name="ability_fire_blaze_desc">"Desata una llama rugiente, quemando a todos los enemigos en el área con daño moderado por fuego."</string>
+    <string name="ability_shields_up">¡Escudos Arriba!</string>
+    <string name="ability_shields_up_desc">"Aumenta las defensas de tu equipo con un escudo poderoso, reduciendo el daño recibido por un tiempo corto."</string>
+    <string name="ability_healing_mushrooms">Hongos Curativos</string>
+    <string name="ability_healing_mushrooms_desc">"Haz brotar hongos mágicos que curan gradualmente a tu equipo cuando se consumen."</string>
+    <string name="ability_hose_spray">Rociador de Agua</string>
+    <string name="ability_hose_spray_desc">"Desata un chorro de agua, empapando al equipo enemigo e infligiendo un daño modesto."</string>
+    <string name="ability_slime_spray">Rociador de Baba</string>
+    <string name="ability_slime_spray_desc">"Cubre al equipo enemigo con baba pegajosa, ralentizando sus movimientos e infligiendo daño menor."</string>
+    <string name="ability_call_mosquito">Llamar Mosquito</string>
+    <string name="ability_call_mosquito_desc">"Invoca un mosquito molesto para acosar a tus enemigos, zumbando sin descanso."</string>
+    <string name="ability_call_mommy">Llamar a Mamá</string>
+    <string name="ability_call_mommy_desc">"Un mapache joven llama a su mamá, quien llega corriendo para proteger al equipo e infundir miedo en los enemigos."</string>
+    <string name="ability_summon_worker">Invocar Obrero</string>
+    <string name="ability_summon_worker_desc">"La Reina Hormiga llama a un diligente obrero para asistirla, apoyando al equipo con utilidad menor."</string>
+    <string name="ability_summon_warrior">Invocar Guerrero</string>
+    <string name="ability_summon_warrior_desc">"La Reina Hormiga invoca a un valiente guerrero hormiga para unirse a la batalla, listo para defender y atacar."</string>
+    <string name="ability_summon_pet_spider">Invocar Araña Mascota</string>
+    <string name="ability_summon_pet_spider_desc">"El Gnomo Cazador llama a su leal araña mascota al combate, un compañero lindo pero formidable."</string>
 
     <!-- Ability Types -->
     <string name="ability_type_blunt">Contundente</string>
@@ -167,4 +251,96 @@
     <string name="play_button_desc">Botón de jugar</string>
     <string name="close_shop">Cerrar Tienda</string>
     <string name="package_shop">Tienda de Paquetes</string>
+
+    <!-- Chapters -->
+    <string name="chapter_title_1">¡Los peligros de jugar!</string>
+    <string name="chapter_desc_1">\"El juego puede ser divertido, pero cuidado con los peligros ocultos en cada rincón.\"</string>
+    <string name="chapter_title_2">¡Ratones!</string>
+    <string name="chapter_desc_2">\"Los ratones están causando estragos en la casa. ¡Atrápalos antes de que sea demasiado tarde!\"</string>
+    <string name="chapter_title_3">El enemigo</string>
+    <string name="chapter_desc_3">\"Tal vez sea mejor correr…\"</string>
+    <string name="chapter_title_4">Gorrión en acción</string>
+    <string name="chapter_desc_4">\"Un gorrión despistado. ¡Deténle antes de que avise a su nido!\"</string>
+    <string name="chapter_title_5">Caracoles del jardín</string>
+    <string name="chapter_desc_5">\"Los caracoles han tomado el jardín. ¿Puedes protegerlo y mantener a raya a estos invasores lentos pero seguros?\"</string>
+    <string name="chapter_title_6">Escuadrón de gnomos del jardín</string>
+    <string name="chapter_desc_6">\"Los gnomos del jardín han formado un escuadrón y están causando problemas. ¡Dales una lección!\"</string>
+    <string name="chapter_title_7">Herramientas de jardín</string>
+    <string name="chapter_desc_7">\"Incluso las herramientas de jardín se han vuelto contra ti. ¿Podrás manejarlas?\"</string>
+    <string name="chapter_title_8">Hormigas obreras</string>
+    <string name="chapter_desc_8">\"Las hormigas están trabajando juntas para invadir. ¡Defiéndete de su ataque organizado!\"</string>
+    <string name="chapter_title_9">Gnomo cazador</string>
+    <string name="chapter_desc_9">\"Un gnomo cazador ha aparecido, armado y peligroso. ¡Prepárate para un duro enfrentamiento!\"</string>
+    <string name="chapter_title_10">¡Mosquitos!</string>
+    <string name="chapter_desc_10">\"El zumbido de los mosquitos se intensifica. ¡Acaba con ellos antes de que te rodeen!\"</string>
+    <string name="chapter_title_11">Mapache joven</string>
+    <string name="chapter_desc_11">\"Un mapache joven está explorando. ¿Amigo o enemigo? Descúbrelo.\"</string>
+    <string name="chapter_title_12">Erizo</string>
+    <string name="chapter_desc_12">\"Este pequeño erizo parece inofensivo, pero no te dejes engañar. ¡Es un oponente formidable!\"</string>
+    <string name="chapter_title_13">Colonia de hormigas</string>
+    <string name="chapter_desc_13">\"La colonia entera está movilizándose contra ti. ¿Podrás vencerlas todas?\"</string>
+    <string name="chapter_title_14">¡Guardias!</string>
+    <string name="chapter_desc_14">\"Los guardias están aquí para proteger su territorio. ¡Ábrete camino a través de ellos!\"</string>
+    <string name="chapter_title_15">¡El pícaro oscuro!</string>
+    <string name="chapter_desc_15">\"El pícaro oscuro ha surgido de las sombras. Esta será tu mayor prueba hasta ahora.\"</string>
+
+    <!-- Campaigns -->
+    <string name="campaign_title_1">Peligros en la casa</string>
+    <string name="campaign_desc_1">\"¡Defiende la casa de tu dueño contra enemigos (y juguetes) peligrosos!\"</string>
+    <string name="campaign_title_2">Peligros en el jardín</string>
+    <string name="campaign_desc_2">\"¡Defiende el jardín de tu dueño contra los ladrones!\"</string>
+    <string name="campaign_title_3">Peligros en el bosque oscuro</string>
+    <string name="campaign_desc_3">\"¡Persigue a los ladrones que robaron el tesoro de tu dueño!\"</string>
+    <string name="campaign_title_4">Peligros en la cueva pirata</string>
+    <string name="campaign_desc_4">\"¡Asalta la cueva pirata y recupera el tesoro de tu dueño!\"</string>
+
+    <!-- Enemy Cats -->
+    <string name="enemy_wool_ball">Bola de Tela</string>
+    <string name="enemy_wool_ball_desc">Mira como rueda!</string>
+    <string name="enemy_mouse_thief">Ratón Ladrón</string>
+    <string name="enemy_mouse_thief_desc">¡Se ha llevado el queso!</string>
+    <string name="enemy_playful_puppy">Perro juguetón</string>
+    <string name="enemy_playful_puppy_desc">Quiere jugar. ¡Corre!</string>
+    <string name="enemy_sparrow_scout">Explorador Gorrión</string>
+    <string name="enemy_sparrow_scout_desc">\"Un gorrión rápido y vigilante, siempre atento a posibles amenazas.\"</string>
+    <string name="enemy_sparrow_guard">Guardián Gorrión</string>
+    <string name="enemy_sparrow_guard_desc">\"Un gorrión protector armado con un fuerte sentido del deber y garras afiladas.\"</string>
+    <string name="enemy_raven_guard">Guardián Cuervo</string>
+    <string name="enemy_raven_guard_desc">\"Un temible cuervo que protege su territorio con una presencia intimidante.\"</string>
+    <string name="enemy_angry_garden_gnome">Gnomo de Jardín Enfadado</string>
+    <string name="enemy_angry_garden_gnome_desc">\"Un gruñón gnomo que defiende su jardín con una ferocidad sorprendente.\"</string>
+    <string name="enemy_jumping_spider">Araña Saltarina</string>
+    <string name="enemy_jumping_spider_desc">\"La leal mascota del Gnomo Cazador, rápida y ágil con colmillos venenosos.\"</string>
+    <string name="enemy_lawn_mower">Cortacésped</string>
+    <string name="enemy_lawn_mower_desc">\"Una máquina imparable que arrasa con todo a su paso.\"</string>
+    <string name="enemy_hose">Manguera</string>
+    <string name="enemy_hose_desc">\"Una herramienta que rocía agua con fuerza sorprendente contra sus enemigos.\"</string>
+    <string name="enemy_ant_worker">Hormiga Obrera</string>
+    <string name="enemy_ant_worker_desc">\"Una hormiga diligente enfocada en apoyar a su colonia a toda costa.\"</string>
+    <string name="enemy_ant_warrior">Hormiga Guerrera</string>
+    <string name="enemy_ant_warrior_desc">\"Un fiero soldado hormiga, listo para defender a su reina con fuerza inquebrantable.\"</string>
+    <string name="enemy_angry_snail">Caracol Enfadado</string>
+    <string name="enemy_angry_snail_desc">\"Un caracol sorprendentemente agresivo, cuya lentitud oculta una gran defensa.\"</string>
+    <string name="enemy_happy_snail">Caracol Feliz</string>
+    <string name="enemy_happy_snail_desc">\"Un caracol contento que solo quiere que lo dejen en paz… a menos que lo provoquen.\"</string>
+    <string name="enemy_mosquito">Mosquito</string>
+    <string name="enemy_mosquito_desc">\"Un zumbante fastidio, siempre buscando una oportunidad para atacar.\"</string>
+    <string name="enemy_hedgehog">Erizo</string>
+    <string name="enemy_hedgehog_desc">\"Una criatura cautelosa y llena de púas, lista para contraatacar si se siente amenazada.\"</string>
+    <string name="enemy_young_raccoon">Mapache Joven</string>
+    <string name="enemy_young_raccoon_desc">\"Un travieso mapache joven, rápido para huir pero siempre listo para causar problemas.\"</string>
+    <string name="enemy_mother_raccoon">Madre Mapache</string>
+    <string name="enemy_mother_raccoon_desc">\"Una protectora feroz, esta mapache hará lo que sea necesario para cuidar a sus crías.\"</string>
+    <string name="enemy_dark_rogue">Pícaro Oscuro</string>
+    <string name="enemy_dark_rogue_desc">\"Una figura sombría con habilidades letales y un pasado misterioso.\"</string>
+    <string name="enemy_ant_queen">Reina Hormiga</string>
+    <string name="enemy_ant_queen_desc">\"El corazón de la colonia, comandando a sus súbditos con autoridad real.\"</string>
+    <string name="enemy_hunter_gnome">Gnomo Cazador</string>
+    <string name="enemy_hunter_gnome_desc">\"Un astuto gnomo que utiliza trampas y trucos para dominar el campo de batalla.\"</string>
+
+    <!-- Notifications -->
+    <string name="notification_evolved">%1$s ha evolucionado!</string>
+    <string name="notification_level_up">%1$s ha subido de nivel!</string>
+    <string name="notification_new_package">Has recibido un nuevo paquete!</string>
+    <string name="notification_currency">Has conseguido %1$s %2$s!</string>
 </resources>

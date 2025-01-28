@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.ui.combat
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -35,7 +36,7 @@ import angelosz.catbattlegame.ui.components.CatCard
 
 class CombatCatData(
     val combatId: Int,
-    val name: String,
+    @StringRes val name: Int,
     @DrawableRes val image: Int,
     var currentHealth: Float,
     val maxHealth: Float,

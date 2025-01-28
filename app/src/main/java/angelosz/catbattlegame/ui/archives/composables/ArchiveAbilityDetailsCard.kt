@@ -47,13 +47,13 @@ fun ArchiveAbilityDetailsCard(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = ability.name,
+                text = stringResource(ability.name),
                 modifier = Modifier.padding(32.dp),
                 style = MaterialTheme.typography.headlineSmall
             )
             Image (
                 painter = painterResource(ability.image),
-                contentDescription = ability.name,
+                contentDescription = stringResource(ability.name),
                 Modifier
                     .height(imageSize.dp)
                     .fillMaxWidth()
@@ -62,7 +62,7 @@ fun ArchiveAbilityDetailsCard(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = ability.description,
+                    text = stringResource(ability.description),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(8.dp)
                 )
@@ -122,8 +122,8 @@ fun CatAbilityCardPreview(){
                 .fillMaxWidth(),
             ability = Ability(
                 id = 3,
-                name = "Defend Ally",
-                description = "Ally becomes SHIELDED for the next damage they receive.",
+                name = R.string.ability_shields_up,
+                description = R.string.ability_shields_up_desc,
                 image = R.drawable.ability_defend_ally_256,
                 icon = R.drawable.ability_defend_ally_48,
                 abilityType = AbilityType.STATUS_CHANGING,

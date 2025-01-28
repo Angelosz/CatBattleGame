@@ -15,32 +15,64 @@
     <string name="catrole_healer">Healer</string>
     <string name="catrole_defender">Defender</string>
 
+    <!-- Cat Names -->
+    <string name="the_swordsman_name">Max</string>
+    <string name="the_priest_name">Milo</string>
+    <string name="the_paladin_name">Zoe</string>
+    <string name="the_mage_name">Lily</string>
+    <string name="the_rogue_name">Nia</string>
+    <string name="the_monk_name">Kai</string>
+
     <!-- Cat titles -->
     <string name="empty_title">%1$s</string>
     <string name="the_kitten_swordman">%1$s, the Kitten Swordsman</string>
+    <string name="the_kitten_swordsman_desc">\"A brave kitten wielding a wooden sword, eager to protect.\"</string>
     <string name="the_teen_swordman">%1$s, the Teen Swordsman</string>
+    <string name="the_teen_swordsman_desc">\"Now a skilled swordsman in training, honing their blade.\"</string>
     <string name="the_swordsman">%1$s, the Swordsman</string>
+    <string name="the_swordsman_desc">\"A battle-hardened warrior clad in shining armor, ready to fight.\"</string>
     <string name="the_elder_swordsman">%1$s, the Elder Swordsman</string>
+    <string name="the_elder_swordsman_desc">\"A legendary swordsman whose blade cleaves through destiny itself.\"</string>
     <string name="the_kitten_priest">%1$s, the Kitten Priest</string>
+    <string name="the_kitten_priest_desc">\"A gentle kitten, learning to heal and bless with care.\"</string>
     <string name="the_teen_priest">%1$s, the Teen Priest</string>
+    <string name="the_teen_priest_desc">\"A devoted healer, growing stronger in their sacred duties.\"</string>
     <string name="the_priest">%1$s, the Priest</string>
+    <string name="the_priest_desc">\"A master of divine magic, radiating peace and protection.\"</string>
     <string name="the_elder_priest">%1$s, the Elder Priest</string>
+    <string name="the_elder_priest_desc">\"A beacon of hope, channeling celestial energy to save all.\"</string>
     <string name="the_kitten_mage">%1$s, the Kitten Mage</string>
+    <string name="the_kitten_mage_desc">\"A curious kitten, experimenting with sparks and spells.\"</string>
     <string name="the_teen_mage">%1$s, the Teen Mage</string>
+    <string name="the_teen_mage_desc">\"A budding sorcerer, mastering the arcane with each spell cast.\"</string>
     <string name="the_mage">%1$s, the Mage</string>
+    <string name="the_mage_desc">\"A grand wizard, weaving powerful magic to reshape the world.\"</string>
     <string name="the_elder_mage">%1$s, the Elder Mage</string>
+    <string name="the_elder_mage_desc">\"An ancient spellcaster, commanding the elements with a flick of their paw.\"</string>
     <string name="the_kitten_paladin">%1$s, the Kitten Paladin</string>
+    <string name="the_kitten_paladin_desc">\"A tiny protector, carrying a shield too big for their size.\"</string>
     <string name="the_teen_paladin">%1$s, the Teen Paladin</string>
+    <string name="the_teen_paladin_desc">\"An aspiring guardian, balancing strength and devotion.\"</string>
     <string name="the_paladin">%1$s, the Paladin</string>
+    <string name="the_paladin_desc">\"A noble defender, armored in righteousness and steel.\"</string>
     <string name="the_elder_paladin">%1$s, the Elder Paladin</string>
+    <string name="the_elder_paladin_desc">\"An unyielding sentinel, blessed by the gods to stand eternal.\"</string>
     <string name="the_kitten_rogue">%1$s, the Kitten Rogue</string>
+    <string name="the_kitten_rogue_desc">\"A sneaky little furball always lurking in the shadows, ready to pounce on unsuspecting toys.\"</string>
     <string name="the_teen_rogue">%1$s, the Teen Rogue</string>
+    <string name="the_teen_rogue_desc">\"Quick and cunning, this adolescent cat uses stealth and speed to outsmart its foes.\"</string>
     <string name="the_rogue">%1$s, the Rogue</string>
+    <string name="the_rogue_desc">\"A master of the shadows, this cat strikes with deadly precision and vanishes without a trace.\"</string>
     <string name="the_elder_rogue">%1$s, the Elder Rogue</string>
+    <string name="the_elder_rogue_desc">\"A legendary phantom of the night, this feline thief is a whisper on the wind and the terror of treasure troves.\"</string>
     <string name="the_kitten_monk">%1$s, the Kitten Monk</string>
+    <string name="the_kitten_monk_desc">\"A serene kitten practicing balance with playful swipes and tiny meditative poses.\"</string>
     <string name="the_teen_monk">%1$s, the Teen Monk</string>
+    <string name="the_teen_monk_desc">\"Disciplined and determined, this young feline channels its energy into swift, focused strikes.\"</string>
     <string name="the_monk">%1$s, the Monk</string>
+    <string name="the_monk_desc">\"A graceful warrior in perfect harmony, this cat strikes with the precision of flowing water.\"</string>
     <string name="the_elder_monk">%1$s, the Elder Monk</string>
+    <string name="the_elder_monk_desc">\"A mystical master of martial arts, this cat embodies tranquility and strength, a living legend among its kind.\"</string>
 
     <!-- Armor Types -->
     <string name="armortype_light">Light</string>
@@ -49,6 +81,58 @@
     <string name="armortype_heroic">Heroic</string>
     <string name="armortype_elemental">Elemental</string>
     <string name="armortype_ethereal">Ethereal</string>
+
+    <!-- Abilities -->
+    <string name="ability_quick_attack">Quick Attack</string>
+    <string name="ability_quick_attack_desc">\"A fast attack that deals immediate damage with superior action speed.\"</string>
+    <string name="ability_heal_ally">Heal Ally</string>
+    <string name="ability_heal_ally_desc">\"Restores health to an ally, healing their wounds with restorative magic.\"</string>
+    <string name="ability_divine_shield">Divine Shield</string>
+    <string name="ability_divine_shield_desc">\"Protects an ally, reducing the damage they take for a brief period.\" Ally becomes SHIELDED for the next physical damage they receive.</string>
+    <string name="ability_back_stab">Back Stab</string>
+    <string name="ability_back_stab_desc">\"A surprise attack from behind that deals extra damage.\"</string>
+    <string name="ability_fire_ball">Fire Ball</string>
+    <string name="ability_fire_ball_desc">\"Launches a fireball that explodes on impact, dealing a high amount of damage.\"</string>
+    <string name="ability_magic_attack">Magic Attack</string>
+    <string name="ability_magic_attack_desc">\"A magical spell that deals direct damage to the enemy.\"</string>
+    <string name="ability_punch">Punch</string>
+    <string name="ability_punch_desc">\"A straightforward strike with a powerful paw.\"</string>
+    <string name="ability_healing_punch">Healing Punch</string>
+    <string name="ability_healing_punch_desc">\"A blow infused with restorative energy, healing an ally.\"</string>
+    <string name="ability_inspire">Inspire</string>
+    <string name="ability_inspire_desc">\"Motivates allies, boosting their health in combat.\"</string>
+    <string name="ability_justice">Justice</string>
+    <string name="ability_justice_desc">\"A righteous attack that punishes foes with unwavering fairness.\" Applies STUNNED to the enemy.</string>
+    <string name="aiblity_roll">Roll</string>
+    <string name="aiblity_roll_desc">A roll that deals damage.</string>
+    <string name="ability_big_roll">Big Roll</string>
+    <string name="ability_big_roll_desc">A powerful roll that deals extra damage.</string>
+    <string name="ability_poison">Poison</string>
+    <string name="ability_poison_desc">\"Coat your claws with venom, dealing damage over time to a single enemy.\"</string>
+    <string name="ability_poison_cloud">Poison Cloud</string>
+    <string name="ability_poison_cloud_desc">\"Unleash a toxic cloud, poisoning all enemies in the area and dealing damage over time.\"</string>
+    <string name="ability_fire_embers">Fire Embers</string>
+    <string name="ability_fire_embers_desc">\"Scatter burning embers over a wide area, dealing light fire damage to all enemies.\"</string>
+    <string name="ability_fire_blaze">Fire Blaze</string>
+    <string name="ability_fire_blaze_desc">\"Ignite a roaring blaze, scorching all enemies in the area with moderate fire damage.\"</string>
+    <string name="ability_shields_up">Shields up!</string>
+    <string name="ability_shields_up_desc">\"Raise your team\'s defenses with a powerful shield, reducing incoming damage for a short time.\"</string>
+    <string name="ability_healing_mushrooms">Healing Mushrooms</string>
+    <string name="ability_healing_mushrooms_desc">\"Sprout magical mushrooms that gradually heal your team over time when consumed.\"</string>
+    <string name="ability_hose_spray">Hose Spray</string>
+    <string name="ability_hose_spray_desc">\"Unleash a stream of water, dousing the enemy team and dealing a modest amount of damage.\"</string>
+    <string name="ability_slime_spray">Slime Spray</string>
+    <string name="ability_slime_spray_desc">\"Coat the enemy team in sticky slime, slowing their movements and dealing minor damage.\"</string>
+    <string name="ability_call_mosquito">Call Mosquito</string>
+    <string name="ability_call_mosquito_desc">\"Summon a pesky mosquito to harass your enemies, buzzing relentlessly\"</string>
+    <string name="ability_call_mommy">Call Mommy</string>
+    <string name="ability_call_mommy_desc">\"A young raccoon calls for its mom, who rushes in to protect the team and strike fear into foes.\"</string>
+    <string name="ability_summon_worker">Summon Worker</string>
+    <string name="ability_summon_worker_desc">\"The Queen Ant calls forth a diligent worker to assist her, supporting the team with minor utility.\"</string>
+    <string name="ability_summon_warrior">Summon Warrior</string>
+    <string name="ability_summon_warrior_desc">\"The Queen Ant summons a brave ant warrior to join the fight, ready to defend and attack.\"\n</string>
+    <string name="ability_summon_pet_spider">Summon Pet Spider</string>
+    <string name="ability_summon_pet_spider_desc">\"The Hunter Gnome calls its loyal pet spider into battle, a cute but formidable companion.\"</string>
 
     <!-- Ability Types -->
     <string name="ability_type_blunt">Blunt</string>
@@ -104,7 +188,7 @@
     <string name="navigation_item_enemies">Enemies</string>
 
     <!-- UI -->
-        <!-- Cat Descriptions -->
+    <!-- Cat Descriptions -->
     <string name="cat_desc_health">Health: %1$s</string>
     <string name="cat_desc_defense">Defense: %1$s</string>
     <string name="cat_desc_role">Role: %1$s</string>
@@ -117,7 +201,7 @@
     <string name="unlock_cat_for">Unlock for %1$s</string>
     <string name="owned">Owned</string>
 
-        <!-- Ability Descriptions -->
+    <!-- Ability Descriptions -->
     <string name="damage_multiplier_desc">Damage multiplier: %1$s</string>
     <string name="attack_speed_multiplier_desc">Attack speed multiplier: %1$s</string>
     <string name="combat_modifier_desc">Combat Modifier: %1$s</string>
@@ -126,7 +210,7 @@
     <string name="cooldown_desc">Cooldown: %1$s</string>
     <string name="ability_icon_title">"Ability icon: "</string>
 
-        <!--BattleChest -->
+    <!--BattleChest -->
     <string name="battlechests_available">You have %1$s packages!\nClick it to open it!</string>
     <string name="no_battlechests_available">You have no packages! :(</string>
     <string name="battlechest_new_cat_display">New</string>
@@ -135,7 +219,7 @@
     <string name="open_more_packages">Open more Packages!</string>
     <string name="type_package">%1$s Package</string>
 
-        <!-- Campaign -->
+    <!-- Campaign Selection -->
     <string name="locked_campaign">Locked Campaign</string>
     <string name="in_development">(In development)</string>
     <string name="locked_chapter">Locked Chapter</string>
@@ -166,5 +250,98 @@
     <string name="play_button_desc">Play button</string>
     <string name="close_shop">Close Shop</string>
     <string name="package_shop">Package Shop</string>
+
+    <!-- Chapters -->
+    <string name="chapter_title_1">The dangers of playing</string>
+    <string name="chapter_desc_1">Chapter Description</string>
+    <string name="chapter_title_2">Mice!</string>
+    <string name="chapter_desc_2">Chapter Description</string>
+    <string name="chapter_title_3">The enemy</string>
+    <string name="chapter_desc_3">Chapter Description</string>
+    <string name="chapter_title_4">Sparrowing</string>
+    <string name="chapter_desc_4">Chapter Description</string>
+    <string name="chapter_title_5">Garden Snails</string>
+    <string name="chapter_desc_5">Chapter Description</string>
+    <string name="chapter_title_6">Garden Gnome Squad</string>
+    <string name="chapter_desc_6">Chapter Description</string>
+    <string name="chapter_title_7">Garden Tools</string>
+    <string name="chapter_desc_7">Chapter Description</string>
+    <string name="chapter_title_8">Worker Ants</string>
+    <string name="chapter_desc_8">Chapter Description</string>
+    <string name="chapter_title_9">Hunter Gnome</string>
+    <string name="chapter_desc_9">Chapter Description</string>
+    <string name="chapter_title_10">Mosquitos!</string>
+    <string name="chapter_desc_10">Chapter Description</string>
+    <string name="chapter_title_11">Young Raccoon</string>
+    <string name="chapter_desc_11">Chapter Description</string>
+    <string name="chapter_title_12">Hedgehog</string>
+    <string name="chapter_desc_12">Chapter Description</string>
+    <string name="chapter_title_13">Ant Colony</string>
+    <string name="chapter_desc_13">Chapter Description</string>
+    <string name="chapter_title_14">Guards!</string>
+    <string name="chapter_desc_14">Chapter Description</string>
+    <string name="chapter_title_15">The Dark Rogue!</string>
+    <string name="chapter_desc_15">Chapter Description</string>
+
+    <!-- Campaigns -->
+    <string name="campaign_title_1">Dangers in the house</string>
+    <string name="campaign_desc_1">\"Defend your owner\'s house against dangerous enemies(and toys)!\"</string>
+    <string name="campaign_title_2">Dangers in the garden</string>
+    <string name="campaign_desc_2">\"Defend your owner\'s garden against the thieves!\"</string>
+    <string name="campaign_title_3">Dangers in the dark forest</string>
+    <string name="campaign_desc_3">\"Pursue the thieves that stole your owner\'s treasure!\"</string>
+    <string name="campaign_title_4">Dangers in the pirate cave</string>
+    <string name="campaign_desc_4">\"Assault the pirate cave and retrieve your owner\'s treasure!\"</string>
+
+    <!-- Enemy Cats -->
+    <string name="enemy_wool_ball">Wool Ball</string>
+    <string name="enemy_wool_ball_desc">Round and round it goes.</string>
+    <string name="enemy_mouse_thief">Mouse Thief</string>
+    <string name="enemy_mouse_thief_desc">They have taken the cheese!</string>
+    <string name="enemy_playful_puppy">Playful Puppy</string>
+    <string name="enemy_playful_puppy_desc">She wants to play. RUN!</string>
+    <string name="enemy_sparrow_scout">Sparrow Scout</string>
+    <string name="enemy_sparrow_scout_desc">\"A quick and watchful sparrow, always on the lookout for threats.\"</string>
+    <string name="enemy_sparrow_guard">Sparrow Guard</string>
+    <string name="enemy_sparrow_guard_desc">\"A protective sparrow armed with a strong sense of duty and sharper claws.\"</string>
+    <string name="enemy_raven_guard">Raven Guard</string>
+    <string name="enemy_raven_guard_desc">\"A fearsome raven that guards its territory with an intimidating presence.\"</string>
+    <string name="enemy_angry_garden_gnome">Angry Garden Gnome</string>
+    <string name="enemy_angry_garden_gnome_desc">\"A grumpy gnome that defends its garden with surprising ferocity.\"</string>
+    <string name="enemy_jumping_spider">Jumping Spider</string>
+    <string name="enemy_jumping_spider_desc">\"The Hunter Gnome’s loyal pet, quick and agile with venomous fangs.\"</string>
+    <string name="enemy_lawn_mower">Lawn Mower</string>
+    <string name="enemy_lawn_mower_desc">\"A relentless machine that chews through everything in its path.\"</string>
+    <string name="enemy_hose">Hose</string>
+    <string name="enemy_hose_desc">\"A spray-happy tool that soaks foes with a surprising amount of force.\"</string>
+    <string name="enemy_ant_worker">Ant Worker</string>
+    <string name="enemy_ant_worker_desc">\"A diligent ant focused on supporting its colony at all costs.\"</string>
+    <string name="enemy_ant_warrior">Ant Warrior</string>
+    <string name="enemy_ant_warrior_desc">\"A fierce ant soldier, ready to defend its queen with unrelenting strength.\"</string>
+    <string name="enemy_angry_snail">Angry Snail</string>
+    <string name="enemy_angry_snail_desc">\"A surprisingly aggressive snail, its slow pace hides a strong defense.\"</string>
+    <string name="enemy_happy_snail">Happy Snail</string>
+    <string name="enemy_happy_snail_desc">\"A content snail that just wants to be left alone... unless provoked.\"\n</string>
+    <string name="enemy_mosquito">Mosquito</string>
+    <string name="enemy_mosquito_desc">\"A buzzing menace, always looking for an opportunity to strike.\"</string>
+    <string name="enemy_hedgehog">Hedgehog</string>
+    <string name="enemy_hedgehog_desc">\"A spiky and cautious creature that can pack a punch when cornered.\"</string>
+    <string name="enemy_young_raccoon">Young Raccoon</string>
+    <string name="enemy_young_raccoon_desc">\"A mischievous young raccoon, quick to run but always ready for trouble.\"</string>
+    <string name="enemy_mother_raccoon">Mother Raccoon</string>
+    <string name="enemy_mother_raccoon_desc">\"A fierce protector, this raccoon will do anything to guard her young.\"</string>
+    <string name="enemy_dark_rogue">Dark Rogue</string>
+    <string name="enemy_dark_rogue_desc">\"A shadowy figure with lethal skills and a mysterious past.\"</string>
+    <string name="enemy_ant_queen">Ant Queen</string>
+    <string name="enemy_ant_queen_desc">\"The heart of the colony, commanding her subjects with royal authority.\"</string>
+    <string name="enemy_hunter_gnome">Hunter Gnome</string>
+    <string name="enemy_hunter_gnome_desc">\"A crafty gnome who uses traps and tricks to dominate the battlefield.\"</string>
+
+    <!-- Notifications -->
+    <string name="notification_evolved">%1$s evolved!</string>
+    <string name="notification_level_up">%1$s leveled up!</string>
+    <string name="notification_new_package">You have received a new Package!</string>
+    <string name="notification_currency">You got %1$s %2$s!</string>
+
 
 </resources>
