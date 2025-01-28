@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.armory.data.CollectionsNavigationItem
 import angelosz.catbattlegame.ui.armory.data.armoryNavigationItems
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
@@ -39,7 +41,7 @@ fun CollectionsNavigationRail(
                 icon = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back button"
+                        contentDescription = stringResource(R.string.back_button_desc)
                     )
                 }
             )
@@ -58,10 +60,10 @@ fun CollectionsNavigationRail(
                         Image(
                             modifier = Modifier.size(48.dp),
                             painter = painterResource(item.icon),
-                            contentDescription = item.title
+                            contentDescription = stringResource(item.title)
                         )
                         Text(
-                            text = item.title,
+                            text = stringResource(item.title),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }

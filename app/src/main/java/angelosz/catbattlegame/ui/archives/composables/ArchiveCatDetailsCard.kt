@@ -121,41 +121,49 @@ private fun ArchiveCatDetailsCatContent(
                 ) {
                     Column {
                         Text(
-                            text = "Health: ${cat.baseHealth}",
+                            text = stringResource(R.string.cat_desc_health, cat.baseAttack),
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = "Defense: ${cat.baseDefense}",
+                            text = stringResource(R.string.cat_desc_defense, cat.baseDefense),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Role: ${stringResource(cat.role.res)}",
+                            text = stringResource(
+                                R.string.cat_desc_role,
+                                stringResource(cat.role.res)
+                            ),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
 
                         Text(
-                            text = "Armor: ${stringResource(cat.armorType.res)}",
+                            text = stringResource(
+                                R.string.cat_desc_armor,
+                                stringResource(cat.armorType.res)
+                            ),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
-
                     }
                     Column {
                         Text(
-                            text = "Attack: ${cat.baseAttack}",
+                            text = stringResource(R.string.cat_desc_attack, cat.baseAttack),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "A. Speed: ${cat.attackSpeed}s",
+                            text = stringResource(R.string.cat_desc_attack_speed, cat.attackSpeed),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Rarity: ${stringResource(cat.rarity.res)}",
+                            text = stringResource(
+                                R.string.cat_desc_rarity,
+                                stringResource(cat.rarity.res)
+                            ),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
@@ -172,11 +180,11 @@ private fun ArchiveCatDetailsCatContent(
             ) {
                 if (cat.evolutionLevel <= MAX_CAT_LEVEL) {
                     Text(
-                        text = "Evolves at level: ${cat.evolutionLevel}",
+                        text = stringResource(R.string.evolves_at_level, cat.evolutionLevel),
                         modifier = Modifier.padding(top = 8.dp, start = 16.dp)
                     )
                     Text(
-                        text = "Evolution: ${cat.nextEvolutionCat?.name}",
+                        text = stringResource(R.string.evolution_title, cat.nextEvolutionCat?.name ?: ""),
                         modifier = Modifier.padding(top = 4.dp, bottom = 8.dp, start = 16.dp)
                     )
                 }
@@ -200,7 +208,7 @@ private fun ArchiveCatDetailsCatContent(
                         ) {
                             Image(
                                 painter = painterResource(ability.icon),
-                                contentDescription = "${ability.name} ability icon",
+                                contentDescription = stringResource(R.string.ability_icon_desc, ability.name),
                                 modifier = Modifier.size(48.dp)
                             )
                             Text(
@@ -233,7 +241,7 @@ private fun ArchiveCatDetailsCatContent(
                             verticalAlignment = Alignment.CenterVertically
                         ){
                             Text(
-                                text = "Unlock for $crystalCost",
+                                text = stringResource(R.string.unlock_cat_for, crystalCost),
                                 modifier = Modifier.padding(8.dp)
                             )
                             Image(
@@ -261,7 +269,7 @@ private fun ArchiveCatDetailsCatContent(
                         onClick = { }
                     ){
                         Text(
-                            text = "Owned",
+                            text = stringResource(R.string.owned),
                             modifier = Modifier.padding(8.dp)
                         )
                     }

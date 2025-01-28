@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -75,9 +76,9 @@ fun CombatResultScreen(
                             modifier = Modifier
                                 .padding(8.dp),
                             text = when(uiState.combatResult) {
-                                CombatResult.PLAYER_WON -> "Victory!"
-                                CombatResult.PLAYER_LOST -> "Defeat :("
-                                CombatResult.TIED -> "You tied? How?!"
+                                CombatResult.PLAYER_WON -> stringResource(R.string.victory)
+                                CombatResult.PLAYER_LOST -> stringResource(R.string.defeat)
+                                CombatResult.TIED -> stringResource(R.string.tie)
                             },
                             style = MaterialTheme.typography.displaySmall,
                             textAlign = TextAlign.Center
@@ -95,7 +96,7 @@ fun CombatResultScreen(
                                 Text(
                                     modifier = Modifier
                                         .padding(4.dp),
-                                    text = "Loot:",
+                                    text = stringResource(R.string.loot),
                                     style = MaterialTheme.typography.labelLarge,
                                     textAlign = TextAlign.Center
                                 )
@@ -130,7 +131,10 @@ fun CombatResultScreen(
                                 Text(
                                     modifier = Modifier
                                         .padding(vertical = 8.dp),
-                                    text = "Experience: ${uiState.experienceGained}",
+                                    text = stringResource(
+                                        R.string.experience_desc,
+                                        uiState.experienceGained
+                                    ),
                                     style = MaterialTheme.typography.labelLarge,
                                     textAlign = TextAlign.Center
                                 )
@@ -141,7 +145,7 @@ fun CombatResultScreen(
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(4.dp),
-                                            text = "Home"
+                                            text = stringResource(R.string.home)
                                         )
                                     }
                                     Button(
@@ -150,7 +154,7 @@ fun CombatResultScreen(
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(4.dp),
-                                            text = "Armory"
+                                            text = stringResource(R.string.armory)
                                         )
                                     }
                                 }
@@ -161,7 +165,7 @@ fun CombatResultScreen(
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(4.dp),
-                                            text = "Packages"
+                                            text = stringResource(R.string.packages)
                                         )
                                     }
                                 }

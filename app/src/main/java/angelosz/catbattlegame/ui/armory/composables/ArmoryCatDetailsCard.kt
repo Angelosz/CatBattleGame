@@ -115,41 +115,49 @@ private fun ArmoryCatDetailsCatContent(
                 ) {
                     Column {
                         Text(
-                            text = "Health: ${cat.health}",
+                            text = stringResource(R.string.cat_desc_health, cat.health),
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = "Defense: ${cat.defense}",
+                            text = stringResource(R.string.cat_desc_defense, cat.defense),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Role: ${stringResource(cat.role.res)}",
+                            text = stringResource(
+                                R.string.cat_desc_role,
+                                stringResource(cat.role.res)
+                            ),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
 
                         Text(
-                            text = "Armor: ${stringResource(cat.armorType.res)}",
+                            text = stringResource(
+                                R.string.cat_desc_armor,
+                                stringResource(cat.armorType.res)
+                            ),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
-
                     }
                     Column {
                         Text(
-                            text = "Attack: ${cat.attack}",
+                            text = stringResource(R.string.cat_desc_attack, cat.attack),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "A. Speed: ${cat.speed}s",
+                            text = stringResource(R.string.cat_desc_attack_speed, cat.speed),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Rarity: ${stringResource(cat.rarity.res)}",
+                            text = stringResource(
+                                R.string.cat_desc_rarity,
+                                stringResource(cat.rarity.res)
+                            ),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
@@ -173,7 +181,7 @@ private fun ArmoryCatDetailsCatContent(
                         ) {
                             Image(
                                 painter = painterResource(ability.icon),
-                                contentDescription = "${ability.name} ability icon",
+                                contentDescription = stringResource(R.string.ability_icon_desc,ability.name),
                                 modifier = Modifier.size(48.dp)
                             )
                             Text(

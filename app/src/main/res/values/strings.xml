@@ -1,46 +1,19 @@
 <resources>
     <string name="app_name">CatBattleGame</string>
-    <string name="battlechests_available">You have %1$s packages!\nClick it to open it!</string>
-    <string name="no_battlechests_available">You have no packages! :(</string>
-    <string name="battlechest_new_cat_display">New</string>
-    <string name="battlechest_normal_display">Normal</string>
-    <string name="package_description">Package rarity: %1$s\nPackage type: %2$s</string>
+    <string name="empty_string" translatable="false" />
+
+    <!-- Cat Rarities -->
     <string name="kitten">Kitten</string>
     <string name="teen">Teen</string>
     <string name="adult">Adult</string>
     <string name="elder">Elder</string>
-    <string name="armortype_light">Light</string>
-    <string name="armortype_medium">Medium</string>
-    <string name="armortype_heavy">Heavy</string>
-    <string name="armortype_heroic">Heroic</string>
-    <string name="armortype_elemental">Elemental</string>
-    <string name="armortype_ethereal">Ethereal</string>
-    <string name="abilitytype_blunt">Blunt</string>
-    <string name="abilitytype_piercing">Piercing</string>
-    <string name="abilitytype_heroic">Heroic</string>
-    <string name="abilitytype_elemental">Elemental</string>
-    <string name="abilitytype_ethereal">Ethereal</string>
-    <string name="abilitytype_healing">Healing</string>
-    <string name="abilitytype_damage">Damage Dealing</string>
-    <string name="abilitytype_status_changing">Status changing</string>
-    <string name="abilitytarget_single_enemy">Single enemy</string>
-    <string name="abilitytarget_enemy_team">Enemy team</string>
-    <string name="abilitytarget_ally">Ally</string>
-    <string name="abilitytarget_team">Team</string>
+
+    <!-- Cat Roles -->
     <string name="catrole_warrior">Warrior</string>
     <string name="catrole_assassin">Assassin</string>
     <string name="catrole_mage">Mage</string>
     <string name="catrole_healer">Healer</string>
     <string name="catrole_defender">Defender</string>
-    <string name="combatmodifier_slowed">Slowed</string>
-    <string name="combatmodifier_stunned">Stunned</string>
-    <string name="combatmodifier_poisoned">Poisoned</string>
-    <string name="combatmodifier_cleansed">Cleansed</string>
-    <string name="combatmodifier_shielded">Shielded</string>
-    <string name="combatmodifier_health">Healthy</string>
-    <string name="combatmodifier_attack">Deadly</string>
-    <string name="combatmodifier_defense">Strong</string>
-    <string name="combatmodifier_speed">Swift</string>
 
     <!-- Cat titles -->
     <string name="empty_title">%1$s</string>
@@ -68,21 +41,130 @@
     <string name="the_teen_monk">%1$s, the Teen Monk</string>
     <string name="the_monk">%1$s, the Monk</string>
     <string name="the_elder_monk">%1$s, the Elder Monk</string>
+
+    <!-- Armor Types -->
+    <string name="armortype_light">Light</string>
+    <string name="armortype_medium">Medium</string>
+    <string name="armortype_heavy">Heavy</string>
+    <string name="armortype_heroic">Heroic</string>
+    <string name="armortype_elemental">Elemental</string>
+    <string name="armortype_ethereal">Ethereal</string>
+
+    <!-- Ability Types -->
+    <string name="ability_type_blunt">Blunt</string>
+    <string name="ability_type_piercing">Piercing</string>
+    <string name="ability_type_heroic">Heroic</string>
+    <string name="ability_type_elemental">Elemental</string>
+    <string name="ability_type_ethereal">Ethereal</string>
+    <string name="ability_type_healing">Healing</string>
+    <string name="ability_type_damage">Damage Dealing</string>
+    <string name="ability_type_status_changing">Status changing</string>
+    <string name="ability_type_summon">Summon</string>
+    <string name="ability_type_unique_summon">Unique Summon</string>
+    <string name="ability_type_clone">Clone</string>
+
     <string name="poison">Poison</string>
     <string name="damage_status_changing">Damage and Status changing</string>
-    <string name="select_target_enemy">Select  target enemy</string>
+
+    <!-- Ability Targets -->
+    <string name="ability_target_single_enemy">Single enemy</string>
+    <string name="ability_target_enemy_team">Enemy team</string>
+    <string name="ability_target_ally">Ally</string>
+    <string name="ability_target_team">Team</string>
+
+    <!-- Combat Modifiers -->
+    <string name="combat_modifier_slowed">Slowed</string>
+    <string name="combat_modifier_stunned">Stunned</string>
+    <string name="combat_modifier_poisoned">Poisoned</string>
+    <string name="combat_modifier_cleansed">Cleansed</string>
+    <string name="combat_modifier_shielded">Shielded</string>
+    <string name="combat_modifier_health">Healthy</string>
+    <string name="combat_modifier_attack">Deadly</string>
+    <string name="combat_modifier_defense">Strong</string>
+    <string name="combat_modifier_speed">Swift</string>
+
+    <!-- Combat directions -->
     <string name="player_turn">Your Turn</string>
     <string name="ending_turn">Ending Turn</string>
     <string name="enemy_turn">AI Turn</string>
     <string name="combat_starting">Combat Starting!</string>
-    <string name="empty_string" />
+    <string name="select_target_enemy">Select  target enemy</string>
     <string name="select_target_ally">Select  target ally</string>
     <string name="select_ally_team">Select ally team</string>
     <string name="select_enemy_team">Select enemy team</string>
     <string name="turn_passed">Turn Passed</string>
     <string name="end_turn">End Turn</string>
     <string name="your_cat_is_stunned">Your cat is Stunned!</string>
-    <string name="ability_type_summon">Summon</string>
-    <string name="ability_type_unique_summon">Unique Summon</string>
-    <string name="ability_type_clone">Clone</string>
+
+    <!-- Navigation items -->
+    <string name="navigation_item_cats">Cats</string>
+    <string name="navigation_item_teams">Teams</string>
+    <string name="navigation_item_packages">Packages</string>
+    <string name="navigation_item_abilities">Abilities</string>
+    <string name="navigation_item_enemies">Enemies</string>
+
+    <!-- UI -->
+        <!-- Cat Descriptions -->
+    <string name="cat_desc_health">Health: %1$s</string>
+    <string name="cat_desc_defense">Defense: %1$s</string>
+    <string name="cat_desc_role">Role: %1$s</string>
+    <string name="cat_desc_armor">Armor: %1$s</string>
+    <string name="cat_desc_attack">Attack: %1$s</string>
+    <string name="cat_desc_attack_speed">A. Speed: %1$ss</string>
+    <string name="cat_desc_rarity">Rarity: %1$s</string>
+    <string name="evolves_at_level">Evolves at level: %1$s</string>
+    <string name="evolution_title">Evolution: %1$s</string>
+    <string name="unlock_cat_for">Unlock for %1$s</string>
+    <string name="owned">Owned</string>
+
+        <!-- Ability Descriptions -->
+    <string name="damage_multiplier_desc">Damage multiplier: %1$s</string>
+    <string name="attack_speed_multiplier_desc">Attack speed multiplier: %1$s</string>
+    <string name="combat_modifier_desc">Combat Modifier: %1$s</string>
+    <string name="ability_type_desc">Ability type: %1$s</string>
+    <string name="ability_target_desc">Ability target: %1$s</string>
+    <string name="cooldown_desc">Cooldown: %1$s</string>
+    <string name="ability_icon_title">"Ability icon: "</string>
+
+        <!--BattleChest -->
+    <string name="battlechests_available">You have %1$s packages!\nClick it to open it!</string>
+    <string name="no_battlechests_available">You have no packages! :(</string>
+    <string name="battlechest_new_cat_display">New</string>
+    <string name="battlechest_normal_display">Normal</string>
+    <string name="package_description">Package rarity: %1$s\nPackage type: %2$s</string>
+    <string name="open_more_packages">Open more Packages!</string>
+    <string name="type_package">%1$s Package</string>
+
+        <!-- Campaign -->
+    <string name="locked_campaign">Locked Campaign</string>
+    <string name="in_development">(In development)</string>
+    <string name="locked_chapter">Locked Chapter</string>
+    <string name="back_button_desc">Back button</string>
+    <string name="ability_icon_desc">%1$s ability icon</string>
+    <string name="start_fight">Fight</string>
+    <string name="change_team">Change Team</string>
+    <string name="start">Start</string>
+    <string name="choose_team">Choose Team</string>
+
+    <!-- Team Builder -->
+    <string name="delete">Delete</string>
+    <string name="create_new_team">Create New Team</string>
+
+    <!-- Combat Result -->
+    <string name="victory">Victory!</string>
+    <string name="defeat">Defeat :(</string>
+    <string name="tie">You tied? How?!</string>
+    <string name="loot">Loot:</string>
+    <string name="experience_desc">Experience: %1$s</string>
+    <string name="home">Home</string>
+    <string name="armory">Armory</string>
+    <string name="packages">Packages</string>
+
+    <!-- Home -->
+    <string name="crystals">Crystals</string>
+    <string name="gold_coins">Gold Coins</string>
+    <string name="play_button_desc">Play button</string>
+    <string name="close_shop">Close Shop</string>
+    <string name="package_shop">Package Shop</string>
+
 </resources>

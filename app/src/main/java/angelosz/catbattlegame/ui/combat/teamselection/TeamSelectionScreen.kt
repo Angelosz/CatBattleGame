@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -86,7 +87,7 @@ fun TeamSelectionScreen(
                         ){
                             Text(
                                 modifier = Modifier.padding(4.dp),
-                                text = "Choose Team",
+                                text = stringResource(R.string.choose_team),
                                 style = MaterialTheme.typography.headlineSmall
                             )
                         }
@@ -155,7 +156,7 @@ fun TeamsList(
                 TeamPanel(
                     teamData = TeamData(
                         teamId = 0,
-                        teamName = "Create New Team",
+                        teamName = stringResource(R.string.create_new_team),
                         cats = listOf()
                     ),
                     modifier = Modifier
@@ -183,7 +184,7 @@ fun TeamsList(
                     ) {
                         Text(
                             modifier = Modifier.padding(4.dp),
-                            text = "Choose Team",
+                            text = stringResource(R.string.choose_team),
                             style = MaterialTheme.typography.headlineSmall
                         )
                     }

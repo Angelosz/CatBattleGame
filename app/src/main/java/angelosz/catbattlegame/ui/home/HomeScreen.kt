@@ -138,16 +138,20 @@ fun PortraitShopScreen(
             .width(304.dp)
     ){
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp, top = 16.dp),
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 8.dp, top = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = "Package Shop",
+                    text = stringResource(R.string.package_shop),
                     style = MaterialTheme.typography.headlineSmall,
                 )
             }
@@ -179,7 +183,10 @@ fun PortraitShopScreen(
                         ) {
                             Text(
                                 modifier = Modifier.padding(2.dp),
-                                text = stringResource(items[it].first.res) + " Package",
+                                text = stringResource(
+                                    R.string.type_package,
+                                    stringResource(items[it].first.res)
+                                ),
                             )
                             Button(
                                 enabled = availableGold >= items[it].second,
@@ -207,7 +214,7 @@ fun PortraitShopScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(4.dp),
-                    text = "Close Shop"
+                    text = stringResource(R.string.close_shop)
                 )
             }
 
@@ -237,12 +244,14 @@ fun LandscapeShopScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Text(
-                    text = "Package Shop",
+                    text = stringResource(R.string.package_shop),
                     style = MaterialTheme.typography.headlineSmall,
                 )
             }
@@ -278,7 +287,10 @@ fun LandscapeShopScreen(
                                 ) {
                                     Text(
                                         modifier = Modifier.padding(2.dp),
-                                        text = stringResource(item.first.res) + " Package",
+                                        text = stringResource(
+                                            R.string.type_package,
+                                            stringResource(item.first.res)
+                                        ),
                                     )
                                     Button(
                                         enabled = availableGold >= item.second,
@@ -309,7 +321,7 @@ fun LandscapeShopScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(4.dp),
-                    text = "Close Shop"
+                    text = stringResource(R.string.close_shop)
                 )
             }
         }
@@ -385,7 +397,7 @@ private fun HomeScreenContent(
             HomeButton(
                 modifier = Modifier.padding(8.dp),
                 image = R.drawable.button_play,
-                contentDescription = "Play button",
+                contentDescription = stringResource(R.string.play_button_desc),
                 onButtonClicked = onPlayButtonClick
             )
         }
@@ -425,7 +437,7 @@ fun HomeTopBar(
         ) {
             Image(
                 painter = painterResource(R.drawable.goldcoins_128),
-                contentDescription = "Gold coins",
+                contentDescription = stringResource(R.string.gold_coins),
                 modifier = Modifier.size(32.dp)
             )
             Text(
@@ -436,7 +448,7 @@ fun HomeTopBar(
             Spacer(modifier = Modifier.width(12.dp))
             Image(
                 painter = painterResource(R.drawable.crystals_128),
-                contentDescription = "Crystals",
+                contentDescription = stringResource(R.string.crystals),
                 modifier = Modifier.size(32.dp)
             )
             Text(

@@ -124,7 +124,7 @@ fun CombatScreen(
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(8.dp),
-                                            text = "Change Team"
+                                            text = stringResource(R.string.change_team)
                                         )
                                     }
                                     Button(
@@ -132,7 +132,7 @@ fun CombatScreen(
                                     ) {
                                         Text(
                                             modifier = Modifier.padding(8.dp),
-                                            text = "Fight"
+                                            text = stringResource(R.string.start_fight)
                                         )
                                     }
                                 }
@@ -440,7 +440,10 @@ private fun AbilitiesDisplay(
                             ) {
                                 Image(
                                     painter = painterResource(ability.ability.icon),
-                                    contentDescription = "${ability.ability.name} ability icon",
+                                    contentDescription = stringResource(
+                                        R.string.ability_icon_desc,
+                                        ability.ability.name
+                                    ),
                                     modifier = Modifier.size(40.dp),
                                 )
                                 if (ability.onCooldown()) {

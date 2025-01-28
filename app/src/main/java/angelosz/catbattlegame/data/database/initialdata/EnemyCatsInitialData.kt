@@ -10,6 +10,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 1,
             name = "Wool Ball",
+            description = "Round and round it goes.",
             baseHealth = 50f,
             baseAttack = 16f,
             baseDefense = 1.2f,
@@ -19,6 +20,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 2,
             name = "Mouse Thief",
+            description = "They have taken the cheese!",
             baseHealth = 45f,
             baseAttack = 11f,
             baseDefense = 1f,
@@ -28,6 +30,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 3,
             name = "Playful Puppy",
+            description = "She wants to play. RUN!",
             baseHealth = 100f,
             baseAttack = 20f,
             baseDefense = 2f,
@@ -37,6 +40,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 4,
             name = "Sparrow Scout",
+            description = "\"A quick and watchful sparrow, always on the lookout for threats.\"",
             baseHealth = 120f,
             baseAttack = 18f,
             baseDefense = 1.2f,
@@ -46,6 +50,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 5,
             name = "Sparrow Guard",
+            description = "\"A protective sparrow armed with a strong sense of duty and sharper claws.\"",
             baseHealth = 140f,
             baseAttack = 26f,
             baseDefense = 2.5f,
@@ -55,6 +60,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 6,
             name = "Raven Guard",
+            description = "\"A fearsome raven that guards its territory with an intimidating presence.\"",
             baseHealth = 140f,
             baseAttack = 22f,
             baseDefense = 1f,
@@ -64,6 +70,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 7,
             name = "Angry Garden Gnome",
+            description = "\"A grumpy gnome that defends its garden with surprising ferocity.\"",
             baseHealth = 60f,
             baseAttack = 14f,
             baseDefense = 1f,
@@ -73,6 +80,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 8,
             name = "Jumping Spider",
+            description = "\"The Hunter Gnome’s loyal pet, quick and agile with venomous fangs.\"",
             baseHealth = 40f,
             baseAttack = 12f,
             baseDefense = 1f,
@@ -82,6 +90,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 9,
             name = "Lawn Mower",
+            description = "\"A relentless machine that chews through everything in its path.\"",
             baseHealth = 100f,
             baseAttack = 22f,
             baseDefense = 2f,
@@ -91,6 +100,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 10,
             name = "Hose",
+            description = "\"A spray-happy tool that soaks foes with a surprising amount of force.\"",
             baseHealth = 100f,
             baseAttack = 16f,
             baseDefense = 1f,
@@ -100,6 +110,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 11,
             name = "Ant Worker",
+            description = "\"A diligent ant focused on supporting its colony at all costs.\"",
             baseHealth = 30f,
             baseAttack = 12f,
             baseDefense = 0.8f,
@@ -109,6 +120,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 12,
             name = "Ant Warrior",
+            description = "\"A fierce ant soldier, ready to defend its queen with unrelenting strength.\"",
             baseHealth = 55f,
             baseAttack = 16f,
             baseDefense = 2.5f,
@@ -118,6 +130,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 13,
             name = "Angry Snail",
+            description = "\"A surprisingly aggressive snail, its slow pace hides a strong defense.\"",
             baseHealth = 85f,
             baseAttack = 18f,
             baseDefense = 2.5f,
@@ -127,6 +140,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 14,
             name = "Happy Snail",
+            description = "\"A content snail that just wants to be left alone... unless provoked.\"\n",
             baseHealth = 85f,
             baseAttack = 16f,
             baseDefense = 2.5f,
@@ -136,6 +150,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 15,
             name = "Mosquito",
+            description = "\"A buzzing menace, always looking for an opportunity to strike.\"",
             baseHealth = 50f,
             baseAttack = 12f,
             baseDefense = 1.5f,
@@ -146,6 +161,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 16,
             name = "Hedgehog",
+            description = "\"A spiky and cautious creature that can pack a punch when cornered.\"",
             baseHealth = 200f,
             baseAttack = 24f,
             baseDefense = 2.5f,
@@ -154,26 +170,29 @@ class EnemyCatsInitialData {
         ),
         EnemyCat(
             id = 17,
-            name = "Young Racoon",
+            name = "Young Raccoon",
+            description = "\"A mischievous young raccoon, quick to run but always ready for trouble.\"",
             baseHealth = 60f,
             baseAttack = 20f,
             baseDefense = 1f,
             attackSpeed = 2.5f,
             enemyType = EnemyType.UNIQUE_SUMMONER,
-            image = R.drawable.enemy_young_racoon_300
+            image = R.drawable.enemy_young_raccoon_300
         ),
         EnemyCat(
             id = 18,
-            name = "Mother Racoon",
+            name = "Mother Raccoon",
+            description = "\"A fierce protector, this raccoon will do anything to guard her young.\"",
             baseHealth = 200f,
             baseAttack = 28f,
             baseDefense = 2f,
             attackSpeed = 1.5f,
-            image = R.drawable.enemy_mother_racoon_300
+            image = R.drawable.enemy_mother_raccoon_300
         ),
         EnemyCat(
             id = 19,
             name = "Dark Rogue",
+            description = "\"A shadowy figure with lethal skills and a mysterious past.\"",
             baseHealth = 200f,
             baseAttack = 28f,
             baseDefense = 2f,
@@ -183,6 +202,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 20,
             name = "Ant Queen",
+            description = "\"The heart of the colony, commanding her subjects with royal authority.\"",
             baseHealth = 200f,
             baseAttack = 28f,
             baseDefense = 2f,
@@ -193,6 +213,7 @@ class EnemyCatsInitialData {
         EnemyCat(
             id = 21,
             name = "Hunter Gnome",
+            description = "\"A crafty gnome who uses traps and tricks to dominate the battlefield.\"",
             baseHealth = 120f,
             baseAttack = 20f,
             baseDefense = 2f,

@@ -16,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.armory.data.CollectionsNavigationItem
 import angelosz.catbattlegame.ui.armory.data.armoryNavigationItems
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
@@ -41,7 +43,7 @@ fun CollectionsBottomBar(
                 icon = {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back Button"
+                        contentDescription = stringResource(R.string.back_button_desc)
                     )
                 }
             )
@@ -57,10 +59,10 @@ fun CollectionsBottomBar(
                         Image(
                             modifier = Modifier.size(32.dp),
                             painter = painterResource(item.icon),
-                            contentDescription = item.title
+                            contentDescription = stringResource(item.title)
                         )
                         Text(
-                            text = item.title,
+                            text = stringResource(item.title),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }

@@ -251,7 +251,7 @@ class AbilitiesInitialData {
         Ability(
             id = 17,
             name = "Shields up!",
-            description = "\"TODO Shields up!\"",
+            description = "\"Raise your team's defenses with a powerful shield, reducing incoming damage for a short time.\"",
             image = R.drawable.ability_defend_ally_256,
             icon = R.drawable.ability_defend_ally_48,
             abilityType = AbilityType.STATUS_CHANGING,
@@ -268,7 +268,7 @@ class AbilitiesInitialData {
         Ability(
             id = 18,
             name = "Healing Mushrooms",
-            description = "\"TODO The gnomes eat some mushrooms.\"",
+            description = "\"Sprout magical mushrooms that gradually heal your team over time when consumed.\"",
             image = R.drawable.ability_heal_ally_256,
             icon = R.drawable.ability_heal_ally_48,
             abilityType = AbilityType.HEALING,
@@ -282,7 +282,7 @@ class AbilitiesInitialData {
         Ability(
             id = 19,
             name = "Hose Spray",
-            description = "\"TODO Turn it off!\"",
+            description = "\"Unleash a stream of water, dousing the enemy team and dealing a modest amount of damage.\"",
             image = R.drawable.ability_fire_embers_256,
             icon = R.drawable.ability_fire_embers_96,
             abilityType = AbilityType.DAMAGE,
@@ -296,7 +296,7 @@ class AbilitiesInitialData {
         Ability(
             id = 20,
             name = "Slime Spray",
-            description = "\"TODO Ugh\"",
+            description = "\"Coat the enemy team in sticky slime, slowing their movements and dealing minor damage.\"",
             image = R.drawable.ability_fire_embers_256,
             icon = R.drawable.ability_fire_embers_96,
             abilityType = AbilityType.DAMAGE_STATUS_CHANGING,
@@ -313,7 +313,7 @@ class AbilitiesInitialData {
         Ability(
             id = 21,
             name = "Call Mosquito",
-            description = "\"TODO Ugh\"",
+            description = "\"Summon a pesky mosquito to harass your enemies, buzzing relentlessly\"",
             image = R.drawable.enemy_mosquito_300,
             icon = R.drawable.enemy_mosquito_300,
             abilityType = AbilityType.CLONE,
@@ -328,9 +328,9 @@ class AbilitiesInitialData {
         Ability(
             id = 22,
             name = "Call Mommy",
-            description = "\"TODO Ugh\"",
-            image = R.drawable.enemy_mother_racoon_300,
-            icon = R.drawable.enemy_mother_racoon_300,
+            description = "\"A young raccoon calls for its mom, who rushes in to protect the team and strike fear into foes.\"",
+            image = R.drawable.enemy_mother_raccoon_300,
+            icon = R.drawable.enemy_mother_raccoon_300,
             abilityType = AbilityType.SUMMON,
             combatModifierValue = 18f,
             damageType = DamageType.ELEMENTAL,
@@ -343,7 +343,7 @@ class AbilitiesInitialData {
         Ability(
             id = 23,
             name = "Summon Worker",
-            description = "\"TODO Ugh\"",
+            description = "\"The Queen Ant calls forth a diligent worker to assist her, supporting the team with minor utility.\"",
             image = R.drawable.enemy_worker_ant_300,
             icon = R.drawable.enemy_worker_ant_300,
             abilityType = AbilityType.SUMMON,
@@ -358,7 +358,7 @@ class AbilitiesInitialData {
         Ability(
             id = 24,
             name = "Summon Warrior",
-            description = "\"TODO Ugh\"",
+            description = "\"The Queen Ant summons a brave ant warrior to join the fight, ready to defend and attack.\"\n",
             image = R.drawable.enemy_warrior_ant_300,
             icon = R.drawable.enemy_warrior_ant_300,
             abilityType = AbilityType.SUMMON,
@@ -373,7 +373,7 @@ class AbilitiesInitialData {
         Ability(
             id = 25,
             name = "Summon Pet Spider",
-            description = "\"TODO Ugh\"",
+            description = "\"The Hunter Gnome calls its loyal pet spider into battle, a cute but formidable companion.\"",
             image = R.drawable.enemy_jumping_spider_300,
             icon = R.drawable.enemy_jumping_spider_300,
             abilityType = AbilityType.SUMMON,

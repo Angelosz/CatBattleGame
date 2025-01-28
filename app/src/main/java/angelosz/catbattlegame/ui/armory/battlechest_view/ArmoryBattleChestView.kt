@@ -193,7 +193,7 @@ fun HandleArmoryBattleChestPortraitView(
                             }
                         ) {
                             Text(
-                                text = "Open more Packages!",
+                                text = stringResource(R.string.open_more_packages),
                                 modifier = Modifier.padding(8.dp),
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.labelLarge
@@ -444,7 +444,9 @@ private fun BattleChestSlot(
                 text = "${stringResource(battleChest.type.res)}\n${stringResource(battleChest.rarity.res)}\nPackage",
                 style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().padding(4.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
             )
         }
     }

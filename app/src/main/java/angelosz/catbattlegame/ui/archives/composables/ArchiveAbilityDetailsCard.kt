@@ -54,7 +54,9 @@ fun ArchiveAbilityDetailsCard(
             Image (
                 painter = painterResource(ability.image),
                 contentDescription = ability.name,
-                Modifier.height(imageSize.dp).fillMaxWidth()
+                Modifier
+                    .height(imageSize.dp)
+                    .fillMaxWidth()
             )
             Column(
                 modifier = Modifier.padding(16.dp)
@@ -65,32 +67,43 @@ fun ArchiveAbilityDetailsCard(
                     modifier = Modifier.padding(8.dp)
                 )
                 Text(
-                    text = "Damage multiplier: ${ability.damageMultiplier}"
+                    text = stringResource(R.string.damage_multiplier_desc, ability.damageMultiplier)
                 )
                 Text(
-                    text = "Attack speed multiplier: ${ability.attackSpeedMultiplier}"
+                    text = stringResource(
+                        R.string.attack_speed_multiplier_desc,
+                        ability.attackSpeedMultiplier
+                    )
                 )
                 Text(
-                    text = "Combat Modifier: ${ability.combatModifier?.res?.let { stringResource(it) } ?: "None"}"
+                    text = stringResource(
+                        R.string.combat_modifier_desc,
+                        ability.combatModifier?.res?.let { stringResource(it) } ?: "None")
                 )
                 Text(
-                    text = "Ability type: ${stringResource(ability.abilityType.res)}"
+                    text = stringResource(
+                        R.string.ability_type_desc,
+                        stringResource(ability.abilityType.res)
+                    )
                 )
                 Text(
-                    text = "Ability target/s: ${stringResource(ability.targets.res)}"
+                    text = stringResource(
+                        R.string.ability_target_desc,
+                        stringResource(ability.targets.res)
+                    )
                 )
                 Text(
-                    text = "Cooldown: ${ability.cooldown}"
+                    text = stringResource(R.string.cooldown_desc, ability.cooldown)
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     Text(
-                        text = "Ability icon: "
+                        text = stringResource(R.string.ability_icon_title)
                     )
                     Image(
                         painter = painterResource(ability.icon),
-                        contentDescription = "${ability.name} ability icon.",
+                        contentDescription = stringResource(R.string.ability_icon_desc, ability.name),
                         Modifier.size(48.dp)
                     )
                 }
@@ -104,7 +117,9 @@ fun ArchiveAbilityDetailsCard(
 fun CatAbilityCardPreview(){
     CatBattleGameTheme {
         ArchiveAbilityDetailsCard(
-            modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
             ability = Ability(
                 id = 3,
                 name = "Defend Ally",

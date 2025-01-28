@@ -106,29 +106,29 @@ private fun ArchiveEnemyDetailsCardContent(
                 ) {
                     Column {
                         Text(
-                            text = "Health: ${enemy.baseHealth}",
+                            text = stringResource(R.string.cat_desc_health, enemy.baseHealth),
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = "Defense: ${enemy.baseDefense}",
+                            text = stringResource(R.string.cat_desc_defense, enemy.baseDefense),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Armor: ${stringResource(enemy.armorType.res)}",
+                            text = stringResource(R.string.cat_desc_armor, stringResource(enemy.armorType.res)),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                     }
                     Column {
                         Text(
-                            text = "Attack: ${enemy.baseAttack}",
+                            text = stringResource(R.string.cat_desc_attack, enemy.baseAttack),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "A. Speed: ${enemy.attackSpeed}s",
+                            text = stringResource(R.string.cat_desc_attack_speed, enemy.attackSpeed),
                             style = textSize,
                             modifier = Modifier.padding(4.dp)
                         )
@@ -153,7 +153,7 @@ private fun ArchiveEnemyDetailsCardContent(
                         ) {
                             Image(
                                 painter = painterResource(ability.icon),
-                                contentDescription = "${ability.name} ability icon",
+                                contentDescription = stringResource(R.string.ability_icon_desc, ability.name),
                                 modifier = Modifier.size(48.dp)
                             )
                             Text(
