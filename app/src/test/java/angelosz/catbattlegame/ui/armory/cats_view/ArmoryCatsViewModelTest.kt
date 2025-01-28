@@ -8,15 +8,23 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
+import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
+import angelosz.catbattlegame.domain.enums.RewardType
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.archives.data.SimpleCatData
 import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
 import angelosz.catbattlegame.ui.combat.BasicCatData
+import angelosz.catbattlegame.ui.home.notifications.BattleChestNotification
+import angelosz.catbattlegame.ui.home.notifications.CatEvolutionNotification
+import angelosz.catbattlegame.ui.home.notifications.CurrencyRewardNotification
+import angelosz.catbattlegame.ui.home.notifications.LevelUpNotification
+import angelosz.catbattlegame.ui.home.notifications.NotificationType
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -46,21 +54,21 @@ val ownedCats: List<OwnedCat> = listOf(
 val cats: List<Cat> = listOf(
     Cat(
         id = 1,
-        name = "firstCat",
-        baseHealth = 100,
-        baseAttack = 20,
-        baseDefense = 20,
+        name = 1,
+        baseHealth = 100f,
+        baseAttack = 20f,
+        baseDefense = 20f,
         attackSpeed = 1f,
     ),
     Cat(
         id = 2,
-        name = "secondCat",
-        baseHealth = 100,
-        baseAttack = 20,
-        baseDefense = 20,
+        name = 2,
+        baseHealth = 100f,
+        baseAttack = 20f,
+        baseDefense = 20f,
         attackSpeed = 1f,
     ),
-    Cat(id = 3, name = "thirdCat")
+    Cat(id = 3, name = 3)
 )
 val simpleArmoryCatDataList = listOf(
     SimpleArmoryCatData(
@@ -175,6 +183,11 @@ class AbilityRepositoryForArmoryTest : AbilityRepository {
     override suspend fun getCount(): Int = 0
     override suspend fun insertAbilities(abilities: List<Ability>) {}
     override suspend fun insertCatAbilityCrossRefs(catAbilityCrossRefs: List<CatAbilityCrossRef>) {}
+    override suspend fun clearAbilitiesTable() {
+    }
+
+    override suspend fun clearAbilityCrossRefsTable() {
+    }
 
     override suspend fun getCatAbilities(catId: Int): List<Ability> = emptyList()
     override suspend fun getEnemyCatAbilities(catId: Int): List<Ability> = emptyList()
@@ -187,6 +200,9 @@ class CatRepositoryForArmoryTest : CatRepository {
         throw Exception()
     }
     override suspend fun insertCats(cats: List<Cat>) {}
+    override suspend fun clearCatsTable() {
+    }
+
     override suspend fun getCatsById(ids: List<Int>): List<Cat>  = emptyList()
     override suspend fun getRandomCatByRarity(rarity: CatRarity): Cat = Cat()
     override suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>  = emptyList()
@@ -202,9 +218,12 @@ class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
     override suspend fun getPlayerAccount(): PlayerAccount? = null
     override suspend fun insertPlayerAccount(playerAccount: PlayerAccount) {}
     override suspend fun updateAccount(playerAccount: PlayerAccount) {}
+    override suspend fun getCrystalsAmount(): Int = 0
 
     override suspend fun addCrystals(amount: Int) {}
     override suspend fun reduceCrystals(amount: Int) {}
+    override suspend fun getGoldAmount(): Int = 0
+
     override suspend fun addGold(amount: Int) {}
     override suspend fun reduceGold(amount: Int) {}
     override suspend fun insertOwnedCat(ownedCat: OwnedCat) {}
@@ -241,5 +260,32 @@ class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
     override suspend fun addCatToTeam(playerTeamOwnedCat: PlayerTeamOwnedCat) {}
     override suspend fun getTeamData(teamId: Long): List<BasicCatData> = emptyList()
     override suspend fun discoverEnemies(enemies: List<EnemyDiscoveryState>) {}
+    override suspend fun getAllNotificationsAsFlow(): Flow<List<NotificationsEntity>> = flowOf(emptyList())
+
+    override suspend fun getAllNotifications(): List<NotificationsEntity> = emptyList()
+
+    override suspend fun deleteNotification(notificationId: Long, type: NotificationType) {}
+
+    override suspend fun insertLevelUpNotification(notification: LevelUpNotification) {
+    }
+
+    override suspend fun insertEvolutionNotification(notification: CatEvolutionNotification) {
+    }
+
+    override suspend fun getLevelUpNotification(notificationId: Long): LevelUpNotification
+    = LevelUpNotification(1, 1, 1, 1, "")
+
+    override suspend fun getCatEvolutionNotification(notificationId: Long): CatEvolutionNotification
+    = CatEvolutionNotification(1, 1, 1, 1, 1, "")
+
+    override suspend fun insertBattleChestNotification(notification: BattleChestNotification) {
+    }
+
+    override suspend fun getBattleChestNotification(notificationId: Long): BattleChestNotification = BattleChestNotification(1, CatRarity.KITTEN,BattleChestType.NEW_CAT,"")
+
+    override suspend fun insertCurrencyNotification(notification: CurrencyRewardNotification) {
+    }
+
+    override suspend fun getCurrencyNotification(notificationId: Long): CurrencyRewardNotification = CurrencyRewardNotification(0, 10, RewardType.GOLD, "")
 }
 
