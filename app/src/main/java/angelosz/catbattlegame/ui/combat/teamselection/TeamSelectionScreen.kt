@@ -78,6 +78,7 @@ fun TeamSelectionScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(128.dp)
+                            .padding(bottom = 36.dp)
                             .align(Alignment.BottomCenter),
                         contentAlignment = Alignment.Center
                     ){
@@ -192,11 +193,11 @@ fun TeamsList(
             }
         } else {
             item {
-                Spacer(modifier = Modifier.height(64.dp))
+                Spacer(modifier = Modifier.height(84.dp))
             }
             item {
-                Spacer(modifier = Modifier.height(64.dp))
+                Spacer(modifier = Modifier.height(84.dp))
             }
         }
     }
-        }
+}

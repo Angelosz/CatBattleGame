@@ -33,11 +33,13 @@ class ArchiveCatsViewModel(
                 )
                 val totalNumberOfCats = catsRepository.getCount()
                 val playerCrystals = playerAccountRepository.getCrystalsAmount()
+                val selectedCat = getDetailedCatData(cats.first().id)
 
                 _uiState.update {
                     it.copy(
                         screenState = ScreenState.SUCCESS,
                         playerCrystals = playerCrystals,
+                        selectedCat = selectedCat,
                         cats = cats,
                         totalNumberOfCats = totalNumberOfCats,
                     )
@@ -51,31 +53,11 @@ class ArchiveCatsViewModel(
     fun selectCat(id: Int) {
         viewModelScope.launch {
             try {
-                val cat = catsRepository.getCatById(id)
-                val catAbilities = abilitiesRepository.getCatAbilities(id)
-
-                val details = DetailedCatData(
-                    id = cat.id,
-                    name = cat.name,
-                    title = cat.title,
-                    description = cat.description,
-                    image = cat.image,
-                    baseHealth = cat.baseHealth,
-                    baseAttack = cat.baseAttack,
-                    baseDefense = cat.baseDefense,
-                    attackSpeed = cat.attackSpeed,
-                    role = cat.role,
-                    armorType = cat.armorType,
-                    rarity = cat.rarity,
-                    abilities = catAbilities,
-                    evolutionLevel = cat.evolutionLevel,
-                    nextEvolutionCat = if(cat.nextEvolutionId != null) catsRepository.getCatById(cat.nextEvolutionId) else null,
-                    playerOwnsIt = playerAccountRepository.ownsCat(cat.id)
-                )
+                val cat = getDetailedCatData(id)
 
                 _uiState.update {
                     it.copy(
-                        selectedCat = details,
+                        selectedCat = cat,
                         isCatSelected = true,
                     )
                 }
@@ -84,6 +66,30 @@ class ArchiveCatsViewModel(
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
         }
+    }
+
+    private suspend fun getDetailedCatData(catId: Int): DetailedCatData{
+        val cat = catsRepository.getCatById(catId)
+        val catAbilities = abilitiesRepository.getCatAbilities(catId)
+
+        return DetailedCatData(
+            id = cat.id,
+            name = cat.name,
+            title = cat.title,
+            description = cat.description,
+            image = cat.image,
+            baseHealth = cat.baseHealth,
+            baseAttack = cat.baseAttack,
+            baseDefense = cat.baseDefense,
+            attackSpeed = cat.attackSpeed,
+            role = cat.role,
+            armorType = cat.armorType,
+            rarity = cat.rarity,
+            abilities = catAbilities,
+            evolutionLevel = cat.evolutionLevel,
+            nextEvolutionCat = if(cat.nextEvolutionId != null) catsRepository.getCatById(cat.nextEvolutionId) else null,
+            playerOwnsIt = playerAccountRepository.ownsCat(cat.id)
+        )
     }
 
     fun isCatSelected(): Boolean = _uiState.value.isCatSelected

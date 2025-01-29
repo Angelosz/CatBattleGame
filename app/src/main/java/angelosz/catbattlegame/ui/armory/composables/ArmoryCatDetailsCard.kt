@@ -73,7 +73,7 @@ private fun ArmoryCatDetailsCatContent(
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = stringResource(cat.title, cat.name),
+            text = stringResource(cat.title, stringResource(cat.name)),
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,

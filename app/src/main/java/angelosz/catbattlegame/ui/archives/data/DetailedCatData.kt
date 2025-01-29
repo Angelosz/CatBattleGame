@@ -14,7 +14,7 @@ data class DetailedCatData(
     val id: Int = 0,
     @StringRes val name: Int = R.string.the_swordsman_name,
     @StringRes val title: Int = R.string.empty_title,
-    @StringRes val description: Int = R.string.empty_title,
+    @StringRes val description: Int = R.string.the_swordsman_desc,
     val armorType: ArmorType = ArmorType.MEDIUM,
     val role: CatRole = CatRole.WARRIOR,
     val baseHealth: Float = 50f,

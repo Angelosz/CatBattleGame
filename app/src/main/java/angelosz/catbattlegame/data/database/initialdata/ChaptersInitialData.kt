@@ -22,7 +22,7 @@ class ChaptersInitialData {
             id = 2,
             campaignId = 1,
             order = 2,
-            experience = 1250,
+            experience = 125,
             name = R.string.chapter_title_2,
             description = R.string.chapter_desc_2,
             image = R.drawable.enemy_chapter_mouse_thief_256,
