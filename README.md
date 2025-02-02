@@ -24,7 +24,7 @@ En este juego, los jugadores pueden:
 
 - **Kotlin**: Lenguaje principal para el desarrollo.
 - **Jetpack Compose**: Para diseño moderno y responsivo.
-- **Room**: Para persistencia de datos locales.
+- **Room** y **DataStore**: Para persistencia de datos locales.
 - **Coroutines y Flows**: Para operaciones asíncronas y reactivas.
 - **MVVM**: Arquitectura para separar UI, lógica y datos.
 - **Trello**: Para la planificación y gestión del proyecto.
@@ -37,7 +37,6 @@ Este proyecto está diseñado para:
 - **Implementar persistencia de datos** con bases de datos locales usando Room.
 - **Diseñar interfaces dinámicas y responsivas** con Jetpack Compose.
 - **Gestionar operaciones asíncronas** con coroutines y flows.
-- Crear un sistema de recompensas diarias y notificaciones.
 - Manejar la navegación entre pantallas y estados en una app Android.
 
 ---
@@ -56,30 +55,40 @@ Este proyecto está diseñado para:
 
 ## 🗺️ Roadmap
 
-### Próximos pasos:
+### Primeros pasos:
 - ~~Crear el sistema completo de combate por turnos.~~
-- Implemetar el desbloqueo de gatos con cristales.
-- Implementar tienda donde el jugador puede comprar paquetes por oro.
+- ~~Implemetar el desbloqueo de gatos con cristales.~~
+- ~~Implementar tienda donde el jugador puede comprar paquetes por oro.~~
 - ~~Desarrollar un sistema de notificaciones.~~
-- Añadir soporte multilenguaje.
-- Añadir sonidos.
-- Añadir suficientes enemigos con interesantes habilidades y diseños para completar la segunda campaña.
-- Mejorar flujo de navegación, sobretodo en el combate/selección de campaña/selección de encuentro.
+- ~~Añadir soporte multilenguaje.~~
+- ~~Añadir suficientes enemigos con interesantes habilidades y diseños para completar la segunda campaña.~~
+- ~~Mejorar flujo de navegación, sobretodo en el combate/selección de campaña/selección de encuentro.~~
 - Publicar la aplicación en Google Play Store.
 
-
-### Una vez publicada:
-- Idea: Auto seleccionar objetivo de habilidades para que el jugador no tenga que dar más de un click en algunas situaciones.
-- Implementar filtrado de gatos en la enciclopedia.
-- Mejorar animaciones para seguir aprendiendo.
-- Añadir más gatos que coleccionar con nuevas habilidades.
-- Idea: Añadir progresión de cuenta de jugador con recompensas diarias y por niveles.
+### Actualización de Febrero:
+- Añadir sonidos:
+  - Música tranquila de fondo
+  - Sonido al clicar los botones
+  - Sonido de Victoria/Derrota
+  - Sonido de los combates:
+    - Golpe
+    - Curación
+    - Veneno
+    - Escudo/Buff
+  - Sonido al abrir paquetes
+  - Sonido para las notificaciones de homescreen
+- Añadir filtrado de gatos en la enciclopedia.
+- Añadir opción para que las habilidades autoseleccionen objetivos cuando sea posible.
+- Añadir botón de opciones en pantallas Home y Combat.
+  - Opción de mutear sonidos.
+  - Activar/Desactivar opción de autoselección de objetivos.
+- Implementar Daily Login
 
 ---
 
 ## 🤝 Contribuciones
 
-¡Este es un proyecto personal para aprender y mejorar, pero todas las sugerencias son bienvenidas! Si tienes ideas, abre un issue o realiza un pull request con tu propuesta.
+¡Este es un proyecto personal para aprender y mejorar, pero todas las sugerencias son bienvenidas!
 
 ---
 
