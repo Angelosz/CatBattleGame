@@ -65,7 +65,7 @@ Este proyecto está diseñado para:
 - ~~Mejorar flujo de navegación, sobretodo en el combate/selección de campaña/selección de encuentro.~~
 - Publicar la aplicación en Google Play Store.
 
-### Actualización de Febrero:
+### Febrero:
 - Añadir sonidos:
   - Música tranquila de fondo
   - Sonido al clicar los botones
