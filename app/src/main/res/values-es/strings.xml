@@ -216,7 +216,7 @@
     <string name="no_battlechests_available">No te quedan paquetes :(</string>
     <string name="battlechest_new_cat_display">Nuevo</string>
     <string name="battlechest_normal_display">Normal</string>
-    <string name="package_description">Rareza: %1$s\\nTipo: $2$s</string>
+    <string name="package_description">Rareza: %1$s \n Tipo: %2$s</string>
     <string name="open_more_packages">Abrir más paquetes!</string>
     <string name="type_package">%1$s Paquete</string>
 
@@ -343,4 +343,10 @@
     <string name="notification_level_up">%1$s ha subido de nivel!</string>
     <string name="notification_new_package">Has recibido un nuevo paquete!</string>
     <string name="notification_currency">Has conseguido %1$s %2$s!</string>
+    <string name="loading">Cargando...</string>
+    <string name="you_have_no_packages">No te quedan paquetes.</string>
+    <string name="last_package">¡Es tu último paquete, abrelo!</string>
+    <string name="open">Abir</string>
+    <string name="you_got_a_new_cat">¡Recibiste un nuevo gato!</string>
+    <string name="it_seems_you_already_have_it_you_received_crystals_instead">¡Parece que ya tienes este gato, en su lugar has recibido dado cristales!</string>
 </resources>

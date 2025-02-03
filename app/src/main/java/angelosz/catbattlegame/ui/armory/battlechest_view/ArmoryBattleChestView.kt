@@ -148,7 +148,7 @@ fun HandleArmoryBattleChestPortraitView(
                         }
                     }
                 )
-                TextCard(uiState.message)
+                TextCard(stringResource(uiState.message))
             }
         }
         ArmoryBattleChestStage.CAT -> {
@@ -176,7 +176,7 @@ fun HandleArmoryBattleChestPortraitView(
                         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
                     ){
                         Text(
-                            text = uiState.message,
+                            text = stringResource(uiState.message),
                             modifier = Modifier.padding(16.dp),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.labelLarge
@@ -230,7 +230,7 @@ fun HandleArmoryBattleChestLandscapeView(
                         }
                     )
                 } else {
-                    TextCard("You have no packages.")
+                    TextCard(stringResource(R.string.you_have_no_packages))
                 }
             }
         }
@@ -256,7 +256,7 @@ fun HandleArmoryBattleChestLandscapeView(
                         }
                     }
                 )
-                TextCard(uiState.message)
+                TextCard(stringResource(uiState.message))
             }
         }
         ArmoryBattleChestStage.CAT -> {
@@ -289,7 +289,7 @@ fun HandleArmoryBattleChestLandscapeView(
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
                         ) {
                             Text(
-                                text = uiState.message,
+                                text = stringResource(uiState.message),
                                 modifier = Modifier
                                     .padding(16.dp)
                                     .width(192.dp),
@@ -308,7 +308,7 @@ fun HandleArmoryBattleChestLandscapeView(
                                 }
                             ) {
                                 Text(
-                                    text = "Open more Packages!",
+                                    text = stringResource(R.string.open_more_packages),
                                     modifier = Modifier.padding(8.dp),
                                     textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.labelLarge

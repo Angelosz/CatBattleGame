@@ -2,6 +2,7 @@ package angelosz.catbattlegame.ui.armory.battlechest_view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.entities.OwnedCat
@@ -68,7 +69,7 @@ class ArmoryBattleChestViewModel(
                     battleChests = battleChests,
                     selectedBattleChest = battleChest,
                     armoryBattleChestView = ArmoryBattleChestStage.BATTLE_CHEST,
-                    message = "This is your last package, click it to open it!"
+                    message = R.string.last_package
                 )
             }
         } else {
@@ -117,7 +118,7 @@ class ArmoryBattleChestViewModel(
             it.copy(
                 selectedBattleChest = battleChest,
                 armoryBattleChestView = ArmoryBattleChestStage.BATTLE_CHEST,
-                message = "Open it!"
+                message = R.string.open
             )
         }
     }
@@ -140,7 +141,7 @@ class ArmoryBattleChestViewModel(
     }
 
     private suspend fun addCatToPlayerAccount(cat: Cat){
-        var message = "You got a new Cat!"
+        var message = R.string.you_got_a_new_cat
         if(!playerAccountRepository.ownsCat(cat.id)){
             playerAccountRepository.insertOwnedCat(
                 OwnedCat(
@@ -150,7 +151,7 @@ class ArmoryBattleChestViewModel(
                 )
             )
         } else {
-            message = "It seems you already have it! You received ${disenchantCat(cat)} crystals instead!"
+            message = R.string.it_seems_you_already_have_it_you_received_crystals_instead
         }
         _uiState.update {
             it.copy(

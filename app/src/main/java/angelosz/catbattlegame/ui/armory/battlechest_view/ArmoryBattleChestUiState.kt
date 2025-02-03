@@ -1,5 +1,7 @@
 package angelosz.catbattlegame.ui.armory.battlechest_view
 
+import androidx.annotation.StringRes
+import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.domain.enums.BattleChestType
@@ -13,5 +15,5 @@ data class ArmoryBattleChestUiState (
     val selectedBattleChest: BattleChest = BattleChest(),
     val armoryBattleChestView: ArmoryBattleChestStage = ArmoryBattleChestStage.GRID,
     val catReward: Cat = Cat(),
-    val message: String = ""
+    @StringRes val message: Int = R.string.empty_string
 )
