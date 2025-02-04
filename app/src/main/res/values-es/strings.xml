@@ -90,7 +90,7 @@
     <string name="ability_heal_ally_desc">"Restaura la salud de un aliado, sanando sus heridas con magia restauradora."</string>
     <string name="ability_divine_shield">Escudo Divino</string>
     <string name="ability_divine_shield_desc">"Protege a un aliado, reduciendo el daño que recibe durante un breve período." El aliado queda PROTEGIDO para el próximo daño físico que reciba.</string>
-    <string name="ability_back_stab">Puñalada por la Espalda</string>
+    <string name="ability_back_stab">Puñalada</string>
     <string name="ability_back_stab_desc">"Un ataque sorpresa por la espalda que inflige daño adicional."</string>
     <string name="ability_fire_ball">Bola de Fuego</string>
     <string name="ability_fire_ball_desc">"Lanza una bola de fuego que explota al impactar, infligiendo una gran cantidad de daño."</string>
@@ -114,7 +114,7 @@
     <string name="ability_poison_cloud_desc">"Libera una nube tóxica, envenenando a todos los enemigos en el área e infligiendo daño continuo."</string>
     <string name="ability_fire_embers">Brasas Ardientes</string>
     <string name="ability_fire_embers_desc">"Esparce brasas ardientes sobre un área amplia, infligiendo daño leve por fuego a todos los enemigos."</string>
-    <string name="ability_fire_blaze">Llamarada de Fuego</string>
+    <string name="ability_fire_blaze">Llamarada</string>
     <string name="ability_fire_blaze_desc">"Desata una llama rugiente, quemando a todos los enemigos en el área con daño moderado por fuego."</string>
     <string name="ability_shields_up">¡Escudos Arriba!</string>
     <string name="ability_shields_up_desc">"Aumenta las defensas de tu equipo con un escudo poderoso, reduciendo el daño recibido por un tiempo corto."</string>
@@ -174,11 +174,11 @@
     <string name="ending_turn">Terminando turno</string>
     <string name="enemy_turn">Turno de IA</string>
     <string name="combat_starting">Combate Empezando</string>
-    <string name="select_target_ally">Selecciona Aiado</string>
+    <string name="select_target_ally">Selecciona Aliado</string>
     <string name="select_ally_team">Selecciona Equipo Aliado</string>
     <string name="select_enemy_team">Selecciona Equipo Enemigo</string>
     <string name="turn_passed">Turno pasado</string>
-    <string name="end_turn">Final de turno</string>
+    <string name="end_turn">Terminar turno</string>
     <string name="your_cat_is_stunned">Tu gato está aturdido</string>
 
     <!-- Navigation items -->
@@ -339,14 +339,16 @@
     <string name="enemy_hunter_gnome_desc">\"Un astuto gnomo que utiliza trampas y trucos para dominar el campo de batalla.\"</string>
 
     <!-- Notifications -->
-    <string name="notification_evolved">%1$s ha evolucionado!</string>
-    <string name="notification_level_up">%1$s ha subido de nivel!</string>
-    <string name="notification_new_package">Has recibido un nuevo paquete!</string>
+    <string name="notification_evolved">¡%1$s ha evolucionado!</string>
+    <string name="notification_level_up">¡%1$s ha subido de nivel!</string>
+    <string name="notification_new_package">¡Has recibido un nuevo paquete!</string>
     <string name="notification_currency">Has conseguido %1$s %2$s!</string>
+
+    <!-- Unsorted -->
     <string name="loading">Cargando...</string>
     <string name="you_have_no_packages">No te quedan paquetes.</string>
     <string name="last_package">¡Es tu último paquete, abrelo!</string>
-    <string name="open">Abir</string>
+    <string name="open">Abrir</string>
     <string name="you_got_a_new_cat">¡Recibiste un nuevo gato!</string>
-    <string name="it_seems_you_already_have_it_you_received_crystals_instead">¡Parece que ya tienes este gato, en su lugar has recibido dado cristales!</string>
+    <string name="already_owned_cat">¡Parece que ya tienes este gato, en su lugar has recibido %1$s cristales!</string>
 </resources>

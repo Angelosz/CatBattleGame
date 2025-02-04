@@ -342,12 +342,14 @@
     <string name="notification_level_up">%1$s leveled up!</string>
     <string name="notification_new_package">You have received a new Package!</string>
     <string name="notification_currency">You got %1$s %2$s!</string>
+
+    <!-- Unsorted -->
     <string name="loading">Loading...</string>
     <string name="you_have_no_packages">You have no packages.</string>
     <string name="last_package">This is your last package, click it to open it!</string>
     <string name="open">Open it!</string>
     <string name="you_got_a_new_cat">You got a new Cat!</string>
-    <string name="it_seems_you_already_have_it_you_received_crystals_instead">It seems you already have it! You received crystals instead!</string>
+    <string name="already_owned_cat">It seems you already have it! You received %1$s crystals instead!</string>
 
 
 </resources>
