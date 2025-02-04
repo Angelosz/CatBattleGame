@@ -194,7 +194,7 @@
     <string name="cat_desc_role">Role</string>
     <string name="cat_desc_armor">Armor</string>
     <string name="cat_desc_attack">Attack</string>
-    <string name="cat_desc_attack_speed">A. Speeds</string>
+    <string name="cat_desc_attack_speed">A. Speed</string>
     <string name="cat_desc_rarity">Rarity</string>
     <string name="evolves_at_level">Evolves at level: %1$s</string>
     <string name="evolution_title">Evolution: %1$s</string>
