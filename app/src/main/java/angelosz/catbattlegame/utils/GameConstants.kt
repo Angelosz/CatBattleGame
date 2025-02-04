@@ -21,6 +21,15 @@ object GameConstants {
     const val ELDER_CRYSTAL_COST = 3600
     const val ELDER_BATTLECHEST_COST = 3600
 
+    val GET_CAT_DISENCHANT_VALUE: (CatRarity) -> Int = {
+        when(it){
+            CatRarity.KITTEN -> KITTEN_DISENCHANT_VALUE
+            CatRarity.TEEN -> TEEN_DISENCHANT_VALUE
+            CatRarity.ADULT -> ADULT_DISENCHANT_VALUE
+            CatRarity.ELDER -> ELDER_DISENCHANT_VALUE
+        }
+    }
+
     val GET_CAT_CRYSTAL_COST: (CatRarity) -> Int = {
         when(it){
             CatRarity.KITTEN -> KITTEN_CRYSTAL_COST
