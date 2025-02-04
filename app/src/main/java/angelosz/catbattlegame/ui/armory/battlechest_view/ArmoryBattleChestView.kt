@@ -56,6 +56,7 @@ import angelosz.catbattlegame.ui.armory.enums.ArmoryBattleChestStage
 import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
+import angelosz.catbattlegame.utils.GameConstants.GET_CAT_DISENCHANT_VALUE
 import kotlinx.coroutines.launch
 
 @Composable
@@ -122,7 +123,7 @@ fun HandleArmoryBattleChestPortraitView(
                         }
                     )
                 } else {
-                    TextCard("You have no packages.")
+                    TextCard(stringResource(R.string.you_have_no_packages))
                 }
             }
         }
@@ -148,7 +149,6 @@ fun HandleArmoryBattleChestPortraitView(
                         }
                     }
                 )
-                TextCard(stringResource(uiState.message))
             }
         }
         ArmoryBattleChestStage.CAT -> {
@@ -176,7 +176,12 @@ fun HandleArmoryBattleChestPortraitView(
                         colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
                     ){
                         Text(
-                            text = stringResource(uiState.message),
+                            text =
+                                if(uiState.newCatIsDuplicated){
+                                    stringResource(R.string.already_owned_cat, GET_CAT_DISENCHANT_VALUE(cat.rarity))
+                                } else {
+                                    stringResource(R.string.you_got_a_new_cat)
+                                },
                             modifier = Modifier.padding(16.dp),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.labelLarge
@@ -256,7 +261,6 @@ fun HandleArmoryBattleChestLandscapeView(
                         }
                     }
                 )
-                TextCard(stringResource(uiState.message))
             }
         }
         ArmoryBattleChestStage.CAT -> {
@@ -289,7 +293,12 @@ fun HandleArmoryBattleChestLandscapeView(
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.surface)
                         ) {
                             Text(
-                                text = stringResource(uiState.message),
+                                text =
+                                    if(uiState.newCatIsDuplicated){
+                                        stringResource(R.string.already_owned_cat, GET_CAT_DISENCHANT_VALUE(cat.rarity))
+                                    } else {
+                                        stringResource(R.string.you_got_a_new_cat)
+                                    },
                                 modifier = Modifier
                                     .padding(16.dp)
                                     .width(192.dp),

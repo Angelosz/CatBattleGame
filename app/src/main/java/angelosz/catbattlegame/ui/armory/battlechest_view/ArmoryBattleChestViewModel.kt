@@ -2,7 +2,6 @@ package angelosz.catbattlegame.ui.armory.battlechest_view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import angelosz.catbattlegame.R
 import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.entities.OwnedCat
@@ -13,10 +12,7 @@ import angelosz.catbattlegame.domain.enums.BattleChestType
 import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.armory.enums.ArmoryBattleChestStage
-import angelosz.catbattlegame.utils.GameConstants.ADULT_DISENCHANT_VALUE
-import angelosz.catbattlegame.utils.GameConstants.ELDER_DISENCHANT_VALUE
-import angelosz.catbattlegame.utils.GameConstants.KITTEN_DISENCHANT_VALUE
-import angelosz.catbattlegame.utils.GameConstants.TEEN_DISENCHANT_VALUE
+import angelosz.catbattlegame.utils.GameConstants.GET_CAT_DISENCHANT_VALUE
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -69,7 +65,6 @@ class ArmoryBattleChestViewModel(
                     battleChests = battleChests,
                     selectedBattleChest = battleChest,
                     armoryBattleChestView = ArmoryBattleChestStage.BATTLE_CHEST,
-                    message = R.string.last_package
                 )
             }
         } else {
@@ -118,7 +113,6 @@ class ArmoryBattleChestViewModel(
             it.copy(
                 selectedBattleChest = battleChest,
                 armoryBattleChestView = ArmoryBattleChestStage.BATTLE_CHEST,
-                message = R.string.open
             )
         }
     }
@@ -141,7 +135,7 @@ class ArmoryBattleChestViewModel(
     }
 
     private suspend fun addCatToPlayerAccount(cat: Cat){
-        var message = R.string.you_got_a_new_cat
+        var isDuplicated = false
         if(!playerAccountRepository.ownsCat(cat.id)){
             playerAccountRepository.insertOwnedCat(
                 OwnedCat(
@@ -151,24 +145,20 @@ class ArmoryBattleChestViewModel(
                 )
             )
         } else {
-            message = R.string.it_seems_you_already_have_it_you_received_crystals_instead
+            disenchantCat(cat)
+            isDuplicated = true
         }
         _uiState.update {
             it.copy(
                 catReward = cat,
                 armoryBattleChestView = ArmoryBattleChestStage.CAT,
-                message = message
+                newCatIsDuplicated = isDuplicated,
             )
         }
     }
 
     private suspend fun disenchantCat(cat: Cat): Int {
-        val crystalValue = when(cat.rarity){
-            CatRarity.KITTEN -> KITTEN_DISENCHANT_VALUE
-            CatRarity.TEEN -> TEEN_DISENCHANT_VALUE
-            CatRarity.ADULT -> ADULT_DISENCHANT_VALUE
-            CatRarity.ELDER -> ELDER_DISENCHANT_VALUE
-        }
+        val crystalValue = GET_CAT_DISENCHANT_VALUE(cat.rarity)
         playerAccountRepository.addCrystals(crystalValue)
         return crystalValue
     }
