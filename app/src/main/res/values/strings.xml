@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CatBattleGame</string>
+    <string name="app_name">Cat Battle Adventures</string>
     <string name="empty_string" translatable="false" />
 
     <!-- Cat Rarities -->
@@ -321,7 +321,7 @@
     <string name="enemy_angry_snail">Angry Snail</string>
     <string name="enemy_angry_snail_desc">\"A surprisingly aggressive snail, its slow pace hides a strong defense.\"</string>
     <string name="enemy_happy_snail">Happy Snail</string>
-    <string name="enemy_happy_snail_desc">\"A content snail that just wants to be left alone... unless provoked.\"\n</string>
+    <string name="enemy_happy_snail_desc">\"A content snail that just wants to be left alone… unless provoked.\"\n</string>
     <string name="enemy_mosquito">Mosquito</string>
     <string name="enemy_mosquito_desc">\"A buzzing menace, always looking for an opportunity to strike.\"</string>
     <string name="enemy_hedgehog">Hedgehog</string>
@@ -344,7 +344,7 @@
     <string name="notification_currency">You got %1$s %2$s!</string>
 
     <!-- Unsorted -->
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="you_have_no_packages">You have no packages.</string>
     <string name="last_package">This is your last package, click it to open it!</string>
     <string name="open">Open it!</string>

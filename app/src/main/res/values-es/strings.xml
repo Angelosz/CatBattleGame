@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CatBattleGame</string>
+    <string name="app_name">Cat Battle Adventures</string>
     <string name="empty_string" translatable="false" />
 
     <!-- Cat Rarities -->
@@ -345,7 +345,7 @@
     <string name="notification_currency">Has conseguido %1$s %2$s!</string>
 
     <!-- Unsorted -->
-    <string name="loading">Cargando...</string>
+    <string name="loading">Cargando…</string>
     <string name="you_have_no_packages">No te quedan paquetes.</string>
     <string name="last_package">¡Es tu último paquete, abrelo!</string>
     <string name="open">Abrir</string>
