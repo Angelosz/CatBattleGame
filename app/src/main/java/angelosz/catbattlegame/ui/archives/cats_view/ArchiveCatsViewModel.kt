@@ -6,6 +6,7 @@ import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.CatRarity
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.archives.data.DetailedCatData
 import angelosz.catbattlegame.utils.GameConstants
@@ -113,7 +114,7 @@ class ArchiveCatsViewModel(
                 )
             }
 
-        reloadSimpleCatData()
+        reloadPage()
     }
 
     fun goToNextPage() {
@@ -123,13 +124,41 @@ class ArchiveCatsViewModel(
                     page = it.page + 1
                 )
             }
-        reloadSimpleCatData()
+        reloadPage()
+    }
+
+    private fun reloadPage() {
+        if(_uiState.value.isFilterOn){
+            reloadFilteredCatData()
+        } else {
+            reloadSimpleCatData()
+        }
     }
 
     private fun reloadSimpleCatData() {
         viewModelScope.launch {
             try {
                 val cats = catsRepository.getSimpleCatDataFromPage(
+                    limit = _uiState.value.pageLimit,
+                    offset = _uiState.value.page * _uiState.value.pageLimit
+                )
+
+                _uiState.update {
+                    it.copy(
+                        cats = cats,
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    private fun reloadFilteredCatData(){
+        viewModelScope.launch {
+            try {
+                val cats = catsRepository.getFilteredCatDataFromPage(
+                    rarity = _uiState.value.filter,
                     limit = _uiState.value.pageLimit,
                     offset = _uiState.value.page * _uiState.value.pageLimit
                 )
@@ -157,6 +186,52 @@ class ArchiveCatsViewModel(
                     selectCat(cat.id)
                 }
             } catch(e: Exception){
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    fun filterCats(rarity: CatRarity){
+        viewModelScope.launch {
+            try {
+                val cats = catsRepository.getFilteredCatDataFromPage(
+                    rarity = rarity,
+                    limit = _uiState.value.pageLimit,
+                    offset = 0
+                )
+                _uiState.update {
+                    it.copy(
+                        cats = cats,
+                        totalNumberOfCats = cats.size,
+                        page = 0,
+                        filter = rarity,
+                        isFilterOn = true
+                    )
+                }
+            } catch (e: Exception){
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    fun removeFilter(){
+        viewModelScope.launch {
+            try {
+                val cats = catsRepository.getSimpleCatDataFromPage(
+                    limit = _uiState.value.pageLimit,
+                    offset = 0
+                )
+                val totalNumberOfCats = catsRepository.getCount()
+
+                _uiState.update {
+                    it.copy(
+                        cats = cats,
+                        totalNumberOfCats = totalNumberOfCats,
+                        page = 0,
+                        isFilterOn = false
+                    )
+                }
+            } catch (e: Exception){
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
         }

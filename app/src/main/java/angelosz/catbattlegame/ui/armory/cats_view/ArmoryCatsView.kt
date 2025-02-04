@@ -76,8 +76,8 @@ fun HandleArmoryCatsLandscapeView(
     ) {
         Column(
             modifier = Modifier
-                .weight(1f),
-            horizontalAlignment = Alignment.End,
+                .width(448.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             ArmoryCatGrid(
@@ -100,7 +100,7 @@ fun HandleArmoryCatsLandscapeView(
         ArmoryCatDetailsCard(
             modifier = Modifier.width(300.dp),
             cat = uiState.selectedCat,
-            imageSize = 256,
+            imageSize = 192,
         )
     }
 }

@@ -45,7 +45,7 @@ fun ArchiveCatDetailsCard(
     modifier: Modifier = Modifier,
     cat: DetailedCatData,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
-    imageSize: Int = 300,
+    imageSize: Int = 192,
     playerCrystals: Int = 0,
     onAbilityClicked: (Int) -> Unit,
     onCatPurchased: (Int) -> Unit
@@ -73,7 +73,7 @@ fun ArchiveCatDetailsCard(
 @Composable
 private fun ArchiveCatDetailsCatContent(
     cat: DetailedCatData,
-    imageSize: Int = 300,
+    imageSize: Int = 192,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
     playerCrystals: Int,
     onAbilityClicked: (Int) -> Unit,
@@ -87,7 +87,7 @@ private fun ArchiveCatDetailsCatContent(
         Text(
             text = stringResource(cat.title, stringResource(cat.name)),
             modifier = Modifier.padding(16.dp),
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )
         Image(

@@ -16,6 +16,9 @@ interface CatDao {
     suspend fun clearCatsTable()
     @Query("Select * from cats")
     suspend fun getAllCats(): List<Cat>
+    @Query("Select * from cats where rarity = :rarity")
+    suspend fun getCatsByRarity(rarity: CatRarity): List<Cat>
+
     @Query("Select * from cats where id = :id")
     suspend fun getCatById(id: Int): Cat
     @Query("Select * from cats where id in (:ids)")
@@ -28,6 +31,8 @@ interface CatDao {
 
     @Query("SELECT id, image FROM cats ORDER BY id ASC LIMIT :limit OFFSET :offset;")
     suspend fun getSimpleCatDataFromPage(limit: Int, offset: Int): List<SimpleCatData>
+    @Query("Select id, image from cats where rarity = :rarity ORDER BY id ASC LIMIT :limit OFFSET :offset")
+    suspend fun getFilteredCatDataFromPage(rarity: CatRarity, limit: Int, offset: Int): List<SimpleCatData>
     @Query("Select count(id) from cats")
     suspend fun getCount(): Int
 }

@@ -42,7 +42,7 @@ fun ArmoryCatDetailsCard(
     modifier: Modifier = Modifier,
     cat: DetailedArmoryCatData,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
-    imageSize: Int = 300,
+    imageSize: Int = 192,
 ) {
     Card(
         modifier = modifier,
@@ -64,7 +64,7 @@ fun ArmoryCatDetailsCard(
 @Composable
 private fun ArmoryCatDetailsCatContent(
     cat: DetailedArmoryCatData,
-    imageSize: Int = 300,
+    imageSize: Int = 192,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
     Column(

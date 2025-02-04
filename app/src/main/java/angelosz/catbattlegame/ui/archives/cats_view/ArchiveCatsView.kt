@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.archives.composables.ArchiveCatDetailsCard
 import angelosz.catbattlegame.ui.archives.composables.ArchiveCatGrid
+import angelosz.catbattlegame.ui.archives.composables.CatRarityFilter
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
 import angelosz.catbattlegame.ui.components.PaginationButtons
@@ -78,6 +80,11 @@ fun HandleArchiveCatsPortraitView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            CatRarityFilter(
+                modifier = Modifier.align(Alignment.Start).padding(start = 32.dp),
+                onRaritySelected = viewModel::filterCats,
+                onRemoveSelection = viewModel::removeFilter
+            )
             ArchiveCatGrid(
                 modifier = Modifier.padding(8.dp),
                 cats = uiState.cats,
@@ -107,8 +114,7 @@ fun HandleArchiveCatsLandscapeView(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Column(
-            modifier = Modifier
-                .weight(1f),
+            modifier = Modifier.width(448.dp),
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center
         ) {
@@ -121,21 +127,30 @@ fun HandleArchiveCatsLandscapeView(
                 pageLimit = uiState.pageLimit,
                 imageSize = 96,
             )
-            PaginationButtons(
-                isNotFirstPage = uiState.page > 0,
-                isNotLastPage = viewModel.isNotLastPage(),
-                onPreviousButtonClicked = viewModel::goToPreviousPage,
-                onNextButtonClicked = viewModel::goToNextPage
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                CatRarityFilter(
+                    onRaritySelected = viewModel::filterCats,
+                    onRemoveSelection = viewModel::removeFilter
+                )
+                PaginationButtons(
+                    isNotFirstPage = uiState.page > 0,
+                    isNotLastPage = viewModel.isNotLastPage(),
+                    onPreviousButtonClicked = viewModel::goToPreviousPage,
+                    onNextButtonClicked = viewModel::goToNextPage
+                )
+            }
         }
         ArchiveCatDetailsCard(
             modifier = Modifier.width(300.dp),
             cat = uiState.selectedCat,
-            imageSize = 256,
+            imageSize = 192,
             playerCrystals = uiState.playerCrystals,
             onAbilityClicked = onAbilityClicked,
             onCatPurchased = { viewModel.catWasPurchased(it) }
         )
     }
 }
-

@@ -1,8 +1,7 @@
 package angelosz.catbattlegame.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,11 +19,9 @@ fun PaginationButtons(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally),
-        modifier = Modifier
-            .fillMaxWidth()
     ) {
         Button(
+            modifier = Modifier.padding(horizontal = 16.dp),
             onClick = onPreviousButtonClicked,
             enabled = isNotFirstPage,
         ) {
@@ -34,6 +31,7 @@ fun PaginationButtons(
             )
         }
         Button(
+            modifier = Modifier.padding(horizontal = 16.dp),
             onClick = onNextButtonClicked,
             enabled = isNotLastPage
         ) {
