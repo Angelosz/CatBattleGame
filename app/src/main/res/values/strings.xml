@@ -189,13 +189,13 @@
 
     <!-- UI -->
     <!-- Cat Descriptions -->
-    <string name="cat_desc_health">Health: %1$s</string>
-    <string name="cat_desc_defense">Defense: %1$s</string>
-    <string name="cat_desc_role">Role: %1$s</string>
-    <string name="cat_desc_armor">Armor: %1$s</string>
-    <string name="cat_desc_attack">Attack: %1$s</string>
-    <string name="cat_desc_attack_speed">A. Speed: %1$ss</string>
-    <string name="cat_desc_rarity">Rarity: %1$s</string>
+    <string name="cat_desc_health">Health</string>
+    <string name="cat_desc_defense">Defense</string>
+    <string name="cat_desc_role">Role</string>
+    <string name="cat_desc_armor">Armor</string>
+    <string name="cat_desc_attack">Attack</string>
+    <string name="cat_desc_attack_speed">A. Speeds</string>
+    <string name="cat_desc_rarity">Rarity</string>
     <string name="evolves_at_level">Evolves at level: %1$s</string>
     <string name="evolution_title">Evolution: %1$s</string>
     <string name="unlock_cat_for">Unlock for %1$s</string>
@@ -207,7 +207,7 @@
     <string name="combat_modifier_desc">Combat Modifier: %1$s</string>
     <string name="ability_type_desc">Ability type: %1$s</string>
     <string name="ability_target_desc">Ability target: %1$s</string>
-    <string name="cooldown_desc">Cooldown: %1$s</string>
+    <string name="cooldown_desc">Cooldown: %1$s turn/s</string>
     <string name="ability_icon_title">"Ability icon: "</string>
 
     <!--BattleChest -->

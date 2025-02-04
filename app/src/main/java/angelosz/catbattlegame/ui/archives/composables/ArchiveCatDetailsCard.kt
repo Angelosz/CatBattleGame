@@ -121,51 +121,83 @@ private fun ArchiveCatDetailsCatContent(
                 ) {
                     Column {
                         Text(
-                            text = stringResource(R.string.cat_desc_health, cat.baseAttack),
+                            text = stringResource(R.string.cat_desc_health),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = "${cat.baseHealth.toInt()}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = stringResource(R.string.cat_desc_defense, cat.baseDefense),
+                            text = stringResource(R.string.cat_desc_defense),
                             style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = stringResource(
-                                R.string.cat_desc_role,
-                                stringResource(cat.role.res)
-                            ),
+                            text = "${cat.baseDefense.toInt()}",
                             style = textSize,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.cat_desc_role),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
                         )
-
                         Text(
-                            text = stringResource(
-                                R.string.cat_desc_armor,
-                                stringResource(cat.armorType.res)
-                            ),
+                            text = stringResource(cat.role.res),
                             style = textSize,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.cat_desc_armor),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
+                        )
+                        Text(
+                            text = stringResource(cat.armorType.res),
+                            style = textSize,
+                            modifier = Modifier.padding(4.dp),
                         )
                     }
                     Column {
                         Text(
-                            text = stringResource(R.string.cat_desc_attack, cat.baseAttack),
+                            text = stringResource(R.string.cat_desc_attack),
                             style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = stringResource(R.string.cat_desc_attack_speed, cat.attackSpeed),
+                            text = "${cat.baseAttack.toInt()}",
                             style = textSize,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.cat_desc_attack_speed),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = stringResource(
-                                R.string.cat_desc_rarity,
-                                stringResource(cat.rarity.res)
-                            ),
+                            text = "${cat.attackSpeed}",
                             style = textSize,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.cat_desc_rarity),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
+                        )
+                        Text(
+                            text = stringResource(cat.rarity.res),
+                            style = textSize,
+                            modifier = Modifier.padding(4.dp),
                         )
                     }
                 }

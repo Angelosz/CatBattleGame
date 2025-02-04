@@ -190,13 +190,13 @@
 
     <!-- UI -->
     <!-- Cat Descriptions -->
-    <string name="cat_desc_health">Vida: %1$s</string>
-    <string name="cat_desc_defense">Defensa: %1$s</string>
-    <string name="cat_desc_role">Rol: %1$s</string>
-    <string name="cat_desc_armor">Armadura: %1$s</string>
-    <string name="cat_desc_attack">Ataque: %1$s</string>
-    <string name="cat_desc_attack_speed">V. Ataque: %1$ss</string>
-    <string name="cat_desc_rarity">Rareza: %1$s</string>
+    <string name="cat_desc_health">Vida</string>
+    <string name="cat_desc_defense">Defensa</string>
+    <string name="cat_desc_role">Rol</string>
+    <string name="cat_desc_armor">Armadura</string>
+    <string name="cat_desc_attack">Ataque</string>
+    <string name="cat_desc_attack_speed">V. Ataque</string>
+    <string name="cat_desc_rarity">Rareza</string>
     <string name="evolves_at_level">Evoluciona a nivel: %1$s</string>
     <string name="evolution_title">Evolución: %1$s</string>
     <string name="unlock_cat_for">Desbloquear por %1$s</string>
