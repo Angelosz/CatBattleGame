@@ -50,7 +50,7 @@ fun CatRarityFilter(
             modifier = Modifier.padding(horizontal = 32.dp, vertical = 8.dp),
             text =
             if(selectedRarity < filterItems.size)
-                filterItems[selectedRarity].name
+                stringResource(filterItems[selectedRarity].res)
             else stringResource(R.string.filter),
             style = MaterialTheme.typography.labelLarge
         )
@@ -64,7 +64,7 @@ fun CatRarityFilter(
         ){
             for(item in filterItems){
                 DropdownMenuItem(
-                    text = { Text(item.name) },
+                    text = { Text(stringResource(item.res)) },
                     onClick = {
                         selectedRarity = filterItems.indexOf(item)
                         onRaritySelected(item)

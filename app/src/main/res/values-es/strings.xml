@@ -352,5 +352,5 @@
     <string name="you_got_a_new_cat">¡Recibiste un nuevo gato!</string>
     <string name="already_owned_cat">¡Parece que ya tienes este gato, en su lugar has recibido %1$s cristales!</string>
     <string name="filter">Filtro</string>
-    <string name="reset">SIN FILTRO</string>
+    <string name="reset">Quitar Filtro</string>
 </resources>
