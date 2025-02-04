@@ -376,7 +376,7 @@ private fun AbilitiesDisplay(
         )
     }
     val activeCat = viewModel.playerCatIsActive()
-    if (activeCat != null) {
+    if (activeCat != null && uiState.combatStage != CombatStage.ENDING_TURN) {
         Column(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
