@@ -342,7 +342,7 @@ private fun ShowBattleChest(
         Text(
             text = stringResource(
                 R.string.package_description,
-                battleChest.rarity,
+                stringResource(battleChest.rarity.res),
                 stringResource(battleChest.type.res)
             ),
             modifier = Modifier.padding(8.dp),
