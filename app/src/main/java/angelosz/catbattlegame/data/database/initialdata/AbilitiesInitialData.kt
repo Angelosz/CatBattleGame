@@ -217,7 +217,7 @@ class AbilitiesInitialData {
             damageMultiplier = 0.5f,
             combatModifier = CombatModifier.POISONED,
             targets = AbilityTarget.ENEMY_TEAM,
-            cooldown = 2,
+            cooldown = 3,
             abilitySource = AbilitySource.PLAYER
         ),
         Ability(
@@ -304,10 +304,10 @@ class AbilitiesInitialData {
             combatModifierDuration = 1,
             combatModifierValue = 1f,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1f,
-            damageMultiplier = 0.4f,
+            attackSpeedMultiplier = 0.8f,
+            damageMultiplier = 0.5f,
             targets = AbilityTarget.ENEMY_TEAM,
-            cooldown = 2,
+            cooldown = 1,
             abilitySource = AbilitySource.ENEMY
         ),
         Ability(
@@ -385,6 +385,20 @@ class AbilitiesInitialData {
             cooldown = 4,
             abilitySource = AbilitySource.ENEMY
         ),
+        Ability(
+            id = 26,
+            name = R.string.ability_big_heal_potion,
+            description = R.string.ability_big_heal_potion_desc,
+            image = R.drawable.ability_heal_ally_256,
+            icon = R.drawable.ability_heal_ally_48,
+            abilityType = AbilityType.HEALING,
+            damageType = DamageType.ELEMENTAL,
+            attackSpeedMultiplier = 0.75f,
+            damageMultiplier = 2.5f,
+            combatModifier = null,
+            targets = AbilityTarget.ALLY,
+            cooldown = 2
+        ),
     )
 
     // catId to abilityIds
@@ -399,8 +413,8 @@ class AbilitiesInitialData {
         8 to listOf(6, 2),
         9 to listOf(1, 3),
         10 to listOf(1, 3, 10),
-        11 to listOf(1, 3, 10),
-        12 to listOf(1, 3, 10, 2),
+        11 to listOf(1, 3, 2),
+        12 to listOf(1, 3, 10),
         13 to listOf(6, 15),
         14 to listOf(6, 15, 5),
         15 to listOf(6, 16, 5),

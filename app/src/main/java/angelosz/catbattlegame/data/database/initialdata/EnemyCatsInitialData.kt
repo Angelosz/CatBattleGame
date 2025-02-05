@@ -81,7 +81,7 @@ class EnemyCatsInitialData {
             id = 8,
             name = R.string.enemy_jumping_spider,
             description = R.string.enemy_jumping_spider_desc,
-            baseHealth = 40f,
+            baseHealth = 45f,
             baseAttack = 12f,
             baseDefense = 1f,
             attackSpeed = 1f,
@@ -151,10 +151,10 @@ class EnemyCatsInitialData {
             id = 15,
             name = R.string.enemy_mosquito,
             description = R.string.enemy_mosquito_desc,
-            baseHealth = 50f,
+            baseHealth = 65f,
             baseAttack = 12f,
             baseDefense = 1.5f,
-            attackSpeed = 1.3f,
+            attackSpeed = 1f,
             enemyType = EnemyType.SUMMONER,
             image = R.drawable.enemy_mosquito_300
         ),
@@ -162,20 +162,20 @@ class EnemyCatsInitialData {
             id = 16,
             name = R.string.enemy_hedgehog,
             description = R.string.enemy_hedgehog_desc,
-            baseHealth = 200f,
-            baseAttack = 24f,
-            baseDefense = 2.5f,
-            attackSpeed = 1.4f,
+            baseHealth = 280f,
+            baseAttack = 26f,
+            baseDefense = 4f,
+            attackSpeed = 1.25f,
             image = R.drawable.enemy_guardian_hedgehog_300
         ),
         EnemyCat(
             id = 17,
             name = R.string.enemy_young_raccoon,
             description = R.string.enemy_young_raccoon_desc,
-            baseHealth = 60f,
+            baseHealth = 100f,
             baseAttack = 20f,
-            baseDefense = 1f,
-            attackSpeed = 2.5f,
+            baseDefense = 2f,
+            attackSpeed = 2f,
             enemyType = EnemyType.UNIQUE_SUMMONER,
             image = R.drawable.enemy_young_raccoon_300
         ),
@@ -185,28 +185,28 @@ class EnemyCatsInitialData {
             description = R.string.enemy_mother_raccoon_desc,
             baseHealth = 200f,
             baseAttack = 28f,
-            baseDefense = 2f,
-            attackSpeed = 1.5f,
+            baseDefense = 3f,
+            attackSpeed = 1.4f,
             image = R.drawable.enemy_mother_raccoon_300
         ),
         EnemyCat(
             id = 19,
             name = R.string.enemy_dark_rogue,
             description = R.string.enemy_dark_rogue_desc,
-            baseHealth = 200f,
-            baseAttack = 28f,
+            baseHealth = 340f,
+            baseAttack = 35f,
             baseDefense = 2f,
-            attackSpeed = 1.5f,
+            attackSpeed = 1.25f,
             image = R.drawable.enemy_dark_rogue_300
         ),
         EnemyCat(
             id = 20,
             name = R.string.enemy_ant_queen,
             description = R.string.enemy_ant_queen_desc,
-            baseHealth = 200f,
+            baseHealth = 300f,
             baseAttack = 28f,
             baseDefense = 2f,
-            attackSpeed = 2.5f,
+            attackSpeed = 2f,
             enemyType = EnemyType.SUMMONER,
             image = R.drawable.enemy_queen_ant_300
         ),
@@ -214,10 +214,10 @@ class EnemyCatsInitialData {
             id = 21,
             name = R.string.enemy_hunter_gnome,
             description = R.string.enemy_hunter_gnome_desc,
-            baseHealth = 120f,
+            baseHealth = 130f,
             baseAttack = 20f,
             baseDefense = 2f,
-            attackSpeed = 1.4f,
+            attackSpeed = 1.1f,
             enemyType = EnemyType.UNIQUE_SUMMONER,
             image = R.drawable.enemy_hunter_gnome_300
         ),
@@ -233,18 +233,18 @@ class EnemyCatsInitialData {
         7L to listOf(1, 11, 18),        // Angry gnome
         8L to listOf(1, 13),            // Jumping spider
         9L to listOf(11, 10),           // Lawn mower
-        10L to listOf(19),              // Hose
+        10L to listOf(19, 10),          // Hose
         11L to listOf(1),               // Ant worker
         12L to listOf(11, 10),          // Ant warrior
         13L to listOf(11, 20),          // Angry snail
         14L to listOf(11, 20),          // Happy Snail
         15L to listOf(1, 13, 21),       // Mosquito
-        16L to listOf(11, 12, 10, 2),   // Hedgehog
+        16L to listOf(11, 12, 10, 26),  // Hedgehog
         17L to listOf(22, 2, 9, 3),     // Young racoon
         18L to listOf(11, 10, 12, 17),  // Mother racoon
         19L to listOf(13, 4, 14, 20),   // Dark rogue
         20L to listOf(23, 24, 19, 20),  // Ant queen
-        21L to listOf(8, 20, 3, 11),    // Hunter gnome
+        21L to listOf(11, 26, 20, 25),  // Hunter gnome
     )
 
     fun getEnemyAbilities(): List<EnemyAbility> =

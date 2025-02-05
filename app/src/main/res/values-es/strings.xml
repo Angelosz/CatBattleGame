@@ -136,6 +136,8 @@
     <string name="ability_summon_pet_spider_desc">"El Gnomo Cazador llama a su leal araña mascota al combate, un compañero lindo pero formidable."</string>
 
     <!-- Ability Types -->
+    <string name="ability_big_heal_potion">Poción Grande</string>
+    <string name="ability_big_heal_potion_desc">\"Una gran poción, preparada por mamá.\"</string>
     <string name="ability_type_blunt">Contundente</string>
     <string name="ability_type_piercing">Perforante</string>
     <string name="ability_type_heroic">Heroico</string>
