@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import angelosz.catbattlegame.BuildConfig
 import angelosz.catbattlegame.CatViewModelProvider
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.domain.enums.ScreenState
@@ -197,6 +198,21 @@ private fun HomeScreenContent(
             navigateToCollections = navigateToCollections,
             navigateToArchive = navigateToArchive,
             openShop = openShop
+        )
+
+        Text(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(horizontal = 16.dp, vertical = 48.dp),
+            text = BuildConfig.VERSION_NAME,
+            color = Color.White,
+            style = MaterialTheme.typography.headlineMedium.copy(
+                shadow = Shadow(
+                    color = Color.Black,
+                    offset = Offset(3f, 3f),
+                    blurRadius = 1f
+                )
+            )
         )
     }
 }

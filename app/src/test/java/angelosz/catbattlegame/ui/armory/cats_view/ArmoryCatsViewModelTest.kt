@@ -195,6 +195,8 @@ class AbilityRepositoryForArmoryTest : AbilityRepository {
 
 class CatRepositoryForArmoryTest : CatRepository {
     override suspend fun getAllCats(): List<Cat>  = emptyList()
+    override suspend fun getCatsByRarity(rarity: CatRarity): List<Cat> = emptyList()
+
     override suspend fun getCatById(id: Int): Cat {
         for(cat in cats) if(cat.id == id) return cat
         throw Exception()
@@ -207,6 +209,11 @@ class CatRepositoryForArmoryTest : CatRepository {
     override suspend fun getRandomCatByRarity(rarity: CatRarity): Cat = Cat()
     override suspend fun getUnownedCatsOfRarityIds(rarity: CatRarity): List<Int>  = emptyList()
     override suspend fun getSimpleCatDataFromPage(limit: Int, offset: Int): List<SimpleCatData> = emptyList()
+    override suspend fun getFilteredCatDataFromPage(
+        rarity: CatRarity,
+        limit: Int,
+        offset: Int,
+    ): List<SimpleCatData> = emptyList()
 
     override suspend fun getCount(): Int = 0
 }
