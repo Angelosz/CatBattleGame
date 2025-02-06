@@ -355,4 +355,7 @@
     <string name="already_owned_cat">¡Parece que ya tienes este gato, en su lugar has recibido %1$s cristales!</string>
     <string name="filter">Filtro</string>
     <string name="reset">Quitar Filtro</string>
+    <string name="settings">Opciones</string>
+    <string name="save">Guardar</string>
+    <string name="auto_target_selection">Selección de objetivos automática</string>
 </resources>
