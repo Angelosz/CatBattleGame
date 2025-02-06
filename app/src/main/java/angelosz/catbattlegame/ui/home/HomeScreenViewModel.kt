@@ -8,6 +8,8 @@ import angelosz.catbattlegame.data.database.initialdata.CatsInitialData
 import angelosz.catbattlegame.data.database.initialdata.ChaptersInitialData
 import angelosz.catbattlegame.data.database.initialdata.EnemyCatsInitialData
 import angelosz.catbattlegame.data.database.initialdata.PlayerInitialData
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
+import angelosz.catbattlegame.data.datastore.PlayerSettings
 import angelosz.catbattlegame.data.entities.BattleChest
 import angelosz.catbattlegame.data.entities.PlayerAccount
 import angelosz.catbattlegame.data.entities.PlayerTeam
@@ -40,7 +42,8 @@ class HomeScreenViewModel(
     private val catRepository: CatRepository,
     private val abilityRepository: AbilityRepository,
     private val enemyCatRepository: EnemyCatRepository,
-    private val battleChestRepository: BattleChestRepository
+    private val battleChestRepository: BattleChestRepository,
+    private val dataStoreRepository: DataStoreRepository
     ): ViewModel() {
 
     private val _uiState: MutableStateFlow<HomeScreenUiState> =
@@ -258,4 +261,34 @@ class HomeScreenViewModel(
             }
         }
     }
+
+    fun openSettings() {
+        viewModelScope.launch {
+            try{
+                val settings = dataStoreRepository.getSettings()
+
+                _uiState.update {
+                    it.copy(
+                        playerSettings = settings,
+                        shopIsOpen = false,
+                        settingsIsOpen = true,
+                    )
+                }
+            } catch (e: Exception){
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    fun saveSettings(settings: PlayerSettings) {
+        viewModelScope.launch {
+            try{
+                dataStoreRepository.saveSettings(settings)
+                _uiState.update { it.copy(settingsIsOpen = false) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
 }

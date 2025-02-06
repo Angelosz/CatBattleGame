@@ -80,7 +80,8 @@ fun HomeScreen(
                         onPlayButtonClick = onPlayButtonClick,
                         navigateToCollections = navigateToCollections,
                         navigateToArchive = navigateToArchive,
-                        openShop = viewModel::openShop
+                        openShop = viewModel::openShop,
+                        openSettings = viewModel::openSettings
                     )
                     if(uiState.shopIsOpen){
                         if (isPortraitView)
@@ -95,6 +96,13 @@ fun HomeScreen(
                                 closeShop = viewModel::closeShop,
                                 buyBattleChest = viewModel::battleChestWasBought
                             )
+                    } else {
+                        if(uiState.settingsIsOpen){
+                            SettingsScreen(
+                                settings = uiState.playerSettings,
+                                saveSettings = viewModel::saveSettings,
+                            )
+                        }
                     }
                 }
             }
@@ -158,7 +166,8 @@ private fun HomeScreenContent(
     onPlayButtonClick: () -> Unit,
     navigateToCollections: () -> Unit,
     navigateToArchive: () -> Unit,
-    openShop: () -> Unit
+    openShop: () -> Unit,
+    openSettings: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -197,7 +206,8 @@ private fun HomeScreenContent(
                 .padding(16.dp),
             navigateToCollections = navigateToCollections,
             navigateToArchive = navigateToArchive,
-            openShop = openShop
+            openShop = openShop,
+            openSettings = openSettings
         )
 
         Text(
@@ -263,6 +273,7 @@ fun HomeSideButtons(
     navigateToCollections: () -> Unit,
     navigateToArchive: () -> Unit,
     openShop: () -> Unit,
+    openSettings: () -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -280,6 +291,10 @@ fun HomeSideButtons(
             RoundedImageButton(
                 onClick = openShop,
                 innerImage = R.drawable.battlechest_256,
+            )
+            RoundedImageButton(
+                onClick = openSettings,
+                innerImage = R.drawable.settings_button_256,
             )
         }
     }
