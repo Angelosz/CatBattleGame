@@ -49,6 +49,8 @@ import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
+import angelosz.catbattlegame.ui.components.RoundedImageButton
+import angelosz.catbattlegame.ui.home.SettingsScreen
 
 @Composable
 fun CombatScreen(
@@ -162,91 +164,110 @@ fun CombatScreen(
                         }
                     }
                     CombatState.IN_PROGRESS -> {
-                        if(isPortraitView){
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                            ){
-                                val selectedCats = uiState.activeAbility?.getSelectedCatsIds() ?: emptyList()
-
-                                EnemyTeamDisplay(
-                                    modifier = Modifier
-                                        .weight(0.35f)
-                                        .fillMaxSize(),
-                                    uiState = uiState,
-                                    selectedCats = selectedCats,
-                                    viewModel = viewModel,
-                                    verticalArrangement = Arrangement.Bottom
-                                )
-
-                                InitiativeDisplay(
-                                    modifier = Modifier
-                                        .weight(0.075f)
-                                        .width(320.dp),
-                                    uiState = uiState
-                                )
-                                AbilitiesDisplay(
-                                    modifier = Modifier.weight(0.1f),
-                                    uiState = uiState,
-                                    viewModel = viewModel)
-                                PlayerTeamDisplay(
-                                    modifier = Modifier
-                                        .weight(0.35f)
-                                        .fillMaxSize(),
-                                    uiState = uiState,
-                                    selectedCats = selectedCats,
-                                    viewModel = viewModel,
-                                    verticalArrangement = Arrangement.Top
-                                )
-                            }
-                        } else {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                val selectedCats = uiState.activeAbility?.getSelectedCatsIds() ?: emptyList()
-
-                                PlayerTeamDisplay(
-                                    modifier = Modifier
-                                        .weight(0.35f)
-                                        .fillMaxSize(),
-                                    uiState = uiState,
-                                    selectedCats = selectedCats,
-                                    viewModel = viewModel,
-                                    verticalArrangement = Arrangement.Center
-                                )
-
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ){
+                            if(isPortraitView){
                                 Column(
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                    verticalArrangement = Arrangement.Center
+                                ){
+                                    val selectedCats = uiState.activeAbility?.getSelectedCatsIds() ?: emptyList()
+
+                                    EnemyTeamDisplay(
+                                        modifier = Modifier
+                                            .weight(0.35f)
+                                            .fillMaxSize(),
+                                        uiState = uiState,
+                                        selectedCats = selectedCats,
+                                        viewModel = viewModel,
+                                        verticalArrangement = Arrangement.Bottom
+                                    )
+
                                     InitiativeDisplay(
                                         modifier = Modifier
+                                            .weight(0.075f)
                                             .width(320.dp),
                                         uiState = uiState
                                     )
                                     AbilitiesDisplay(
-                                        modifier = Modifier.width(320.dp),
+                                        modifier = Modifier.weight(0.1f),
                                         uiState = uiState,
                                         viewModel = viewModel)
+                                    PlayerTeamDisplay(
+                                        modifier = Modifier
+                                            .weight(0.35f)
+                                            .fillMaxSize(),
+                                        uiState = uiState,
+                                        selectedCats = selectedCats,
+                                        viewModel = viewModel,
+                                        verticalArrangement = Arrangement.Top
+                                    )
                                 }
-
-                                EnemyTeamDisplay(
+                            } else {
+                                Row(
                                     modifier = Modifier
-                                        .weight(0.35f)
                                         .fillMaxSize(),
-                                    uiState = uiState,
-                                    selectedCats = selectedCats,
-                                    viewModel = viewModel,
-                                    verticalArrangement = Arrangement.Center
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ){
+                                    val selectedCats = uiState.activeAbility?.getSelectedCatsIds() ?: emptyList()
+
+                                    PlayerTeamDisplay(
+                                        modifier = Modifier
+                                            .weight(0.35f)
+                                            .fillMaxSize(),
+                                        uiState = uiState,
+                                        selectedCats = selectedCats,
+                                        viewModel = viewModel,
+                                        verticalArrangement = Arrangement.Center
+                                    )
+
+                                    Column(
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        InitiativeDisplay(
+                                            modifier = Modifier
+                                                .width(320.dp),
+                                            uiState = uiState
+                                        )
+                                        AbilitiesDisplay(
+                                            modifier = Modifier.width(320.dp),
+                                            uiState = uiState,
+                                            viewModel = viewModel)
+                                    }
+
+                                    EnemyTeamDisplay(
+                                        modifier = Modifier
+                                            .weight(0.35f)
+                                            .fillMaxSize(),
+                                        uiState = uiState,
+                                        selectedCats = selectedCats,
+                                        viewModel = viewModel,
+                                        verticalArrangement = Arrangement.Center
+                                    )
+                                }
+                            }
+                            RoundedImageButton(
+                                modifier = Modifier.Companion
+                                    .align(Alignment.BottomEnd)
+                                    .padding(horizontal = 8.dp, vertical = 64.dp),
+                                onClick = viewModel::openSettings,
+                                innerImage = R.drawable.settings_button_256,
+                                innerImageSize = 48,
+                                outerImageSize = 48
+                            )
+                            if(uiState.settingsIsOpen){
+                                SettingsScreen(
+                                    settings = uiState.playerSettings,
+                                    saveSettings = viewModel::saveSettings,
                                 )
                             }
                         }
-
                     }
                     CombatState.FINISHED -> {
                         LaunchedEffect(chapterId, teamId, uiState.combatResult){

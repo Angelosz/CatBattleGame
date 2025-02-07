@@ -3,6 +3,8 @@ package angelosz.catbattlegame.ui.combat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
+import angelosz.catbattlegame.data.datastore.PlayerSettings
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.EnemyCat
 import angelosz.catbattlegame.data.repository.AbilityRepository
@@ -29,10 +31,13 @@ class CombatScreenViewModel(
     private val campaignRepository: CampaignRepository,
     private val enemyCatRepository: EnemyCatRepository,
     private val abilityRepository: AbilityRepository,
-    private val catRepository: CatRepository
+    private val catRepository: CatRepository,
+    private val dataStoreRepository: DataStoreRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(CombatScreenUiState())
     val uiState: StateFlow<CombatScreenUiState> = _uiState
+
+    private var autoSelectActive: Boolean = false
 
     private suspend fun getCatAbilities(id: Int): List<Ability> = abilityRepository.getCatAbilities(id)
     private fun getCat(catId: Int): CombatCat? = (_uiState.value.teamCombatCats + _uiState.value.enemyCombatCats).find { catId == it.cat.combatId }
@@ -61,6 +66,8 @@ class CombatScreenViewModel(
                     chapterEnemies = chapterEnemies,
                     firstCombatId = playerCombatCats.size
                 )
+
+                autoSelectActive = dataStoreRepository.getSettings().autoTargetSelect
 
                 _uiState.update{
                     it.copy(
@@ -309,11 +316,38 @@ class CombatScreenViewModel(
 
     fun abilityClicked(ability: CombatAbility) {
         if(_uiState.value.activeAbility != null) _uiState.value.activeAbility!!.clear()
-        _uiState.value = _uiState.value.copy(
-            abilityMessage = if(isAiTurn()) R.string.enemy_turn else ability.getMessage(),
-            activeAbility = ability,
-            combatStage = CombatStage.SELECTING_TARGETS
-        )
+        if(!isAiTurn() && autoSelectActive){
+            _uiState.value = _uiState.value.copy(
+                abilityMessage = R.string.selecting_targets,
+                activeAbility = ability,
+                combatStage = CombatStage.SELECTING_TARGETS
+            )
+            autoSelectTargets(ability)
+            if(ability.isReady()){
+                useAbility()
+            } else {
+                _uiState.value = _uiState.value.copy(
+                    abilityMessage = ability.getMessage(),
+                )
+            }
+        } else {
+            _uiState.value = _uiState.value.copy(
+                abilityMessage = if(isAiTurn()) R.string.enemy_turn else ability.getMessage(),
+                activeAbility = ability,
+                combatStage = CombatStage.SELECTING_TARGETS
+            )
+        }
+    }
+
+    private fun autoSelectTargets(ability: CombatAbility) {
+        ability.selectEnemyTeam(_uiState.value.enemyCombatCats.map{ it.cat.combatId })
+        ability.selectAllyTeam(_uiState.value.teamCombatCats.map{ it.cat.combatId })
+        if(_uiState.value.enemyCombatCats.size == 1) {
+            ability.setSelectedEnemyCat(_uiState.value.enemyCombatCats.first().cat.combatId)
+        }
+        if(_uiState.value.teamCombatCats.size == 1) {
+            ability.setSelectedAllyCat(_uiState.value.teamCombatCats.first().cat.combatId)
+        }
     }
 
     private fun useAbility() {
@@ -639,6 +673,36 @@ class CombatScreenViewModel(
                 enemyCombatCats = enemyCats,
                 catInitiatives = initiatives.sortedBy { initiative -> initiative.initiative },
             )
+        }
+    }
+
+    fun openSettings() {
+        viewModelScope.launch {
+            try{
+                val settings = dataStoreRepository.getSettings()
+
+                _uiState.update {
+                    it.copy(
+                        playerSettings = settings,
+                        settingsIsOpen = true,
+                    )
+                }
+            } catch (e: Exception){
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
+        }
+    }
+
+    fun saveSettings(settings: PlayerSettings) {
+        viewModelScope.launch {
+            try{
+                dataStoreRepository.saveSettings(settings)
+                autoSelectActive = settings.autoTargetSelect
+
+                _uiState.update { it.copy(settingsIsOpen = false) }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
+            }
         }
     }
 }

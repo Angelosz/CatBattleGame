@@ -357,6 +357,7 @@
     <string name="settings">Settings</string>
     <string name="save">Save</string>
     <string name="auto_target_selection">Auto Target Selection</string>
+    <string name="selecting_targets">Selecting Targets</string>
 
 
 </resources>

@@ -279,7 +279,7 @@ fun HomeSideButtons(
         contentAlignment = Alignment.Center,
         modifier = modifier
     ) {
-        Column() {
+        Column {
             RoundedImageButton(
                 onClick = navigateToCollections,
                 innerImage = R.drawable.collections_button_256,
@@ -295,6 +295,7 @@ fun HomeSideButtons(
             RoundedImageButton(
                 onClick = openSettings,
                 innerImage = R.drawable.settings_button_256,
+                innerImageSize = 48
             )
         }
     }
