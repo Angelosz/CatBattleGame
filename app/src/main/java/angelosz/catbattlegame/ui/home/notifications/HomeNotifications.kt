@@ -117,7 +117,7 @@ class CatEvolutionNotification(
                 contentDescription = stringResource(evolutionName),
                 modifier = Modifier.size(192.dp)
             )
-            Card(
+            /*Card(
                 colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
             ) {
                 Text(
@@ -129,7 +129,7 @@ class CatEvolutionNotification(
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleSmall
                 )
-            }
+            }*/
         }
     }
 }
