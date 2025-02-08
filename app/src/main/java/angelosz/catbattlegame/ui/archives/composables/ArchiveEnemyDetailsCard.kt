@@ -106,31 +106,61 @@ private fun ArchiveEnemyDetailsCardContent(
                 ) {
                     Column {
                         Text(
-                            text = stringResource(R.string.cat_desc_health, enemy.baseHealth),
+                            text = stringResource(R.string.cat_desc_health),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = "${enemy.baseHealth.toInt()}",
                             style = textSize,
                             modifier = Modifier.padding(4.dp),
                         )
                         Text(
-                            text = stringResource(R.string.cat_desc_defense, enemy.baseDefense),
+                            text = stringResource(R.string.cat_desc_defense),
                             style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = stringResource(R.string.cat_desc_armor, stringResource(enemy.armorType.res)),
+                            text = "${enemy.baseDefense.toInt()}",
                             style = textSize,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.cat_desc_armor),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
+                        )
+                        Text(
+                            text = stringResource(enemy.armorType.res),
+                            style = textSize,
+                            modifier = Modifier.padding(4.dp),
                         )
                     }
                     Column {
                         Text(
-                            text = stringResource(R.string.cat_desc_attack, enemy.baseAttack),
+                            text = stringResource(R.string.cat_desc_attack),
                             style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = stringResource(R.string.cat_desc_attack_speed, enemy.attackSpeed),
+                            text = "${enemy.baseAttack.toInt()}",
                             style = textSize,
+                            modifier = Modifier.padding(4.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.cat_desc_attack_speed),
+                            style = textSize,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(4.dp)
+                        )
+                        Text(
+                            text = "${enemy.attackSpeed}",
+                            style = textSize,
+                            modifier = Modifier.padding(4.dp),
                         )
                     }
                 }
