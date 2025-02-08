@@ -13,8 +13,8 @@ android {
         applicationId = "angelosz.catbattlegame"
         minSdk = 24
         targetSdk = 34
-        versionCode = 7
-        versionName = "Alpha 0.02"
+        versionCode = 8
+        versionName = "Alpha 0.09"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
