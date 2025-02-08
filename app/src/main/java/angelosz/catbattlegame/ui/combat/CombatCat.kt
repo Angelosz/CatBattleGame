@@ -36,6 +36,7 @@ import angelosz.catbattlegame.ui.components.CatCard
 
 class CombatCatData(
     val combatId: Int,
+    val id: Int,
     @StringRes val name: Int,
     @DrawableRes val image: Int,
     var currentHealth: Float,
@@ -72,6 +73,7 @@ class CombatCatData(
         ): CombatCatData {
             return CombatCatData(
                 combatId = combatId,
+                id = cat.id,
                 name = cat.name,
                 image = cat.image,
                 currentHealth = cat.baseHealth + ownedCat.healthModifier,
@@ -97,6 +99,7 @@ class CombatCatData(
         ): CombatCatData {
             return CombatCatData(
                 combatId = combatId,
+                id = enemyCat.id.toInt(),
                 name = enemyCat.name,
                 image = enemyCat.image,
                 currentHealth = enemyCat.baseHealth,
@@ -120,6 +123,7 @@ class CombatCatData(
             combatCatData: CombatCatData
         ): CombatCatData = CombatCatData(
             combatId = newCombatId,
+            id = combatCatData.id,
             name = combatCatData.name,
             image = combatCatData.image,
             currentHealth = combatCatData.currentHealth,
@@ -454,12 +458,20 @@ interface CombatCat{
 class PlayerCombatCat(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : CombatCat {}
 
 sealed class EnemyCombatCat(override val cat: CombatCatData) : CombatCat {
-    abstract fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility
-    abstract fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility)
+    abstract fun selectAbility(playerCats: List<CombatCat>, enemyCats: List<CombatCat>): CombatAbility
+    open fun selectTargets(playerCats: List<CombatCat>, enemyCats: List<CombatCat>, ability: CombatAbility){
+        ability.selectAllyTeam(enemyCats.map { it.cat.combatId })
+        ability.setSelectedAllyCat(enemyCats.random().cat.combatId)
+        ability.selectEnemyTeam(playerCats.map { it.cat.combatId })
+        ability.setSelectedEnemyCat(playerCats.random().cat.combatId)
+    }
 }
 
 class SimpleEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
-    override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
+    override fun selectAbility(
+        playerCats: List<CombatCat>,
+        enemyCats: List<CombatCat>
+    ): CombatAbility {
         val notOnCooldownAbilities = cat.abilities.filter { ability -> !ability.onCooldown()}
         if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
         val ability = notOnCooldownAbilities.random()
@@ -467,16 +479,13 @@ class SimpleEnemy(override val cat: CombatCatData, override val onDeath: (Int) -
         return ability
     }
 
-    override fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility) {
-        ability.selectAllyTeam(enemyCats)
-        ability.setSelectedAllyCat(enemyCats.random())
-        ability.selectEnemyTeam(playerCats)
-        ability.setSelectedEnemyCat(playerCats.random())
-    }
 }
 
 class SummonerEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
-    override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
+    override fun selectAbility(
+        playerCats: List<CombatCat>,
+        enemyCats: List<CombatCat>
+    ): CombatAbility {
         var selectedAbility = cat.abilities.find { ability ->
             (ability.ability.abilityType == AbilityType.SUMMON
                     || ability.ability.abilityType == AbilityType.CLONE)
@@ -498,20 +507,17 @@ class SummonerEnemy(override val cat: CombatCatData, override val onDeath: (Int)
         return selectedAbility
     }
 
-    override fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility) {
-        ability.selectAllyTeam(enemyCats)
-        ability.setSelectedAllyCat(enemyCats.random())
-        ability.selectEnemyTeam(playerCats)
-        ability.setSelectedEnemyCat(playerCats.random())
-    }
 }
 
 class UniqueSummonEnemy(override val cat: CombatCatData, override val onDeath: (Int) -> Unit) : EnemyCombatCat(cat) {
-    override fun selectAbility(playerCats: List<Int>, enemyCats: List<Int>): CombatAbility {
+    override fun selectAbility(
+        playerCats: List<CombatCat>,
+        enemyCats: List<CombatCat>
+    ): CombatAbility {
         var selectedAbility = cat.abilities.find { ability -> ability.ability.abilityType == AbilityType.SUMMON }
         if(selectedAbility != null && !selectedAbility.onCooldown() && enemyCats.size < 4){
             val summonId = selectedAbility.ability.combatModifierValue
-            if(!enemyCats.contains(summonId.toInt())){
+            if(enemyCats.find { cat -> cat.cat.id == summonId.toInt()} != null){
                 selectTargets(playerCats, enemyCats, selectedAbility)
                 return selectedAbility
             }
@@ -527,10 +533,4 @@ class UniqueSummonEnemy(override val cat: CombatCatData, override val onDeath: (
         return selectedAbility
     }
 
-    override fun selectTargets(playerCats: List<Int>, enemyCats: List<Int>, ability: CombatAbility) {
-        ability.selectAllyTeam(enemyCats)
-        ability.setSelectedAllyCat(enemyCats.random())
-        ability.selectEnemyTeam(playerCats)
-        ability.setSelectedEnemyCat(playerCats.random())
-    }
 }

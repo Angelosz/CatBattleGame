@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.first
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_DATASTORE)
 
 class DataStoreRepository(
-    val context: Context
+    private val context: Context
 ){
     suspend fun saveSelectedCampaign(campaignIndex: Int){
         context.dataStore.edit{

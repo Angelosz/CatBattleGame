@@ -493,8 +493,8 @@ class CombatScreenViewModel(
                     useAbility()
                 } else {
                     abilityClicked(enemyCat.selectAbility(
-                        playerCats = _uiState.value.teamCombatCats.map { it.cat.combatId },
-                        enemyCats = _uiState.value.enemyCombatCats.map { it.cat.combatId },
+                        playerCats = _uiState.value.teamCombatCats,
+                        enemyCats = _uiState.value.enemyCombatCats,
                         )
                     )
                     val ability = _uiState.value.activeAbility
