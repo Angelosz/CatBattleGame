@@ -517,7 +517,7 @@ class UniqueSummonEnemy(override val cat: CombatCatData, override val onDeath: (
         var selectedAbility = cat.abilities.find { ability -> ability.ability.abilityType == AbilityType.SUMMON }
         if(selectedAbility != null && !selectedAbility.onCooldown() && enemyCats.size < 4){
             val summonId = selectedAbility.ability.combatModifierValue
-            if(enemyCats.find { cat -> cat.cat.id == summonId.toInt()} != null){
+            if(enemyCats.find { cat -> cat.cat.id == summonId.toInt()} == null){
                 selectTargets(playerCats, enemyCats, selectedAbility)
                 return selectedAbility
             }
