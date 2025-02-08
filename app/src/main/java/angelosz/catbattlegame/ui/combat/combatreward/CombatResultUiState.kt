@@ -14,10 +14,10 @@ data class CombatResultUiState(
         ChapterReward(
             chapterId = 0,
             rewardType = RewardType.GOLD,
-            amount = 10
+            amount = 5
         )
     ),
-    val experienceGained: Int = 0,
+    val experienceGained: Int = 10,
     val combatResult: CombatResult = CombatResult.PLAYER_LOST,
     val screenState: ScreenState = ScreenState.INITIALIZING
 )

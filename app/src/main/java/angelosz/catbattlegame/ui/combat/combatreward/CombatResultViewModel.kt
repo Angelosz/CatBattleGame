@@ -56,9 +56,9 @@ class CombatResultViewModel(
         viewModelScope.launch {
             try {
                 discoverEnemies(chapterId)
+                val team = playerAccountRepository.getTeamData(teamId)
                 if(combatResult == CombatResult.PLAYER_WON){
                     val chapter = campaignRepository.getChapterById(chapterId)
-                    val team = playerAccountRepository.getTeamData(teamId)
 
                     if(chapter.state != CampaignState.COMPLETED){
                         val chapterRewards = campaignRepository.getChapterRewards(chapterId)
@@ -87,6 +87,7 @@ class CombatResultViewModel(
                     } else {
                         val experience = chapter.experience / 4
                         addCatsExperience(team, experience)
+                        addRewards(_uiState.value.chapterReward)
 
                         _uiState.update {
                             it.copy(
@@ -97,10 +98,13 @@ class CombatResultViewModel(
                             )
                         }
                     }
-
                 } else {
+                    addCatsExperience(team, _uiState.value.experienceGained)
+                    addRewards(_uiState.value.chapterReward)
+
                     _uiState.update {
                         it.copy(
+                            experienceGained = _uiState.value.experienceGained,
                             screenState = ScreenState.SUCCESS
                         )
                     }
