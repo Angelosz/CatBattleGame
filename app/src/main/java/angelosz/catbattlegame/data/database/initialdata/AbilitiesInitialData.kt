@@ -80,7 +80,7 @@ class AbilitiesInitialData {
             damageMultiplier = 2f,
             combatModifier = null,
             targets = AbilityTarget.SINGLE_ENEMY,
-            cooldown = 2
+            cooldown = 3
         ),
         Ability(
             id = 6,
@@ -104,7 +104,7 @@ class AbilitiesInitialData {
             icon = R.drawable.ability_punch_48,
             abilityType = AbilityType.DAMAGE,
             damageType = DamageType.BLUNT,
-            attackSpeedMultiplier = 1f,
+            attackSpeedMultiplier = 0.9f,
             damageMultiplier = 1f,
             combatModifier = null,
             targets = AbilityTarget.SINGLE_ENEMY,
@@ -165,7 +165,7 @@ class AbilitiesInitialData {
             abilityType = AbilityType.DAMAGE,
             damageType = DamageType.BLUNT,
             attackSpeedMultiplier = 1.0f,
-            damageMultiplier = 1.0f,
+            damageMultiplier = 1.1f,
             combatModifier = null,
             targets = AbilityTarget.SINGLE_ENEMY,
             cooldown = 0,
@@ -193,8 +193,8 @@ class AbilitiesInitialData {
             image = R.drawable.ability_poison_dagger_256,
             icon = R.drawable.ability_poison_dagger_48,
             abilityType = AbilityType.DAMAGE_STATUS_CHANGING,
-            combatModifierDuration = 3,
-            combatModifierValue = 0.05f,
+            combatModifierDuration = 2,
+            combatModifierValue = 0.04f,
             damageType = DamageType.POISON,
             attackSpeedMultiplier = 1f,
             damageMultiplier = 0.5f,
@@ -210,8 +210,8 @@ class AbilitiesInitialData {
             image = R.drawable.ability_poison_rain_256,
             icon = R.drawable.ability_poison_rain_48,
             abilityType = AbilityType.DAMAGE_STATUS_CHANGING,
-            combatModifierDuration = 3,
-            combatModifierValue = 0.05f,
+            combatModifierDuration = 2,
+            combatModifierValue = 0.04f,
             damageType = DamageType.POISON,
             attackSpeedMultiplier = 1.2f,
             damageMultiplier = 0.5f,
@@ -273,8 +273,8 @@ class AbilitiesInitialData {
             icon = R.drawable.ability_heal_ally_48,
             abilityType = AbilityType.HEALING,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1.0f,
-            damageMultiplier = 0.5f,
+            attackSpeedMultiplier = 0.8f,
+            damageMultiplier = 0.6f,
             targets = AbilityTarget.TEAM,
             cooldown = 2,
             abilitySource = AbilitySource.ENEMY
@@ -319,7 +319,7 @@ class AbilitiesInitialData {
             abilityType = AbilityType.CLONE,
             combatModifierValue = 15f,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1f,
+            attackSpeedMultiplier = 0.5f,
             damageMultiplier = 1f,
             targets = AbilityTarget.ENEMY_TEAM,
             cooldown = 1,
@@ -334,7 +334,7 @@ class AbilitiesInitialData {
             abilityType = AbilityType.SUMMON,
             combatModifierValue = 18f,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1f,
+            attackSpeedMultiplier = 0.5f,
             damageMultiplier = 1f,
             targets = AbilityTarget.ENEMY_TEAM,
             cooldown = 999,
@@ -349,10 +349,10 @@ class AbilitiesInitialData {
             abilityType = AbilityType.SUMMON,
             combatModifierValue = 11f,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1f,
+            attackSpeedMultiplier = 0.5f,
             damageMultiplier = 1f,
             targets = AbilityTarget.ENEMY_TEAM,
-            cooldown = 3,
+            cooldown = 1,
             abilitySource = AbilitySource.ENEMY
         ),
         Ability(
@@ -364,10 +364,10 @@ class AbilitiesInitialData {
             abilityType = AbilityType.SUMMON,
             combatModifierValue = 12f,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1f,
+            attackSpeedMultiplier = 0.5f,
             damageMultiplier = 1f,
             targets = AbilityTarget.ENEMY_TEAM,
-            cooldown = 4,
+            cooldown = 1,
             abilitySource = AbilitySource.ENEMY
         ),
         Ability(
@@ -379,10 +379,10 @@ class AbilitiesInitialData {
             abilityType = AbilityType.SUMMON,
             combatModifierValue = 8f,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 1f,
+            attackSpeedMultiplier = 0.5f,
             damageMultiplier = 1f,
             targets = AbilityTarget.ENEMY_TEAM,
-            cooldown = 4,
+            cooldown = 1,
             abilitySource = AbilitySource.ENEMY
         ),
         Ability(
@@ -397,7 +397,7 @@ class AbilitiesInitialData {
             damageMultiplier = 2.5f,
             combatModifier = null,
             targets = AbilityTarget.ALLY,
-            cooldown = 2
+            cooldown = 3
         ),
     )
 
