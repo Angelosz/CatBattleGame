@@ -21,8 +21,8 @@ class EnemyCatsInitialData {
             id = 2,
             name = R.string.enemy_mouse_thief,
             description = R.string.enemy_mouse_thief_desc,
-            baseHealth = 45f,
-            baseAttack = 11f,
+            baseHealth = 50f,
+            baseAttack = 12f,
             baseDefense = 1f,
             attackSpeed = 0.9f,
             image = R.drawable.enemy_mouse_thief_300
@@ -92,7 +92,7 @@ class EnemyCatsInitialData {
             name = R.string.enemy_lawn_mower,
             description = R.string.enemy_lawn_mower_desc,
             baseHealth = 100f,
-            baseAttack = 22f,
+            baseAttack = 20f,
             baseDefense = 2f,
             attackSpeed = 1.5f,
             image = R.drawable.enemy_lawn_mower_300
@@ -102,7 +102,7 @@ class EnemyCatsInitialData {
             name = R.string.enemy_hose,
             description = R.string.enemy_hose_desc,
             baseHealth = 100f,
-            baseAttack = 16f,
+            baseAttack = 14f,
             baseDefense = 1f,
             attackSpeed = 1.5f,
             image = R.drawable.enemy_hose_300
@@ -122,9 +122,9 @@ class EnemyCatsInitialData {
             name = R.string.enemy_ant_warrior,
             description = R.string.enemy_ant_warrior_desc,
             baseHealth = 55f,
-            baseAttack = 20f,
+            baseAttack = 18f,
             baseDefense = 2.5f,
-            attackSpeed = 1f,
+            attackSpeed = 1.1f,
             image = R.drawable.enemy_warrior_ant_300
         ),
         EnemyCat(
@@ -151,9 +151,9 @@ class EnemyCatsInitialData {
             id = 15,
             name = R.string.enemy_mosquito,
             description = R.string.enemy_mosquito_desc,
-            baseHealth = 75f,
+            baseHealth = 70f,
             baseAttack = 18f,
-            baseDefense = 1.5f,
+            baseDefense = 1f,
             attackSpeed = 1f,
             enemyType = EnemyType.SUMMONER,
             image = R.drawable.enemy_mosquito_300
