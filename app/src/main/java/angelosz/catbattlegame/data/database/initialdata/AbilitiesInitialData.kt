@@ -399,6 +399,20 @@ class AbilitiesInitialData {
             targets = AbilityTarget.ALLY,
             cooldown = 3
         ),
+        Ability(
+            id = 27,
+            name = R.string.ability_healing_pray,
+            description = R.string.ability_big_heal_potion_desc,
+            image = R.drawable.ability_heal_team_256,
+            icon = R.drawable.ability_heal_team_96,
+            abilityType = AbilityType.HEALING,
+            damageType = DamageType.ELEMENTAL,
+            attackSpeedMultiplier = 0.75f,
+            damageMultiplier = 2.5f,
+            combatModifier = null,
+            targets = AbilityTarget.ALLY,
+            cooldown = 3
+        ),
     )
 
     // catId to abilityIds

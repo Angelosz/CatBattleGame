@@ -134,10 +134,11 @@
     <string name="ability_summon_warrior_desc">"La Reina Hormiga invoca a un valiente guerrero hormiga para unirse a la batalla, listo para defender y atacar."</string>
     <string name="ability_summon_pet_spider">Invocar Araña Mascota</string>
     <string name="ability_summon_pet_spider_desc">"El Gnomo Cazador llama a su leal araña mascota al combate, un compañero lindo pero formidable."</string>
-
-    <!-- Ability Types -->
     <string name="ability_big_heal_potion">Poción Grande</string>
     <string name="ability_big_heal_potion_desc">\"Una gran poción, preparada por mamá.\"</string>
+    <string name="ability_healing_pray">Oración Sagrada</string>
+    <string name="ability_healing_pray_desc">\"Una oración sagrada que canaliza energía divina, restaurando la salud de todos los aliados y elevando sus espíritus en la batalla.\"</string>
+    <!-- Ability Types -->
     <string name="ability_type_blunt">Contundente</string>
     <string name="ability_type_piercing">Perforante</string>
     <string name="ability_type_heroic">Heroico</string>

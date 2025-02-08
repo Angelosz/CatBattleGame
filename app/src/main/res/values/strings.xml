@@ -135,6 +135,8 @@
     <string name="ability_summon_pet_spider_desc">\"The Hunter Gnome calls its loyal pet spider into battle, a cute but formidable companion.\"</string>
     <string name="ability_big_heal_potion">Big Potion</string>
     <string name="ability_big_heal_potion_desc">\"Drinks a big potion, prepared by their mother.\"</string>
+    <string name="ability_healing_pray">Healing Pray</string>
+    <string name="ability_healing_pray_desc">\"A sacred prayer that channels divine energy, restoring the health of all allies and uplifting their spirits in battle.\"</string>
 
     <!-- Ability Types -->
     <string name="ability_type_blunt">Blunt</string>
