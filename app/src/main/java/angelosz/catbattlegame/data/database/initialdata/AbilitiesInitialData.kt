@@ -154,7 +154,7 @@ class AbilitiesInitialData {
             attackSpeedMultiplier = 1.2f,
             damageMultiplier = 1.2f,
             targets = AbilityTarget.SINGLE_ENEMY,
-            cooldown = 2
+            cooldown = 3
         ),
         Ability(
             id = 11,
@@ -211,7 +211,7 @@ class AbilitiesInitialData {
             icon = R.drawable.ability_poison_rain_96,
             abilityType = AbilityType.DAMAGE_STATUS_CHANGING,
             combatModifierDuration = 2,
-            combatModifierValue = 0.04f,
+            combatModifierValue = 0.05f,
             damageType = DamageType.POISON,
             attackSpeedMultiplier = 1.2f,
             damageMultiplier = 0.5f,
@@ -397,7 +397,8 @@ class AbilitiesInitialData {
             damageMultiplier = 2.5f,
             combatModifier = null,
             targets = AbilityTarget.ALLY,
-            cooldown = 3
+            cooldown = 3,
+            abilitySource = AbilitySource.ENEMY
         ),
         Ability(
             id = 27,
@@ -407,11 +408,12 @@ class AbilitiesInitialData {
             icon = R.drawable.ability_heal_team_96,
             abilityType = AbilityType.HEALING,
             damageType = DamageType.ELEMENTAL,
-            attackSpeedMultiplier = 0.75f,
-            damageMultiplier = 2.5f,
+            attackSpeedMultiplier = 1f,
+            damageMultiplier = 1.25f,
             combatModifier = null,
-            targets = AbilityTarget.ALLY,
-            cooldown = 3
+            targets = AbilityTarget.TEAM,
+            cooldown = 3,
+            abilitySource = AbilitySource.PLAYER
         ),
     )
 
