@@ -51,20 +51,20 @@ class EnemyCatsInitialData {
             id = 5,
             name = R.string.enemy_sparrow_guard,
             description = R.string.enemy_sparrow_guard_desc,
-            baseHealth = 140f,
+            baseHealth = 160f,
             baseAttack = 26f,
-            baseDefense = 2.5f,
-            attackSpeed = 1.3f,
+            baseDefense = 3.5f,
+            attackSpeed = 1f,
             image = R.drawable.enemy_sparrow_guard_300
         ),
         EnemyCat(
             id = 6,
             name = R.string.enemy_raven_guard,
             description = R.string.enemy_raven_guard_desc,
-            baseHealth = 140f,
+            baseHealth = 160f,
             baseAttack = 22f,
-            baseDefense = 1f,
-            attackSpeed = 1.1f,
+            baseDefense = 3.5f,
+            attackSpeed = 1f,
             image = R.drawable.enemy_raven_guard_300
         ),
         EnemyCat(
