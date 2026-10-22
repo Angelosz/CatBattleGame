@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -67,8 +68,8 @@ fun AppLayout(
     }
 
     LaunchedEffect(currentDestination, settings.musicEnabled) {
-        val routeName = currentDestination?.route
-        val track = if (routeName?.contains("CombatScreenRoute") == true) {
+        val isCombat = currentDestination?.hasRoute<CombatScreenRoute>() == true
+        val track = if (isCombat) {
             MusicManager.MusicTrack.COMBAT
         } else {
             MusicManager.MusicTrack.HOME

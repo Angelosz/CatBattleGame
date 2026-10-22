@@ -89,7 +89,11 @@ class ArmoryBattleChestViewModel(
         return battleChests
     }
 
+    private var isOpening = false
+
     fun openSelectedBattleChest(){
+        if (isOpening) return
+        isOpening = true
         viewModelScope.launch {
             try {
                 val battleChest = _uiState.value.selectedBattleChest
@@ -104,6 +108,8 @@ class ArmoryBattleChestViewModel(
                 onBattleChestOpened()
             } catch (e: Exception) {
                 _uiState.update { it.copy(state = ScreenState.FAILURE) }
+            } finally {
+                isOpening = false
             }
         }
     }

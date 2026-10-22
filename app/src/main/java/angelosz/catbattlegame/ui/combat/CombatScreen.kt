@@ -330,7 +330,8 @@ private fun PlayerTeamDisplay(
                     imageSize = 128,
                     barHeight = 8,
                     onCardClicked = { viewModel.allyClicked(catData.cat.combatId) },
-                    border = border
+                    border = border,
+                    isActive = (uiState.activeCatId == catData.cat.combatId)
                 )
             }
         )
@@ -371,7 +372,8 @@ private fun EnemyTeamDisplay(
                     imageSize = 128,
                     barHeight = 8,
                     onCardClicked = { viewModel.enemyClicked(catData.cat.combatId) },
-                    border = border
+                    border = border,
+                    isActive = (uiState.activeCatId == catData.cat.combatId)
                 )
             }
         )

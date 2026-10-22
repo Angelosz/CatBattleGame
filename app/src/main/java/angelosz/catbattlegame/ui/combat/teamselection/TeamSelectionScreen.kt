@@ -1,6 +1,7 @@
 package angelosz.catbattlegame.ui.combat.teamselection
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +14,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -22,7 +25,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import angelosz.catbattlegame.CatViewModelProvider
@@ -34,6 +42,7 @@ import angelosz.catbattlegame.ui.components.BackButton
 import angelosz.catbattlegame.ui.components.BackgroundImage
 import angelosz.catbattlegame.ui.components.FailureCard
 import angelosz.catbattlegame.ui.components.LoadingCard
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun TeamSelectionScreen(
@@ -61,11 +70,25 @@ fun TeamSelectionScreen(
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Text(
+                        text = stringResource(R.string.choose_team),
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                offset = Offset(2f, 2f),
+                                blurRadius = 4f
+                            )
+                        ),
+                        color = Color(0xFFFFD54F),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                    )
+
                     TeamsList(
                         teams = uiState.teams,
                         selectTeam = { teamData ->
                             viewModel.selectTeam(teamData.teamId)
-                                     },
+                        },
                         onChooseTeamClicked = { onStartFightClicked(chapterId, uiState.teamId) },
                         columns = if(isPortraitView) 1 else 2,
                         selectedTeamId = uiState.teamId,
@@ -77,21 +100,14 @@ fun TeamSelectionScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(128.dp)
-                            .padding(bottom = 36.dp)
+                            .height(118.dp)
+                            .padding(bottom = 24.dp)
                             .align(Alignment.BottomCenter),
                         contentAlignment = Alignment.Center
                     ){
-                        Button(
-                            modifier = Modifier.padding(8.dp),
+                        ChooseTeamButton(
                             onClick = { onStartFightClicked(chapterId, uiState.teamId) }
-                        ){
-                            Text(
-                                modifier = Modifier.padding(4.dp),
-                                text = stringResource(R.string.choose_team),
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                        }
+                        )
                     }
                 }
                 BackButton(
@@ -114,6 +130,41 @@ fun TeamSelectionScreen(
 
             }
         }
+    }
+}
+
+@Composable
+fun ChooseTeamButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    val context = LocalContext.current
+    Button(
+        modifier = modifier.height(56.dp),
+        onClick = {
+            SoundManager.playButtonClick(context)
+            onClick()
+        },
+        shape = RoundedCornerShape(20.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(0xFF6E4327)
+        ),
+        border = BorderStroke(3.dp, Color(0xFFFFD700)),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp)
+    ) {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp),
+            text = stringResource(R.string.choose_team),
+            style = MaterialTheme.typography.titleLarge.copy(
+                shadow = Shadow(
+                    color = Color.Black,
+                    offset = Offset(2f, 2f),
+                    blurRadius = 4f
+                )
+            ),
+            color = Color(0xFFFFF8E1),
+            fontWeight = FontWeight.Bold
+        )
     }
 }
 
@@ -176,19 +227,10 @@ fun TeamsList(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(128.dp),
+                        .height(118.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Button(
-                        modifier = Modifier.padding(8.dp),
-                        onClick = onChooseTeamClicked
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(4.dp),
-                            text = stringResource(R.string.choose_team),
-                            style = MaterialTheme.typography.headlineSmall
-                        )
-                    }
+                    ChooseTeamButton(onClick = onChooseTeamClicked)
                 }
             }
         } else {

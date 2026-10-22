@@ -2,27 +2,43 @@ package angelosz.catbattlegame.ui.combat
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.utils.SoundManager
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.entities.EnemyCat
@@ -194,10 +210,55 @@ interface CombatCat{
         imageSize: Int,
         barHeight: Int,
         onCardClicked: (Int) -> Unit,
-        @DrawableRes border: Int
+        @DrawableRes border: Int,
+        isActive: Boolean
     ){
+        val context = LocalContext.current
+        val cardOffset by animateDpAsState(
+            targetValue = if (isActive) (-12).dp else 0.dp,
+            animationSpec = tween(300)
+        )
+        val cardScale by animateFloatAsState(
+            targetValue = if (isActive) 1.10f else 1.0f,
+            animationSpec = tween(300)
+        )
+
+        val flashAlpha = remember { Animatable(0f) }
+        var flashColor by remember { mutableStateOf(Color.Transparent) }
+
+        LaunchedEffect(cat.lastCombatActionTaken) {
+            val (targetColor, shouldFlash) = when (cat.lastCombatActionTaken.combatAction) {
+                CombatActionTaken.DAMAGED, CombatActionTaken.POISONED -> Color.Red to true
+                CombatActionTaken.HEALED -> Color.Green to true
+                CombatActionTaken.SHIELDED -> Color(0xFFFFD700) to true
+                CombatActionTaken.ATTACKED, CombatActionTaken.NO_EFFECT -> Color.Transparent to false
+            }
+
+            when (cat.lastCombatActionTaken.combatAction) {
+                CombatActionTaken.DAMAGED -> SoundManager.playDamageSound(context, cat.lastCombatActionTaken.damageType)
+                CombatActionTaken.HEALED -> SoundManager.playHealSound(context)
+                CombatActionTaken.POISONED -> SoundManager.playDamageSound(context, DamageType.POISON)
+                CombatActionTaken.SHIELDED -> SoundManager.playShieldSound(context)
+                CombatActionTaken.ATTACKED, CombatActionTaken.NO_EFFECT -> {}
+            }
+
+            if (shouldFlash) {
+                flashColor = targetColor
+                flashAlpha.snapTo(0.6f)
+                flashAlpha.animateTo(0f, animationSpec = tween(450))
+            }
+        }
+
+        LaunchedEffect(cat.appliedCombatModifiers.size) {
+            cat.appliedCombatModifiers.lastOrNull()?.let { modifier ->
+                SoundManager.playStatusSound(context, modifier.combatModifier)
+            }
+        }
+
         Box(
             modifier = Modifier
+                .offset(y = cardOffset)
+                .scale(cardScale)
                 .width(imageSize.dp)
                 .height((imageSize + 16).dp),
             contentAlignment = Alignment.Center,
@@ -209,6 +270,14 @@ interface CombatCat{
                 image = cat.image,
                 borderImage = border,
             )
+            if (flashAlpha.value > 0f) {
+                Box(
+                    modifier = Modifier
+                        .size(imageSize.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(flashColor.copy(alpha = flashAlpha.value))
+                )
+            }
             Row(
                 modifier = Modifier.align(Alignment.TopStart)
             ){

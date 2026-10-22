@@ -45,16 +45,20 @@ object MusicManager {
                     if (homeMediaPlayer == null) {
                         homeMediaPlayer = MediaPlayer.create(appContext, R.raw.sounds_background_home)?.apply {
                             isLooping = true
+                            setVolume(1.0f, 1.0f)
                         }
                     }
+                    homeMediaPlayer?.setVolume(1.0f, 1.0f)
                     homeMediaPlayer?.start()
                 }
                 MusicTrack.COMBAT -> {
                     if (combatMediaPlayer == null) {
                         combatMediaPlayer = MediaPlayer.create(appContext, R.raw.sounds_background_combat)?.apply {
                             isLooping = true
+                            setVolume(1.0f, 1.0f)
                         }
                     }
+                    combatMediaPlayer?.setVolume(1.0f, 1.0f)
                     combatMediaPlayer?.start()
                 }
             }

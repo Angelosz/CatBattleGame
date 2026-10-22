@@ -45,6 +45,8 @@ class CombatResultViewModel(
     )
     val uiState: StateFlow<CombatResultUiState> = _uiState
 
+    private var rewardsProcessed = false
+
     fun setupCombatResult(teamId: Long, chapterId: Long, combatResult: CombatResult){
         _uiState.update {
             it.copy(
@@ -57,57 +59,48 @@ class CombatResultViewModel(
             try {
                 discoverEnemies(chapterId)
                 val team = playerAccountRepository.getTeamData(teamId)
-                if(combatResult == CombatResult.PLAYER_WON){
-                    val chapter = campaignRepository.getChapterById(chapterId)
+                val chapter = campaignRepository.getChapterById(chapterId)
+                val chapterRewards = campaignRepository.getChapterRewards(chapterId)
+                var activeRewards = emptyList<ChapterReward>()
+                var expGained = 0
 
-                    if(chapter.state != CampaignState.COMPLETED){
-                        val chapterRewards = campaignRepository.getChapterRewards(chapterId)
+                if (!rewardsProcessed) {
+                    rewardsProcessed = true
+                    if(combatResult == CombatResult.PLAYER_WON){
+                        if(chapter.state != CampaignState.COMPLETED){
+                            addRewards(chapterRewards)
+                            addCatsExperience(team, chapter.experience)
+                            activeRewards = chapterRewards
+                            expGained = chapter.experience
 
-                        addRewards(chapterRewards)
-                        addCatsExperience(team, chapter.experience)
+                            completeChapter(chapter)
 
-                        completeChapter(chapter)
-
-                        if(chapter.isLastCampaignChapter){
-                            val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
-                            completeCampaign(currentCampaign)
-                            unlockNextCampaign(currentCampaign.nextCampaign)
-                        }
-                        unlockNextChapter(chapter.unlocksChapter)
-
-                        _uiState.update {
-                            it.copy(
-                                chapter = chapter,
-                                team = team,
-                                chapterReward = chapterRewards,
-                                experienceGained = chapter.experience,
-                                screenState = ScreenState.SUCCESS
-                            )
+                            if(chapter.isLastCampaignChapter){
+                                val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
+                                completeCampaign(currentCampaign)
+                                unlockNextCampaign(currentCampaign.nextCampaign)
+                            }
+                            unlockNextChapter(chapter.unlocksChapter)
+                        } else {
+                            val experience = chapter.experience / 4
+                            addCatsExperience(team, experience)
+                            activeRewards = addReplayRewards(chapterRewards)
+                            expGained = experience
                         }
                     } else {
-                        val experience = chapter.experience / 4
-                        addCatsExperience(team, experience)
-                        addRewards(_uiState.value.chapterReward)
-
-                        _uiState.update {
-                            it.copy(
-                                chapter = chapter,
-                                team = team,
-                                experienceGained = experience,
-                                screenState = ScreenState.SUCCESS
-                            )
-                        }
+                        expGained = chapter.experience / 10
+                        addCatsExperience(team, expGained)
                     }
-                } else {
-                    addCatsExperience(team, _uiState.value.experienceGained)
-                    addRewards(_uiState.value.chapterReward)
+                }
 
-                    _uiState.update {
-                        it.copy(
-                            experienceGained = _uiState.value.experienceGained,
-                            screenState = ScreenState.SUCCESS
-                        )
-                    }
+                _uiState.update {
+                    it.copy(
+                        chapter = chapter,
+                        team = team,
+                        chapterReward = activeRewards,
+                        experienceGained = expGained,
+                        screenState = ScreenState.SUCCESS
+                    )
                 }
             } catch (e: Exception){
                 _uiState.value = _uiState.value.copy(
@@ -131,31 +124,33 @@ class CombatResultViewModel(
     }
 
     private suspend fun addCatsExperience(team: List<BasicCatData>, experience: Int) {
+        if (experience <= 0) return
         team.forEach{ cat ->
             val ownedCat = playerAccountRepository.getOwnedCatByCatId(cat.catId)
             val baseCat = catRepository.getCatById(cat.catId)
-            val totalExperience = ownedCat.experience + experience
+            var currentXp = ownedCat.experience + experience
+            var currentLevel = ownedCat.level
+            var healthMod = ownedCat.healthModifier
+            var attackMod = ownedCat.attackModifier
+            var defenseMod = ownedCat.defenseModifier
 
-            if(totalExperience >= EXPERIENCE_PER_LEVEL){
-                val newLevel = ownedCat.level + 1
-                playerAccountRepository.updateOwnedCat(
-                    ownedCat.copy(
-                        experience = totalExperience - EXPERIENCE_PER_LEVEL,
-                        level = newLevel,
-                        healthModifier = ownedCat.healthModifier + (baseCat.baseHealth * 0.1).toInt(),
-                        attackModifier = ownedCat.attackModifier + (baseCat.baseAttack * 0.1).toInt(),
-                        defenseModifier = ownedCat.defenseModifier + (baseCat.baseDefense * 0.1).toInt(),
-                    )
-                )
+            while (currentXp >= EXPERIENCE_PER_LEVEL && currentLevel < angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL) {
+                currentXp -= EXPERIENCE_PER_LEVEL
+                currentLevel += 1
+                healthMod += (baseCat.baseHealth * 0.1).toInt()
+                attackMod += (baseCat.baseAttack * 0.1).toInt()
+                defenseMod += (baseCat.baseDefense * 0.1).toInt()
+
                 playerAccountRepository.insertLevelUpNotification(
                     LevelUpNotification(
                         name = baseCat.name,
                         image = baseCat.image,
-                        level = newLevel,
+                        level = currentLevel,
                         notificationText = ""
                     )
                 )
-                if(newLevel >= baseCat.evolutionLevel){
+
+                if(currentLevel >= baseCat.evolutionLevel){
                     val evolutionCatId = baseCat.nextEvolutionId
                     if(evolutionCatId != null){
                         val evolutionCat = catRepository.getCatById(evolutionCatId)
@@ -189,13 +184,21 @@ class CombatResultViewModel(
                         )
                     }
                 }
-            } else {
-                playerAccountRepository.updateOwnedCat(
-                    ownedCat.copy(
-                        experience = totalExperience
-                    )
-                )
             }
+
+            if (currentLevel >= angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL) {
+                currentXp = 0
+            }
+
+            playerAccountRepository.updateOwnedCat(
+                ownedCat.copy(
+                    experience = currentXp,
+                    level = currentLevel,
+                    healthModifier = healthMod,
+                    attackModifier = attackMod,
+                    defenseModifier = defenseMod
+                )
+            )
         }
     }
 
@@ -258,6 +261,27 @@ class CombatResultViewModel(
                 ) }
             }
         }
+    }
+
+    private suspend fun addReplayRewards(chapterRewards: List<ChapterReward>): List<ChapterReward> {
+        val replayRewards = mutableListOf<ChapterReward>()
+        chapterRewards.forEach { reward ->
+            when(reward.rewardType){
+                RewardType.GOLD -> {
+                    val reducedGold = (reward.amount / 4).coerceAtLeast(1)
+                    playerAccountRepository.addGold(reducedGold)
+                    replayRewards.add(reward.copy(amount = reducedGold))
+                }
+                RewardType.CRYSTAL -> {
+                    val reducedCrystals = (reward.amount / 4).coerceAtLeast(1)
+                    playerAccountRepository.addCrystals(reducedCrystals)
+                    replayRewards.add(reward.copy(amount = reducedCrystals))
+                }
+                // Boxes/Chests are NEVER awarded on replay
+                else -> {}
+            }
+        }
+        return replayRewards
     }
 
     fun rewardIncludesBattleChest(): Boolean {

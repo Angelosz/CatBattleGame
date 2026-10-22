@@ -26,10 +26,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -292,8 +295,27 @@ private fun PortraitCampaignSelectionCarousel(
 ) {
     if (campaigns.isNotEmpty()) {
         var selectedImageIndex by remember { mutableIntStateOf(if(selectedCampaignIndex >= 0) selectedCampaignIndex else 0) }
+        var totalDragAmount by remember { mutableFloatStateOf(0f) }
+
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectVerticalDragGestures(
+                        onDragStart = { totalDragAmount = 0f },
+                        onVerticalDrag = { change, dragAmount ->
+                            change.consume()
+                            totalDragAmount += dragAmount
+                        },
+                        onDragEnd = {
+                            if (totalDragAmount < -40f && selectedImageIndex < campaigns.lastIndex) {
+                                selectedImageIndex++
+                            } else if (totalDragAmount > 40f && selectedImageIndex > 0) {
+                                selectedImageIndex--
+                            }
+                        }
+                    )
+                },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -390,8 +412,27 @@ private fun LandscapeCampaignSelectionCarousel(
 ) {
     if (campaigns.isNotEmpty()) {
         var selectedImageIndex by remember { mutableIntStateOf(if(selectedCampaignIndex >= 0) selectedCampaignIndex else 0) }
+        var totalDragAmount by remember { mutableFloatStateOf(0f) }
+
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectVerticalDragGestures(
+                        onDragStart = { totalDragAmount = 0f },
+                        onVerticalDrag = { change, dragAmount ->
+                            change.consume()
+                            totalDragAmount += dragAmount
+                        },
+                        onDragEnd = {
+                            if (totalDragAmount < -40f && selectedImageIndex < campaigns.lastIndex) {
+                                selectedImageIndex++
+                            } else if (totalDragAmount > 40f && selectedImageIndex > 0) {
+                                selectedImageIndex--
+                            }
+                        }
+                    )
+                },
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {

@@ -1,5 +1,6 @@
 package angelosz.catbattlegame.ui.combat
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,14 +26,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
 import angelosz.catbattlegame.ui.components.CatCard
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun TeamPanel(
@@ -46,22 +51,34 @@ fun TeamPanel(
     isNameEditable: Boolean = false,
     onNameChanged: (String) -> Unit = {}
 ){
+    val context = LocalContext.current
+    // Rich medieval brown for selected team, dark steel/silver brown for unselected team
+    val cardBgColor = if (markTeam) Color(0xFF2C1C13) else Color(0xFF383431)
+    // Gold border for selected, Silver border for unselected
+    val cardBorder = if (markTeam) BorderStroke(3.dp, Color(0xFFFFD700)) else BorderStroke(2.dp, Color(0xFFC0C0C0))
+
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = if(markTeam) Color.LightGray else Color.White
+            containerColor = cardBgColor
         ),
-        onClick = { onTeamCardClicked(teamData) },
-        shape = RectangleShape,
+        elevation = CardDefaults.cardElevation(defaultElevation = if (markTeam) 10.dp else 4.dp),
+        border = cardBorder,
+        onClick = {
+            SoundManager.playButtonClick(context)
+            onTeamCardClicked(teamData)
+        },
+        shape = RoundedCornerShape(16.dp),
     ){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(4.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
                 if(isNameEditable){
                     var teamName by remember { mutableStateOf(teamData.teamName) }
@@ -76,7 +93,9 @@ fun TeamPanel(
                 } else {
                     Text(
                         text = teamData.teamName,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = if (markTeam) Color(0xFFFFD700) else Color(0xFFE0E0E0)
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -94,12 +113,18 @@ private fun DeleteTeamButton(
     onDeleteTeamClicked: (TeamData) -> Unit,
     teamData: TeamData,
 ) {
+    val context = LocalContext.current
     Button(
-        onClick = { onDeleteTeamClicked(teamData) },
+        onClick = {
+            SoundManager.playButtonClick(context)
+            onDeleteTeamClicked(teamData)
+        },
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBA1A1A))
     ) {
         Text(
-            text = "Delete Team",
+            text = "Delete",
             style = MaterialTheme.typography.labelMedium,
+            color = Color.White,
             modifier = Modifier.padding(2.dp)
         )
     }
@@ -128,7 +153,7 @@ private fun TeamRow(
                 )
             } else {
                 Image(
-                    painter = painterResource(R.drawable.battlechest_background_128),
+                    painter = painterResource(R.drawable.cat_image_border),
                     contentDescription = null,
                     modifier = Modifier
                         .size(imageSize.dp),
