@@ -11,8 +11,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun HomeButton(
@@ -21,8 +23,12 @@ fun HomeButton(
     contentDescription: String,
     onButtonClicked: () -> Unit
 ) {
+    val context = LocalContext.current
     Button(
-        onClick = onButtonClicked,
+        onClick = {
+            SoundManager.playButtonClick(context)
+            onButtonClicked()
+        },
         modifier = modifier
             .width(192.dp)
             .height(48.dp),

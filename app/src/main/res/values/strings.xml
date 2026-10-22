@@ -359,6 +359,8 @@
     <string name="settings">Settings</string>
     <string name="save">Save</string>
     <string name="auto_target_selection">Auto Target Selection</string>
+    <string name="music_enabled">Background Music</string>
+    <string name="sound_effects_enabled">Sound Effects</string>
     <string name="selecting_targets">Selecting Targets</string>
 
 

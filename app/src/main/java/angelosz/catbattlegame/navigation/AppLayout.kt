@@ -17,18 +17,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
+import angelosz.catbattlegame.data.datastore.PlayerSettings
 import angelosz.catbattlegame.ui.archives.ArchivesScreen
 import angelosz.catbattlegame.ui.armory.ArmoryScreen
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
@@ -39,12 +47,34 @@ import angelosz.catbattlegame.ui.components.RoundedImageButton
 import angelosz.catbattlegame.ui.home.HomeScreen
 import angelosz.catbattlegame.ui.combat.teamselection.TeamSelectionScreen
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
+import angelosz.catbattlegame.utils.MusicManager
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun AppLayout(
     windowSize: WindowWidthSizeClass
 ){
     val navController = rememberNavController()
+    val context = LocalContext.current
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = currentBackStackEntry?.destination
+
+    val dataStoreRepository = remember { DataStoreRepository(context.applicationContext) }
+    val settings by dataStoreRepository.settingsFlow.collectAsState(initial = PlayerSettings())
+
+    LaunchedEffect(settings.soundEffectsEnabled) {
+        SoundManager.soundEffectsEnabled = settings.soundEffectsEnabled
+    }
+
+    LaunchedEffect(currentDestination, settings.musicEnabled) {
+        val routeName = currentDestination?.route
+        val track = if (routeName?.contains("CombatScreenRoute") == true) {
+            MusicManager.MusicTrack.COMBAT
+        } else {
+            MusicManager.MusicTrack.HOME
+        }
+        MusicManager.play(context, track, settings.musicEnabled)
+    }
 
     NavHost(
         navController = navController,

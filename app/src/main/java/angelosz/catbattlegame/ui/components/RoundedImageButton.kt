@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun RoundedImageButton(
@@ -23,6 +25,7 @@ fun RoundedImageButton(
     outerImageSize: Int = 96,
     innerImageSize: Int = 80
 ) {
+    val context = LocalContext.current
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -41,7 +44,10 @@ fun RoundedImageButton(
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
-                    onClick = onClick
+                    onClick = {
+                        SoundManager.playButtonClick(context)
+                        onClick()
+                    }
                 )
         )
     }

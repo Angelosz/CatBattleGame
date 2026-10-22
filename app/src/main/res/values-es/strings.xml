@@ -359,5 +359,7 @@
     <string name="settings">Opciones</string>
     <string name="save">Guardar</string>
     <string name="auto_target_selection">Selección de objetivos automática</string>
+    <string name="music_enabled">Música de fondo</string>
+    <string name="sound_effects_enabled">Efectos de sonido</string>
     <string name="selecting_targets">Seleccionando objetivos</string>
 </resources>

@@ -12,11 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import angelosz.catbattlegame.R
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun RoundedTextButton(
@@ -26,6 +28,7 @@ fun RoundedTextButton(
     onClick: () -> Unit = {},
     textStyle: TextStyle = MaterialTheme.typography.labelLarge
 ) {
+    val context = LocalContext.current
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.size(size.dp)
@@ -35,7 +38,10 @@ fun RoundedTextButton(
             contentDescription = null,
             modifier = Modifier
                 .size(size.dp)
-                .clickable(onClick = onClick)
+                .clickable {
+                    SoundManager.playButtonClick(context)
+                    onClick()
+                }
         )
         Text(
             text = text,

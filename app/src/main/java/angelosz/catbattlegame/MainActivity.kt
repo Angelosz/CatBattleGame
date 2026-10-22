@@ -10,6 +10,7 @@ import angelosz.catbattlegame.data.database.AppDatabase
 import angelosz.catbattlegame.data.datastore.DataStoreRepository
 import angelosz.catbattlegame.navigation.AppLayout
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
+import angelosz.catbattlegame.utils.MusicManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,7 +25,6 @@ class MainActivity : ComponentActivity() {
             val db = AppDatabase.getInstance(applicationContext)
             val dataStore = DataStoreRepository(applicationContext)
             //db.clearAllTables()
-            //dataStore.clearSelectedCampaign()
         }
 
         setContent {
@@ -32,5 +32,10 @@ class MainActivity : ComponentActivity() {
                 AppLayout(windowSize = calculateWindowSizeClass(this).widthSizeClass)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MusicManager.stopAll()
     }
 }
