@@ -99,6 +99,7 @@ class ArmoryBattleChestViewModel(
                 val battleChest = _uiState.value.selectedBattleChest
 
                 val cat = when (battleChest.type) {
+                    BattleChestType.HALLOWEEN_SPECIAL -> catRepository.getCatById(25)
                     BattleChestType.NEW_CAT -> getRandomUnownedCatOfRarity(battleChest.rarity)
                     BattleChestType.NORMAL -> getRandomCatOfRarity(battleChest.rarity)
                 }

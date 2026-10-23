@@ -160,4 +160,21 @@ class ArmoryCatsViewModel(
             }
         }
     }
+
+    fun trainCatWithCrystals(catId: Int, crystalAmount: Int) {
+        viewModelScope.launch {
+            try {
+                if (crystalAmount <= 0) return@launch
+                val currentCrystals = playerAccountRepository.getCrystalsAmount()
+                if (currentCrystals >= crystalAmount) {
+                    playerAccountRepository.reduceCrystals(crystalAmount)
+                    val xpGained = crystalAmount * 5
+                    playerAccountRepository.grantCatExperience(catId, xpGained)
+                    selectCat(catId)
+                }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(state = ScreenState.FAILURE) }
+            }
+        }
+    }
 }

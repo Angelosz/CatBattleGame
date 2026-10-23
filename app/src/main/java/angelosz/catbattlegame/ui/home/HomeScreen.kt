@@ -10,11 +10,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -50,6 +54,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
+import angelosz.catbattlegame.ui.home.dialogs.DailyRewardDialog
+import angelosz.catbattlegame.ui.home.dialogs.MailBoxDialog
+
 @Composable
 fun HomeScreen(
     windowSize: WindowWidthSizeClass,
@@ -62,6 +69,9 @@ fun HomeScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
+    val bgRes = getHomeScreenBackgroundRes(isPortraitView, isBlurry = false)
+    val bgBlurryRes = getHomeScreenBackgroundRes(isPortraitView, isBlurry = true)
+
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -70,18 +80,22 @@ fun HomeScreen(
         when (uiState.screenState) {
             ScreenState.SUCCESS -> {
                 if(uiState.notifications.isNotEmpty()){
-                    BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait_blurry else R.drawable.homescreen_landscape_blurry)
+                    BackgroundImage(bgBlurryRes)
                     ManageNotification(viewModel, uiState)
                 } else {
-                    BackgroundImage(if (isPortraitView) R.drawable.homescreen_portrait else R.drawable.homescreen_landscape)
+                    BackgroundImage(bgRes)
                     HomeScreenContent(
                         gold = uiState.gold,
                         crystals = uiState.crystals,
+                        unreadMailCount = uiState.unreadMailCount,
+                        isDailyRewardAvailable = uiState.isDailyRewardAvailable,
                         onPlayButtonClick = onPlayButtonClick,
                         navigateToCollections = navigateToCollections,
                         navigateToArchive = navigateToArchive,
                         openShop = viewModel::openShop,
-                        openSettings = viewModel::openSettings
+                        openSettings = viewModel::openSettings,
+                        openMailbox = viewModel::openMailbox,
+                        openDailyReward = viewModel::openDailyReward
                     )
                     if(uiState.shopIsOpen){
                         if (isPortraitView)
@@ -104,6 +118,24 @@ fun HomeScreen(
                             )
                         }
                     }
+                }
+
+                if (uiState.mailboxIsOpen) {
+                    MailBoxDialog(
+                        mails = uiState.mails,
+                        onClaimReward = { viewModel.claimMailReward(it) },
+                        onDeleteMail = { viewModel.deleteMail(it) },
+                        onDismiss = { viewModel.closeMailbox() }
+                    )
+                }
+
+                if (uiState.dailyRewardIsOpen) {
+                    DailyRewardDialog(
+                        streakDay = uiState.dailyRewardStreak,
+                        isClaimableToday = uiState.isDailyRewardAvailable,
+                        onClaimReward = { viewModel.claimDailyReward() },
+                        onDismiss = { viewModel.closeDailyReward() }
+                    )
                 }
             }
 
@@ -159,31 +191,44 @@ fun ManageNotification(viewModel: HomeScreenViewModel, uiState: HomeScreenUiStat
     }
 }
 
+private fun getHomeScreenBackgroundRes(isPortrait: Boolean, isBlurry: Boolean): Int {
+    return if (isPortrait) {
+        if (isBlurry) R.drawable.homescreen_portrait_halloween_blurry else R.drawable.homescreen_portrait_halloween
+    } else {
+        if (isBlurry) R.drawable.homescreen_landscape_halloween_blurry else R.drawable.homescreen_landscape_halloween
+    }
+}
+
 @Composable
 private fun HomeScreenContent(
     gold: Int,
     crystals: Int,
+    unreadMailCount: Int,
+    isDailyRewardAvailable: Boolean,
     onPlayButtonClick: () -> Unit,
     navigateToCollections: () -> Unit,
     navigateToArchive: () -> Unit,
     openShop: () -> Unit,
     openSettings: () -> Unit,
+    openMailbox: () -> Unit,
+    openDailyReward: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        // Main Center: Game Logo & Play Button
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Image(
-                painter = painterResource(R.mipmap.ic_launcher_foreground),
-                contentDescription = "",
+                painter = painterResource(R.drawable.logo_256),
+                contentDescription = "Cat Battles Logo",
                 modifier = Modifier
-                    .size(256.dp)
-                    .padding(bottom = 64.dp)
+                    .size(240.dp)
+                    .padding(bottom = 32.dp)
             )
             HomeButton(
                 modifier = Modifier.padding(8.dp),
@@ -193,27 +238,94 @@ private fun HomeScreenContent(
             )
         }
 
-        HomeTopBar(
-            modifier = Modifier.Companion
-                .align(Alignment.TopStart)
-                .systemBarsPadding(),
-            gold = gold,
-            crystals = crystals
-        )
-        HomeSideButtons(
-            modifier = Modifier.Companion
-                .align(Alignment.CenterEnd)
-                .padding(16.dp),
-            navigateToCollections = navigateToCollections,
-            navigateToArchive = navigateToArchive,
-            openShop = openShop,
-            openSettings = openSettings
-        )
+        // Top Zone: Currency Bar on Left, Calendar & Mail on Right
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .systemBarsPadding()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            HomeTopBar(gold = gold, crystals = crystals)
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(contentAlignment = Alignment.TopEnd) {
+                    RoundedImageButton(
+                        onClick = openDailyReward,
+                        innerImage = R.drawable.calendar_button_256,
+                        innerImageSize = 48
+                    )
+                    if (isDailyRewardAvailable) {
+                        Card(
+                            shape = CircleShape,
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFFFFD700)),
+                            modifier = Modifier.size(16.dp)
+                        ) {}
+                    }
+                }
+                Box(contentAlignment = Alignment.TopEnd) {
+                    RoundedImageButton(
+                        onClick = openMailbox,
+                        innerImage = R.drawable.mail_128,
+                        innerImageSize = 48
+                    )
+                    if (unreadMailCount > 0) {
+                        Card(
+                            shape = CircleShape,
+                            colors = CardDefaults.cardColors(containerColor = Color.Red),
+                            modifier = Modifier.padding(2.dp)
+                        ) {
+                            Text(
+                                text = "$unreadMailCount",
+                                color = Color.White,
+                                style = MaterialTheme.typography.labelSmall,
+                                modifier = Modifier.padding(horizontal = 4.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        // Bottom Zone: Secondary Menu Bar (Armory, Encyclopedia, Shop, Settings)
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .systemBarsPadding()
+                .padding(bottom = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RoundedImageButton(
+                onClick = navigateToCollections,
+                innerImage = R.drawable.collections_button_256,
+                innerImageSize = 56
+            )
+            RoundedImageButton(
+                onClick = navigateToArchive,
+                innerImage = R.drawable.archive_button_256,
+                innerImageSize = 56
+            )
+            RoundedImageButton(
+                onClick = openShop,
+                innerImage = R.drawable.battlechest_256,
+                innerImageSize = 56
+            )
+            RoundedImageButton(
+                onClick = openSettings,
+                innerImage = R.drawable.settings_button_256,
+                innerImageSize = 56
+            )
+        }
 
         Text(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(horizontal = 16.dp, vertical = 48.dp),
+                .padding(horizontal = 16.dp, vertical = 16.dp),
             text = BuildConfig.VERSION_NAME,
             color = Color.White,
             style = MaterialTheme.typography.headlineMedium.copy(
@@ -262,40 +374,6 @@ fun HomeTopBar(
                 text = "$crystals",
                 style = MaterialTheme.typography.labelLarge,
                 color = Color.White
-            )
-        }
-    }
-}
-
-@Composable
-fun HomeSideButtons(
-    modifier: Modifier,
-    navigateToCollections: () -> Unit,
-    navigateToArchive: () -> Unit,
-    openShop: () -> Unit,
-    openSettings: () -> Unit,
-) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-    ) {
-        Column {
-            RoundedImageButton(
-                onClick = navigateToCollections,
-                innerImage = R.drawable.collections_button_256,
-            )
-            RoundedImageButton(
-                onClick = navigateToArchive,
-                innerImage = R.drawable.archive_button_256,
-            )
-            RoundedImageButton(
-                onClick = openShop,
-                innerImage = R.drawable.battlechest_256,
-            )
-            RoundedImageButton(
-                onClick = openSettings,
-                innerImage = R.drawable.settings_button_256,
-                innerImageSize = 48
             )
         }
     }

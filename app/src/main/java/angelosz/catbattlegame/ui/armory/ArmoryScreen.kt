@@ -111,6 +111,7 @@ fun ArmoryScreen(
                                         armoryCatsViewModel.reloadDataIfAlreadyInitialized()
                                         armoryTeamsViewModel.reloadDataIfAlreadyInitialized()
                                     },
+                                    onGoToTeams = { viewModel.selectCollection(CollectionsView.TEAMS) },
                                     isLandscapeView = isLandscapeView
                                 )
                             }

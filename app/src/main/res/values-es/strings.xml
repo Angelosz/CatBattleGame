@@ -361,5 +361,27 @@
     <string name="auto_target_selection">Selección de objetivos automática</string>
     <string name="music_enabled">Música de fondo</string>
     <string name="sound_effects_enabled">Efectos de sonido</string>
+    <string name="notifications_enabled">Notificaciones externas</string>
     <string name="selecting_targets">Seleccionando objetivos</string>
+    <string name="daily_rewards_title">Recompensas Diarias</string>
+    <string name="claim_reward">Reclamar Recompensa</string>
+    <string name="close">Cerrar</string>
+    <string name="mailbox_title">Buzón de Correo</string>
+    <string name="no_messages">No hay mensajes en el buzón.</string>
+
+    <!-- Halloween Event Strings -->
+    <string name="salem_name">Salem</string>
+    <string name="salem_title_kitten">Gatita Bruja</string>
+    <string name="salem_desc_kitten">Una adorable gata negra con un pequeño sombrero de bruja y ojos ámbar.</string>
+    <string name="salem_title_teen">Joven Bruja</string>
+    <string name="salem_desc_teen">Una joven bruja traviesa que domina la magia lunar y las llamas espectrales.</string>
+    <string name="salem_title_adult">La Bruja</string>
+    <string name="salem_desc_adult">El Gato Encantado. Una poderosa gata bruja espectral de Halloween.</string>
+    <string name="salem_title_elder">Bruja Anciana</string>
+    <string name="salem_desc_elder">Una anciana hechicera felina espectral que domina maldiciones lunares.</string>
+    <string name="ability_witchbolt">Rayo de Bruja</string>
+    <string name="ability_witchbolt_desc">Lanza magia espectral que daña a un enemigo y le inflige una maldición.</string>
+    <string name="battlechest_halloween_display">Paquete Especial de Halloween</string>
+    <string name="check_teams">Ver Equipos</string>
+    <string name="ability_type_damage_drain">Daño y Robo</string>
 </resources>

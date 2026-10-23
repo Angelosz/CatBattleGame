@@ -21,6 +21,7 @@ interface PlayerAccountRepository {
     suspend fun getPlayerAccount(): PlayerAccount?
     suspend fun insertPlayerAccount(playerAccount: PlayerAccount)
     suspend fun updateAccount(playerAccount: PlayerAccount)
+    suspend fun executeAlphaResetWithEventPreservation()
 
     /* Crystals */
     suspend fun getCrystalsAmount(): Int
@@ -37,6 +38,7 @@ interface PlayerAccountRepository {
     suspend fun insertOwnedCats(ownedCats: List<OwnedCat>)
     suspend fun updateOwnedCat(ownedCat: OwnedCat)
     suspend fun deleteOwnedCat(ownedCat: OwnedCat)
+    suspend fun grantCatExperience(catId: Int, experienceAmount: Int)
 
     suspend fun getAllOwnedCats(): List<OwnedCat>
     suspend fun getOwnedCatByCatId(catId: Int): OwnedCat
@@ -79,4 +81,13 @@ interface PlayerAccountRepository {
     /* Currency Notifications */
     suspend fun insertCurrencyNotification(notification: CurrencyRewardNotification)
     suspend fun getCurrencyNotification(notificationId: Long): CurrencyRewardNotification
+
+    /* Player Mail */
+    suspend fun insertMail(mail: angelosz.catbattlegame.data.entities.MailEntity): Long
+    suspend fun insertMails(mails: List<angelosz.catbattlegame.data.entities.MailEntity>)
+    suspend fun updateMail(mail: angelosz.catbattlegame.data.entities.MailEntity)
+    suspend fun deleteMail(mail: angelosz.catbattlegame.data.entities.MailEntity)
+    fun getAllMailsAsFlow(): Flow<List<angelosz.catbattlegame.data.entities.MailEntity>>
+    suspend fun getAllMails(): List<angelosz.catbattlegame.data.entities.MailEntity>
+    fun getUnreadMailCountAsFlow(): Flow<Int>
 }

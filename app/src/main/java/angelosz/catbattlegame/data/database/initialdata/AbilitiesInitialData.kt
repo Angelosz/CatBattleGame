@@ -415,6 +415,21 @@ class AbilitiesInitialData {
             cooldown = 3,
             abilitySource = AbilitySource.PLAYER
         ),
+        Ability(
+            id = 28,
+            name = R.string.ability_witchbolt,
+            description = R.string.ability_witchbolt_desc,
+            image = R.drawable.ability_witchbolt_256,
+            icon = R.drawable.ability_witchbolt_96,
+            abilityType = AbilityType.DAMAGE_DRAIN,
+            damageType = DamageType.ETHEREAL,
+            attackSpeedMultiplier = 1.0f,
+            damageMultiplier = 1.3f,
+            combatModifier = null,
+            targets = AbilityTarget.SINGLE_ENEMY,
+            cooldown = 2,
+            abilitySource = AbilitySource.PLAYER
+        ),
     )
 
     // catId to abilityIds
@@ -442,7 +457,11 @@ class AbilitiesInitialData {
         21 to listOf(7, 8),
         22 to listOf(7, 8, 9),
         23 to listOf(7, 8, 9),
-        24 to listOf(7, 8, 9)
+        24 to listOf(7, 8, 9),
+        25 to listOf(6, 28),
+        26 to listOf(6, 28, 5),
+        27 to listOf(6, 28, 5),
+        28 to listOf(6, 28, 5)
     )
 
     fun getCatAbilitiesCrossRef(): List<CatAbilityCrossRef> =

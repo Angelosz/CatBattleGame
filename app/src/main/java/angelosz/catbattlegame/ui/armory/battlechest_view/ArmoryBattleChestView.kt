@@ -65,6 +65,7 @@ fun ArmoryBattleChestView(
     innerPadding: PaddingValues,
     onFailure: () -> Unit,
     onBattleChestOpened: () -> Unit,
+    onGoToTeams: () -> Unit = {},
     isLandscapeView: Boolean = false
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -78,9 +79,9 @@ fun ArmoryBattleChestView(
                 contentAlignment = Alignment.Center
             ){
                 if(isLandscapeView){
-                    HandleArmoryBattleChestLandscapeView(uiState, viewModel)
+                    HandleArmoryBattleChestLandscapeView(uiState, viewModel, onGoToTeams)
                 } else {
-                    HandleArmoryBattleChestPortraitView(uiState, viewModel)
+                    HandleArmoryBattleChestPortraitView(uiState, viewModel, onGoToTeams)
                 }
             }
         }
@@ -103,6 +104,7 @@ fun ArmoryBattleChestView(
 fun HandleArmoryBattleChestPortraitView(
     uiState: ArmoryBattleChestUiState,
     viewModel: ArmoryBattleChestViewModel,
+    onGoToTeams: () -> Unit = {}
 ) {
     val lootBoxAnimationOffsetY = remember { Animatable(0f) }
     val coroutineScope = rememberCoroutineScope()
@@ -188,7 +190,9 @@ fun HandleArmoryBattleChestPortraitView(
                         )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    Row {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
                         Button(
                             onClick = {
                                 viewModel.reloadBattleChests()
@@ -199,7 +203,17 @@ fun HandleArmoryBattleChestPortraitView(
                         ) {
                             Text(
                                 text = stringResource(R.string.open_more_packages),
-                                modifier = Modifier.padding(8.dp),
+                                modifier = Modifier.padding(4.dp),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
+                        Button(
+                            onClick = onGoToTeams
+                        ) {
+                            Text(
+                                text = stringResource(R.string.check_teams),
+                                modifier = Modifier.padding(4.dp),
                                 textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.labelLarge
                             )
@@ -215,6 +229,7 @@ fun HandleArmoryBattleChestPortraitView(
 fun HandleArmoryBattleChestLandscapeView(
     uiState: ArmoryBattleChestUiState,
     viewModel: ArmoryBattleChestViewModel,
+    onGoToTeams: () -> Unit = {}
 ) {
     val lootBoxAnimationOffsetY = remember { Animatable(0f) }
     val coroutineScope = rememberCoroutineScope()
@@ -307,7 +322,9 @@ fun HandleArmoryBattleChestLandscapeView(
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
-                        Row {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
                             Button(
                                 onClick = {
                                     viewModel.reloadBattleChests()
@@ -318,7 +335,17 @@ fun HandleArmoryBattleChestLandscapeView(
                             ) {
                                 Text(
                                     text = stringResource(R.string.open_more_packages),
-                                    modifier = Modifier.padding(8.dp),
+                                    modifier = Modifier.padding(4.dp),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                            }
+                            Button(
+                                onClick = onGoToTeams
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.check_teams),
+                                    modifier = Modifier.padding(4.dp),
                                     textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.labelLarge
                                 )
@@ -351,8 +378,14 @@ private fun ShowBattleChest(
         )
     }
 
+    val chestImg = if (battleChest.type == BattleChestType.HALLOWEEN_SPECIAL) {
+        R.drawable.battlechest_halloween_512
+    } else {
+        R.drawable.battlechest_512
+    }
+
     Image(
-        painter = painterResource(R.drawable.battlechest_512),
+        painter = painterResource(chestImg),
         contentDescription = null,
         modifier = Modifier
             .padding(32.dp)
@@ -417,8 +450,14 @@ private fun BattleChestSlot(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Fit
             )
+            val chestImg = if (battleChest.type == BattleChestType.HALLOWEEN_SPECIAL) {
+                R.drawable.battlechest_halloween_256
+            } else {
+                R.drawable.battlechest_256
+            }
+
             Image(
-                painter = painterResource(R.drawable.battlechest_256),
+                painter = painterResource(chestImg),
                 contentDescription = null,
                 modifier = Modifier
                     .size((boxSize * 0.8f).dp)

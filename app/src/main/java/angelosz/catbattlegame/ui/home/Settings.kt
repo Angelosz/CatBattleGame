@@ -39,6 +39,7 @@ fun SettingsScreen(
     var autoSelectTarget by remember { mutableStateOf(settings.autoTargetSelect) }
     var musicEnabled by remember { mutableStateOf(settings.musicEnabled) }
     var soundEffectsEnabled by remember { mutableStateOf(settings.soundEffectsEnabled) }
+    var notificationsEnabled by remember { mutableStateOf(settings.notificationsEnabled) }
 
     Box(
         modifier = Modifier
@@ -50,7 +51,8 @@ fun SettingsScreen(
                 PlayerSettings(
                     autoTargetSelect = autoSelectTarget,
                     musicEnabled = musicEnabled,
-                    soundEffectsEnabled = soundEffectsEnabled
+                    soundEffectsEnabled = soundEffectsEnabled,
+                    notificationsEnabled = notificationsEnabled
                 )
             ) },
             modifier = Modifier
@@ -140,6 +142,23 @@ fun SettingsScreen(
                                 }
                             )
                         }
+                        Row(
+                            modifier = Modifier.padding(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Text(
+                                modifier = Modifier.padding(4.dp).weight(1f),
+                                text = stringResource(R.string.notifications_enabled)
+                            )
+                            Switch(
+                                modifier = Modifier.padding(4.dp),
+                                checked = notificationsEnabled,
+                                onCheckedChange = {
+                                    SoundManager.playButtonClick(context)
+                                    notificationsEnabled = it
+                                }
+                            )
+                        }
                     }
                 }
 
@@ -152,7 +171,8 @@ fun SettingsScreen(
                             PlayerSettings(
                                 autoTargetSelect = autoSelectTarget,
                                 musicEnabled = musicEnabled,
-                                soundEffectsEnabled = soundEffectsEnabled
+                                soundEffectsEnabled = soundEffectsEnabled,
+                                notificationsEnabled = notificationsEnabled
                             )
                         )
                     }

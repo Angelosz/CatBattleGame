@@ -361,7 +361,29 @@
     <string name="auto_target_selection">Auto Target Selection</string>
     <string name="music_enabled">Background Music</string>
     <string name="sound_effects_enabled">Sound Effects</string>
+    <string name="notifications_enabled">System Notifications</string>
     <string name="selecting_targets">Selecting Targets</string>
+    <string name="daily_rewards_title">Daily Rewards</string>
+    <string name="claim_reward">Claim Reward</string>
+    <string name="close">Close</string>
+    <string name="mailbox_title">Mailbox</string>
+    <string name="no_messages">No messages in mailbox.</string>
+
+    <!-- Halloween Event Strings -->
+    <string name="salem_name">Salem</string>
+    <string name="salem_title_kitten">Kitten Witch</string>
+    <string name="salem_desc_kitten">A adorable black cat with a tiny witch hat and glowing amber eyes.</string>
+    <string name="salem_title_teen">Teen Witch</string>
+    <string name="salem_desc_teen">A mischievous young witch mastering lunar magic and spectral flames.</string>
+    <string name="salem_title_adult">The Witch</string>
+    <string name="salem_desc_adult">The Haunted Cat. A powerful spectral witch cat of Halloween.</string>
+    <string name="salem_title_elder">Elder Witch</string>
+    <string name="salem_desc_elder">An ancient spectral cat sorceress wielding cosmic lunar curses.</string>
+    <string name="ability_witchbolt">Witchbolt</string>
+    <string name="ability_witchbolt_desc">Casts spectral witch magic that damages an enemy and inflicts a curse.</string>
+    <string name="battlechest_halloween_display">Halloween Special Package</string>
+    <string name="check_teams">Check Teams</string>
+    <string name="ability_type_damage_drain">Damage &amp; Drain</string>
 
 
 </resources>

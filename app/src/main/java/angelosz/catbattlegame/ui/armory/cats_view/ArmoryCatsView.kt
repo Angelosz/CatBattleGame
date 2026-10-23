@@ -101,6 +101,7 @@ fun HandleArmoryCatsLandscapeView(
             modifier = Modifier.width(300.dp),
             cat = uiState.selectedCat,
             imageSize = 192,
+            onTrainWithCrystals = { catId, crystals -> viewModel.trainCatWithCrystals(catId, crystals) }
         )
     }
 }
@@ -114,6 +115,7 @@ private fun HandleArmoryCatsPortraitView(
         ArmoryCatDetailsCard(
             modifier = Modifier.padding(16.dp),
             cat = uiState.selectedCat,
+            onTrainWithCrystals = { catId, crystals -> viewModel.trainCatWithCrystals(catId, crystals) }
         )
     } else {
         Column(

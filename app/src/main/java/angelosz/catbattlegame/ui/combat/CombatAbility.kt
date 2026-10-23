@@ -38,6 +38,7 @@ sealed class CombatAbility(){
             return abilities.map{ ability ->
                 when(Pair(ability.abilityType, ability.targets)){
                     Pair(AbilityType.DAMAGE, AbilityTarget.SINGLE_ENEMY) -> SingleTargetDamageAbility(ability)
+                    Pair(AbilityType.DAMAGE_DRAIN, AbilityTarget.SINGLE_ENEMY) -> SingleTargetDamageDrainAbility(ability)
                     Pair(AbilityType.DAMAGE_STATUS_CHANGING, AbilityTarget.SINGLE_ENEMY) -> SingleTargetDamageAbility(ability)
                     Pair(AbilityType.DAMAGE_STATUS_CHANGING, AbilityTarget.ENEMY_TEAM) -> AoEDamageAbility(ability)
                     Pair(AbilityType.HEALING, AbilityTarget.ALLY) -> SingleTargetHealingAbility(ability)
@@ -107,11 +108,41 @@ class SingleTargetDamageAbility(override val ability: Ability): CombatAbility(){
 
     override fun selectAllyTeam(allyTeam: List<Int>) {}
 
+    override fun getMessage(): Int = ability.name
+
     override fun clear() {
         selectedCatId = null
     }
+}
 
-    override fun getMessage(): Int = R.string.select_target_enemy
+class SingleTargetDamageDrainAbility(override val ability: Ability): CombatAbility(){
+    private var selectedCatId: Int? = null
+
+    override fun setSelectedEnemyCat(catCombatId: Int) {
+        selectedCatId = if (selectedCatId != catCombatId) catCombatId else null
+    }
+
+    override fun setSelectedAllyCat(catCombatId: Int) {}
+
+    override fun isReady(): Boolean = selectedCatId != null
+
+    override fun apply(viewModel: CombatScreenViewModel) {
+        val catId = selectedCatId
+        if (catId != null) {
+            viewModel.damageAndDrainCat(catId, ability)
+        }
+    }
+
+    override fun getSelectedCatsIds(): List<Int> = listOfNotNull(selectedCatId)
+
+    override fun selectEnemyTeam(enemyTeam: List<Int>) {}
+    override fun selectAllyTeam(allyTeam: List<Int>) {}
+
+    override fun getMessage(): Int = ability.name
+
+    override fun clear() {
+        selectedCatId = null
+    }
 }
 
 class SingleTargetHealingAbility(override val ability: Ability): CombatAbility(){

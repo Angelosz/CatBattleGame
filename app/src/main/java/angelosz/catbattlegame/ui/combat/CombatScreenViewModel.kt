@@ -552,6 +552,28 @@ class CombatScreenViewModel(
         }
     }
 
+    fun damageAndDrainCat(selectedCatId: Int, ability: Ability) {
+        val cat = getCat(selectedCatId)
+        val activeCat = getCat(_uiState.value.activeCatId)
+        if (cat != null) {
+            if (ability.damageType != DamageType.POISON && cat.isShielded()) {
+                cat.shieldAbsorbedDamage()
+                cat.cat.lastCombatActionTaken = CombatAction(CombatActionTaken.SHIELDED, 0, ability.damageType)
+                return
+            }
+            var damage = ((activeCat?.cat?.getAttack ?: 0f) * ability.damageMultiplier) - cat.cat.getDefense
+            if (damage <= 0) damage = 1f
+            val actualDamageInt = damage.toInt()
+            cat.takeDamage(actualDamageInt, ability.damageType)
+            cat.cat.lastCombatActionTaken = CombatAction(CombatActionTaken.DAMAGED, actualDamageInt, ability.damageType)
+
+            val drainHealAmount = actualDamageInt / 2
+            if (drainHealAmount > 0 && activeCat != null) {
+                activeCat.heal(drainHealAmount, ability.damageType)
+            }
+        }
+    }
+
     fun healCat(catId: Int, ability: Ability) {
         val cat = getCat(catId)
         if(cat != null){

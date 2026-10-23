@@ -56,10 +56,11 @@ import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
         NotificationsEntity::class,
         CatNotificationEntity::class,
         BattleChestNotificationEntity::class,
-        CurrencyNotificationEntity::class
+        CurrencyNotificationEntity::class,
+        angelosz.catbattlegame.data.entities.MailEntity::class
     ],
     exportSchema = false,
-    version = 38)
+    version = 40)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao

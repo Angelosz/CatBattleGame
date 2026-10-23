@@ -77,12 +77,6 @@ fun CampaignScreen(
                 when(uiState.stage){
                     CampaignSelectionStage.SELECTING_CAMPAIGN -> {
                         BackHandler(onBack = onBackButtonPressed)
-                        BackButton(
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(horizontal = 32.dp, vertical = 56.dp),
-                            onBackPressed = onBackButtonPressed
-                        )
                         if(isPortraitView){
                             PortraitCampaignSelectionCarousel(
                                 campaigns = uiState.campaigns,
@@ -96,6 +90,12 @@ fun CampaignScreen(
                                 selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
                             )
                         }
+                        BackButton(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(horizontal = 32.dp, vertical = 56.dp),
+                            onBackPressed = onBackButtonPressed
+                        )
                     }
                     CampaignSelectionStage.SELECTING_CHAPTER -> {
                         BackHandler(onBack = { viewModel.backToCampaignSelection() })

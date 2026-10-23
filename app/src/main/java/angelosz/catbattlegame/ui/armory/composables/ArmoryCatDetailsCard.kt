@@ -1,17 +1,22 @@
 package angelosz.catbattlegame.ui.armory.composables
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +24,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -35,7 +42,7 @@ import angelosz.catbattlegame.domain.enums.CatRole
 import angelosz.catbattlegame.ui.armory.data.DetailedArmoryCatData
 import angelosz.catbattlegame.ui.components.ExperienceBar
 import angelosz.catbattlegame.ui.theme.CatBattleGameTheme
-
+import angelosz.catbattlegame.utils.SoundManager
 
 @Composable
 fun ArmoryCatDetailsCard(
@@ -43,6 +50,7 @@ fun ArmoryCatDetailsCard(
     cat: DetailedArmoryCatData,
     textSize: TextStyle = MaterialTheme.typography.bodyLarge,
     imageSize: Int = 192,
+    onTrainWithCrystals: (Int, Int) -> Unit = { _, _ -> }
 ) {
     Card(
         modifier = modifier,
@@ -55,7 +63,8 @@ fun ArmoryCatDetailsCard(
             ArmoryCatDetailsCatContent(
                 cat = cat,
                 imageSize = imageSize,
-                textSize = textSize
+                textSize = textSize,
+                onTrainWithCrystals = onTrainWithCrystals
             )
         }
     }
@@ -65,8 +74,10 @@ fun ArmoryCatDetailsCard(
 private fun ArmoryCatDetailsCatContent(
     cat: DetailedArmoryCatData,
     imageSize: Int = 192,
-    textSize: TextStyle = MaterialTheme.typography.bodyLarge
+    textSize: TextStyle = MaterialTheme.typography.bodyLarge,
+    onTrainWithCrystals: (Int, Int) -> Unit = { _, _ -> }
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,6 +105,30 @@ private fun ArmoryCatDetailsCatContent(
                 experience = cat.experience,
                 showText = true
             )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                onClick = {
+                    SoundManager.playButtonClick(context)
+                    onTrainWithCrystals(cat.id, 20)
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6E4327)),
+                border = BorderStroke(1.dp, Color(0xFFFFD700))
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.crystals_128),
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = "Train XP (+100 XP / 20 Crystals)",
+                    color = Color.White,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
             Text(
                 text = stringResource(cat.description),
                 style = MaterialTheme.typography.bodyMedium,

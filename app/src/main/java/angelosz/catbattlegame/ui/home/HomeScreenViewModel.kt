@@ -55,7 +55,9 @@ class HomeScreenViewModel(
 
         viewModelScope.launch {
             try {
+                checkAndExecuteAlphaReset()
                 val playerAccount = initializePlayerAccount()
+                checkHalloweenEvent()
 
                 val isDifferentVersion = playerAccount.gameVersion != GameConstants.GAME_VERSION
                 if (isDifferentVersion) {
@@ -87,6 +89,10 @@ class HomeScreenViewModel(
                 viewModelScope.launch {
                     setupNotificationCollector()
                 }
+                viewModelScope.launch {
+                    setupMailCollector()
+                }
+                checkDailyRewards()
             } catch (e: Exception) {
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
@@ -150,6 +156,7 @@ class HomeScreenViewModel(
     private suspend fun initializePlayerAccount(): PlayerAccount {
         var playerAccount = playerAccountRepository.getPlayerAccount()
         if (playerAccount == null) {
+            dataStoreRepository.resetHalloweenEventClaim()
             playerAccount = PlayerAccount(gameVersion = GameConstants.GAME_VERSION)
             val ownedCats = PlayerInitialData().ownedCats
             val teamId = 1L
@@ -291,4 +298,157 @@ class HomeScreenViewModel(
         }
     }
 
+    private suspend fun checkAndExecuteAlphaReset() {
+        val hasReset = dataStoreRepository.hasCompletedAlphaResetV1()
+        if (!hasReset) {
+            playerAccountRepository.executeAlphaResetWithEventPreservation()
+            dataStoreRepository.markAlphaResetV1Completed()
+        }
+    }
+
+    private suspend fun checkHalloweenEvent() {
+        val hasReceived = dataStoreRepository.hasReceivedHalloweenPackage()
+        if (!hasReceived) {
+            dataStoreRepository.markHalloweenPackageReceived()
+            battleChestRepository.insertBattleChest(
+                BattleChest(rarity = CatRarity.KITTEN, type = BattleChestType.HALLOWEEN_SPECIAL)
+            )
+            playerAccountRepository.insertMail(
+                angelosz.catbattlegame.data.entities.MailEntity(
+                    title = "It's Halloween!",
+                    content = "A special Halloween package is waiting for you in your Armory! Open packages and meet Salem!",
+                    rewardType = null,
+                    rewardAmount = 0
+                )
+            )
+        }
+    }
+
+    fun checkDailyRewards() {
+        viewModelScope.launch {
+            try {
+                val todayStr = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    java.time.LocalDate.now().toString()
+                } else {
+                    java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+                }
+                val rewardState = dataStoreRepository.getDailyRewardState()
+                val isAvailable = rewardState.lastClaimDate != todayStr
+                var streak = rewardState.streak
+                if (streak <= 0 || streak > 7) streak = 1
+
+                _uiState.update {
+                    it.copy(
+                        isDailyRewardAvailable = isAvailable,
+                        dailyRewardStreak = streak
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun claimDailyReward() {
+        viewModelScope.launch {
+            try {
+                val todayStr = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    java.time.LocalDate.now().toString()
+                } else {
+                    java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+                }
+                val rewardState = dataStoreRepository.getDailyRewardState()
+                if (rewardState.lastClaimDate == todayStr) return@launch
+
+                var currentStreak = rewardState.streak
+                if (currentStreak <= 0 || currentStreak >= 7) {
+                    currentStreak = 1
+                } else {
+                    currentStreak += 1
+                }
+
+                when (currentStreak) {
+                    1 -> playerAccountRepository.addGold(50)
+                    2 -> playerAccountRepository.addGold(100)
+                    3 -> battleChestRepository.insertBattleChest(BattleChest(rarity = CatRarity.KITTEN, type = BattleChestType.NORMAL))
+                    4 -> playerAccountRepository.addGold(200)
+                    5 -> playerAccountRepository.addCrystals(25)
+                    6 -> battleChestRepository.insertBattleChest(BattleChest(rarity = CatRarity.TEEN, type = BattleChestType.NORMAL))
+                    7 -> {
+                        playerAccountRepository.addGold(400)
+                        playerAccountRepository.addCrystals(50)
+                    }
+                }
+
+                dataStoreRepository.recordDailyRewardClaim(todayStr, currentStreak)
+
+                _uiState.update {
+                    it.copy(
+                        isDailyRewardAvailable = false,
+                        dailyRewardStreak = currentStreak
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private suspend fun setupMailCollector() {
+        playerAccountRepository.getAllMailsAsFlow().collect { mailList ->
+            _uiState.update {
+                it.copy(
+                    mails = mailList,
+                    unreadMailCount = mailList.count { mail -> !mail.isRead }
+                )
+            }
+        }
+    }
+
+    fun claimMailReward(mail: angelosz.catbattlegame.data.entities.MailEntity) {
+        viewModelScope.launch {
+            try {
+                if (mail.isRewardClaimed) return@launch
+                if (mail.rewardType != null && mail.rewardAmount > 0) {
+                    when (mail.rewardType) {
+                        angelosz.catbattlegame.domain.enums.RewardType.GOLD -> playerAccountRepository.addGold(mail.rewardAmount)
+                        angelosz.catbattlegame.domain.enums.RewardType.CRYSTAL -> playerAccountRepository.addCrystals(mail.rewardAmount)
+                        angelosz.catbattlegame.domain.enums.RewardType.KITTEN_BOX -> battleChestRepository.insertBattleChest(BattleChest(rarity = CatRarity.KITTEN, type = BattleChestType.NORMAL))
+                        angelosz.catbattlegame.domain.enums.RewardType.TEEN_BOX -> battleChestRepository.insertBattleChest(BattleChest(rarity = CatRarity.TEEN, type = BattleChestType.NORMAL))
+                        angelosz.catbattlegame.domain.enums.RewardType.ADULT_BOX -> battleChestRepository.insertBattleChest(BattleChest(rarity = CatRarity.ADULT, type = BattleChestType.NORMAL))
+                        else -> {}
+                    }
+                }
+                playerAccountRepository.updateMail(mail.copy(isRead = true, isRewardClaimed = true))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun deleteMail(mail: angelosz.catbattlegame.data.entities.MailEntity) {
+        viewModelScope.launch {
+            try {
+                playerAccountRepository.deleteMail(mail)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun openMailbox() {
+        _uiState.update { it.copy(mailboxIsOpen = true) }
+        viewModelScope.launch {
+            try {
+                _uiState.value.mails.filter { !it.isRead }.forEach { mail ->
+                    playerAccountRepository.updateMail(mail.copy(isRead = true))
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+    fun closeMailbox() { _uiState.update { it.copy(mailboxIsOpen = false) } }
+    fun openDailyReward() { _uiState.update { it.copy(dailyRewardIsOpen = true) } }
+    fun closeDailyReward() { _uiState.update { it.copy(dailyRewardIsOpen = false) } }
 }

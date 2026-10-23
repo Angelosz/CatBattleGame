@@ -27,5 +27,6 @@ data class Cat(
     val evolutionLevel: Int = 50,
     val nextEvolutionId: Int? = null,
     val evolutionItemId: Int? = null,
-    val isElderOf: Int? = null
+    val isElderOf: Int? = null,
+    val isEventCat: Boolean = false
 )

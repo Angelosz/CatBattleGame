@@ -26,6 +26,36 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun insertPlayerAccount(playerAccount: PlayerAccount) = dao.insertPlayerAccount(playerAccount)
     override suspend fun updateAccount(playerAccount: PlayerAccount) = dao.updateAccount(playerAccount)
 
+    override suspend fun executeAlphaResetWithEventPreservation() {
+        val allOwnedCats = dao.getAllOwnedCats()
+        val eventCatIds = listOf(25, 26, 27, 28)
+        val ownedEventCats = allOwnedCats.filter { it.catId in eventCatIds }
+
+        dao.clearAllOwnedCats()
+
+        if (ownedEventCats.isNotEmpty()) {
+            dao.insertOwnedCat(
+                OwnedCat(
+                    catId = 25,
+                    level = 1,
+                    experience = 0,
+                    healthModifier = 0,
+                    attackModifier = 0,
+                    defenseModifier = 0
+                )
+            )
+        }
+
+        dao.resetPlayerResources()
+        dao.clearAllBattleChests()
+
+        dao.clearTeam(1L)
+        val remainingOwnedCats = dao.getAllOwnedCats()
+        remainingOwnedCats.forEachIndexed { index, ownedCat ->
+            dao.addCatToTeam(PlayerTeamOwnedCat(1, ownedCat.catId, index))
+        }
+    }
+
     /* Crystals */
     override suspend fun getCrystalsAmount(): Int = dao.getCrystalsAmount()
     override suspend fun addCrystals(amount: Int) = dao.addCrystals(amount)
@@ -60,6 +90,37 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
     override suspend fun insertOwnedCats(ownedCats: List<OwnedCat>) = dao.insertOwnedCats(ownedCats)
     override suspend fun updateOwnedCat(ownedCat: OwnedCat) = dao.updateOwnedCat(ownedCat)
     override suspend fun deleteOwnedCat(ownedCat: OwnedCat) = dao.deleteOwnedCat(ownedCat)
+    override suspend fun grantCatExperience(catId: Int, experienceAmount: Int) {
+        if (experienceAmount <= 0) return
+        val ownedCat = dao.getOwnedCatByCatId(catId)
+        var currentXp = ownedCat.experience + experienceAmount
+        var currentLevel = ownedCat.level
+        var healthMod = ownedCat.healthModifier
+        var attackMod = ownedCat.attackModifier
+        var defenseMod = ownedCat.defenseModifier
+
+        while (currentXp >= angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL && currentLevel < angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL) {
+            currentXp -= angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
+            currentLevel += 1
+            healthMod += 10
+            attackMod += 2
+            defenseMod += 1
+        }
+
+        if (currentLevel >= angelosz.catbattlegame.utils.GameConstants.MAX_CAT_LEVEL) {
+            currentXp = 0
+        }
+
+        dao.updateOwnedCat(
+            ownedCat.copy(
+                experience = currentXp,
+                level = currentLevel,
+                healthModifier = healthMod,
+                attackModifier = attackMod,
+                defenseModifier = defenseMod
+            )
+        )
+    }
     override suspend fun getAllOwnedCats(): List<OwnedCat> = dao.getAllOwnedCats()
     override suspend fun getOwnedCatsByCatIds(catIds: List<Int>): List<OwnedCat> = dao.getOwnedCatsByIds(catIds)
     override suspend fun getOwnedCatByCatId(catId: Int): OwnedCat = dao.getOwnedCatByCatId(catId)
@@ -188,4 +249,13 @@ class OfflinePlayerAccountRepository(val dao: PlayerDao): PlayerAccountRepositor
             notificationText = notification.notificationText
         )
     }
+
+    /* Player Mail */
+    override suspend fun insertMail(mail: angelosz.catbattlegame.data.entities.MailEntity): Long = dao.insertMail(mail)
+    override suspend fun insertMails(mails: List<angelosz.catbattlegame.data.entities.MailEntity>) = dao.insertMails(mails)
+    override suspend fun updateMail(mail: angelosz.catbattlegame.data.entities.MailEntity) = dao.updateMail(mail)
+    override suspend fun deleteMail(mail: angelosz.catbattlegame.data.entities.MailEntity) = dao.deleteMail(mail)
+    override fun getAllMailsAsFlow(): Flow<List<angelosz.catbattlegame.data.entities.MailEntity>> = dao.getAllMailsAsFlow()
+    override suspend fun getAllMails(): List<angelosz.catbattlegame.data.entities.MailEntity> = dao.getAllMails()
+    override fun getUnreadMailCountAsFlow(): Flow<Int> = dao.getUnreadMailCountAsFlow()
 }

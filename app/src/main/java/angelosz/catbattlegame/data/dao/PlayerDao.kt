@@ -48,7 +48,8 @@ interface PlayerDao {
     suspend fun addGold(amount: Int)
     @Query("Update player_account set gold = gold - :amount")
     suspend fun reduceGold(amount: Int)
-
+    @Query("Update player_account set gold = 0, crystals = 0")
+    suspend fun resetPlayerResources()
 
     /* Owned Cats */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -59,6 +60,10 @@ interface PlayerDao {
     suspend fun updateOwnedCat(ownedCat: OwnedCat)
     @Delete
     suspend fun deleteOwnedCat(ownedCat: OwnedCat)
+    @Query("Delete from player_owned_cat")
+    suspend fun clearAllOwnedCats()
+    @Query("Delete from battle_chests")
+    suspend fun clearAllBattleChests()
 
     @Query("Select * from player_owned_cat")
     suspend fun getAllOwnedCats(): List<OwnedCat>
@@ -170,5 +175,21 @@ interface PlayerDao {
     suspend fun deleteCurrencyNotification(id: Long)
     @Query("SELECT * from currency_notifications where id = :notificationId")
     suspend fun getCurrencyNotification(notificationId: Long): CurrencyNotificationEntity
+
+    /* Player Mail */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMail(mail: angelosz.catbattlegame.data.entities.MailEntity): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMails(mails: List<angelosz.catbattlegame.data.entities.MailEntity>)
+    @Update
+    suspend fun updateMail(mail: angelosz.catbattlegame.data.entities.MailEntity)
+    @Delete
+    suspend fun deleteMail(mail: angelosz.catbattlegame.data.entities.MailEntity)
+    @Query("Select * from player_mail order by timestamp desc")
+    fun getAllMailsAsFlow(): Flow<List<angelosz.catbattlegame.data.entities.MailEntity>>
+    @Query("Select * from player_mail order by timestamp desc")
+    suspend fun getAllMails(): List<angelosz.catbattlegame.data.entities.MailEntity>
+    @Query("Select count(id) from player_mail where isRead = 0")
+    fun getUnreadMailCountAsFlow(): Flow<Int>
 
 }
