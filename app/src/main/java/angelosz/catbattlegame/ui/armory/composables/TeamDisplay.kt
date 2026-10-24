@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -41,9 +42,11 @@ fun TeamDisplay(
     onButtonClick: (Long) -> Unit = {},
     isNameEditable: Boolean = false,
     onNameEdited: (String) -> Unit = {},
-    displayAsLongStrip: Boolean = false
+    displayAsLongStrip: Boolean = false,
+    maxTeamSize: Int = 4
 ){
     Box(modifier = modifier
+        .widthIn(min = 360.dp)
         .background(if(isSelected) Color.LightGray else Color.White)
         .clickable(onClick = { onTeamClicked(team.teamId) })
     ) {
@@ -83,7 +86,7 @@ fun TeamDisplay(
                 }
 
                 if(displayAsLongStrip){
-                    TeamRowDisplay(team, onCatCardClicked)
+                    TeamRowDisplay(team, onCatCardClicked, maxTeamSize = maxTeamSize)
                 }
 
                 if(hasButton){
@@ -100,7 +103,7 @@ fun TeamDisplay(
                 }
             }
             if(!displayAsLongStrip){
-                TeamRowDisplay(team, onCatCardClicked)
+                TeamRowDisplay(team, onCatCardClicked, maxTeamSize = maxTeamSize)
             }
         }
     }
@@ -111,6 +114,7 @@ private fun TeamRowDisplay(
     team: ArmoryTeam,
     onCatCardClicked: (SimpleArmoryCatData) -> Unit,
     imageSize: Int = 76,
+    maxTeamSize: Int = 4
 ) {
     Row(
         modifier = Modifier
@@ -118,7 +122,7 @@ private fun TeamRowDisplay(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        repeat(4) { index ->
+        repeat(maxTeamSize) { index ->
             if (index >= team.cats.size) {
                 CatCard(
                     id = 0,

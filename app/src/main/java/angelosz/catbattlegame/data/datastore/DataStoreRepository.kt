@@ -75,6 +75,13 @@ class DataStoreRepository(
         }
     }
 
+    suspend fun resetDailyRewardsData() {
+        context.dataStore.edit {
+            it[LAST_DAILY_REWARD_CLAIM_DATE] = ""
+            it[DAILY_REWARD_STREAK] = "0"
+        }
+    }
+
     suspend fun hasReceivedHalloweenPackage(): Boolean {
         val prefs = context.dataStore.data.first()
         return prefs[HAS_RECEIVED_HALLOWEEN_PACKAGE] ?: false

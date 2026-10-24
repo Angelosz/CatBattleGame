@@ -64,16 +64,24 @@ class CombatResultViewModel(
                 var activeRewards = emptyList<ChapterReward>()
                 var expGained = 0
 
+                var unlockedMsg: String? = null
+
                 if (!rewardsProcessed) {
                     rewardsProcessed = true
                     if(combatResult == CombatResult.PLAYER_WON){
                         if(chapter.state != CampaignState.COMPLETED){
                             addRewards(chapterRewards)
-                            addCatsExperience(team, chapter.experience)
-                            activeRewards = chapterRewards
                             expGained = chapter.experience
+                            addCatsExperience(team, expGained, chapter.recommendedLevel)
+                            activeRewards = chapterRewards
 
                             completeChapter(chapter)
+
+                            if (chapter.id == 1L) {
+                                unlockedMsg = "¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 3 Gatos en tu equipo!"
+                            } else if (chapter.id == 2L) {
+                                unlockedMsg = "¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 4 Gatos en tu equipo!"
+                            }
 
                             if(chapter.isLastCampaignChapter){
                                 val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
@@ -82,14 +90,13 @@ class CombatResultViewModel(
                             }
                             unlockNextChapter(chapter.unlocksChapter)
                         } else {
-                            val experience = chapter.experience / 4
-                            addCatsExperience(team, experience)
+                            expGained = chapter.experience / 4
+                            addCatsExperience(team, expGained, chapter.recommendedLevel)
                             activeRewards = addReplayRewards(chapterRewards)
-                            expGained = experience
                         }
                     } else {
                         expGained = chapter.experience / 10
-                        addCatsExperience(team, expGained)
+                        addCatsExperience(team, expGained, chapter.recommendedLevel)
                     }
                 }
 
@@ -99,6 +106,7 @@ class CombatResultViewModel(
                         team = team,
                         chapterReward = activeRewards,
                         experienceGained = expGained,
+                        teamSizeUnlockedMessage = unlockedMsg,
                         screenState = ScreenState.SUCCESS
                     )
                 }
@@ -123,12 +131,24 @@ class CombatResultViewModel(
         )
     }
 
-    private suspend fun addCatsExperience(team: List<BasicCatData>, experience: Int) {
-        if (experience <= 0) return
+    private fun calculateCatXp(baseXp: Int, catLevel: Int, recommendedLevel: Int): Int {
+        val diff = catLevel - recommendedLevel
+        return when {
+            diff < 3 -> baseXp
+            diff == 3 -> (baseXp * 0.1).toInt()
+            else -> 0
+        }
+    }
+
+    private suspend fun addCatsExperience(team: List<BasicCatData>, baseXp: Int, recommendedLevel: Int) {
+        if (baseXp <= 0) return
         team.forEach{ cat ->
             val ownedCat = playerAccountRepository.getOwnedCatByCatId(cat.catId)
             val baseCat = catRepository.getCatById(cat.catId)
-            var currentXp = ownedCat.experience + experience
+            val catXpGained = calculateCatXp(baseXp, ownedCat.level, recommendedLevel)
+            if (catXpGained <= 0) return@forEach
+
+            var currentXp = ownedCat.experience + catXpGained
             var currentLevel = ownedCat.level
             var healthMod = ownedCat.healthModifier
             var attackMod = ownedCat.attackModifier
@@ -272,12 +292,7 @@ class CombatResultViewModel(
                     playerAccountRepository.addGold(reducedGold)
                     replayRewards.add(reward.copy(amount = reducedGold))
                 }
-                RewardType.CRYSTAL -> {
-                    val reducedCrystals = (reward.amount / 4).coerceAtLeast(1)
-                    playerAccountRepository.addCrystals(reducedCrystals)
-                    replayRewards.add(reward.copy(amount = reducedCrystals))
-                }
-                // Boxes/Chests are NEVER awarded on replay
+                // Crystals, Boxes, and New Cats are NEVER awarded on replay
                 else -> {}
             }
         }

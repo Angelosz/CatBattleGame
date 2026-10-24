@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -138,6 +139,25 @@ fun CombatResultScreen(
                                     style = MaterialTheme.typography.labelLarge,
                                     textAlign = TextAlign.Center
                                 )
+
+                                if (uiState.teamSizeUnlockedMessage != null) {
+                                    Card(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(8.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFD700))
+                                    ) {
+                                        Text(
+                                            text = uiState.teamSizeUnlockedMessage!!,
+                                            color = Color.Black,
+                                            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            textAlign = TextAlign.Center,
+                                            modifier = Modifier.padding(8.dp)
+                                        )
+                                    }
+                                }
+
                                 Row {
                                     Button(
                                         modifier = Modifier.padding(4.dp),

@@ -384,4 +384,6 @@
     <string name="battlechest_halloween_display">Paquete Especial de Halloween</string>
     <string name="check_teams">Ver Equipos</string>
     <string name="ability_type_damage_drain">Daño y Robo</string>
+    <string name="team_size_increased_3">¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 3 Gatos en tu equipo!</string>
+    <string name="team_size_increased_4">¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 4 Gatos en tu equipo!</string>
 </resources>

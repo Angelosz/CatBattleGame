@@ -17,6 +17,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_1,
             image = R.drawable.enemy_chapter_wool_ball_256,
             unlocksChapter = 2,
+            recommendedLevel = 1
         ),
         CampaignChapter(
             id = 2,
@@ -27,6 +28,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_2,
             image = R.drawable.enemy_chapter_mouse_thief_256,
             unlocksChapter = 3,
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 3,
@@ -37,7 +39,8 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_3,
             image = R.drawable.enemy_chapter_puppy_256,
             unlocksChapter = 4,
-            isLastCampaignChapter = true
+            isLastCampaignChapter = true,
+            recommendedLevel = 3
         ),
         /*  End First Campaign */
 
@@ -51,6 +54,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_4,
             image = R.drawable.enemy_chapter_sparrow,
             unlocksChapter = 5,
+            recommendedLevel = 4
         ),
         CampaignChapter(
             id = 5,
@@ -61,6 +65,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_5,
             image = R.drawable.enemy_chapter_snails,
             unlocksChapter = 6,
+            recommendedLevel = 5
         ),
         CampaignChapter(
             id = 6,
@@ -71,6 +76,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_6,
             image = R.drawable.enemy_chapter_angry_gnome,
             unlocksChapter = 7,
+            recommendedLevel = 6
         ),
         CampaignChapter(
             id = 7,
@@ -81,6 +87,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_7,
             image = R.drawable.enemy_chapter_garden_tools,
             unlocksChapter = 8,
+            recommendedLevel = 7
         ),
         CampaignChapter(
             id = 8,
@@ -91,6 +98,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_8,
             image = R.drawable.enemy_chapter_worker_ant,
             unlocksChapter = 9,
+            recommendedLevel = 8
         ),
         CampaignChapter(
             id = 9,
@@ -101,6 +109,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_9,
             image = R.drawable.enemy_chapter_hunter_gnome,
             unlocksChapter = 10,
+            recommendedLevel = 9
         ),
         CampaignChapter(
             id = 10,
@@ -111,6 +120,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_10,
             image = R.drawable.enemy_chapter_mosquito,
             unlocksChapter = 11,
+            recommendedLevel = 10
         ),
         CampaignChapter(
             id = 11,
@@ -121,6 +131,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_11,
             image = R.drawable.enemy_chapter_raccoon,
             unlocksChapter = 12,
+            recommendedLevel = 11
         ),
         CampaignChapter(
             id = 12,
@@ -131,6 +142,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_12,
             image = R.drawable.enemy_chapter_hedgehog,
             unlocksChapter = 13,
+            recommendedLevel = 12
         ),
         CampaignChapter(
             id = 13,
@@ -141,6 +153,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_13,
             image = R.drawable.enemy_chapter_ant_queen,
             unlocksChapter = 14,
+            recommendedLevel = 13
         ),
         CampaignChapter(
             id = 14,
@@ -151,6 +164,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_14,
             image = R.drawable.enemy_chapter_birdguards,
             unlocksChapter = 15,
+            recommendedLevel = 14
         ),
         CampaignChapter(
             id = 15,
@@ -161,7 +175,8 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_15,
             image = R.drawable.enemy_chapter_dark_rogue,
             unlocksChapter = 16,
-            isLastCampaignChapter = true
+            isLastCampaignChapter = true,
+            recommendedLevel = 15
         )
         /*  End Second Campaign */
     )
@@ -179,6 +194,10 @@ class ChaptersInitialData {
                 amount = 28
             ),
             Reward(
+                type = RewardType.CRYSTAL,
+                amount = 10
+            ),
+            Reward(
                 type = RewardType.NEW_KITTEN,
             ),
         ),
@@ -188,6 +207,10 @@ class ChaptersInitialData {
                 amount = 34
             ),
             Reward(
+                type = RewardType.CRYSTAL,
+                amount = 10
+            ),
+            Reward(
                 type = RewardType.NEW_KITTEN,
             )
         ),
@@ -195,6 +218,10 @@ class ChaptersInitialData {
             Reward(
                 type = RewardType.GOLD,
                 amount = 38
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 20
             ),
             Reward(
                 type = RewardType.NEW_KITTEN,
@@ -212,6 +239,10 @@ class ChaptersInitialData {
                 amount = 44
             ),
             Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
+            ),
+            Reward(
                 type = RewardType.KITTEN_BOX,
             ),
         ),
@@ -219,6 +250,10 @@ class ChaptersInitialData {
             Reward(
                 type = RewardType.GOLD,
                 amount = 52
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.KITTEN_BOX,
@@ -230,6 +265,10 @@ class ChaptersInitialData {
                 amount = 60
             ),
             Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
+            ),
+            Reward(
                 type = RewardType.KITTEN_BOX,
             ),
         ),
@@ -237,6 +276,10 @@ class ChaptersInitialData {
             Reward(
                 type = RewardType.GOLD,
                 amount = 60
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.KITTEN_BOX,
@@ -248,6 +291,10 @@ class ChaptersInitialData {
                 amount = 60
             ),
             Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
+            ),
+            Reward(
                 type = RewardType.KITTEN_BOX,
             ),
         ),
@@ -257,13 +304,21 @@ class ChaptersInitialData {
                 amount = 60
             ),
             Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
+            ),
+            Reward(
                 type = RewardType.TEEN_BOX,
             ),
         ),
         10L to listOf(
             Reward(
                 type = RewardType.GOLD,
-                amount = 60
+                amount = 72
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.KITTEN_BOX,
@@ -272,7 +327,11 @@ class ChaptersInitialData {
         11L to listOf(
             Reward(
                 type = RewardType.GOLD,
-                amount = 60
+                amount = 72
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.KITTEN_BOX,
@@ -281,7 +340,11 @@ class ChaptersInitialData {
         12L to listOf(
             Reward(
                 type = RewardType.GOLD,
-                amount = 60
+                amount = 72
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.TEEN_BOX,
@@ -290,7 +353,11 @@ class ChaptersInitialData {
         13L to listOf(
             Reward(
                 type = RewardType.GOLD,
-                amount = 60
+                amount = 90
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.KITTEN_BOX,
@@ -299,7 +366,11 @@ class ChaptersInitialData {
         14L to listOf(
             Reward(
                 type = RewardType.GOLD,
-                amount = 60
+                amount = 90
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 15
             ),
             Reward(
                 type = RewardType.KITTEN_BOX,
@@ -308,7 +379,11 @@ class ChaptersInitialData {
         15L to listOf(
             Reward(
                 type = RewardType.GOLD,
-                amount = 60
+                amount = 90
+            ),
+            Reward(
+                type = RewardType.CRYSTAL,
+                amount = 30
             ),
             Reward(
                 type = RewardType.TEEN_BOX,

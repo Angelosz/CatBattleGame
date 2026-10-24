@@ -60,7 +60,7 @@ import angelosz.catbattlegame.data.entities.notifications.NotificationsEntity
         angelosz.catbattlegame.data.entities.MailEntity::class
     ],
     exportSchema = false,
-    version = 40)
+    version = 41)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun catDao(): CatDao
     abstract fun abilityDao(): AbilityDao

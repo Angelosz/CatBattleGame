@@ -92,7 +92,8 @@ fun HandleArmoryTeamsPortraitView(uiState: ArmoryTeamsUiState, viewModel: Armory
                 team = uiState.selectedTeam,
                 onCatCardClicked = { viewModel.removeCatFromTeam(it) },
                 isNameEditable = true,
-                onNameEdited = viewModel::renameTeam
+                onNameEdited = viewModel::renameTeam,
+                maxTeamSize = uiState.maxTeamSize
             )
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -108,7 +109,8 @@ fun HandleArmoryTeamsPortraitView(uiState: ArmoryTeamsUiState, viewModel: Armory
                         onTeamClicked = { id -> viewModel.selectTeam(id) },
                         hasButton = true,
                         buttonText = stringResource(R.string.delete),
-                        onButtonClick = viewModel::deleteTeam
+                        onButtonClick = viewModel::deleteTeam,
+                        maxTeamSize = uiState.maxTeamSize
                     )
                 }
                 item {
@@ -119,7 +121,8 @@ fun HandleArmoryTeamsPortraitView(uiState: ArmoryTeamsUiState, viewModel: Armory
                             teamName = stringResource(R.string.create_new_team),
                             cats = emptyList()
                         ),
-                        onTeamClicked = { viewModel.createTeam() }
+                        onTeamClicked = { viewModel.createTeam() },
+                        maxTeamSize = uiState.maxTeamSize
                     )
                 }
             }
@@ -153,7 +156,8 @@ fun HandleArmoryTeamsLandscapeView(uiState: ArmoryTeamsUiState, viewModel: Armor
                 onCatCardClicked = { viewModel.removeCatFromTeam(it) },
                 isNameEditable = true,
                 onNameEdited = viewModel::renameTeam,
-                displayAsLongStrip = true
+                displayAsLongStrip = true,
+                maxTeamSize = uiState.maxTeamSize
             )
         }
     }
@@ -171,7 +175,8 @@ fun HandleArmoryTeamsLandscapeView(uiState: ArmoryTeamsUiState, viewModel: Armor
                         onTeamClicked = { id -> viewModel.selectTeam(id) },
                         hasButton = true,
                         buttonText = stringResource(R.string.delete),
-                        onButtonClick = viewModel::deleteTeam
+                        onButtonClick = viewModel::deleteTeam,
+                        maxTeamSize = uiState.maxTeamSize
                     )
                 }
                 item {
@@ -182,7 +187,8 @@ fun HandleArmoryTeamsLandscapeView(uiState: ArmoryTeamsUiState, viewModel: Armor
                             teamName = stringResource(R.string.create_new_team),
                             cats = emptyList()
                         ),
-                        onTeamClicked = { viewModel.createTeam() }
+                        onTeamClicked = { viewModel.createTeam() },
+                        maxTeamSize = uiState.maxTeamSize
                     )
                 }
             }

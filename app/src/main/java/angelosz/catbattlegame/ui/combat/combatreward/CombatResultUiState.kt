@@ -19,5 +19,6 @@ data class CombatResultUiState(
     ),
     val experienceGained: Int = 10,
     val combatResult: CombatResult = CombatResult.PLAYER_LOST,
-    val screenState: ScreenState = ScreenState.INITIALIZING
+    val screenState: ScreenState = ScreenState.INITIALIZING,
+    val teamSizeUnlockedMessage: String? = null
 )

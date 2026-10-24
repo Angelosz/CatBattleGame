@@ -49,7 +49,8 @@ fun TeamPanel(
     onCatClicked: (Int) -> Unit,
     markTeam: Boolean = false,
     isNameEditable: Boolean = false,
-    onNameChanged: (String) -> Unit = {}
+    onNameChanged: (String) -> Unit = {},
+    maxTeamSize: Int = 4
 ){
     val context = LocalContext.current
     // Rich medieval brown for selected team, dark steel/silver brown for unselected team
@@ -103,7 +104,7 @@ fun TeamPanel(
                     DeleteTeamButton(onDeleteTeamClicked, teamData)
                 }
             }
-            TeamRow(teamData, imageSize, spacedBy, onCatClicked)
+            TeamRow(teamData, imageSize, spacedBy, onCatClicked, maxTeamSize)
         }
     }
 }
@@ -136,13 +137,14 @@ private fun TeamRow(
     imageSize: Int,
     itemsSpacedBy: Int,
     onCatClicked: (Int) -> Unit,
+    maxTeamSize: Int = 4
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(itemsSpacedBy.dp),
         modifier = Modifier.padding(8.dp),
     ) {
-        repeat(4) { index ->
+        repeat(maxTeamSize) { index ->
             val catData = teamData.cats.getOrNull(index)
             if (catData != null) {
                 CatCard(

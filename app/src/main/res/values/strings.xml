@@ -384,6 +384,8 @@
     <string name="battlechest_halloween_display">Halloween Special Package</string>
     <string name="check_teams">Check Teams</string>
     <string name="ability_type_damage_drain">Damage &amp; Drain</string>
+    <string name="team_size_increased_3">Team size increased! You can now equip up to 3 Cats in your team!</string>
+    <string name="team_size_increased_4">Team size increased! You can now equip up to 4 Cats in your team!</string>
 
 
 </resources>

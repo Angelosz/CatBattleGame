@@ -15,5 +15,6 @@ data class Chapter(
     @StringRes val description: Int = R.string.chapter_desc_1,
     @DrawableRes val image: Int = R.drawable.enemy_wool_ball_300,
     val unlocksChapter: Long = 0,
-    val isLastCampaignChapter: Boolean = false
+    val isLastCampaignChapter: Boolean = false,
+    val recommendedLevel: Int = 1
 )

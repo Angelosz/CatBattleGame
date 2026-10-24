@@ -71,7 +71,8 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
                 description = chapter.description,
                 image = chapter.image,
                 unlocksChapter = chapter.unlocksChapter,
-                isLastCampaignChapter = chapter.isLastCampaignChapter
+                isLastCampaignChapter = chapter.isLastCampaignChapter,
+                recommendedLevel = chapter.recommendedLevel
             )
         }
     }
@@ -88,7 +89,8 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
             description = chapter.description,
             image = chapter.image,
             unlocksChapter = chapter.unlocksChapter,
-            isLastCampaignChapter = chapter.isLastCampaignChapter
+            isLastCampaignChapter = chapter.isLastCampaignChapter,
+            recommendedLevel = chapter.recommendedLevel
         )
     }
 

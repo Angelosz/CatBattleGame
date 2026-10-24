@@ -157,6 +157,7 @@ class HomeScreenViewModel(
         var playerAccount = playerAccountRepository.getPlayerAccount()
         if (playerAccount == null) {
             dataStoreRepository.resetHalloweenEventClaim()
+            dataStoreRepository.resetDailyRewardsData()
             playerAccount = PlayerAccount(gameVersion = GameConstants.GAME_VERSION)
             val ownedCats = PlayerInitialData().ownedCats
             val teamId = 1L
