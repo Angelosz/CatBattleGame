@@ -1,5 +1,5 @@
 package angelosz.catbattlegame.ui.armory.cats_view
-
+/*
 import angelosz.catbattlegame.data.entities.Ability
 import angelosz.catbattlegame.data.entities.Cat
 import angelosz.catbattlegame.data.entities.CatAbilityCrossRef
@@ -296,3 +296,4 @@ class PlayerRepositoryForArmoryTest: PlayerAccountRepository {
     override suspend fun getCurrencyNotification(notificationId: Long): CurrencyRewardNotification = CurrencyRewardNotification(0, 10, RewardType.GOLD, "")
 }
 
+*/

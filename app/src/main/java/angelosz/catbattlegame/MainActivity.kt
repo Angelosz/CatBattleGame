@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val db = AppDatabase.getInstance(applicationContext)
             val dataStore = DataStoreRepository(applicationContext)
-            //db.clearAllTables()
+            db.clearAllTables()
         }
 
         setContent {

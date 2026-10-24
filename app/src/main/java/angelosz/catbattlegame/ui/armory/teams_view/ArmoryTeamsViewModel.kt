@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import angelosz.catbattlegame.data.entities.PlayerTeam
 import angelosz.catbattlegame.data.entities.PlayerTeamOwnedCat
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.data.repository.CampaignRepository
+import angelosz.catbattlegame.domain.enums.CampaignState
 import angelosz.catbattlegame.domain.enums.ScreenState
 import angelosz.catbattlegame.ui.armory.data.ArmoryTeam
 import angelosz.catbattlegame.ui.armory.data.SimpleArmoryCatData
@@ -14,7 +16,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ArmoryTeamsViewModel(val playerAccountRepository: PlayerAccountRepository): ViewModel() {
+class ArmoryTeamsViewModel(
+    val playerAccountRepository: PlayerAccountRepository,
+    val campaignRepository: CampaignRepository
+): ViewModel() {
     private val _uiState = MutableStateFlow(ArmoryTeamsUiState())
     val uiState: StateFlow<ArmoryTeamsUiState> = _uiState
 
@@ -26,6 +31,7 @@ class ArmoryTeamsViewModel(val playerAccountRepository: PlayerAccountRepository)
                 val teams = fetchAllPlayerTeams()
                 val selectedTeam = if(teams.isEmpty()) ArmoryTeam(0, "No Teams", emptyList()) else teams.first()
                 val cats = fetchCatsFromCurrentPage()
+                val maxTeamSize = calculateMaxTeamSize()
 
                 delay(100)
 
@@ -35,12 +41,29 @@ class ArmoryTeamsViewModel(val playerAccountRepository: PlayerAccountRepository)
                         selectedTeam = selectedTeam,
                         cats = cats,
                         totalNumberOfCats = playerAccountRepository.getOwnedCatsCount(),
+                        maxTeamSize = maxTeamSize,
                         state = ScreenState.SUCCESS
                     )
                 }
             } catch (e: Exception){
                 _uiState.update { it.copy( state = ScreenState.FAILURE ) }
             }
+        }
+    }
+
+    private suspend fun calculateMaxTeamSize(): Int {
+        return try {
+            val chapter1 = campaignRepository.getChapterById(1)
+            val chapter2 = campaignRepository.getChapterById(2)
+            if (chapter2.state == CampaignState.COMPLETED) {
+                4
+            } else if (chapter1.state == CampaignState.COMPLETED) {
+                3
+            } else {
+                2
+            }
+        } catch (e: Exception) {
+            2
         }
     }
 
@@ -131,7 +154,7 @@ class ArmoryTeamsViewModel(val playerAccountRepository: PlayerAccountRepository)
     private fun catIsInTeam(cat: SimpleArmoryCatData) =
         _uiState.value.selectedTeam.cats.contains(cat)
 
-    private fun teamIsFull() = _uiState.value.selectedTeam.cats.size >= 4
+    private fun teamIsFull() = _uiState.value.selectedTeam.cats.size >= _uiState.value.maxTeamSize
 
     fun removeCatFromTeam(newCat: SimpleArmoryCatData) {
         if(_uiState.value.selectedTeam.cats.isEmpty()) return

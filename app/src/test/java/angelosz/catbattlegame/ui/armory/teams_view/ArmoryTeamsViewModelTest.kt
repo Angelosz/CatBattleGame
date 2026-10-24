@@ -1,5 +1,5 @@
 package angelosz.catbattlegame.ui.armory.teams_view
-
+/*
 import angelosz.catbattlegame.data.entities.EnemyDiscoveryState
 import angelosz.catbattlegame.data.entities.OwnedCat
 import angelosz.catbattlegame.data.entities.PlayerAccount
@@ -264,4 +264,4 @@ class PlayerRepositoryForArmoryTeamsTest: PlayerAccountRepository {
     }
 
     override suspend fun getCurrencyNotification(notificationId: Long): CurrencyRewardNotification = CurrencyRewardNotification(0, 10, RewardType.GOLD, "")
-}
+}*/

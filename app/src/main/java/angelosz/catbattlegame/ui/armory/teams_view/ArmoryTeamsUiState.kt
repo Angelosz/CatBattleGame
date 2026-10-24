@@ -19,4 +19,5 @@ data class ArmoryTeamsUiState (
     val page: Int = 0,
     val pageLimit: Int = 12,
     val totalNumberOfCats: Int = 0,
+    val maxTeamSize: Int = 2
 )

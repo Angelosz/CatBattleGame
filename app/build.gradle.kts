@@ -7,13 +7,13 @@ plugins {
 
 android {
     namespace = "angelosz.catbattlegame"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "angelosz.catbattlegame"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 8
+        targetSdk = 36
+        versionCode = 9
         versionName = "Alpha 0.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

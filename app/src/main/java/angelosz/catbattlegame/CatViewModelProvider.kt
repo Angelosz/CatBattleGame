@@ -110,7 +110,8 @@ object CatViewModelProvider {
 
         initializer {
             ArmoryTeamsViewModel(
-                getCatBattleApplication().container.playerRepository
+                getCatBattleApplication().container.playerRepository,
+                getCatBattleApplication().container.campaignRepository
             )
         }
 
