@@ -28,7 +28,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_2,
             image = R.drawable.enemy_chapter_mouse_thief_256,
             unlocksChapter = 3,
-            recommendedLevel = 2
+            recommendedLevel = 1
         ),
         CampaignChapter(
             id = 3,
@@ -40,7 +40,7 @@ class ChaptersInitialData {
             image = R.drawable.enemy_chapter_puppy_256,
             unlocksChapter = 4,
             isLastCampaignChapter = true,
-            recommendedLevel = 3
+            recommendedLevel = 1
         ),
         /*  End First Campaign */
 
@@ -54,7 +54,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_4,
             image = R.drawable.enemy_chapter_sparrow,
             unlocksChapter = 5,
-            recommendedLevel = 4
+            recommendedLevel = 1
         ),
         CampaignChapter(
             id = 5,
@@ -65,7 +65,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_5,
             image = R.drawable.enemy_chapter_snails,
             unlocksChapter = 6,
-            recommendedLevel = 5
+            recommendedLevel = 1
         ),
         CampaignChapter(
             id = 6,
@@ -76,7 +76,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_6,
             image = R.drawable.enemy_chapter_angry_gnome,
             unlocksChapter = 7,
-            recommendedLevel = 6
+            recommendedLevel = 1
         ),
         CampaignChapter(
             id = 7,
@@ -87,7 +87,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_7,
             image = R.drawable.enemy_chapter_garden_tools,
             unlocksChapter = 8,
-            recommendedLevel = 7
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 8,
@@ -98,7 +98,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_8,
             image = R.drawable.enemy_chapter_worker_ant,
             unlocksChapter = 9,
-            recommendedLevel = 8
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 9,
@@ -109,7 +109,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_9,
             image = R.drawable.enemy_chapter_hunter_gnome,
             unlocksChapter = 10,
-            recommendedLevel = 9
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 10,
@@ -120,7 +120,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_10,
             image = R.drawable.enemy_chapter_mosquito,
             unlocksChapter = 11,
-            recommendedLevel = 10
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 11,
@@ -131,7 +131,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_11,
             image = R.drawable.enemy_chapter_raccoon,
             unlocksChapter = 12,
-            recommendedLevel = 11
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 12,
@@ -142,7 +142,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_12,
             image = R.drawable.enemy_chapter_hedgehog,
             unlocksChapter = 13,
-            recommendedLevel = 12
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 13,
@@ -153,7 +153,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_13,
             image = R.drawable.enemy_chapter_ant_queen,
             unlocksChapter = 14,
-            recommendedLevel = 13
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 14,
@@ -164,7 +164,7 @@ class ChaptersInitialData {
             description = R.string.chapter_desc_14,
             image = R.drawable.enemy_chapter_birdguards,
             unlocksChapter = 15,
-            recommendedLevel = 14
+            recommendedLevel = 2
         ),
         CampaignChapter(
             id = 15,
@@ -176,7 +176,7 @@ class ChaptersInitialData {
             image = R.drawable.enemy_chapter_dark_rogue,
             unlocksChapter = 16,
             isLastCampaignChapter = true,
-            recommendedLevel = 15
+            recommendedLevel = 2
         )
         /*  End Second Campaign */
     )

@@ -255,30 +255,51 @@ fun CampaignChapterSelectionGrid(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(chapters) { chapter ->
-                    Box(contentAlignment = Alignment.Center) {
-                        RoundedImageButton(
-                            onClick = { onChapterClicked(chapter) },
-                            innerImage = chapter.image,
-                            outerImage = R.drawable.iconflash_256,
-                            innerImageSize = 96,
-                            outerImageSize = 128
-                        )
-                        if(chapter.state == CampaignState.LOCKED){
-                            Card(
-                                modifier = Modifier
-                                    .align(Alignment.BottomCenter)
-                                    .shadow(2.dp, CircleShape),
-                                shape = CircleShape,
-                                colors = CardDefaults.cardColors(
-                                    containerColor = Color.White
-                                ),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Filled.Lock,
-                                    contentDescription = stringResource(R.string.locked_chapter),
-                                    modifier = Modifier.padding(4.dp),
-                                )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            RoundedImageButton(
+                                onClick = { onChapterClicked(chapter) },
+                                innerImage = chapter.image,
+                                outerImage = R.drawable.iconflash_256,
+                                innerImageSize = 96,
+                                outerImageSize = 128
+                            )
+                            if(chapter.state == CampaignState.LOCKED){
+                                Card(
+                                    modifier = Modifier
+                                        .align(Alignment.BottomCenter)
+                                        .shadow(2.dp, CircleShape),
+                                    shape = CircleShape,
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = Color.White
+                                    ),
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Lock,
+                                        contentDescription = stringResource(R.string.locked_chapter),
+                                        modifier = Modifier.padding(4.dp),
+                                    )
+                                }
                             }
+                        }
+                        Card(
+                            modifier = Modifier.padding(top = 2.dp),
+                            shape = CircleShape,
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color(0xFF2C1C13)
+                            ),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFFFD700))
+                        ) {
+                            Text(
+                                text = "Lv. ${chapter.recommendedLevel}",
+                                color = Color(0xFFFFD700),
+                                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                style = MaterialTheme.typography.labelSmall,
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                            )
                         }
                     }
                 }
