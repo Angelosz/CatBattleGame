@@ -50,6 +50,7 @@ fun CombatResultScreen(
     onBackPressed: () -> Unit,
     onReturnToHomePressed: () -> Unit,
     goToArmory: (CollectionsView) -> Unit = {},
+    onSelectChapterPressed: () -> Unit = {}
 ) {
     BackHandler(onBack = onReturnToHomePressed)
     val uiState by viewModel.uiState.collectAsState()
@@ -158,22 +159,34 @@ fun CombatResultScreen(
                                     }
                                 }
 
-                                Row {
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
                                     Button(
-                                        modifier = Modifier.padding(4.dp),
+                                        modifier = Modifier.padding(2.dp),
                                         onClick = onReturnToHomePressed
                                     ) {
                                         Text(
-                                            modifier = Modifier.padding(4.dp),
+                                            modifier = Modifier.padding(2.dp),
                                             text = stringResource(R.string.home)
                                         )
                                     }
                                     Button(
-                                        modifier = Modifier.padding(4.dp),
+                                        modifier = Modifier.padding(2.dp),
+                                        onClick = onSelectChapterPressed
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.padding(2.dp),
+                                            text = stringResource(R.string.select_chapter)
+                                        )
+                                    }
+                                    Button(
+                                        modifier = Modifier.padding(2.dp),
                                         onClick = { goToArmory(CollectionsView.CATS) }
                                     ) {
                                         Text(
-                                            modifier = Modifier.padding(4.dp),
+                                            modifier = Modifier.padding(2.dp),
                                             text = stringResource(R.string.armory)
                                         )
                                     }

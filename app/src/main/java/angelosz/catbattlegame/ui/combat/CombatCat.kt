@@ -541,7 +541,7 @@ class SimpleEnemy(override val cat: CombatCatData, override val onDeath: (Int) -
         playerCats: List<CombatCat>,
         enemyCats: List<CombatCat>
     ): CombatAbility {
-        val notOnCooldownAbilities = cat.abilities.filter { ability -> !ability.onCooldown()}
+        val notOnCooldownAbilities = cat.abilities.filter { ability -> !ability.onCooldown() && ability.ability.abilityType != AbilityType.MIMIC }
         if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
         val ability = notOnCooldownAbilities.random()
         selectTargets(playerCats, enemyCats, ability)
@@ -569,6 +569,7 @@ class SummonerEnemy(override val cat: CombatCatData, override val onDeath: (Int)
             ability -> !ability.onCooldown()
                 && ability.ability.abilityType != AbilityType.SUMMON
                 && ability.ability.abilityType != AbilityType.CLONE
+                && ability.ability.abilityType != AbilityType.MIMIC
         }
         if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
         selectedAbility = notOnCooldownAbilities.random()
@@ -595,6 +596,7 @@ class UniqueSummonEnemy(override val cat: CombatCatData, override val onDeath: (
         val notOnCooldownAbilities = cat.abilities.filter {
                 ability -> !ability.onCooldown()
                 && ability.ability.abilityType != AbilityType.SUMMON
+                && ability.ability.abilityType != AbilityType.MIMIC
         }
         if(notOnCooldownAbilities.isEmpty()) return EmptyAbility(Ability(0))
         selectedAbility = notOnCooldownAbilities.random()

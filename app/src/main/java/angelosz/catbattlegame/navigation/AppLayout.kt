@@ -150,7 +150,10 @@ fun AppLayout(
                     }
                 },
                 onBackPressed = { navController.popBackStack(HomeScreenRoute, false) },
-                onReturnToHomePressed = { navController.popBackStack(HomeScreenRoute, false) }
+                onReturnToHomePressed = { navController.popBackStack(HomeScreenRoute, false) },
+                onSelectChapterPressed = {
+                    navController.popBackStack(CampaignMenuScreenRoute, false)
+                }
             )
         }
     }

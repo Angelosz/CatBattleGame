@@ -34,6 +34,7 @@ import angelosz.catbattlegame.utils.SoundManager
 fun SettingsScreen(
     settings: PlayerSettings,
     saveSettings: (PlayerSettings) -> Unit,
+    onAbandonCombat: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
     var autoSelectTarget by remember { mutableStateOf(settings.autoTargetSelect) }
@@ -181,6 +182,23 @@ fun SettingsScreen(
                         modifier = Modifier.padding(4.dp),
                         text = stringResource(R.string.save)
                     )
+                }
+
+                if (onAbandonCombat != null) {
+                    Button(
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBA1A1A)),
+                        onClick = {
+                            SoundManager.playButtonClick(context)
+                            onAbandonCombat()
+                        }
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(4.dp),
+                            text = stringResource(R.string.abandon_combat),
+                            color = Color.White
+                        )
+                    }
                 }
             }
         }

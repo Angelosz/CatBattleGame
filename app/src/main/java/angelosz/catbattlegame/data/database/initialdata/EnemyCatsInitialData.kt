@@ -221,6 +221,261 @@ class EnemyCatsInitialData {
             enemyType = EnemyType.UNIQUE_SUMMONER,
             image = R.drawable.enemy_hunter_gnome_300
         ),
+        EnemyCat(
+            id = 23,
+            name = R.string.enemy_curious_wisp,
+            description = R.string.enemy_curious_wisp_desc,
+            baseHealth = 320f,
+            baseAttack = 26f,
+            baseDefense = 1.5f,
+            attackSpeed = 0.8f,
+            image = R.drawable.enemy_wisp_curious_300
+        ),
+        EnemyCat(
+            id = 24,
+            name = R.string.enemy_angry_wisp,
+            description = R.string.enemy_angry_wisp_desc,
+            baseHealth = 320f,
+            baseAttack = 26f,
+            baseDefense = 1.5f,
+            attackSpeed = 0.8f,
+            image = R.drawable.enemy_wisp_angry_300
+        ),
+        EnemyCat(
+            id = 25,
+            name = R.string.enemy_sad_wisp,
+            description = R.string.enemy_sad_wisp_desc,
+            baseHealth = 320f,
+            baseAttack = 26f,
+            baseDefense = 1.5f,
+            attackSpeed = 0.8f,
+            image = R.drawable.enemy_wisp_sad_300
+        ),
+        EnemyCat(
+            id = 26,
+            name = R.string.enemy_furious_wisp,
+            description = R.string.enemy_furious_wisp_desc,
+            baseHealth = 320f,
+            baseAttack = 26f,
+            baseDefense = 1.5f,
+            attackSpeed = 0.8f,
+            image = R.drawable.enemy_wisp_furious_300
+        ),
+        EnemyCat(
+            id = 27,
+            name = R.string.enemy_squirrel_explorer,
+            description = R.string.enemy_squirrel_explorer_desc,
+            baseHealth = 440f,
+            baseAttack = 38f,
+            baseDefense = 2.5f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_squirrel_explorer_300
+        ),
+        EnemyCat(
+            id = 28,
+            name = R.string.enemy_squirrel_forager,
+            description = R.string.enemy_squirrel_forager_desc,
+            baseHealth = 440f,
+            baseAttack = 38f,
+            baseDefense = 2.5f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_squirrel_forager_300
+        ),
+        EnemyCat(
+            id = 29,
+            name = R.string.enemy_dark_rogue_mage,
+            description = R.string.enemy_dark_rogue_mage_desc,
+            baseHealth = 340f,
+            baseAttack = 42f,
+            baseDefense = 2.0f,
+            attackSpeed = 1.2f,
+            image = R.drawable.enemy_dark_rogue_mage_300
+        ),
+        EnemyCat(
+            id = 30,
+            name = R.string.enemy_dark_rogue_warrior,
+            description = R.string.enemy_dark_rogue_warrior_desc,
+            baseHealth = 420f,
+            baseAttack = 34f,
+            baseDefense = 3.5f,
+            attackSpeed = 1.3f,
+            image = R.drawable.enemy_dark_rogue_warrior_300
+        ),
+        EnemyCat(
+            id = 31,
+            name = R.string.enemy_leafmasked_raccoon_one,
+            description = R.string.enemy_leafmasked_raccoon_one_desc,
+            baseHealth = 480f,
+            baseAttack = 35f,
+            baseDefense = 3.0f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_leafmasked_raccoon_one_300
+        ),
+        EnemyCat(
+            id = 32,
+            name = R.string.enemy_leafmasked_raccoon_two,
+            description = R.string.enemy_leafmasked_raccoon_two_desc,
+            baseHealth = 480f,
+            baseAttack = 35f,
+            baseDefense = 3.0f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_leafmasked_raccoon_two_300
+        ),
+        EnemyCat(
+            id = 33,
+            name = R.string.enemy_mushroom_happy,
+            description = R.string.enemy_mushroom_happy_desc,
+            baseHealth = 180f,
+            baseAttack = 36f,
+            baseDefense = 4.0f,
+            attackSpeed = 1.2f,
+            enemyType = EnemyType.MIMIC,
+            image = R.drawable.enemy_mushroom_happy_300
+        ),
+        EnemyCat(
+            id = 34,
+            name = R.string.enemy_mushroom_angry,
+            description = R.string.enemy_mushroom_angry_desc,
+            baseHealth = 620f,
+            baseAttack = 36f,
+            baseDefense = 4.0f,
+            attackSpeed = 1.4f,
+            image = R.drawable.enemy_mushroom_angry_300
+        ),
+        EnemyCat(
+            id = 35,
+            name = R.string.enemy_dark_mushroom_happy,
+            description = R.string.enemy_dark_mushroom_happy_desc,
+            baseHealth = 180f,
+            baseAttack = 36f,
+            baseDefense = 4.0f,
+            attackSpeed = 1.2f,
+            enemyType = EnemyType.MIMIC,
+            image = R.drawable.enemy_dark_mushroom_happy_300
+        ),
+        EnemyCat(
+            id = 36,
+            name = R.string.enemy_dark_mushroom_angry,
+            description = R.string.enemy_dark_mushroom_angry_desc,
+            baseHealth = 480f,
+            baseAttack = 42f,
+            baseDefense = 2.0f,
+            attackSpeed = 1.4f,
+            image = R.drawable.enemy_dark_mushroom_angry_300
+        ),
+        EnemyCat(
+            id = 37,
+            name = R.string.enemy_dark_vines,
+            description = R.string.enemy_dark_vines_desc,
+            baseHealth = 860f,
+            baseAttack = 42f,
+            baseDefense = 5.0f,
+            attackSpeed = 1.5f,
+            image = R.drawable.enemy_dark_vines_300
+        ),
+        EnemyCat(
+            id = 38,
+            name = R.string.enemy_glowbug,
+            description = R.string.enemy_glowbug_desc,
+            baseHealth = 240f,
+            baseAttack = 18f,
+            baseDefense = 1.0f,
+            attackSpeed = 0.8f,
+            image = R.drawable.enemy_glowbug_300
+        ),
+        EnemyCat(
+            id = 39,
+            name = R.string.enemy_hollow_beetle,
+            description = R.string.enemy_hollow_beetle_desc,
+            baseHealth = 660f,
+            baseAttack = 52f,
+            baseDefense = 6.0f,
+            attackSpeed = 1.6f,
+            image = R.drawable.enemy_hollow_beetle_300
+        ),
+        EnemyCat(
+            id = 40,
+            name = R.string.enemy_darkowl_asleep,
+            description = R.string.enemy_darkowl_asleep_desc,
+            baseHealth = 240f,
+            baseAttack = 60f,
+            baseDefense = 5.0f,
+            attackSpeed = 2.5f,
+            enemyType = EnemyType.MIMIC,
+            image = R.drawable.enemy_darkowl_asleep_300
+        ),
+        EnemyCat(
+            id = 41,
+            name = R.string.enemy_darkowl,
+            description = R.string.enemy_darkowl_desc,
+            baseHealth = 1040f,
+            baseAttack = 42f,
+            baseDefense = 5.0f,
+            attackSpeed = 1.2f,
+            image = R.drawable.enemy_darkowl_300
+        ),
+        EnemyCat(
+            id = 42,
+            name = R.string.enemy_dark_spider,
+            description = R.string.enemy_dark_spider_desc,
+            baseHealth = 1020f,
+            baseAttack = 42f,
+            baseDefense = 6.0f,
+            attackSpeed = 1.4f,
+            image = R.drawable.enemy_dark_spider_300
+        ),
+        EnemyCat(
+            id = 43,
+            name = R.string.enemy_dark_spider_baby,
+            description = R.string.enemy_dark_spider_baby_desc,
+            baseHealth = 220f,
+            baseAttack = 24f,
+            baseDefense = 2.0f,
+            attackSpeed = 1.0f,
+            enemyType = EnemyType.SUMMONER,
+            image = R.drawable.enemy_dark_spider_baby_300
+        ),
+        EnemyCat(
+            id = 44,
+            name = R.string.enemy_oldstumpy,
+            description = R.string.enemy_oldstumpy_desc,
+            baseHealth = 1480f,
+            baseAttack = 46f,
+            baseDefense = 7.0f,
+            attackSpeed = 1.4f,
+            image = R.drawable.enemy_oldstumpy_300
+        ),
+        EnemyCat(
+            id = 45,
+            name = R.string.enemy_phantom_cat,
+            description = R.string.enemy_phantom_cat_desc,
+            baseHealth = 720f,
+            baseAttack = 38f,
+            baseDefense = 3.0f,
+            attackSpeed = 1.1f,
+            enemyType = EnemyType.UNIQUE_SUMMONER,
+            image = R.drawable.enemy_phantom_cat_300
+        ),
+        EnemyCat(
+            id = 46,
+            name = R.string.enemy_phantom_cat_minion,
+            description = R.string.enemy_phantom_cat_minion_desc,
+            baseHealth = 480f,
+            baseAttack = 42f,
+            baseDefense = 3.0f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_phantom_cat_minion_300
+        ),
+        EnemyCat(
+            id = 47,
+            name = R.string.enemy_phantom_squirrel,
+            description = R.string.enemy_phantom_squirrel_desc,
+            baseHealth = 880f,
+            baseAttack = 42f,
+            baseDefense = 3.0f,
+            attackSpeed = 1.4f,
+            image = R.drawable.enemy_phantom_squirrel_300
+        ),
     )
 
     private val enemyAbilities: Map<Long, List<Int>> = mapOf(
@@ -245,6 +500,31 @@ class EnemyCatsInitialData {
         19L to listOf(13, 4, 14, 20),   // Dark rogue
         20L to listOf(23, 24, 19, 20),  // Ant queen
         21L to listOf(11, 26, 20, 25),  // Hunter gnome
+        23L to listOf(29, 6, 18),       // Curious Wisp
+        24L to listOf(10, 6, 15, 28),   // Angry Wisp
+        25L to listOf(30, 2, 6),        // Sad Wisp
+        26L to listOf(15, 19, 28, 16),  // Furious Wisp
+        27L to listOf(1, 11, 10, 18),   // Squirrel Explorer
+        28L to listOf(2, 3, 5, 26),     // Squirrel Forager
+        29L to listOf(5, 15, 28, 16),   // Dark Rogue Mage
+        30L to listOf(1, 11, 26),       // Dark Rogue Warrior
+        31L to listOf(2, 11, 10, 26),   // Leaf-Masked Raccoon One
+        32L to listOf(2, 11, 14, 26),   // Leaf-Masked Raccoon Two
+        33L to listOf(1, 2, 27, 31),    // Mushroom Happy
+        34L to listOf(1, 11, 10, 27),   // Mushroom Angry
+        35L to listOf(1, 13, 14, 32),   // Dark Mushroom Happy
+        36L to listOf(11, 14, 28, 16),  // Dark Mushroom Angry
+        37L to listOf(11, 10, 14, 28),  // Dark Vines
+        38L to listOf(1, 18, 28, 33),   // Glowbug
+        39L to listOf(2, 5, 11, 10),    // Hollow Beetle
+        40L to listOf(34),              // Dark Owl Asleep
+        41L to listOf(1, 6, 28, 16),    // Dark Owl
+        42L to listOf(11, 14, 28, 16),  // Dark Spider
+        43L to listOf(1, 13, 28),       // Dark Baby Spider
+        44L to listOf(5, 11, 19, 26),   // Old Stumpy
+        45L to listOf(1, 13, 14, 18),   // Phantom Cat
+        46L to listOf(29, 30, 1, 15),   // Phantom Cat Minion
+        47L to listOf(11, 10, 18, 28),  // Phantom Squirrel
     )
 
     fun getEnemyAbilities(): List<EnemyAbility> =

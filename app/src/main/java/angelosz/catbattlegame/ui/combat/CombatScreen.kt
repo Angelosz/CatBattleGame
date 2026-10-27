@@ -265,6 +265,10 @@ fun CombatScreen(
                                 SettingsScreen(
                                     settings = uiState.playerSettings,
                                     saveSettings = viewModel::saveSettings,
+                                    onAbandonCombat = {
+                                        viewModel.closeSettings()
+                                        onBackToTeamSelection()
+                                    }
                                 )
                             }
                         }

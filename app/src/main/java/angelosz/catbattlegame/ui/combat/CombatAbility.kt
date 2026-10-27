@@ -50,6 +50,10 @@ sealed class CombatAbility(){
                     Pair(AbilityType.STATUS_CHANGING, AbilityTarget.ENEMY_TEAM) -> AoeEnemyTeamStatusChangingAbility(ability)
                     Pair(AbilityType.SUMMON, AbilityTarget.ENEMY_TEAM) -> EnemySummonAbility(ability)
                     Pair(AbilityType.CLONE, AbilityTarget.ENEMY_TEAM) -> EnemyCloneAbility(ability)
+                    Pair(AbilityType.MIMIC, AbilityTarget.SINGLE_ENEMY) -> MimicAbility(ability)
+                    Pair(AbilityType.MIMIC, AbilityTarget.ENEMY_TEAM) -> MimicAbility(ability)
+                    Pair(AbilityType.MIMIC_DAMAGE, AbilityTarget.ENEMY_TEAM) -> MimicDamageAbility(ability)
+                    Pair(AbilityType.MIMIC_DAMAGE, AbilityTarget.SINGLE_ENEMY) -> MimicDamageAbility(ability)
 
                     else -> EmptyAbility(ability)
                 }
@@ -491,4 +495,42 @@ class EnemyCloneAbility(override val ability: Ability): CombatAbility(){
     }
 
     override fun getMessage(): Int = R.string.select_ally_team
+}
+
+class MimicAbility(override val ability: Ability): CombatAbility() {
+    private var selectedCatId: Int? = null
+
+    override fun setSelectedEnemyCat(catCombatId: Int) { selectedCatId = catCombatId }
+    override fun setSelectedAllyCat(catCombatId: Int) {}
+    override fun isReady(): Boolean = true
+    override fun apply(viewModel: CombatScreenViewModel) {
+        viewModel.triggerMimicTransformationForActiveCat(ability.combatModifierValue.toLong())
+    }
+    override fun getSelectedCatsIds(): List<Int> = listOfNotNull(selectedCatId)
+    override fun selectEnemyTeam(enemyTeam: List<Int>) {}
+    override fun selectAllyTeam(allyTeam: List<Int>) {}
+    override fun getMessage(): Int = ability.name
+    override fun clear() { selectedCatId = null }
+}
+
+class MimicDamageAbility(override val ability: Ability): CombatAbility() {
+    private var selectedCatId: Int? = null
+
+    override fun setSelectedEnemyCat(catCombatId: Int) { selectedCatId = catCombatId }
+    override fun setSelectedAllyCat(catCombatId: Int) {}
+    override fun isReady(): Boolean = true
+    override fun apply(viewModel: CombatScreenViewModel) {
+        val catId = selectedCatId
+        if (catId != null) {
+            viewModel.damageCat(catId, ability)
+        } else {
+            viewModel.damageEnemyTeam(ability)
+        }
+        viewModel.triggerMimicTransformationForActiveCat(ability.combatModifierValue.toLong())
+    }
+    override fun getSelectedCatsIds(): List<Int> = listOfNotNull(selectedCatId)
+    override fun selectEnemyTeam(enemyTeam: List<Int>) {}
+    override fun selectAllyTeam(allyTeam: List<Int>) {}
+    override fun getMessage(): Int = ability.name
+    override fun clear() { selectedCatId = null }
 }

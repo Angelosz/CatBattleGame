@@ -10,6 +10,8 @@ enum class AbilityType(@StringRes val res: Int) {
     DAMAGE_STATUS_CHANGING(R.string.damage_status_changing),
     SUMMON(R.string.ability_type_summon),
     CLONE(R.string.ability_type_clone),
-    DAMAGE_DRAIN(R.string.ability_type_damage_drain)
+    DAMAGE_DRAIN(R.string.ability_type_damage_drain),
+    MIMIC(R.string.ability_type_mimic),
+    MIMIC_DAMAGE(R.string.ability_type_mimic_damage)
 }
 

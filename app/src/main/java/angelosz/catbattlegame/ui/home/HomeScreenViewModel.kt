@@ -71,6 +71,8 @@ class HomeScreenViewModel(
                     )
                 }
 
+                ensureCampaign3UnlockedIfCampaign2Completed()
+
 
                 val notifications = getConvertedNotifications(playerAccountRepository.getAllNotifications())
 
@@ -172,13 +174,29 @@ class HomeScreenViewModel(
             }
 
             campaignRepository.updateCampaignState(1, CampaignState.UNLOCKED)
-            campaignRepository.updateCampaignState(3, CampaignState.DEVELOPMENT)
+            campaignRepository.updateCampaignState(2, CampaignState.LOCKED)
+            campaignRepository.updateCampaignState(3, CampaignState.LOCKED)
             campaignRepository.updateCampaignState(4, CampaignState.DEVELOPMENT)
             campaignRepository.updateChapterState(1, CampaignState.UNLOCKED)
             repopulateDatabase()
         }
 
         return playerAccount
+    }
+
+    private suspend fun ensureCampaign3UnlockedIfCampaign2Completed() {
+        try {
+            val campaign2State = campaignRepository.getCampaignState(2)
+            val campaign3State = campaignRepository.getCampaignState(3)
+            if (campaign2State == CampaignState.COMPLETED && campaign3State != CampaignState.UNLOCKED) {
+                campaignRepository.updateCampaignState(3, CampaignState.UNLOCKED)
+                campaignRepository.updateChapterState(16, CampaignState.UNLOCKED)
+            } else if (campaign3State == CampaignState.DEVELOPMENT) {
+                campaignRepository.updateCampaignState(3, CampaignState.LOCKED)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private suspend fun setupPlayerDataCollector() {

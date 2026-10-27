@@ -12,6 +12,7 @@ import angelosz.catbattlegame.data.repository.CampaignRepository
 import angelosz.catbattlegame.data.repository.CatRepository
 import angelosz.catbattlegame.data.repository.EnemyCatRepository
 import angelosz.catbattlegame.data.repository.PlayerAccountRepository
+import angelosz.catbattlegame.domain.enums.AbilityType
 import angelosz.catbattlegame.domain.enums.CombatModifier
 import angelosz.catbattlegame.domain.enums.CombatResult
 import angelosz.catbattlegame.domain.enums.CombatStage
@@ -157,6 +158,17 @@ class CombatScreenViewModel(
                     enemyCatDied(catId)
                 }
             )
+
+            EnemyType.MIMIC -> SimpleEnemy(
+                CombatCatData.build(
+                    combatId = combatId,
+                    enemyCat = enemyCat,
+                    combatAbilities = combatAbilities
+                ),
+                onDeath = { catId ->
+                    enemyCatDied(catId)
+                }
+            )
         }
     }
 
@@ -222,7 +234,69 @@ class CombatScreenViewModel(
         }
     }
 
+    fun damageEnemyTeam(ability: Ability) {
+        _uiState.value.teamCombatCats.forEach { cat ->
+            damageCat(cat.cat.combatId, ability)
+        }
+    }
+
+    fun triggerMimicTransformationForActiveCat(targetEnemyId: Long) {
+        val activeEnemy = getEnemyCat(_uiState.value.activeCatId)
+        if (activeEnemy != null) {
+            transformEnemy(activeEnemy, targetEnemyId)
+        }
+    }
+
+    private fun transformEnemy(dyingEnemy: EnemyCombatCat, targetEnemyId: Long) {
+        viewModelScope.launch {
+            try {
+                val targetEnemyCat = enemyCatRepository.getEnemyCatById(targetEnemyId)
+                if (targetEnemyCat != null) {
+                    val newCombatId = getHighestCombatId() + 1
+                    val newEnemyCombatCat = createEnemyCombatCat(targetEnemyCat, newCombatId)
+
+                    val enemyCats = _uiState.value.enemyCombatCats.toMutableList()
+                    val initiatives = _uiState.value.catInitiatives.toMutableList()
+
+                    enemyCats.add(newEnemyCombatCat)
+                    initiatives.add(
+                        CatInitiativeData(
+                            catId = newEnemyCombatCat.cat.combatId,
+                            image = newEnemyCombatCat.cat.image,
+                            initiative = newEnemyCombatCat.cat.initiative + Random.nextFloat()
+                        )
+                    )
+
+                    val oldCombatId = dyingEnemy.cat.combatId
+                    val updatedEnemyCats = enemyCats.filter { it.cat.combatId != oldCombatId }
+                    val updatedInitiatives = initiatives.filter { it.catId != oldCombatId }
+
+                    _uiState.update {
+                        it.copy(
+                            enemyCombatCats = updatedEnemyCats,
+                            catInitiatives = updatedInitiatives.sortedBy { init -> init.initiative }
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     private fun enemyCatDied(catId: Int) {
+        val dyingEnemy = getEnemyCat(catId)
+        if (dyingEnemy != null) {
+            val mimicAbility = dyingEnemy.cat.abilities.find {
+                it.ability.abilityType == AbilityType.MIMIC || it.ability.abilityType == AbilityType.MIMIC_DAMAGE
+            }
+            if (mimicAbility != null) {
+                val targetEnemyId = mimicAbility.ability.combatModifierValue.toLong()
+                transformEnemy(dyingEnemy, targetEnemyId)
+                return
+            }
+        }
+
         viewModelScope.launch {
             val remainingCats =
                 _uiState.value.enemyCombatCats.filter { cat -> cat.cat.combatId != catId }
@@ -726,6 +800,10 @@ class CombatScreenViewModel(
                 _uiState.update { it.copy(screenState = ScreenState.FAILURE) }
             }
         }
+    }
+
+    fun closeSettings() {
+        _uiState.update { it.copy(settingsIsOpen = false) }
     }
 }
 

@@ -386,6 +386,102 @@
     <string name="ability_type_damage_drain">Damage &amp; Drain</string>
     <string name="team_size_increased_3">Team size increased! You can now equip up to 3 Cats in your team!</string>
     <string name="team_size_increased_4">Team size increased! You can now equip up to 4 Cats in your team!</string>
+    <string name="abandon_combat">Abandon Combat</string>
+    <string name="select_chapter">Select Chapter</string>
+
+    <!-- Campaign 3 Titles & Descriptions -->
+    <string name="chapter_title_16">Lost Wisps</string>
+    <string name="chapter_desc_16">Curious and sad wisps wander through the dim tree cover.</string>
+    <string name="chapter_title_17">Adventurer Squirrels</string>
+    <string name="chapter_desc_17">Bold squirrels exploring the dark woods.</string>
+    <string name="chapter_title_18">Dark Rogues</string>
+    <string name="chapter_desc_18">Shadowy rogues lurking in the dark canopy.</string>
+    <string name="chapter_title_19">Angry Wisps</string>
+    <string name="chapter_desc_19">Agitated spectral wisps burning with anger.</string>
+    <string name="chapter_title_20">Leaf-Masked Raccoons</string>
+    <string name="chapter_desc_20">Stealthy raccoons wearing leaf masks.</string>
+    <string name="chapter_title_21">Possessed Mushrooms</string>
+    <string name="chapter_desc_21">Spooky mushrooms that transform when attacked.</string>
+    <string name="chapter_title_22">Dark Vines</string>
+    <string name="chapter_desc_22">Twisted vines summoning glowing insects.</string>
+    <string name="chapter_title_23">Hollow Beetles</string>
+    <string name="chapter_desc_23">Heavily armored beetles guarding the deep forest.</string>
+    <string name="chapter_title_24">Sleepy Dark Owl</string>
+    <string name="chapter_desc_24">A resting owl that awakens when disturbed.</string>
+    <string name="chapter_title_25">Dark Giant Spider</string>
+    <string name="chapter_desc_25">A massive spider summoning dark spiderlings.</string>
+    <string name="chapter_title_26">Old Stumpy</string>
+    <string name="chapter_desc_26">An ancient possessed tree stump.</string>
+    <string name="chapter_title_27">Dark Phantoms</string>
+    <string name="chapter_desc_27">The spectral cat phantoms guarding the heart of the forest.</string>
+
+    <!-- Campaign 3 Abilities -->
+    <string name="ability_type_mimic">Mimic</string>
+    <string name="ability_type_mimic_damage">Mimic &amp; Damage</string>
+    <string name="ability_inspiring_cry">Inspiring Cry</string>
+    <string name="ability_inspiring_cry_desc">Encourages allies, boosting their action speed.</string>
+    <string name="ability_rallying_cry">Rallying Cry</string>
+    <string name="ability_rallying_cry_desc">Rallies allies, increasing their attack power.</string>
+    <string name="ability_mushroom_mimic">Mushroom Mimic</string>
+    <string name="ability_mushroom_mimic_desc">Transforms into an angry mushroom upon defeat.</string>
+    <string name="ability_dark_mushroom_mimic">Dark Mushroom Mimic</string>
+    <string name="ability_dark_mushroom_mimic_desc">Transforms into an angry dark mushroom upon defeat.</string>
+    <string name="ability_call_glowbug">Call Glowbug</string>
+    <string name="ability_call_glowbug_desc">Summons a glowing insect minion to aid in battle.</string>
+    <string name="ability_awake_dark_owl">Awake Dark Owl</string>
+    <string name="ability_awake_dark_owl_desc">Awakens the sleeping owl, dealing damage and transforming it.</string>
+
+    <!-- Campaign 3 Enemies -->
+    <string name="enemy_curious_wisp">Curious Wisp</string>
+    <string name="enemy_curious_wisp_desc">A gentle wisp glowing softly in the dark.</string>
+    <string name="enemy_angry_wisp">Angry Wisp</string>
+    <string name="enemy_angry_wisp_desc">A fiery wisp crackling with anger.</string>
+    <string name="enemy_sad_wisp">Sad Wisp</string>
+    <string name="enemy_sad_wisp_desc">A melancholy wisp weeping spectral tears.</string>
+    <string name="enemy_furious_wisp">Furious Wisp</string>
+    <string name="enemy_furious_wisp_desc">A raging wisp burning brightly with fury.</string>
+    <string name="enemy_squirrel_explorer">Squirrel Explorer</string>
+    <string name="enemy_squirrel_explorer_desc">A brave squirrel searching for secrets.</string>
+    <string name="enemy_squirrel_forager">Squirrel Forager</string>
+    <string name="enemy_squirrel_forager_desc">A helpful squirrel gathering food and herbs.</string>
+    <string name="enemy_dark_rogue_mage">Dark Rogue Mage</string>
+    <string name="enemy_dark_rogue_mage_desc">A rogue adept at dark elemental magic.</string>
+    <string name="enemy_dark_rogue_warrior">Dark Rogue Warrior</string>
+    <string name="enemy_dark_rogue_warrior_desc">A battle-hardened rogue wielding dark blades.</string>
+    <string name="enemy_leafmasked_raccoon_one">Leaf-Masked Raccoon</string>
+    <string name="enemy_leafmasked_raccoon_one_desc">A sneaky raccoon masked with forest leaves.</string>
+    <string name="enemy_leafmasked_raccoon_two">Leaf-Masked Raccoon Scout</string>
+    <string name="enemy_leafmasked_raccoon_two_desc">A cunning raccoon scout scouting the trails.</string>
+    <string name="enemy_mushroom_happy">Possessed Mushroom</string>
+    <string name="enemy_mushroom_happy_desc">A cheerful mushroom hiding a dark secret.</string>
+    <string name="enemy_mushroom_angry">Angry Mushroom</string>
+    <string name="enemy_mushroom_angry_desc">A furious mushroom striking with spore magic.</string>
+    <string name="enemy_dark_mushroom_happy">Dark Mushroom</string>
+    <string name="enemy_dark_mushroom_happy_desc">A quiet dark mushroom that transforms when hit.</string>
+    <string name="enemy_dark_mushroom_angry">Angry Dark Mushroom</string>
+    <string name="enemy_dark_mushroom_angry_desc">A potent dark mushroom unleashing toxic spores.</string>
+    <string name="enemy_dark_vines">Dark Vines</string>
+    <string name="enemy_dark_vines_desc">Twisted vines that summon glowbugs.</string>
+    <string name="enemy_glowbug">Glowbug</string>
+    <string name="enemy_glowbug_desc">A tiny glowing bug assisting the dark vines.</string>
+    <string name="enemy_hollow_beetle">Hollow Beetle</string>
+    <string name="enemy_hollow_beetle_desc">A heavily armored beetle with a hard shell.</string>
+    <string name="enemy_darkowl_asleep">Sleepy Dark Owl</string>
+    <string name="enemy_darkowl_asleep_desc">A sleeping owl resting peacefully... do not disturb!</string>
+    <string name="enemy_darkowl">Awakened Dark Owl</string>
+    <string name="enemy_darkowl_desc">A majestic and powerful owl guarding the dark canopy.</string>
+    <string name="enemy_dark_spider">Dark Giant Spider</string>
+    <string name="enemy_dark_spider_desc">A giant spider spinning dark webs.</string>
+    <string name="enemy_dark_spider_baby">Dark Baby Spider</string>
+    <string name="enemy_dark_spider_baby_desc">A small spiderling summoned by the giant spider.</string>
+    <string name="enemy_oldstumpy">Old Stumpy</string>
+    <string name="enemy_oldstumpy_desc">An ancient tree stump endowed with dark magic.</string>
+    <string name="enemy_phantom_cat">Phantom Cat</string>
+    <string name="enemy_phantom_cat_desc">A spectral feline phantom floating through the dark trees.</string>
+    <string name="enemy_phantom_cat_minion">Phantom Cat Minion</string>
+    <string name="enemy_phantom_cat_minion_desc">A phantom minion summoned to aid the Phantom Cat.</string>
+    <string name="enemy_phantom_squirrel">Phantom Squirrel</string>
+    <string name="enemy_phantom_squirrel_desc">A ghostly squirrel leaping through the spectral shadows.</string>
 
 
 </resources>

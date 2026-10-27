@@ -177,6 +177,142 @@ class ChaptersInitialData {
             unlocksChapter = 16,
             isLastCampaignChapter = true,
             recommendedLevel = 2
+        ),
+        /*  End Second Campaign */
+
+        /* Third Campaign */
+        CampaignChapter(
+            id = 16,
+            campaignId = 3,
+            order = 1,
+            experience = 250,
+            name = R.string.chapter_title_16,
+            description = R.string.chapter_desc_16,
+            image = R.drawable.enemy_chapter_16_wisps,
+            unlocksChapter = 17,
+            recommendedLevel = 2
+        ),
+        CampaignChapter(
+            id = 17,
+            campaignId = 3,
+            order = 2,
+            experience = 275,
+            name = R.string.chapter_title_17,
+            description = R.string.chapter_desc_17,
+            image = R.drawable.enemy_chapter_17_adventurer_squirrels,
+            unlocksChapter = 18,
+            recommendedLevel = 3
+        ),
+        CampaignChapter(
+            id = 18,
+            campaignId = 3,
+            order = 3,
+            experience = 275,
+            name = R.string.chapter_title_18,
+            description = R.string.chapter_desc_18,
+            image = R.drawable.enemy_chapter_18_dark_rogue_friends,
+            unlocksChapter = 19,
+            recommendedLevel = 3
+        ),
+        CampaignChapter(
+            id = 19,
+            campaignId = 3,
+            order = 4,
+            experience = 275,
+            name = R.string.chapter_title_19,
+            description = R.string.chapter_desc_19,
+            image = R.drawable.enemy_chapter_19_angry_wisps,
+            unlocksChapter = 20,
+            recommendedLevel = 3
+        ),
+        CampaignChapter(
+            id = 20,
+            campaignId = 3,
+            order = 5,
+            experience = 275,
+            name = R.string.chapter_title_20,
+            description = R.string.chapter_desc_20,
+            image = R.drawable.enemy_chapter_20_leafmasked_raccoons,
+            unlocksChapter = 21,
+            recommendedLevel = 3
+        ),
+        CampaignChapter(
+            id = 21,
+            campaignId = 3,
+            order = 6,
+            experience = 300,
+            name = R.string.chapter_title_21,
+            description = R.string.chapter_desc_21,
+            image = R.drawable.enemy_chapter_21_possessed_mushrooms,
+            unlocksChapter = 22,
+            recommendedLevel = 3
+        ),
+        CampaignChapter(
+            id = 22,
+            campaignId = 3,
+            order = 7,
+            experience = 300,
+            name = R.string.chapter_title_22,
+            description = R.string.chapter_desc_22,
+            image = R.drawable.enemy_chapter_22_dark_leafvine,
+            unlocksChapter = 23,
+            recommendedLevel = 4
+        ),
+        CampaignChapter(
+            id = 23,
+            campaignId = 3,
+            order = 8,
+            experience = 300,
+            name = R.string.chapter_title_23,
+            description = R.string.chapter_desc_23,
+            image = R.drawable.enemy_chapter_22_hollow_beetle,
+            unlocksChapter = 24,
+            recommendedLevel = 4
+        ),
+        CampaignChapter(
+            id = 24,
+            campaignId = 3,
+            order = 9,
+            experience = 325,
+            name = R.string.chapter_title_24,
+            description = R.string.chapter_desc_24,
+            image = R.drawable.enemy_chapter_23_dark_sleepy_owl,
+            unlocksChapter = 25,
+            recommendedLevel = 4
+        ),
+        CampaignChapter(
+            id = 25,
+            campaignId = 3,
+            order = 10,
+            experience = 325,
+            name = R.string.chapter_title_25,
+            description = R.string.chapter_desc_25,
+            image = R.drawable.enemy_chapter_24_dark_giant_spider,
+            unlocksChapter = 26,
+            recommendedLevel = 5
+        ),
+        CampaignChapter(
+            id = 26,
+            campaignId = 3,
+            order = 11,
+            experience = 325,
+            name = R.string.chapter_title_26,
+            description = R.string.chapter_desc_26,
+            image = R.drawable.enemy_chapter_25_old_stumpy,
+            unlocksChapter = 27,
+            recommendedLevel = 5
+        ),
+        CampaignChapter(
+            id = 27,
+            campaignId = 3,
+            order = 12,
+            experience = 350,
+            name = R.string.chapter_title_27,
+            description = R.string.chapter_desc_27,
+            image = R.drawable.enemy_chapter_26_phantoms,
+            unlocksChapter = 28,
+            isLastCampaignChapter = true,
+            recommendedLevel = 5
         )
         /*  End Second Campaign */
     )
@@ -308,7 +444,7 @@ class ChaptersInitialData {
                 amount = 15
             ),
             Reward(
-                type = RewardType.TEEN_BOX,
+                type = RewardType.KITTEN_BOX,
             ),
         ),
         10L to listOf(
@@ -390,6 +526,21 @@ class ChaptersInitialData {
             ),
         ),
         /*  End Second Campaign */
+
+        /* Third Campaign */
+        16L to listOf(Reward(RewardType.GOLD, 100), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        17L to listOf(Reward(RewardType.GOLD, 100), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        18L to listOf(Reward(RewardType.GOLD, 110), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        19L to listOf(Reward(RewardType.GOLD, 110), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        20L to listOf(Reward(RewardType.GOLD, 120), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        21L to listOf(Reward(RewardType.GOLD, 120), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.TEEN_BOX)),
+        22L to listOf(Reward(RewardType.GOLD, 130), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        23L to listOf(Reward(RewardType.GOLD, 130), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        24L to listOf(Reward(RewardType.GOLD, 140), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.TEEN_BOX)),
+        25L to listOf(Reward(RewardType.GOLD, 140), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        26L to listOf(Reward(RewardType.GOLD, 150), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.TEEN_BOX)),
+        27L to listOf(Reward(RewardType.GOLD, 180), Reward(RewardType.CRYSTAL, 40), Reward(RewardType.ADULT_BOX)),
+        /* End Third Campaign */
     )
 
     fun getChapterRewards(): List<ChapterReward> =
@@ -419,6 +570,20 @@ class ChaptersInitialData {
         13L to listOf(20L, 11L),
         14L to listOf(5L, 6L),
         15L to listOf(19L),
+        /* Third Campaign */
+        16L to listOf(23L, 25L),
+        17L to listOf(27L, 28L),
+        18L to listOf(19L, 29L, 30L),
+        19L to listOf(26L, 24L, 23L, 25L),
+        20L to listOf(31L, 32L),
+        21L to listOf(33L, 35L),
+        22L to listOf(37L, 38L, 38L, 38L),
+        23L to listOf(39L, 39L),
+        24L to listOf(40L),
+        25L to listOf(42L, 43L, 43L, 43L),
+        26L to listOf(44L),
+        27L to listOf(45L, 46L, 47L),
+        /* End Third Campaign */
     )
 
     fun getChapterEnemies(): List<ChapterEnemy> = enemies.flatMap { (id, enemies) ->
