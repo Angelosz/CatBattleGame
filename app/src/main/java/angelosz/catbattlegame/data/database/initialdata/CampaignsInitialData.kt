@@ -32,6 +32,13 @@ class CampaignsInitialData {
             description = R.string.campaign_desc_4,
             image = R.drawable.piratecave_campaign_icon_256,
             nextCampaign = 5
+        ),
+        CampaignEntity(
+            id = 1001,
+            name = R.string.campaign_title_halloween,
+            description = R.string.campaign_desc_halloween,
+            image = R.drawable.campaign_halloween_icon256,
+            nextCampaign = 0
         )
     )
 }

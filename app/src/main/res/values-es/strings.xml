@@ -389,6 +389,19 @@
     <string name="abandon_combat">Abandonar Combate</string>
     <string name="select_chapter">Seleccionar Capítulo</string>
 
+    <!-- Halloween Campaign (ID 1001) -->
+    <string name="campaign_title_halloween">Peligros en Halloween</string>
+    <string name="campaign_desc_halloween">Entra en una escalofriante campaña de Halloween llena de criaturas malditas, muertos vivientes y magia oscura.</string>
+
+    <string name="chapter_title_28">Espantapájaros Maldito de Halloween</string>
+    <string name="chapter_desc_28">Un espantapájaros maldito y sus calabazas encantadas custodian el camino.</string>
+    <string name="chapter_title_29">Nigromante de Halloween</string>
+    <string name="chapter_desc_29">Un nigromante ha levantado a los muertos para luchar a su lado.</string>
+    <string name="chapter_title_30">Bruja de Halloween</string>
+    <string name="chapter_desc_30">Una poderosa bruja y sus tres familiares felinos luchan juntos como un aquelarre.</string>
+    <string name="chapter_title_31">Jinete Sin Cabeza de Halloween</string>
+    <string name="chapter_desc_31">El Jinete Sin Cabeza se lanza al combate en un temible encuentro final.</string>
+
     <!-- Campaign 3 Titles & Descriptions -->
     <string name="chapter_title_16">Fuegos Fatuos Perdidos</string>
     <string name="chapter_desc_16">Fuegos fatuos curiosos y tristes deambulan bajo la sombra de los árboles.</string>

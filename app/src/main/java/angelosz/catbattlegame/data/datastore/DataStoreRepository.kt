@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import angelosz.catbattlegame.utils.DataStoreConstants.DAILY_REWARD_STREAK
 import angelosz.catbattlegame.utils.DataStoreConstants.HAS_COMPLETED_ALPHA_RESET_V1
@@ -107,6 +108,30 @@ class DataStoreRepository(
     suspend fun markAlphaResetV1Completed() {
         context.dataStore.edit {
             it[HAS_COMPLETED_ALPHA_RESET_V1] = true
+        }
+    }
+
+    suspend fun hasClaimedHalloweenDailyReward(chapterId: Long): Boolean {
+        val todayStr = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            java.time.LocalDate.now().toString()
+        } else {
+            java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+        }
+        val prefs = context.dataStore.data.first()
+        val key = stringPreferencesKey("last_halloween_claim_date_$chapterId")
+        val lastClaimDate = prefs[key] ?: ""
+        return lastClaimDate == todayStr
+    }
+
+    suspend fun markHalloweenDailyRewardClaimed(chapterId: Long) {
+        val todayStr = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            java.time.LocalDate.now().toString()
+        } else {
+            java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault()).format(java.util.Date())
+        }
+        val key = stringPreferencesKey("last_halloween_claim_date_$chapterId")
+        context.dataStore.edit {
+            it[key] = todayStr
         }
     }
 

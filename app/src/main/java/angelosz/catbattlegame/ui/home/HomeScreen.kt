@@ -3,6 +3,7 @@ package angelosz.catbattlegame.ui.home
 import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,12 +12,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -61,6 +65,7 @@ import angelosz.catbattlegame.ui.home.dialogs.MailBoxDialog
 fun HomeScreen(
     windowSize: WindowWidthSizeClass,
     onPlayButtonClick: () -> Unit,
+    openHalloweenEvent: () -> Unit = {},
     navigateToArchive: () -> Unit,
     navigateToCollections: () -> Unit,
     viewModel:HomeScreenViewModel = viewModel(factory = CatViewModelProvider.Factory)
@@ -90,6 +95,7 @@ fun HomeScreen(
                         unreadMailCount = uiState.unreadMailCount,
                         isDailyRewardAvailable = uiState.isDailyRewardAvailable,
                         onPlayButtonClick = onPlayButtonClick,
+                        openHalloweenEvent = openHalloweenEvent,
                         navigateToCollections = navigateToCollections,
                         navigateToArchive = navigateToArchive,
                         openShop = viewModel::openShop,
@@ -206,6 +212,7 @@ private fun HomeScreenContent(
     unreadMailCount: Int,
     isDailyRewardAvailable: Boolean,
     onPlayButtonClick: () -> Unit,
+    openHalloweenEvent: () -> Unit,
     navigateToCollections: () -> Unit,
     navigateToArchive: () -> Unit,
     openShop: () -> Unit,
@@ -217,7 +224,7 @@ private fun HomeScreenContent(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        // Main Center: Game Logo & Play Button
+        // Main Center: Game Logo, Play Button, and Halloween Event Button
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -227,15 +234,41 @@ private fun HomeScreenContent(
                 painter = painterResource(R.drawable.logo_256),
                 contentDescription = "Cat Battles Logo",
                 modifier = Modifier
-                    .size(240.dp)
-                    .padding(bottom = 32.dp)
+                    .size(220.dp)
+                    .padding(bottom = 16.dp)
             )
             HomeButton(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(4.dp),
                 image = R.drawable.button_play,
                 contentDescription = stringResource(R.string.play_button_desc),
                 onButtonClicked = onPlayButtonClick
             )
+            Spacer(modifier = Modifier.height(12.dp))
+            Card(
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF2C1C13)),
+                border = BorderStroke(2.dp, Color(0xFFFF9900)),
+                onClick = openHalloweenEvent,
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.campaign_halloween_icon256),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Text(
+                        text = stringResource(R.string.campaign_title_halloween),
+                        color = Color(0xFFFF9900),
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+            }
         }
 
         // Top Zone: Currency Bar on Left, Calendar & Mail on Right

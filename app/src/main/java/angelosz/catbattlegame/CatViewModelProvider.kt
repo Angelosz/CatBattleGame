@@ -67,6 +67,7 @@ object CatViewModelProvider {
                 getCatBattleApplication().container.battleChestRepository,
                 getCatBattleApplication().container.catRepository,
                 getCatBattleApplication().container.enemyCatRepository,
+                getCatBattleApplication().container.dataStoreRepository
             )
         }
 

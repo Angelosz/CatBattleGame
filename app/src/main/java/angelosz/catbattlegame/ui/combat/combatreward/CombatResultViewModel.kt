@@ -27,6 +27,7 @@ import angelosz.catbattlegame.utils.GameConstants.ELDER_DISENCHANT_VALUE
 import angelosz.catbattlegame.utils.GameConstants.EXPERIENCE_PER_LEVEL
 import angelosz.catbattlegame.utils.GameConstants.KITTEN_DISENCHANT_VALUE
 import angelosz.catbattlegame.utils.GameConstants.TEEN_DISENCHANT_VALUE
+import angelosz.catbattlegame.data.datastore.DataStoreRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -38,7 +39,8 @@ class CombatResultViewModel(
     private val playerAccountRepository: PlayerAccountRepository,
     private val battleChestRepository: BattleChestRepository,
     private val catRepository: CatRepository,
-    private val enemyCatRepository: EnemyCatRepository
+    private val enemyCatRepository: EnemyCatRepository,
+    private val dataStoreRepository: DataStoreRepository
 ): ViewModel() {
     private val _uiState: MutableStateFlow<CombatResultUiState> = MutableStateFlow(
         CombatResultUiState()
@@ -69,30 +71,44 @@ class CombatResultViewModel(
                 if (!rewardsProcessed) {
                     rewardsProcessed = true
                     if(combatResult == CombatResult.PLAYER_WON){
-                        if(chapter.state != CampaignState.COMPLETED){
+                        val isHalloweenChapter = chapter.campaignId == 1001L
+                        val isFirstDailyClaim = if (isHalloweenChapter) {
+                            !dataStoreRepository.hasClaimedHalloweenDailyReward(chapter.id)
+                        } else {
+                            chapter.state != CampaignState.COMPLETED
+                        }
+
+                        if(isFirstDailyClaim){
                             addRewards(chapterRewards)
                             expGained = chapter.experience
                             addCatsExperience(team, expGained, chapter.recommendedLevel)
                             activeRewards = chapterRewards
-
-                            completeChapter(chapter)
-
-                            if (chapter.id == 1L) {
-                                unlockedMsg = "¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 3 Gatos en tu equipo!"
-                            } else if (chapter.id == 2L) {
-                                unlockedMsg = "¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 4 Gatos en tu equipo!"
+                            if (isHalloweenChapter) {
+                                dataStoreRepository.markHalloweenDailyRewardClaimed(chapter.id)
                             }
-
-                            if(chapter.isLastCampaignChapter){
-                                val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
-                                completeCampaign(currentCampaign)
-                                unlockNextCampaign(currentCampaign.nextCampaign)
-                            }
-                            unlockNextChapter(chapter.unlocksChapter)
                         } else {
                             expGained = chapter.experience / 4
                             addCatsExperience(team, expGained, chapter.recommendedLevel)
                             activeRewards = addReplayRewards(chapterRewards)
+                        }
+
+                        completeChapter(chapter)
+
+                        if (chapter.id == 1L) {
+                            unlockedMsg = "¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 3 Gatos en tu equipo!"
+                        } else if (chapter.id == 2L) {
+                            unlockedMsg = "¡Tamaño de equipo aumentado! ¡Ahora puedes equipar hasta 4 Gatos en tu equipo!"
+                        }
+
+                        if(chapter.isLastCampaignChapter){
+                            val currentCampaign = campaignRepository.getCampaignById(chapter.campaignId)
+                            completeCampaign(currentCampaign)
+                            if (currentCampaign.nextCampaign > 0) {
+                                unlockNextCampaign(currentCampaign.nextCampaign)
+                            }
+                        }
+                        if (chapter.unlocksChapter > 0) {
+                            unlockNextChapter(chapter.unlocksChapter)
                         }
                     } else {
                         expGained = chapter.experience / 10

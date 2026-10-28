@@ -476,6 +476,98 @@ class EnemyCatsInitialData {
             attackSpeed = 1.4f,
             image = R.drawable.enemy_phantom_squirrel_300
         ),
+        EnemyCat(
+            id = 48,
+            name = R.string.chapter_title_28,
+            description = R.string.chapter_desc_28,
+            baseHealth = 108f,
+            baseAttack = 22f,
+            baseDefense = 1.5f,
+            attackSpeed = 1.3f,
+            enemyType = EnemyType.SUMMONER,
+            image = R.drawable.enemy_halloween_scarecrow_cursed_300
+        ),
+        EnemyCat(
+            id = 49,
+            name = R.string.chapter_title_28,
+            description = R.string.chapter_desc_28,
+            baseHealth = 48f,
+            baseAttack = 12f,
+            baseDefense = 1.0f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_halloween_pumpkin_300
+        ),
+        EnemyCat(
+            id = 50,
+            name = R.string.chapter_title_29,
+            description = R.string.chapter_desc_29,
+            baseHealth = 256f,
+            baseAttack = 24f,
+            baseDefense = 2.0f,
+            attackSpeed = 1.3f,
+            enemyType = EnemyType.SUMMONER,
+            image = R.drawable.enemy_halloween_necromancer_300
+        ),
+        EnemyCat(
+            id = 51,
+            name = R.string.chapter_title_29,
+            description = R.string.chapter_desc_29,
+            baseHealth = 84f,
+            baseAttack = 16f,
+            baseDefense = 1.0f,
+            attackSpeed = 1.0f,
+            image = R.drawable.enemy_halloween_skeleton_300
+        ),
+        EnemyCat(
+            id = 52,
+            name = R.string.chapter_title_30,
+            description = R.string.chapter_desc_30,
+            baseHealth = 640f,
+            baseAttack = 32f,
+            baseDefense = 2.5f,
+            attackSpeed = 1.3f,
+            image = R.drawable.enemy_halloween_witch_300
+        ),
+        EnemyCat(
+            id = 53,
+            name = R.string.chapter_title_30,
+            description = R.string.chapter_desc_30,
+            baseHealth = 112f,
+            baseAttack = 19f,
+            baseDefense = 1.5f,
+            attackSpeed = 1.1f,
+            image = R.drawable.enemy_halloween_witch_familiar_one_300
+        ),
+        EnemyCat(
+            id = 54,
+            name = R.string.chapter_title_30,
+            description = R.string.chapter_desc_30,
+            baseHealth = 112f,
+            baseAttack = 19f,
+            baseDefense = 1.5f,
+            attackSpeed = 1.1f,
+            image = R.drawable.enemy_halloween_witch_familiar_two_300
+        ),
+        EnemyCat(
+            id = 55,
+            name = R.string.chapter_title_30,
+            description = R.string.chapter_desc_30,
+            baseHealth = 112f,
+            baseAttack = 19f,
+            baseDefense = 1.5f,
+            attackSpeed = 1.1f,
+            image = R.drawable.enemy_halloween_witch_familiar_three_300
+        ),
+        EnemyCat(
+            id = 56,
+            name = R.string.chapter_title_31,
+            description = R.string.chapter_desc_31,
+            baseHealth = 1080f,
+            baseAttack = 42f,
+            baseDefense = 3.0f,
+            attackSpeed = 1.3f,
+            image = R.drawable.enemy_halloween_headless_horseman_300
+        ),
     )
 
     private val enemyAbilities: Map<Long, List<Int>> = mapOf(
@@ -525,6 +617,16 @@ class EnemyCatsInitialData {
         45L to listOf(1, 13, 14, 18),   // Phantom Cat
         46L to listOf(29, 30, 1, 15),   // Phantom Cat Minion
         47L to listOf(11, 10, 18, 28),  // Phantom Squirrel
+        /* Halloween Campaign (ID 1001) */
+        48L to listOf(6, 15),           // Cursed Scarecrow
+        49L to listOf(1, 6),            // Cursed Pumpkin
+        50L to listOf(6, 28, 35, 36),   // Halloween Necromancer
+        51L to listOf(1, 11),           // Cursed-Skeleton
+        52L to listOf(5, 15, 26, 28),   // Halloween Witch
+        53L to listOf(1, 2),            // Familiar One
+        54L to listOf(29, 1),           // Familiar Two
+        55L to listOf(30, 1),           // Familiar Three
+        56L to listOf(11, 10, 19, 35),  // Headless Horseman
     )
 
     fun getEnemyAbilities(): List<EnemyAbility> =

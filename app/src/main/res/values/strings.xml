@@ -389,6 +389,19 @@
     <string name="abandon_combat">Abandon Combat</string>
     <string name="select_chapter">Select Chapter</string>
 
+    <!-- Halloween Campaign (ID 1001) -->
+    <string name="campaign_title_halloween">Dangers in Halloween</string>
+    <string name="campaign_desc_halloween">Enter a spooky Halloween campaign filled with cursed creatures, restless dead, dark magic, and a fearsome final encounter.</string>
+
+    <string name="chapter_title_28">Halloween Cursed Scarecrow</string>
+    <string name="chapter_desc_28">A cursed scarecrow and its enchanted pumpkins guard the path. Defeat them before their dark magic overwhelms your team.</string>
+    <string name="chapter_title_29">Halloween Necromancer</string>
+    <string name="chapter_desc_29">A Halloween necromancer has raised the dead to fight at its side. Face the spellcaster and its skeletal servant in battle.</string>
+    <string name="chapter_title_30">Halloween Witch</string>
+    <string name="chapter_desc_30">A powerful witch and her three feline familiars fight together as a coven. Break their teamwork to claim victory.</string>
+    <string name="chapter_title_31">Halloween Headless Horseman</string>
+    <string name="chapter_desc_31">The Headless Horseman rides into battle for a fearsome final encounter. Prepare your team to face his strength and eerie magic.</string>
+
     <!-- Campaign 3 Titles & Descriptions -->
     <string name="chapter_title_16">Lost Wisps</string>
     <string name="chapter_desc_16">Curious and sad wisps wander through the dim tree cover.</string>

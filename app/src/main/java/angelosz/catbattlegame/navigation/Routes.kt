@@ -17,6 +17,9 @@ data class ArchiveScreenRoute(val selectedArchive: CollectionsView)
 object CampaignMenuScreenRoute
 
 @Serializable
+object HalloweenEventScreenRoute
+
+@Serializable
 data class TeamSelectionScreenRoute(val chapterId: Long)
 
 @Serializable

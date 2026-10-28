@@ -87,8 +87,16 @@ fun AppLayout(
             HomeScreen(
                 windowSize = windowSize,
                 onPlayButtonClick = { navController.navigate(CampaignMenuScreenRoute) },
+                openHalloweenEvent = { navController.navigate(HalloweenEventScreenRoute) },
                 navigateToArchive = { navController.navigate(ArchiveScreenRoute(CollectionsView.CATS)) },
                 navigateToCollections = { navController.navigate(ArmoryScreenRoute(CollectionsView.CATS)) },
+            )
+        }
+        composable<HalloweenEventScreenRoute> {
+            angelosz.catbattlegame.ui.campaign.HalloweenEventScreen(
+                windowSize = windowSize,
+                onBackButtonPressed = { navController.navigateUp() },
+                onChapterSelected = { chapterId -> navController.navigate(TeamSelectionScreenRoute(chapterId = chapterId)) }
             )
         }
         composable<ArmoryScreenRoute> { backStackEntry ->
