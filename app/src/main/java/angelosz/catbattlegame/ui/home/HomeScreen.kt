@@ -244,31 +244,13 @@ private fun HomeScreenContent(
                 onButtonClicked = onPlayButtonClick
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Card(
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF2C1C13)),
-                border = BorderStroke(2.dp, Color(0xFFFF9900)),
+            RoundedImageButton(
                 onClick = openHalloweenEvent,
-                modifier = Modifier.padding(4.dp)
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.campaign_halloween_icon256),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp)
-                    )
-                    Text(
-                        text = stringResource(R.string.campaign_title_halloween),
-                        color = Color(0xFFFF9900),
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.labelLarge,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
-                }
-            }
+                innerImage = R.drawable.campaign_halloween_icon_512,
+                outerImage = R.drawable.iconflash_256,
+                innerImageSize = 196,
+                outerImageSize = 256
+            )
         }
 
         // Top Zone: Currency Bar on Left, Calendar & Mail on Right

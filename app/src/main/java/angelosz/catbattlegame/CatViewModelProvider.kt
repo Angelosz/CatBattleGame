@@ -13,6 +13,7 @@ import angelosz.catbattlegame.ui.armory.battlechest_view.ArmoryBattleChestViewMo
 import angelosz.catbattlegame.ui.armory.cats_view.ArmoryCatsViewModel
 import angelosz.catbattlegame.ui.armory.teams_view.ArmoryTeamsViewModel
 import angelosz.catbattlegame.ui.campaign.CampaignScreenViewModel
+import angelosz.catbattlegame.ui.campaign.HalloweenEventViewModel
 import angelosz.catbattlegame.ui.combat.CombatScreenViewModel
 import angelosz.catbattlegame.ui.combat.combatreward.CombatResultViewModel
 import angelosz.catbattlegame.ui.combat.teamselection.TeamSelectionScreenViewModel
@@ -121,6 +122,13 @@ object CatViewModelProvider {
                 getCatBattleApplication().container.catRepository,
                 getCatBattleApplication().container.playerRepository,
                 getCatBattleApplication().container.battleChestRepository
+            )
+        }
+
+        initializer {
+            HalloweenEventViewModel(
+                getCatBattleApplication().container.campaignRepository,
+                getCatBattleApplication().container.dataStoreRepository,
             )
         }
     }

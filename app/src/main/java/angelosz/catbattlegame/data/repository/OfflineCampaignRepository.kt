@@ -43,7 +43,7 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
         )
     }
 
-    override suspend fun getCampaignState(campaignId: Long): CampaignState = dao.getCampaignState(campaignId)
+    override suspend fun getCampaignState(campaignId: Long): CampaignState = dao.getCampaignState(campaignId) ?: CampaignState.LOCKED
     override suspend fun updateCampaignState(campaignId: Long, state: CampaignState) {
         val campaign = dao.getCampaignState(campaignId)
         if(campaign != null){
@@ -94,7 +94,7 @@ class OfflineCampaignRepository(val dao: CampaignDao): CampaignRepository {
         )
     }
 
-    override suspend fun getChapterState(chapterId: Long): CampaignState = dao.getChapterState(chapterId)
+    override suspend fun getChapterState(chapterId: Long): CampaignState = dao.getChapterState(chapterId) ?: CampaignState.LOCKED
     override suspend fun updateChapterState(chapterId: Long, state: CampaignState) = dao.updateChapterState(
         CampaignChapterState(chapterId, state)
     )

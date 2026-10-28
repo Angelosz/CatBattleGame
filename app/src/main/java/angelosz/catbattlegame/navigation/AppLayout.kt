@@ -42,6 +42,7 @@ import angelosz.catbattlegame.ui.archives.ArchivesScreen
 import angelosz.catbattlegame.ui.armory.ArmoryScreen
 import angelosz.catbattlegame.ui.armory.enums.CollectionsView
 import angelosz.catbattlegame.ui.campaign.CampaignScreen
+import angelosz.catbattlegame.ui.campaign.HalloweenEventScreen
 import angelosz.catbattlegame.ui.combat.CombatScreen
 import angelosz.catbattlegame.ui.combat.combatreward.CombatResultScreen
 import angelosz.catbattlegame.ui.components.RoundedImageButton
@@ -93,10 +94,14 @@ fun AppLayout(
             )
         }
         composable<HalloweenEventScreenRoute> {
-            angelosz.catbattlegame.ui.campaign.HalloweenEventScreen(
+            HalloweenEventScreen(
                 windowSize = windowSize,
                 onBackButtonPressed = { navController.navigateUp() },
-                onChapterSelected = { chapterId -> navController.navigate(TeamSelectionScreenRoute(chapterId = chapterId)) }
+                onChapterSelected = { chapterId ->
+                    navController.navigate(TeamSelectionScreenRoute(chapterId = chapterId)) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
         composable<ArmoryScreenRoute> { backStackEntry ->
@@ -117,7 +122,11 @@ fun AppLayout(
             CampaignScreen(
                 windowSize = windowSize,
                 onBackButtonPressed = { navController.navigateUp() },
-                onChapterSelected = { chapterId -> navController.navigate(TeamSelectionScreenRoute(chapterId = chapterId))}
+                onChapterSelected = { chapterId ->
+                    navController.navigate(TeamSelectionScreenRoute(chapterId = chapterId)) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
         composable<TeamSelectionScreenRoute>{ backStackEntry ->

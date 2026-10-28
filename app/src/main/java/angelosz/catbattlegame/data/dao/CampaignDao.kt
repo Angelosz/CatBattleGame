@@ -27,7 +27,7 @@ interface CampaignDao {
     @Query("Select * from campaign where id = :id")
     suspend fun getCampaignById(id: Long): CampaignEntity
     @Query("Select state from campaign_state where campaignId = :campaignId")
-    suspend fun getCampaignState(campaignId: Long): CampaignState
+    suspend fun getCampaignState(campaignId: Long): CampaignState?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCampaignState(campaignCompletionState: CampaignCompletionState)
 
@@ -47,7 +47,7 @@ interface CampaignDao {
     @Query("Select * from campaign_chapter where id = :id")
     suspend fun getCampaignChapterById(id: Long): CampaignChapter
     @Query("Select state from campaign_chapter_state where chapterId = :chapterId")
-    suspend fun getChapterState(chapterId: Long): CampaignState
+    suspend fun getChapterState(chapterId: Long): CampaignState?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateChapterState(campaignChapterState: CampaignChapterState)
 

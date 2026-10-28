@@ -72,6 +72,7 @@ class HomeScreenViewModel(
                 }
 
                 ensureCampaign3UnlockedIfCampaign2Completed()
+                ensureHalloweenCampaignUnlocked()
 
 
                 val notifications = getConvertedNotifications(playerAccountRepository.getAllNotifications())
@@ -193,6 +194,21 @@ class HomeScreenViewModel(
                 campaignRepository.updateChapterState(16, CampaignState.UNLOCKED)
             } else if (campaign3State == CampaignState.DEVELOPMENT) {
                 campaignRepository.updateCampaignState(3, CampaignState.LOCKED)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private suspend fun ensureHalloweenCampaignUnlocked() {
+        try {
+            val campaignState = campaignRepository.getCampaignState(1001L)
+            if (campaignState != CampaignState.UNLOCKED) {
+                campaignRepository.updateCampaignState(1001L, CampaignState.UNLOCKED)
+            }
+            val chapter28State = campaignRepository.getChapterState(28L)
+            if (chapter28State == CampaignState.LOCKED) {
+                campaignRepository.updateChapterState(28L, CampaignState.UNLOCKED)
             }
         } catch (e: Exception) {
             e.printStackTrace()
