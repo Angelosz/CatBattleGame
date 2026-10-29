@@ -92,85 +92,76 @@ fun HalloweenEventScreen(
                             val chapter = item.chapter
                             val isUnlocked = chapter.state != CampaignState.LOCKED
 
-                            Card(
-                                modifier = Modifier.width(160.dp),
-                                shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = if (isUnlocked) Color(0xFF2C1C13) else Color(0xFF383431)
-                                ),
-                                border = BorderStroke(2.dp, if (isUnlocked) Color(0xFFFF9900) else Color.Gray),
-                                onClick = {
-                                    if (isUnlocked) {
-                                        onChapterSelected(chapter.id)
-                                    }
-                                }
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center,
+                                modifier = Modifier.padding(8.dp)
                             ) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    modifier = Modifier.padding(12.dp)
-                                ) {
-                                    Box(contentAlignment = Alignment.Center) {
-                                        RoundedImageButton(
-                                            onClick = {
-                                                if (isUnlocked) onChapterSelected(chapter.id)
-                                            },
-                                            innerImage = chapter.image,
-                                            outerImage = R.drawable.iconflash_256,
-                                            innerImageSize = 80,
-                                            outerImageSize = 104
-                                        )
-                                        if (!isUnlocked) {
-                                            Card(
-                                                modifier = Modifier.shadow(2.dp, CircleShape),
-                                                shape = CircleShape,
-                                                colors = CardDefaults.cardColors(containerColor = Color.White)
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Filled.Lock,
-                                                    contentDescription = null,
-                                                    modifier = Modifier.padding(4.dp)
-                                                )
-                                            }
+                                Box(contentAlignment = Alignment.Center) {
+                                    RoundedImageButton(
+                                        onClick = {
+                                            if (isUnlocked) onChapterSelected(chapter.id)
+                                        },
+                                        innerImage = chapter.image,
+                                        outerImage = R.drawable.iconflash_256,
+                                        innerImageSize = 96,
+                                        outerImageSize = 128
+                                    )
+                                    if (!isUnlocked) {
+                                        Card(
+                                            modifier = Modifier
+                                                .align(Alignment.BottomCenter)
+                                                .shadow(2.dp, CircleShape),
+                                            shape = CircleShape,
+                                            colors = CardDefaults.cardColors(containerColor = Color.White)
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Filled.Lock,
+                                                contentDescription = stringResource(R.string.locked_chapter),
+                                                modifier = Modifier.padding(4.dp)
+                                            )
                                         }
                                     }
+                                }
 
+                                Text(
+                                    text = stringResource(chapter.name),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.padding(top = 4.dp)
+                                )
+
+                                Card(
+                                    modifier = Modifier.padding(top = 2.dp),
+                                    shape = CircleShape,
+                                    colors = CardDefaults.cardColors(containerColor = Color(0xFF2C1C13)),
+                                    border = BorderStroke(1.dp, Color(0xFFFF9900))
+                                ) {
                                     Text(
-                                        text = stringResource(chapter.name),
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = Color.White,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier.padding(top = 8.dp)
+                                        text = "Lv. ${chapter.recommendedLevel}",
+                                        color = Color(0xFFFF9900),
+                                        fontWeight = FontWeight.Bold,
+                                        style = MaterialTheme.typography.labelSmall,
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                                     )
+                                }
 
+                                if (isUnlocked) {
                                     Card(
                                         modifier = Modifier.padding(top = 4.dp),
                                         shape = CircleShape,
-                                        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E100A)),
-                                        border = BorderStroke(1.dp, Color(0xFFFF9900))
+                                        colors = CardDefaults.cardColors(
+                                            containerColor = if (item.isDailyClaimed) Color(0xFF1B5E20) else Color(0xFFE65100)
+                                        )
                                     ) {
                                         Text(
-                                            text = "Lv. ${chapter.recommendedLevel}",
-                                            color = Color(0xFFFF9900),
-                                            fontWeight = FontWeight.Bold,
+                                            text = if (item.isDailyClaimed) "Reclamado Hoy" else "Diaria Disponible",
+                                            color = Color.White,
                                             style = MaterialTheme.typography.labelSmall,
                                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                                         )
-                                    }
-
-                                    if (isUnlocked) {
-                                        Card(
-                                            modifier = Modifier.padding(top = 6.dp),
-                                            colors = CardDefaults.cardColors(
-                                                containerColor = if (item.isDailyClaimed) Color(0xFF1B5E20) else Color(0xFFE65100)
-                                            )
-                                        ) {
-                                            Text(
-                                                text = if (item.isDailyClaimed) "Reclamado Hoy" else "Diaria Disponible",
-                                                color = Color.White,
-                                                style = MaterialTheme.typography.labelSmall,
-                                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                                            )
-                                        }
                                     }
                                 }
                             }

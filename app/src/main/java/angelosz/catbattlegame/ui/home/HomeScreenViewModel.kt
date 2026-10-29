@@ -72,7 +72,7 @@ class HomeScreenViewModel(
                 }
 
                 ensureCampaign3UnlockedIfCampaign2Completed()
-                ensureHalloweenCampaignUnlocked()
+                ensureHalloweenDataSeeded()
 
 
                 val notifications = getConvertedNotifications(playerAccountRepository.getAllNotifications())
@@ -200,14 +200,45 @@ class HomeScreenViewModel(
         }
     }
 
-    private suspend fun ensureHalloweenCampaignUnlocked() {
+    private suspend fun ensureHalloweenDataSeeded() {
         try {
+            val campaign1001 = campaignRepository.getCampaignById(1001L)
+            if (campaign1001 == null) {
+                campaignRepository.insertCampaigns(CampaignsInitialData().campaigns.filter { it.id == 1001L })
+            }
+
+            val ability35 = try { abilityRepository.getAbilityById(35) } catch (e: Exception) { null }
+            if (ability35 == null) {
+                val halloweenAbilities = AbilitiesInitialData().abilities.filter { it.id >= 35 }
+                abilityRepository.insertAbilities(halloweenAbilities)
+            }
+
+            val enemy48 = enemyCatRepository.getEnemyCatById(48L)
+            if (enemy48 == null) {
+                val halloweenEnemies = EnemyCatsInitialData().enemyCats.filter { it.id >= 48 }
+                enemyCatRepository.insertEnemyCats(halloweenEnemies)
+                enemyCatRepository.insertEnemyAbilities(EnemyCatsInitialData().getEnemyAbilities().filter { it.enemyCatId >= 48 })
+            }
+
+            val halloweenChapters = campaignRepository.getCampaignChaptersByCampaignId(1001L)
+            if (halloweenChapters.size < 4) {
+                val seedChapters = ChaptersInitialData().campaignChapters.filter { it.campaignId == 1001L }
+                campaignRepository.insertCampaignChapters(seedChapters)
+
+                val seedEnemies = ChaptersInitialData().getChapterEnemies().filter { it.chapterId in 28L..31L }
+                enemyCatRepository.insertChapterEnemies(seedEnemies)
+
+                val seedRewards = ChaptersInitialData().getChapterRewards().filter { it.chapterId in 28L..31L }
+                campaignRepository.insertChapterRewards(seedRewards)
+            }
+
             val campaignState = campaignRepository.getCampaignState(1001L)
             if (campaignState != CampaignState.UNLOCKED) {
                 campaignRepository.updateCampaignState(1001L, CampaignState.UNLOCKED)
             }
+
             val chapter28State = campaignRepository.getChapterState(28L)
-            if (chapter28State == CampaignState.LOCKED) {
+            if (chapter28State != CampaignState.UNLOCKED && chapter28State != CampaignState.COMPLETED) {
                 campaignRepository.updateChapterState(28L, CampaignState.UNLOCKED)
             }
         } catch (e: Exception) {

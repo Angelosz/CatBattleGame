@@ -26,7 +26,7 @@ class CampaignScreenViewModel(
         _uiState.update { it.copy(screenState = ScreenState.LOADING) }
         try {
             viewModelScope.launch {
-                val campaigns = campaignRepository.getAllCampaigns()
+                val campaigns = campaignRepository.getAllCampaigns().filter { it.id != 1001L }
                 val selectedCampaignId = dataStoreRepository.getSelectedCampaign()
                 _uiState.update {
                     it.copy(
@@ -34,7 +34,7 @@ class CampaignScreenViewModel(
                         campaigns = campaigns,
                         selectedCampaign = campaigns.find { campaign ->
                             campaign.id.toInt() == selectedCampaignId }
-                            ?: Campaign(0),
+                            ?: campaigns.firstOrNull() ?: Campaign(0),
                     )
                 }
             }

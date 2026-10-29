@@ -27,3 +27,6 @@ data class CombatScreenRoute(val teamId: Long, val chapterId: Long)
 
 @Serializable
 data class CombatResultScreenRoute(val teamId: Long, val chapterId: Long, val combatResult: CombatResult)
+
+@Serializable
+data class HalloweenCombatResultScreenRoute(val teamId: Long, val chapterId: Long, val combatResult: CombatResult)

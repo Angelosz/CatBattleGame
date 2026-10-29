@@ -310,7 +310,55 @@ class ChaptersInitialData {
             name = R.string.chapter_title_27,
             description = R.string.chapter_desc_27,
             image = R.drawable.enemy_chapter_26_phantoms,
-            unlocksChapter = 28,
+            unlocksChapter = 0,
+            isLastCampaignChapter = true,
+            recommendedLevel = 5
+        ),
+        /*  End Third Campaign */
+
+        /* Halloween Campaign (ID 1001) */
+        CampaignChapter(
+            id = 28,
+            campaignId = 1001,
+            order = 1,
+            experience = 200,
+            name = R.string.chapter_title_28,
+            description = R.string.chapter_desc_28,
+            image = R.drawable.enemy_chapter_halloween_1_scarecrow,
+            unlocksChapter = 29,
+            recommendedLevel = 2
+        ),
+        CampaignChapter(
+            id = 29,
+            campaignId = 1001,
+            order = 2,
+            experience = 300,
+            name = R.string.chapter_title_29,
+            description = R.string.chapter_desc_29,
+            image = R.drawable.enemy_chapter_halloween_2_necromancer,
+            unlocksChapter = 30,
+            recommendedLevel = 3
+        ),
+        CampaignChapter(
+            id = 30,
+            campaignId = 1001,
+            order = 3,
+            experience = 350,
+            name = R.string.chapter_title_30,
+            description = R.string.chapter_desc_30,
+            image = R.drawable.enemy_chapter_halloween_3_witch,
+            unlocksChapter = 31,
+            recommendedLevel = 4
+        ),
+        CampaignChapter(
+            id = 31,
+            campaignId = 1001,
+            order = 4,
+            experience = 400,
+            name = R.string.chapter_title_31,
+            description = R.string.chapter_desc_31,
+            image = R.drawable.enemy_chapter_halloween_4_headlesshorseman,
+            unlocksChapter = 0,
             isLastCampaignChapter = true,
             recommendedLevel = 5
         )
@@ -541,6 +589,13 @@ class ChaptersInitialData {
         26L to listOf(Reward(RewardType.GOLD, 150), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.TEEN_BOX)),
         27L to listOf(Reward(RewardType.GOLD, 180), Reward(RewardType.CRYSTAL, 40), Reward(RewardType.ADULT_BOX)),
         /* End Third Campaign */
+
+        /* Halloween Campaign (ID 1001) */
+        28L to listOf(Reward(RewardType.GOLD, 100), Reward(RewardType.CRYSTAL, 20), Reward(RewardType.KITTEN_BOX)),
+        29L to listOf(Reward(RewardType.GOLD, 150), Reward(RewardType.CRYSTAL, 25), Reward(RewardType.KITTEN_BOX)),
+        30L to listOf(Reward(RewardType.GOLD, 200), Reward(RewardType.CRYSTAL, 35), Reward(RewardType.TEEN_BOX)),
+        31L to listOf(Reward(RewardType.GOLD, 300), Reward(RewardType.CRYSTAL, 50), Reward(RewardType.TEEN_BOX)),
+        /* End Halloween Campaign */
     )
 
     fun getChapterRewards(): List<ChapterReward> =
@@ -583,7 +638,11 @@ class ChaptersInitialData {
         25L to listOf(42L, 43L, 43L, 43L),
         26L to listOf(44L),
         27L to listOf(45L, 46L, 47L),
-        /* End Third Campaign */
+        /* Halloween Campaign (ID 1001) */
+        28L to listOf(48L, 49L, 49L),
+        29L to listOf(50L, 51L),
+        30L to listOf(52L, 53L, 54L, 55L),
+        31L to listOf(56L),
     )
 
     fun getChapterEnemies(): List<ChapterEnemy> = enemies.flatMap { (id, enemies) ->

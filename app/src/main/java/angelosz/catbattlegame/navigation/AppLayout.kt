@@ -149,7 +149,11 @@ fun AppLayout(
                 windowSize = windowSize,
                 onBackToTeamSelection = { navController.navigateUp() },
                 onCombatFinished = { teamId, chapterId, combatResult ->
-                    navController.navigate(CombatResultScreenRoute(teamId, chapterId, combatResult))
+                    if (chapterId in 28L..31L) {
+                        navController.navigate(HalloweenCombatResultScreenRoute(teamId, chapterId, combatResult))
+                    } else {
+                        navController.navigate(CombatResultScreenRoute(teamId, chapterId, combatResult))
+                    }
                 }
             )
         }
@@ -171,6 +175,18 @@ fun AppLayout(
                 onSelectChapterPressed = {
                     navController.popBackStack(CampaignMenuScreenRoute, false)
                 }
+            )
+        }
+
+        composable<HalloweenCombatResultScreenRoute> { backStackEntry ->
+            val data: HalloweenCombatResultScreenRoute = backStackEntry.toRoute()
+
+            angelosz.catbattlegame.ui.combat.combatreward.HalloweenCombatResultScreen(
+                teamId = data.teamId,
+                chapterId = data.chapterId,
+                combatResult = data.combatResult,
+                onBackPressed = { navController.popBackStack(HomeScreenRoute, false) },
+                onReturnToHomePressed = { navController.popBackStack(HomeScreenRoute, false) }
             )
         }
     }

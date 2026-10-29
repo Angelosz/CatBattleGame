@@ -77,17 +77,18 @@ fun CampaignScreen(
                 when(uiState.stage){
                     CampaignSelectionStage.SELECTING_CAMPAIGN -> {
                         BackHandler(onBack = onBackButtonPressed)
+                        val selectedIndex = uiState.campaigns.indexOfFirst { it.id == uiState.selectedCampaign.id }.coerceAtLeast(0)
                         if(isPortraitView){
                             PortraitCampaignSelectionCarousel(
                                 campaigns = uiState.campaigns,
                                 onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) },
-                                selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
+                                selectedCampaignIndex = selectedIndex
                             )
                         } else {
                             LandscapeCampaignSelectionCarousel(
                                 campaigns = uiState.campaigns,
                                 onCampaignClicked = { campaign -> viewModel.selectCampaign(campaign) },
-                                selectedCampaignIndex = uiState.selectedCampaign.id.toInt() - 1
+                                selectedCampaignIndex = selectedIndex
                             )
                         }
                         BackButton(
